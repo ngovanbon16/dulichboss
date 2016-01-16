@@ -46,7 +46,7 @@
                             //alert(data.status);
                             if(data.status == "error")
                             {
-                                $("#info").addClass("bg01").text("Có lỗi xảy ra");
+                                $("#info").addClass("bg01").text("Có lỗi xảy ra! " + data.msg["kichhoat"]);
                                 $.each(data.msg, function(i, val)
                                 {
                                     var ele = "#login [name='" + i + "']";

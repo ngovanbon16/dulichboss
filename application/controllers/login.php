@@ -41,6 +41,11 @@ class Login extends CI_Controller
 			$msg["password"] = "Mật khẩu không đúng";
 		}
 
+		if(!($this->mlogin->kichhoat($email)))
+		{
+			$msg["kichhoat"] = "Tài khoản chưa được kích hoạt vui lòng vào gmail kích hoạt tài khoản!";
+		}
+
 		$status = "error";
 		if(count($msg) == 0)
 		{

@@ -56,6 +56,24 @@ class Mlogin extends CI_Model {
         {
             return false;
         }
-    }                         
+    }  
+
+    public function kichhoat($id)
+    {
+        $this -> db -> select('ND_MA, ND_KICHHOAT');
+        $this -> db -> from($this->_table);
+        $this -> db -> where('ND_DIACHIMAIL', $id);
+        $this -> db -> where('ND_KICHHOAT', "1");
+        $this -> db -> limit(1);
+        $query = $this -> db -> get();           
+        if($query -> num_rows() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }                       
 }            
 ?>

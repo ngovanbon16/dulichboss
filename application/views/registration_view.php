@@ -18,6 +18,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxexpander.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxvalidator.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/demos.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxloader.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
     <script type="text/javascript">
         $(document).ready(function () {
@@ -36,7 +37,7 @@
             var genders = ["Nam", "Nữ"];
             $("#gender").jqxDropDownList({  source: genders, selectedIndex: -1, width: '300px', height: '25px', promptText: "Tôi là...", dropDownHeight: "50px" });
             // Create jqxButton.
-            $("#submit").jqxButton({ theme: theme, height: "30px", width: "100px" });
+            $("#submit").jqxButton({ theme: theme, height: "30px", width: "150px" });
             // Create jqxValidator.
             $("#form").jqxValidator({
                 rules: [
@@ -72,10 +73,12 @@
             $("#submit").click(function () {
                 $('#form').jqxValidator('validate');
             });
+            $("#jqxLoader").jqxLoader({ width: 100, height: 60, imagePosition: 'top' });
             // Update the jqxExpander's content if the validation is successful.
             $('#form').on('validationSuccess', function (event) {
                 //$("#createAccount").jqxExpander('setContent', '<span style="margin: 10px;">Account created.</span>');
-
+                $('#jqxLoader').jqxLoader('open');
+                $("#submit").hide();
                 var url, dta;
                 url="<?php echo base_url(); ?>index.php/registration/registration?t=" + Math.random();
                 dta = {
@@ -100,16 +103,35 @@
                         }
                         else
                         {
-                            alert("Đăng ký thành công! \n" + data.msg["email"] + " \n Vui lòng đăng nhập vào Email để xác nhận tài khoản!");
+                            alert("Đăng ký thành công! \n" + data.msg["email"]);
                             //setTimeout("location.href = '<?php echo site_url('login'); ?>';",500);
                             setTimeout("location.href = 'https://mail.google.com/';",500);
                         }
                     }
+                    $("#submit").show();
+                    $('#jqxLoader').jqxLoader('close');
                 }, 'json');
 
 
             });
         });
+
+        /*$(document).ready(function () {
+            $("#submit1").jqxButton({
+                width: 150
+            });
+            $("#jqxLoader").jqxLoader({ width: 100, height: 60, imagePosition: 'top' });
+            $('#submit1').on('click', function () {
+                $('#jqxLoader').jqxLoader('open');
+            });
+            $("#closeLoader").jqxButton({
+                width: 100
+            });
+            $('#closeLoader').on('click', function () {
+                $('#jqxLoader').jqxLoader('close');
+            });
+        });*/
+        
     </script>
 
     <style type="text/css">
@@ -132,6 +154,11 @@
         <div style="font-family: Verdana; font-size: 13px;">
             <form id="form" style="overflow: hidden; margin: 10px;" action="./">
                 <table>
+                    <tr>
+                        <td align="center" colspan="2">
+                            <div id="jqxLoader"></div>
+                        </td>
+                    </tr>
                     <tr>
                         <td colspan="2">Họ<b class="batbuoc"> * </b>
                         </td>

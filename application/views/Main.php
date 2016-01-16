@@ -132,7 +132,7 @@
                             <li class="divider"></li>
 
                             <?php if($this->session->userdata("id") != ""){ ?>
-
+                            <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-mail-forward"></i> Đổi tài khoản</a>
                             <li><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
                             <?php }else{ ?>
                             <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-sign-in"></i> Đăng nhập</a>

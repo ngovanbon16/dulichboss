@@ -111,10 +111,11 @@ class Registration extends CI_Controller
         ";
         $this->email->message($message);
         if ($this->email->send()) {
-            return 'Email Đã được gửi';
+            return 'Email Đã được gửi! Vui lòng đăng nhập email để xác nhận!';
         } else 
         {
-            show_error($this->email->print_debugger());
+            return 'Không gửi được mail! Vui lòng kiểm tra lại địa chỉ email!';
+            //show_error($this->email->print_debugger());
         }
     }
 }
