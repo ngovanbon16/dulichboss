@@ -38,6 +38,8 @@
             $("#gender").jqxDropDownList({  source: genders, selectedIndex: -1, width: '300px', height: '25px', promptText: "Tôi là...", dropDownHeight: "50px" });
             // Create jqxButton.
             $("#submit").jqxButton({ theme: theme, height: "30px", width: "150px" });
+            $("#btntrangchu").jqxButton({ theme: theme, height: "28px", width: "90px" });
+            $("#btndangnhap").jqxButton({ theme: theme, height: "28px", width: "90px" });
             // Create jqxValidator.
             $("#form").jqxValidator({
                 rules: [
@@ -99,7 +101,7 @@
                     {  
                         if(data.status == "error")
                         {
-                            alert("Địa chỉ Email đã tồn tại!");
+                            alert(data.msg["email"]);
                         }
                         else
                         {
@@ -144,12 +146,21 @@
         .batbuoc{
             color: #F00;
         }
+        #tieude{
+            text-transform: capitalize;
+            font-size: 18px;
+            color: #000;
+            padding: 5px 5px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body><center>
     <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
-        <div>
+        <div id="tieude">
             Tạo tài khoản
+             <a href="<?php echo base_url(); ?>index.php/home"><button id="btntrangchu">Trang chủ</button></a>
+            <a href="<?php echo base_url(); ?>index.php/login"><button id="btndangnhap">Đăng nhập</button></a>
         </div>
         <div style="font-family: Verdana; font-size: 13px;">
             <form id="form" style="overflow: hidden; margin: 10px;" action="./">

@@ -53,17 +53,17 @@ class Mnguoidung extends CI_Model {
         $this->db->update($this->_table, $data_update);
     }
 
-    public function updatexacnhan($id, $data_update){
+    public function updatexacnhan($email, $data_update){
         $query = $this->getList();
         $test = 0;
         foreach ($query as $item) {
-            if($id == md5($item["ND_MA"]))
+            if($email == md5($item["ND_DIACHIMAIL"]))
             {
                 if($item["ND_KICHHOAT"] != "1")
                 {
-                    $id=$item["ND_MA"];
+                    $email=$item["ND_DIACHIMAIL"];
                     $test = 1;
-                    $this->db->where("ND_MA", $id);
+                    $this->db->where("ND_DIACHIMAIL", $email);
                     $this->db->update($this->_table, $data_update);
                 }
                 else

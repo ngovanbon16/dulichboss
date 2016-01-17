@@ -41,39 +41,45 @@ class Registration extends CI_Controller
 
 		if(($this->mregistration->testEmail($email)))
 		{
-			$msg["email"] = "Email đã tồn tại";
+			$msg["email"] = "Email đã tồn tại!";
 		}
+
+    if(!($this->xacnhanemail($email)))
+    {
+      $msg['email'] = 'Đăng ký không thành công! Không gửi được mail! Vui lòng kiểm tra lại địa chỉ email!';
+    }
 
 		$status = "error";
 		$data_insert = "";
 		if(count($msg) == 0)
 		{
 			date_default_timezone_set('Asia/Ho_Chi_Minh');  
-            $date = date('Y-m-d H:i:s');
+      $date = date('Y-m-d H:i:s');
 
-            $data_insert = array(
-               "ND_HO" => $ho,
-               "ND_TEN" => $ten,
-               "ND_DIACHIMAIL" => $email,
-               "ND_MATKHAU" => md5($matkhau),
-               "ND_NGAYSINH" => $ngaysinh,
-               "ND_GIOITINH" => $gioitinh,
-               "ND_HINH" => 'avata.png',
-               "ND_KICHHOAT" => '0',
-               "T_MA" => "0",
-               "H_MA" => "0",
-               "X_MA" => "0",
-               "ND_NGAYTAO" => $date,
-               "ND_NGAYCAPNHAT" => $date,
-               "ND_DIEM" => '0',
-               "ND_THUONG" => '0',
-               "CB_MA" => '0',
-            );
-            $this->mregistration->insert($data_insert);
-            $status = "success";
-            $query = $this->mregistration->getid($email);
-            $id = $query['ND_MA'];
-            $msg['email'] = $this->xacnhanemail($id, $email);
+      $data_insert = array(
+        "ND_HO" => $ho,
+        "ND_TEN" => $ten,
+        "ND_DIACHIMAIL" => $email,
+        "ND_MATKHAU" => md5($matkhau),
+        "ND_NGAYSINH" => $ngaysinh,
+        "ND_GIOITINH" => $gioitinh,
+        "ND_HINH" => 'avata.png',
+        "ND_KICHHOAT" => '0',
+        "T_MA" => "0",
+        "H_MA" => "0",
+        "X_MA" => "0",
+        "ND_NGAYTAO" => $date,
+        "ND_NGAYCAPNHAT" => $date,
+        "ND_DIEM" => '0',
+        "ND_THUONG" => '0',
+        "CB_MA" => '0',
+      );
+          $this->mregistration->insert($data_insert);
+          $status = "success";
+          $msg["email"] = 'Email Đã được gửi! Vui lòng đăng nhập email để xác nhận!';
+          /*$query = $this->mregistration->getid($email);
+          $id = $query['ND_MA'];
+          $msg['email'] = $this->xacnhanemail($id, $email);*/
 		}
 
 		$response = array('status' => $status,'msg' => $msg, 'data' => $data_insert);
@@ -81,7 +87,7 @@ class Registration extends CI_Controller
 		echo $jsonString;
 	}
 
-	public function xacnhanemail($id, $email)
+	public function xacnhanemail($email)
     {
         //echo "Truy cập vào trang web của bạn để kích hoạt tài khoản: <br/>";
         $config = Array(
@@ -106,15 +112,16 @@ class Registration extends CI_Controller
 
         $message = "<b>Chào người dùng mới</b> 
                     <br/>
-                    <a href='".base_url()."index.php/nguoidung/xacnhanemail/".md5($id)."'>Nhấn vào đây để xác nhận</a>
+                    <a href='".base_url()."index.php/nguoidung/xacnhanemail/".md5($email)."'>Nhấn vào đây để xác nhận</a>
 
         ";
         $this->email->message($message);
         if ($this->email->send()) {
-            return 'Email Đã được gửi! Vui lòng đăng nhập email để xác nhận!';
-        } else 
+            return true;
+        } 
+        else 
         {
-            return 'Không gửi được mail! Vui lòng kiểm tra lại địa chỉ email!';
+            return false;
             //show_error($this->email->print_debugger());
         }
     }

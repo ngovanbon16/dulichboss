@@ -57,6 +57,7 @@ class Login extends CI_Controller
 					$newdata = array(
                         'id' => $row->ND_MA,
                         'email'   => $row->ND_DIACHIMAIL,
+                        'avata' => $row->ND_HINH,
                     );
                     $this->session->set_userdata($newdata); // Tạo Session cho Users                 
                     //redirect(base_url() . "index.php/home");
@@ -87,6 +88,7 @@ class Login extends CI_Controller
            //neu thanh vien da dang nhap thi xoa session login
            $this->session->unset_userdata('id');
            $this->session->unset_userdata('email');
+           $this->session->unset_userdata('avata');
            $this->session->set_flashdata('flash_message', 'Đăng xuất thành công');
            redirect(base_url() . "index.php/home");
         }

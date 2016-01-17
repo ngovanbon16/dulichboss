@@ -127,7 +127,7 @@
                         else
                         {
                             alert("Sửa thành công");
-                            //setTimeout("location.href = '<?php echo site_url('login'); ?>';",500);
+                            setTimeout("location.href = '<?php echo site_url('home'); ?>';",500);
                         }
                     }
                 }, 'json');

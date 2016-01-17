@@ -121,13 +121,32 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user fa-fw"></i> <?php echo $this->session->userdata("email"); ?> <b class="caret"></b>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+                            <?php //echo $this->session->userdata['avata']; ?>
+                            <!-- <a href="<?php echo base_url(); ?>index.php/avata"> -->
+                            <?php
+                                if($this->session->userdata("email") != "")
+                                {
+                                    ?>
+                                        <img id="avata" src="<?php echo base_url(); ?>uploads/user/<?php echo $this->session->userdata['avata']; ?>" height="18" width="18">
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                        <i class="fa fa-user fa-fw"></i>
+                                    <?php
+                                }
+                            ?>
+                            <?php echo $this->session->userdata("email"); ?> <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li><a href="<?php echo base_url(); ?>index.php/nguoidung/edit"><i class="fa fa-user fa-fw"></i> Thông tin người dùng</a>
                             </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Cài đặt</a>
+                            <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-camera"></i> Đổi Avatar</a>
+                            </li>
+                            </li>
+                            <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-gear fa-fw"></i> Cài đặt</a>
                             </li>
                             <li class="divider"></li>
 

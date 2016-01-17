@@ -241,13 +241,13 @@ class Nguoidung extends CI_Controller
 		echo $jsonString;
 	}
 
-	public function xacnhanemail($id)
+	public function xacnhanemail($email)
 	{
 		$data = array(
 		    "ND_KICHHOAT" => "1"
 		);
 		//$this->mnguoidung->updatexacnhan($id, $data);
-		$test = $this->mnguoidung->updatexacnhan($id, $data);
+		$test = $this->mnguoidung->updatexacnhan($email, $data);
 		if($test == 0)
 		{
 			echo "<center><h2>Tài khoản không tồn tại hoặc đã bị xóa!</h2>
