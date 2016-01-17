@@ -23,24 +23,24 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 
-                var url = "<?php echo base_url(); ?>index.php/tinh/data";
+                var url = "<?php echo base_url(); ?>index.php/nhomquyen/data";
                 // prepare the data
                 var source =
                 {
                     datatype: "json",
                     datafields: [
-                        { name: 'T_MA' },
-                        { name: 'T_TEN' }
+                        { name: 'NQ_MA' },
+                        { name: 'NQ_TEN' }
                     ],
                     url: url,
                     async: true
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#jqxInput").jqxDropDownList({ source: dataAdapter, placeHolder: "Tên tỉnh:", displayMember: "T_TEN", valueMember: "T_MA", width: 200, height: 30});
+                $("#jqxInput").jqxDropDownList({ source: dataAdapter, placeHolder: "Tên nhóm quyền:", displayMember: "NQ_TEN", valueMember: "NQ_MA", width: 200, height: 30});
                 
                 /*$("#jqxInput").jqxDropDownList({
-                    selectedIndex: 2, source: dataAdapter, displayMember: "T_MA", valueMember: "T_TEN", width: 200, height: 25
+                    selectedIndex: 2, source: dataAdapter, displayMember: "NQ_MA", valueMember: "NQ_TEN", width: 200, height: 25
                 });*/
 
                 $("#jqxInput").on('select', function (event) {
@@ -48,25 +48,25 @@
                         var item = event.args.item;
                         if (item) {
                             var valueelement = $("<div></div>");
-                            valueelement.text("Mã tỉnh: " + item.value);
+                            valueelement.text("Mã nhóm quyền: " + item.value);
                             var labelelement = $("<div></div>");
-                            labelelement.text("Tên tỉnh: " + item.label);
+                            labelelement.text("Tên nhóm quyền: " + item.label);
                             $("#selectionlog").children().remove();
                             $("#selectionlog").append(labelelement);
                             $("#selectionlog").append(valueelement);
 
                             //alert(item.value);
-                            //var url1 = "<?php echo base_url(); ?>index.php/huyen/data/"+item.value;
+                            //var url1 = "<?php echo base_url(); ?>index.php/quyen/data/"+item.value;
                             // prepare the data
-                            var orderdetailsurl = "<?php echo base_url(); ?>index.php/huyen/data/"+item.value;
+                            var orderdetailsurl = "<?php echo base_url(); ?>index.php/quyen/data/"+item.value;
                             var ordersSource =
                             {
                                 dataFields: [
-                                    { name: 'H_MA', type: 'number' },
-                                    { name: 'H_TEN', type: 'string' }
+                                    { name: 'Q_MA', type: 'number' },
+                                    { name: 'Q_TEN', type: 'string' }
                                 ],
                                 dataType: "json",
-                                id: 'H_MA',
+                                id: 'Q_MA',
                                 url: orderdetailsurl,
                                 addRow: function (rowID, rowData, position, commit) {
                                     //alert("ID: " + rowID + " | rowData: " + rowData);
@@ -79,8 +79,8 @@
                                 },
                                 updateRow: function (rowID, rowData, commit) {
 
-                                    url = "<?php echo base_url(); ?>index.php/huyen/add";
-                                    rowData["T_MA"] = item.value; 
+                                    url = "<?php echo base_url(); ?>index.php/quyen/add";
+                                    rowData["NQ_MA"] = item.value; 
                                     //alert(item.value);
                                     console.log(rowData);
 
@@ -111,10 +111,10 @@
                                     //alert(rowID);
                                     //console.log(item.value);
                                     var dta, url;
-                                    url = "<?php echo base_url(); ?>index.php/huyen/delete";
+                                    url = "<?php echo base_url(); ?>index.php/quyen/delete";
                                     dta = {
-                                        "T_MA" : item.value,
-                                        "H_MA" : rowID
+                                        "NQ_MA" : item.value,
+                                        "Q_MA" : rowID
                                     };
                                     console.log(dta);
                                     $.post(url, dta, function(data, status){
@@ -285,8 +285,8 @@
                                     });
                                 },
                                 columns: [
-                                    { text: 'Mã', dataField: 'H_MA', width: 150 },
-                                    { text: 'Tên', dataField: 'H_TEN', width: 250 }
+                                    { text: 'Mã', dataField: 'Q_MA', width: 150 },
+                                    { text: 'Tên', dataField: 'Q_TEN', width: 250 }
                                 ]
                             });
 
@@ -301,7 +301,7 @@
             <tr>
                 <td>
                     <div id='jqxInput'></div>
-                    <label style="font-family: Verdana; font-size: 14px;">Thông tin tỉnh được chọn</label>
+                    <label style="font-family: Verdana; font-size: 14px;">Thông tin nhóm quyền được chọn</label>
                     <div style="font-family: Verdana; font-size: 13px;" id='selectionlog'></div>
                 </td>
                 <td>

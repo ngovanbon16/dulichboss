@@ -22,6 +22,8 @@
     <div id='content'>
         <script type="text/javascript">
             $(document).ready(function () {
+                $("#btn").jqxButton({ theme: theme, height: "30px", width: "110px"});
+
                 var matinh = "";
                 var mahuyen = "";
                 var url = "<?php echo base_url(); ?>index.php/tinh/data";
@@ -38,7 +40,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#jqxInput").jqxDropDownList({ source: dataAdapter, placeHolder: "Tên tỉnh:", displayMember: "T_TEN", valueMember: "T_MA", width: 200, height: 25});
+                $("#jqxInput").jqxDropDownList({ source: dataAdapter, placeHolder: "Tên tỉnh:", displayMember: "T_TEN", valueMember: "T_MA", width: 200, height: 30});
                 
                 /*$("#jqxInput").jqxDropDownList({
                     selectedIndex: 2, source: dataAdapter, displayMember: "T_MA", valueMember: "T_TEN", width: 200, height: 25
@@ -80,7 +82,7 @@
                             var dataAdapter = new $.jqx.dataAdapter(source);
                             // Create a jqxDropDownList
                             $("#jqxWidget1").jqxDropDownList({
-                                selectedIndex: -1, source: dataAdapter, displayMember: "H_TEN", valueMember: "H_MA", width: 200, height: 25
+                                selectedIndex: -1, source: dataAdapter, displayMember: "H_TEN", valueMember: "H_MA", width: 200, height: 30
                             });
                             // subscribe to the select event.
                             $("#jqxWidget1").change('select', function (event) {

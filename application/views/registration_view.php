@@ -37,9 +37,9 @@
             var genders = ["Nam", "Nữ"];
             $("#gender").jqxDropDownList({  source: genders, selectedIndex: -1, width: '300px', height: '25px', promptText: "Tôi là...", dropDownHeight: "50px" });
             // Create jqxButton.
-            $("#submit").jqxButton({ theme: theme, height: "30px", width: "150px" });
-            $("#btntrangchu").jqxButton({ theme: theme, height: "28px", width: "90px" });
-            $("#btndangnhap").jqxButton({ theme: theme, height: "28px", width: "90px" });
+            $("#submit").jqxButton({ template: "primary", height: "30px", width: "150px" });
+            $("#btntrangchu").jqxButton({ template: "info", height: "28px", width: "90px" });
+            $("#btndangnhap").jqxButton({ template: "info", height: "28px", width: "90px" });
             // Create jqxValidator.
             $("#form").jqxValidator({
                 rules: [
@@ -149,7 +149,7 @@
         #tieude{
             text-transform: capitalize;
             font-size: 18px;
-            color: #000;
+            color: #00F;
             padding: 5px 5px;
             font-style: italic;
         }

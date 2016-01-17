@@ -200,11 +200,11 @@
                             <li>
                                 <a href="#"><i class="fa fa-th-list"></i> Danh mục<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
+                                    <!-- <li>
+                                        <a href="<?php echo base_url(); ?>index.php/danhmuc"> Nhóm danh mục</a>
+                                    </li> -->
                                     <li>
-                                        <a href="flot.html"> Nhóm danh mục</a>
-                                    </li>
-                                    <li>
-                                        <a href="morris.html"> Danh mục</a>
+                                        <a href="<?php echo base_url(); ?>index.php/danhmuc"> Danh mục</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
@@ -264,10 +264,10 @@
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> Quyền<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="flot.html"> Nhóm quyền</a>
+                                        <a href="<?php echo base_url(); ?>index.php/nhomquyen"> Nhóm quyền</a>
                                     </li>
                                     <li>
-                                        <a href="flot.html"> Quyền</a>
+                                        <a href="<?php echo base_url(); ?>index.php/quyen"> Quyền</a>
                                     </li>
                                     <li>
                                         <a href="flot.html"> Cấp bậc người dùng</a>
