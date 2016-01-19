@@ -13,10 +13,46 @@ class Aediadiem extends CI_Controller
 
 	public function index()
 	{
-		/*$this->_data['subview'] = 'registration_view';
-       	$this->_data['title'] = 'Đăng ký';
-       	$this->load->view('main.php', $this->_data);*/
-       	 $this->load->view("admin/themdiadiem_view");
+		$this->load->library('googlemaps');
+
+		$config = array();
+		$config['center'] = 'auto';
+		//$config['onclick'] = 'alert(\'You just clicked at: \' + event.latLng.lat() + \', \' + event.latLng.lng());';
+		$config['onboundschanged'] = 'if (!centreGot) {
+			var mapCentre = map.getCenter();
+			marker_0.setOptions({
+				position: new google.maps.LatLng(mapCentre.lat(), mapCentre.lng()) 
+			});
+		}
+		centreGot = true;';
+		$this->googlemaps->initialize($config);
+		   
+		// set up the marker ready for positioning 
+		// once we know the users location
+		$marker = array();
+		$this->googlemaps->add_marker($marker);
+
+		$marker = array();
+		$marker['position'] = '10.021555, 105.764830';
+		$marker['draggable'] = TRUE;
+		$marker['animation'] = 'DROP';
+		$marker['icon'] = base_url().'/assets/images/movelocal.png';
+		$marker['onmouseup'] = " 
+
+			/*alert(event.latLng.lat() + ' , ' + event.latLng.lng());*/ 
+			var lat = event.latLng.lat();
+			var lng = event.latLng.lng();
+			var vitri = lat + ', ' + lng;
+			document.getElementById('lat').value = lat;
+			document.getElementById('lng').value = lng;
+			document.getElementById('DD_VITRI').value = vitri;
+
+		";
+		$this->googlemaps->add_marker($marker);
+
+		$data['map'] = $this->googlemaps->create_map();
+
+		$this->load->view('admin/themdiadiem_view', $data);
 	}
 
 	public function add()

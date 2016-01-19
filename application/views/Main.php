@@ -213,7 +213,10 @@
                                 <a href="#"><i class="fa fa-map-marker"></i> Bài đăng<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/welcome"> Map Codeigniter</a>
+                                        <a href="<?php echo base_url(); ?>index.php/map"> Map Codeigniter</a>
+                                    </li>
+                                     <li>
+                                        <a href="<?php echo base_url(); ?>index.php/map/map"> Map địa điểm</a>
                                     </li>
                                     <li>
                                         <a href="flot.html"> Loại địa điểm</a>
