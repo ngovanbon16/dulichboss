@@ -213,10 +213,13 @@
                                 <a href="#"><i class="fa fa-map-marker"></i> Bài đăng<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
+                                        <a href="<?php echo base_url(); ?>index.php/welcome"> Map Codeigniter</a>
+                                    </li>
+                                    <li>
                                         <a href="flot.html"> Loại địa điểm</a>
                                     </li>
                                     <li>
-                                        <a href="flot.html"> Địa điểm</a>
+                                        <a href="<?php echo base_url(); ?>index.php/diadiem"> Địa điểm</a>
                                     </li>
                                     <li>
                                         <a href="morris.html"> Thông tin</a>

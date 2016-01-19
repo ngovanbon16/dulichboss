@@ -136,7 +136,7 @@
                             var ordersSource =
                             {
                                 dataFields: [
-                                    { name: 'X_MA', type: 'number' },
+                                    { name: 'X_MA', type: 'int' },
                                     { name: 'X_TEN', type: 'string' }
                                 ],
                                 dataType: "json",
