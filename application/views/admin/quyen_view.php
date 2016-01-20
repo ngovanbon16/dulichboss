@@ -144,7 +144,7 @@
                             });
                             $("#table").jqxDataTable(
                             {
-                                width: 400,
+                                width: "100%",
                                 height: 415,
                                 source: dataAdapter,
                                 
@@ -285,8 +285,8 @@
                                     });
                                 },
                                 columns: [
-                                    { text: 'Mã', dataField: 'Q_MA', width: 150 },
-                                    { text: 'Tên', dataField: 'Q_TEN', width: 250 }
+                                    { text: 'Mã', dataField: 'Q_MA', width: "20%" },
+                                    { text: 'Tên', dataField: 'Q_TEN', width: "80%" }
                                 ]
                             });
 
@@ -297,14 +297,14 @@
             });
         </script>
         <!-- <input id="jqxInput" /> -->
-        <table>
+        <table width="100%">
             <tr>
-                <td>
+                <td width="20%" valign="top">
                     <div id='jqxInput'></div>
                     <label style="font-family: Verdana; font-size: 14px;">Thông tin nhóm quyền được chọn</label>
                     <div style="font-family: Verdana; font-size: 13px;" id='selectionlog'></div>
                 </td>
-                <td>
+                <td width="80%">
                     <div id="table"></div>
                 </td>
             </tr>

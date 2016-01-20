@@ -82,6 +82,14 @@
                 text-decoration: none;
                 color: #FFF;
             }
+            h3{
+                float: left;
+            }
+            a{
+                text-decoration: none;
+                font-size: 16px;
+                padding-left: 180px;
+            }
         </style>
 
     </head>
@@ -92,6 +100,7 @@
                     <div class="login-panel panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Đăng nhập</h3>
+                            <a href="<?php echo base_url(); ?>index.php/registration">Đăng Ký</a>
                         </div>
                         <div class="panel-body">
                             <div id="info" class="form-group">Thông báo</div>
@@ -103,13 +112,7 @@
                                     <div class="form-group">
                                         <input class="form-control" placeholder="Password" name="password" id="password" type="password" value="">
                                     </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input name="remember" type="checkbox" value="Remember Me">Nhớ mật khẩu
-                                        </label>
-                                    </div>
-                                    <button type="button" id="button" class="btn btn-lg btn-success btn-block">Đăng nhập</button><br/>
-                                    <a id="btn" href="<?php echo base_url(); ?>index.php/registration"><button type="button" id="button1" class="btn btn-lg btn-success btn-block">Đăng ký</button></a>
+                                    <button type="button" id="button" class="btn btn-lg btn-success btn-block">Đăng nhập</button>
                                 </fieldset>
                             </form>
                         </div>

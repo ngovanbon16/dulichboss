@@ -124,7 +124,7 @@
             });
             $("#table").jqxDataTable(
             {
-                width: 1080,
+                width: "100%",
                 height: 415,
                 source: dataAdapter,
                 
@@ -265,13 +265,13 @@
                     });
                 },
                 columns: [
-                    { text: 'Mã địa điểm', dataField: 'DD_MA', width: 50 },
-                    { text: 'Mã danh mục', dataField: 'DM_MA', width: 80 },
-                    { text: 'Mã người dùng', dataField: 'ND_MA', width: 150 },
-                    { text: 'Tên địa điểm', dataField: 'DD_TEN', width: 250 },
-                    { text: 'Duyệt', dataField: 'DD_DUYET', width: 80 },
-                    { text: 'Ngày cập nhật', dataField: 'DD_NGAYCAPNHAT', width: 160 },
-                    { text: 'Ngày đăng', dataField: 'DD_NGAYDANG', width: 160 }
+                    { text: 'Mã địa điểm', dataField: 'DD_MA', width: "10%" },
+                    { text: 'Mã danh mục', dataField: 'DM_MA', width: "10%" },
+                    { text: 'Mã người dùng', dataField: 'ND_MA', width: "10%" },
+                    { text: 'Tên địa điểm', dataField: 'DD_TEN', width: "20%" },
+                    { text: 'Duyệt', dataField: 'DD_DUYET', width: "10%" },
+                    { text: 'Ngày cập nhật', dataField: 'DD_NGAYCAPNHAT', width: "20%" },
+                    { text: 'Ngày đăng', dataField: 'DD_NGAYDANG', width: "20%" }
                 ]
             });
             
@@ -288,7 +288,7 @@
 </head>
 <body class='default'>
       <div id="table"></div>
-      <button id="button">Kiểm tra gửi dữ liệu</button>
+      <!-- <button id="button">Kiểm tra gửi dữ liệu</button> -->
       
       <!-- <div id="messageNotification">
         Xóa thành công!

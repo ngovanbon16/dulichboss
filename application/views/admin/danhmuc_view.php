@@ -115,7 +115,7 @@
             });
             $("#table").jqxDataTable(
             {
-                width: 400,
+                width: "100%",
                 height: 415,
                 source: dataAdapter,
                 
@@ -256,8 +256,8 @@
                     });
                 },
                 columns: [
-                    { text: 'Mã', dataField: 'DM_MA', width: 150 },
-                    { text: 'Tên', dataField: 'DM_TEN', width: 250 }
+                    { text: 'Mã', dataField: 'DM_MA', width: "20%" },
+                    { text: 'Tên', dataField: 'DM_TEN', width: "80%" }
                 ]
             });
         });
@@ -265,7 +265,7 @@
 </head>
 <body class='default'>
       <div id="table"></div>
-
-      <button id="button">Nhấp vào</button>
+      
+      <!-- <button id="button">Nhấp vào</button> -->
 </body>
 </html>

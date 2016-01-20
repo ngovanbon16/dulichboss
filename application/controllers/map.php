@@ -89,9 +89,7 @@ class Map extends CI_Controller {
 
 
 	public function map()
-	{	
-		//show cac marker, di chuyen len map
-		//$this->load->library('googlemaps');
+	{
 
 		$config = array();
 		$config['center'] = 'auto';
@@ -140,11 +138,210 @@ class Map extends CI_Controller {
 			$this->googlemaps->add_marker($marker);
 		}
 
+		/*$data['map'] = $this->googlemaps->create_map();
+		
+		$this->load->view('admin/map_view', $data);*/
+
+		$this->_data['map'] = $this->googlemaps->create_map();
+		$this->_data['subview'] = "admin/map_view";
+		$this->_data['title'] = "Các vị trí đã thêm";
+		$this->load->view("Main", $this->_data);
+	}
+
+	function mapvd()
+	{
+		//ẩn hiện marker
+		/*$this->load->library('googlemaps');
+
+		$config['center'] = 'auto';
+		$config['zoom'] = 'auto';
+		$config['cluster'] = TRUE;
+		$config['onboundschanged'] = 'if (!centreGot) {
+			var mapCentre = map.getCenter();
+			marker_0.setOptions({
+				position: new google.maps.LatLng(mapCentre.lat(), mapCentre.lng()) 
+			});
+		}
+		centreGot = true;';
+		$this->googlemaps->initialize($config);
+		   
+		// set up the marker ready for positioning 
+		// once we know the users location
+		$marker = array();
+		$marker['onclick'] = 'alert("Bạn đang ở vị trí này!")';
+		$this->googlemaps->add_marker($marker);
+
+		$marker = array();
+		$marker['position'] = '10.047296, 105.755602';
+		$this->googlemaps->add_marker($marker);
+
+		$marker = array();
+		$marker['position'] = '10.041573, 105.791425';
+		$this->googlemaps->add_marker($marker);
+
+		$marker = array();
+		$marker['position'] = '10.017806, 105.771470';
+		$this->googlemaps->add_marker($marker);
+
+		$marker = array();
+		$marker['position'] = '10.021221, 105.764179';
+		$this->googlemaps->add_marker($marker);
+		$data['map'] = $this->googlemaps->create_map();
+
+		$this->load->view('admin/map_view', $data);*/
+
+		/*$config['center'] = 'auto';
+		$config['zoom'] = 'auto';
+		$config['onboundschanged'] = 'if (!centreGot) {
+			var mapCentre = map.getCenter();
+			marker_0.setOptions({
+				position: new google.maps.LatLng(mapCentre.lat(), mapCentre.lng()) 
+			});
+		}
+		centreGot = true;';
+		$this->googlemaps->initialize($config);
+
+		$marker = array();
+		$marker['onclick'] = 'alert("Bạn đang ở vị trí này!")';
+		$this->googlemaps->add_marker($marker);*/
+
+
+		$config['center'] = 'auto';
+		$config['zoom'] = 'auto';
+		$config['directions'] = TRUE;
+		$config['directionsStart'] = '10.021518, 105.764655';
+		$config['directionsEnd'] = '10.032805, 105.774439';
+		$config['directionsDivID'] = 'directionsDiv';
+		$config['geocodeCaching'] = 'true';
+		$this->googlemaps->initialize($config);
+
+		$marker = array();
+		$marker['position'] = '10.021555, 105.764830';
+		$marker['draggable'] = TRUE;
+		$marker['animation'] = 'DROP';
+		$marker['icon'] = base_url().'/assets/images/A1.png';
+		$marker['onmouseup'] = " 
+
+			/*alert(event.latLng.lat() + ' , ' + event.latLng.lng());*/ 
+			var lat = event.latLng.lat();
+			var lng = event.latLng.lng();
+			var local = lat + ', ' + lng;
+
+			document.getElementById('A').value = local;
+
+		";
+		$this->googlemaps->add_marker($marker);
+
+		$marker = array();
+		$marker['position'] = '10.021555, 105.764830';
+		$marker['draggable'] = TRUE;
+		$marker['animation'] = 'DROP';
+		$marker['icon'] = base_url().'/assets/images/B1.png';
+		$marker['onmouseup'] = " 
+
+			var lat = event.latLng.lat();
+			var lng = event.latLng.lng();
+			var local = lat + ', ' + lng;
+
+			document.getElementById('B').value = local;
+
+		";
+		$this->googlemaps->add_marker($marker);
+
 		$data['map'] = $this->googlemaps->create_map();
 
 		$this->load->view('admin/map_view', $data);
 	}
 
+	public function mapfromAtoB()
+	{
+		if(isset($_POST['lat']))
+		{
+			if($_POST['lat'] != "")
+			{
+				$lat = $_POST['lat'];
+			}
+			else
+			{
+				$lat = "10.022888, 105.762633";
+			}
+		}
+		else
+		{
+			$lat = "10.022888, 105.762633";
+		}
+		if(isset($_POST['lng']))
+		{
+			if($_POST['lng'] != "")
+			{
+				$lng = $_POST['lng']; 
+			}
+			else
+			{
+				$lng = "10.023486, 105.766678";
+			}
+		}
+		else
+		{
+			$lng = "10.023486, 105.766678";
+		}
+		
+		$re = array('lat' => $lat, 'lng' => $lng);
+
+		$jsonString = json_encode($re);
+		echo $jsonString;
+
+		$config['center'] = 'auto';
+		$config['zoom'] = 'auto';
+		$config['directions'] = TRUE;
+		$config['directionsStart'] = $lat;
+		$config['directionsEnd'] = $lng;
+		$config['directionsDivID'] = 'directionsDiv';
+		$this->googlemaps->initialize($config);
+
+		$marker = array();
+		$marker['position'] = $lng;
+		$marker['draggable'] = TRUE;
+		$marker['animation'] = 'DROP';
+		$marker['icon'] = base_url().'/assets/images/B1.png';
+		$marker['onmouseup'] = " 
+
+			var lat = event.latLng.lat();
+			var lng = event.latLng.lng();
+			var local = lat + ', ' + lng;
+
+			document.getElementById('lng').value = local;
+
+		";
+		$this->googlemaps->add_marker($marker);
+
+		$marker = array();
+		$marker['position'] = $lat;
+		$marker['draggable'] = TRUE;
+		$marker['animation'] = 'DROP';
+		$marker['icon'] = base_url().'/assets/images/A1.png';
+		$marker['onmouseup'] = " 
+
+			/*alert(event.latLng.lat() + ' , ' + event.latLng.lng());*/ 
+			var lat = event.latLng.lat();
+			var lng = event.latLng.lng();
+			var local = lat + ', ' + lng;
+
+			document.getElementById('lat').value = local;
+
+		";
+		$this->googlemaps->add_marker($marker);
+
+		/*$data['map'] = $this->googlemaps->create_map();
+		$this->load->view('admin/map_view', $data);*/
+
+		$this->_data['lat'] = $lat;
+		$this->_data['lng'] = $lng;
+		$this->_data['map'] = $this->googlemaps->create_map();
+		$this->_data['subview'] = 'admin/map_view';
+       	$this->_data['title'] = 'Map dẫn đường từ A đến B';
+       	$this->load->view('main.php', $this->_data);
+	}
 
 	public function add()
 	{

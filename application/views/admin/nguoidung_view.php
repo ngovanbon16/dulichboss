@@ -121,8 +121,8 @@
             });
             $("#table").jqxDataTable(
             {
-                width: 1080,
-                height: 415,
+                width: "100%",
+                height: "415",
                 source: dataAdapter,
                 
                 pageable: true,
@@ -262,13 +262,13 @@
                     });
                 },
                 columns: [
-                    { text: 'Mã', dataField: 'ND_MA', width: 50 },
-                    { text: 'Họ', dataField: 'ND_HO', width: 80 },
-                    { text: 'Tên', dataField: 'ND_TEN', width: 150 },
-                    { text: 'Địa chỉ mail', dataField: 'ND_DIACHIMAIL', width: 250 },
-                    { text: 'Kích hoạt', dataField: 'ND_KICHHOAT', width: 80 },
-                    { text: 'Ngày cập nhật', dataField: 'ND_NGAYCAPNHAT', width: 160 },
-                    { text: 'Ngày tạo', dataField: 'ND_NGAYTAO', width: 160 }
+                    { text: 'Mã', dataField: 'ND_MA', width: "5%" },
+                    { text: 'Họ', dataField: 'ND_HO', width: "10%" },
+                    { text: 'Tên', dataField: 'ND_TEN', width: "10%" },
+                    { text: 'Địa chỉ mail', dataField: 'ND_DIACHIMAIL', width: "25%" },
+                    { text: 'Kích hoạt', dataField: 'ND_KICHHOAT', width: "10%" },
+                    { text: 'Ngày cập nhật', dataField: 'ND_NGAYCAPNHAT', width: "20%" },
+                    { text: 'Ngày tạo', dataField: 'ND_NGAYTAO', width: "20%" }
                 ]
             });
             
@@ -284,8 +284,8 @@
     </script>
 </head>
 <body class='default'>
-      <div id="table"></div>
-      <button id="button">Kiểm tra gửi dữ liệu</button>
+    <div id="table"></div>  
+    <!-- <button id="button">Kiểm tra gửi dữ liệu</button> -->
       
       <!-- <div id="messageNotification">
         Xóa thành công!

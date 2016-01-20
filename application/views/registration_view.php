@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
     <script type="text/javascript">
         $(document).ready(function () {
+            $.jqx.theme = "bootstrap";
             // Create jqxExpander.
             $("#createAccount").jqxExpander({  toggleMode: 'none', width: '350px', showArrow: false });
             // Create jqxInput.
@@ -37,9 +38,7 @@
             var genders = ["Nam", "Nữ"];
             $("#gender").jqxDropDownList({  source: genders, selectedIndex: -1, width: '300px', height: '25px', promptText: "Tôi là...", dropDownHeight: "50px" });
             // Create jqxButton.
-            $("#submit").jqxButton({ template: "primary", height: "30px", width: "150px" });
-            $("#btntrangchu").jqxButton({ template: "info", height: "28px", width: "90px" });
-            $("#btndangnhap").jqxButton({ template: "info", height: "28px", width: "90px" });
+            $("#submit").jqxButton({ theme: theme, height: "28px", width: "110px" });
             // Create jqxValidator.
             $("#form").jqxValidator({
                 rules: [
@@ -137,14 +136,11 @@
     </script>
 
     <style type="text/css">
-        #firstName{
+       /* #firstName{
             text-transform: capitalize;
         }
         #lastName{
             text-transform: capitalize;
-        }
-        .batbuoc{
-            color: #F00;
         }
         #tieude{
             text-transform: capitalize;
@@ -152,15 +148,41 @@
             color: #00F;
             padding: 5px 5px;
             font-style: italic;
+        }*/
+        .batbuoc{
+            color: #F00;
+        }
+        a{
+            text-decoration: none;
+            color: #06F;
+        }
+        a:hover{
+            color: #00C;
+            
+        }
+        .div1{
+            float: left;
+        }
+        .div2{
+            float: left;
+            padding-left: 120px;
+        }
+        #submit{
+            background-color: #FFF;
+        }
+        #submit:hover{
+            background-color: #CCC;
         }
     </style>
 </head>
 <body><center>
     <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
         <div id="tieude">
-            Tạo tài khoản
-             <a href="<?php echo base_url(); ?>index.php/home"><button id="btntrangchu">Trang chủ</button></a>
-            <a href="<?php echo base_url(); ?>index.php/login"><button id="btndangnhap">Đăng nhập</button></a>
+            <div class="div1">Tạo tài khoản</div>
+            <div class="div2">
+                <a href="<?php echo base_url(); ?>index.php/home">Trang chủ</a> |  
+                <a href="<?php echo base_url(); ?>index.php/login">Đăng nhập</a>
+            </div>
         </div>
         <div style="font-family: Verdana; font-size: 13px;">
             <form id="form" style="overflow: hidden; margin: 10px;" action="./">

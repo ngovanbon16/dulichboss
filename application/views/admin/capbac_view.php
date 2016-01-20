@@ -19,8 +19,8 @@
             $("#button").click(function()
             {
                 var url, dta;
-                //url="<?php echo base_url(); ?>index.php/tinh/add?t=" + Math.random();
-                url = "<?php echo base_url(); ?>index.php/tinh/data";
+                //url="<?php echo base_url(); ?>index.php/capbac/add?t=" + Math.random();
+                url = "<?php echo base_url(); ?>index.php/capbac/data";
                 dta = {
                   "ma" : $("#frmbox :text[name='ma']").val(),
                   "ten" : $("#frmbox :text[name='ten']").val()
@@ -34,15 +34,17 @@
                 }, 'json');
             });
 
-            var orderdetailsurl = "<?php echo base_url(); ?>index.php/tinh/data";
+            var orderdetailsurl = "<?php echo base_url(); ?>index.php/capbac/data";
             var ordersSource =
             {
                 dataFields: [
-                    { name: 'T_MA', type: 'int' },
-                    { name: 'T_TEN', type: 'string' }
+                    { name: 'CB_MA', type: 'int' },
+                    { name: 'CB_TEN', type: 'string' },
+                    { name: 'CB_DIEMTU', type: 'int' },
+                    { name: 'CB_DIEMDEN', type: 'int' },
                 ],
                 dataType: "json",
-                id: 'T_MA',
+                id: 'CB_MA',
                 url: orderdetailsurl,
                 addRow: function (rowID, rowData, position, commit) {
                     //alert("ID: " + rowID + " | rowData: " + rowData);
@@ -55,7 +57,7 @@
                 },
                 updateRow: function (rowID, rowData, commit) {
 
-                    url = "<?php echo base_url(); ?>index.php/tinh/add";
+                    url = "<?php echo base_url(); ?>index.php/capbac/add";
                     //console.log(rowData);
 
                     $.post(url, rowData, function(data, status){
@@ -84,7 +86,7 @@
                     // and with parameter false if the synchronization failed.
                     //alert(rowID);
                     var dta, url, test;
-                    url = "<?php echo base_url(); ?>index.php/tinh/delete";
+                    url = "<?php echo base_url(); ?>index.php/capbac/delete";
                     dta = {
                         "ma" : rowID
                     };
@@ -256,8 +258,10 @@
                     });
                 },
                 columns: [
-                    { text: 'Mã', dataField: 'T_MA', width: "20%" },
-                    { text: 'Tên', dataField: 'T_TEN', width: "80%" }
+                    { text: 'Mã', dataField: 'CB_MA', width: "10%" },
+                    { text: 'Tên', dataField: 'CB_TEN', width: "50%" },
+                    { text: 'Điểm từ', dataField: 'CB_DIEMTU', width: "20%" },
+                    { text: 'Điểm đến', dataField: 'CB_DIEMDEN', width: "20%" },
                 ]
             });
         });

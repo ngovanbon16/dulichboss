@@ -215,20 +215,17 @@
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/map"> Map Codeigniter</a>
                                     </li>
-                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/map/map"> Map địa điểm</a>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>index.php/map/map"> Các địa điểm đã thêm</a>
                                     </li>
                                     <li>
-                                        <a href="flot.html"> Loại địa điểm</a>
+                                        <a href="<?php echo base_url(); ?>index.php/map/mapfromAtoB"> Dẫn đường từ A -> B</a>
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/diadiem"> Địa điểm</a>
                                     </li>
                                     <li>
-                                        <a href="morris.html"> Thông tin</a>
-                                    </li>
-                                    <li>
-                                        <a href="flot.html"> Mùa</a>
+                                        <a href="<?php echo base_url(); ?>index.php/mua"> Mùa</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
@@ -237,10 +234,10 @@
                                 <a href="#"><i class="fa fa-camera-retro"></i> Đa phương tiện<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="flot.html"> Nhóm hình ảnh</a>
+                                        <a href="#"> Nhóm hình ảnh Y</a>
                                     </li>
                                     <li>
-                                        <a href="morris.html"> Hình ảnh</a>
+                                        <a href="#"> Hình ảnh Y</a>
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/upload"> Upload hình ảnh</a>
@@ -252,16 +249,16 @@
                                 <a href="#"><i class="fa fa-comments"></i> Phản hồi<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="panels-wells.html">Bình luận</a>
+                                        <a href="#">Bình luận Y</a>
                                     </li>
                                     <li>
-                                        <a href="buttons.html">Thảo luận</a>
+                                        <a href="#">Thảo luận Y</a>
                                     </li>
                                     <li>
-                                        <a href="notifications.html">Hình ảnh bình luận</a>
+                                        <a href="#">Hình ảnh bình luận Y</a>
                                     </li>
                                     <li>
-                                        <a href="typography.html">Đánh giá</a>
+                                        <a href="#">Đánh giá Y</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
@@ -276,16 +273,16 @@
                                         <a href="<?php echo base_url(); ?>index.php/quyen"> Quyền</a>
                                     </li>
                                     <li>
-                                        <a href="flot.html"> Cấp bậc người dùng</a>
+                                        <a href="<?php echo base_url(); ?>index.php/capbac"> Cấp bậc người dùng</a>
                                     </li>
                                     <li>
                                         <a href="#">Cài đặt <span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li>
-                                                <a href="#">Cài đặt</a>
+                                                <a href="#">Cài đặt Y</a>
                                             </li>
                                             <li>
-                                                <a href="#">Giá trị</a>
+                                                <a href="#">Giá trị Y</a>
                                             </li>
                                         </ul>
                                         <!-- /.nav-third-level -->
@@ -297,10 +294,10 @@
                                 <a href="#"><i class="fa fa-bar-chart-o"></i> Thống kê<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="blank.html">Báo cáo</a>
+                                        <a href="#">Báo cáo Y</a>
                                     </li>
                                     <li>
-                                        <a href="login.html">Thống kê</a>
+                                        <a href="#">Thống kê Y</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->

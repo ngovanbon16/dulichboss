@@ -23,6 +23,11 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxloader.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxformattedinput.js"></script>
+    
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxwindow.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxtabs.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             // Create jqxExpander.
@@ -270,6 +275,70 @@
             });
     </script>
 
+    <script type="text/javascript">
+        var centreGot = false;
+    </script>
+
+    <?php echo $map['js']; ?>
+
+    <script type="text/javascript">
+        var basicDemo = (function () {
+            //Adding event listeners
+            function _addEventListeners() {
+                $('#showWindowButton').click(function () {
+                    $('#window').jqxWindow('open');
+                });
+                $('#hideWindowButton').click(function () {
+                    $('#window').jqxWindow('close');
+                });
+            };
+            //Creating all page elements which are jqxWidgets
+            function _createElements() {
+                $('#showWindowButton').jqxButton({ width: '70px' });
+                $('#hideWindowButton').jqxButton({ width: '65px' });
+            };
+            //Creating the demo window
+            function _createWindow() {
+                var jqxWidget = $('#jqxWidget');
+                var offset = jqxWidget.offset();
+                $('#window').jqxWindow({
+                    position: { x: offset.left + -250, y: offset.top + -450} ,
+                    showCollapseButton: true, maxHeight: 1000, maxWidth: 1000, minHeight: 550, minWidth: 750, height: 550, width: 750,
+                    initContent: function () {
+                        $('#window').jqxWindow('focus');
+                    }
+                });
+                $('#window').jqxWindow('resizable', true);
+                $('#window').jqxWindow('draggable', true);
+                $("#showWindowButton").jqxButton({ template: "success" , height: 30, width: 90 });
+                $("#hideWindowButton").jqxButton({ template: "success" , height: 30, width: 90 });
+                $("#lat").jqxInput({placeHolder: "Vĩ độ - Latitude", height: 25, width: 160 });
+                $("#lng").jqxInput({placeHolder: "Kinh độ - Longitude", height: 25, width: 160 });
+            };
+            return {
+                config: {
+                    dragArea: null
+                },
+                init: function () {
+                    //Creating all jqxWindgets except the window
+                    _createElements();
+                    //Attaching event listeners
+                    _addEventListeners();
+                    //Adding jqxWindow
+                    _createWindow();
+                }
+            };
+        } ());
+        $(document).ready(function () {  
+            //Initializing the demo
+            basicDemo.init();
+        });
+        function load()
+        {
+            $('#window').jqxWindow('close');
+        }
+    </script>
+
     <style type="text/css">
         #firstName{
             text-transform: capitalize;
@@ -292,7 +361,7 @@
         }
     </style>
 </head>
-<body><center>
+<body onload="load()"><center>
     <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
         <div id="tieude">
             Thêm địa điểm mới 
@@ -410,6 +479,35 @@
                         </td>
                          <td>
                             <input id="DD_VITRI" value="<?php echo $info['DD_VITRI']; ?>" placeholder="Nhập vị trí..." />
+                        
+
+                            <div id="jqxWidget">
+                                <div style="float: left;">
+                                    <div>
+                                        <input type="button" value="Mở bản đồ" id="showWindowButton" />
+                                        
+                                    </div>
+                                </div>
+                                <div>
+                                    <div id="window">
+                                        <div id="windowHeader">
+                                            <span>
+                                                <img src="<?php echo base_url(); ?>assets/images/mapicon.png" alt="" style="margin-right: 15px" />Map
+                                            </span>
+                                        </div>
+                                        <div style="overflow: hidden;" id="windowContent">
+                                            
+                                            <?php echo $map['html']; ?>
+                                            Lat: <input type="text" id="lat" value="" readonly="readonly" >
+                                            Lng: <input type="text" id="lng" value="" readonly="readonly" >
+                                            <input type="button" value="Đóng bản đồ" id="hideWindowButton" style="margin-left: 5px" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </td>
                     </tr>
                     <tr>

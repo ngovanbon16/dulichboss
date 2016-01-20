@@ -241,7 +241,7 @@
                 var jqxWidget = $('#jqxWidget');
                 var offset = jqxWidget.offset();
                 $('#window').jqxWindow({
-                    position: { x: offset.left + 100, y: offset.top + 100} ,
+                    position: { x: offset.left + -250, y: offset.top + -450} ,
                     showCollapseButton: true, maxHeight: 1000, maxWidth: 1000, minHeight: 550, minWidth: 750, height: 550, width: 750,
                     initContent: function () {
                         $('#window').jqxWindow('focus');
@@ -249,6 +249,7 @@
                 });
                 $('#window').jqxWindow('resizable', true);
                 $('#window').jqxWindow('draggable', true);
+                $("#showWindowButton").jqxButton({ template: "success" , height: 30, width: 90 });
                 $("#hideWindowButton").jqxButton({ template: "success" , height: 30, width: 90 });
                 $("#lat").jqxInput({placeHolder: "Vĩ độ - Latitude", height: 25, width: 160 });
                 $("#lng").jqxInput({placeHolder: "Kinh độ - Longitude", height: 25, width: 160 });
@@ -415,7 +416,7 @@
                             <div id="jqxWidget">
                                 <div style="float: left;">
                                     <div>
-                                        <input type="button" value="Open" id="showWindowButton" />
+                                        <input type="button" value="Mở bản đồ" id="showWindowButton" />
                                         
                                     </div>
                                 </div>
@@ -423,7 +424,7 @@
                                     <div id="window">
                                         <div id="windowHeader">
                                             <span>
-                                                <img src="<?php echo base_url(); ?>assets/images/local.png" alt="" style="margin-right: 15px" />Map
+                                                <img src="<?php echo base_url(); ?>assets/images/mapicon.png" alt="" style="margin-right: 15px" />Map
                                             </span>
                                         </div>
                                         <div style="overflow: hidden;" id="windowContent">
@@ -431,7 +432,7 @@
                                             <?php echo $map['html']; ?>
                                             Lat: <input type="text" id="lat" value="" readonly="readonly" >
                                             Lng: <input type="text" id="lng" value="" readonly="readonly" >
-                                            <input type="button" value="Close" id="hideWindowButton" style="margin-left: 5px" />
+                                            <input type="button" value="Đóng bản đồ" id="hideWindowButton" style="margin-left: 5px" />
 
                                         </div>
                                     </div>

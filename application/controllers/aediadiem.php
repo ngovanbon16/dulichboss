@@ -11,12 +11,23 @@ class Aediadiem extends CI_Controller
 		$this->load->model("mdiadiem");
 	}
 
-	public function index()
+	function map($local)
 	{
+		if($local == "")
+		{
+			$local = '10.021555, 105.764830';
+			$center = "auto";
+		}
+		else
+		{
+			//$local = "auto";
+			$center = $local;
+		}
+
 		$this->load->library('googlemaps');
 
 		$config = array();
-		$config['center'] = 'auto';
+		$config['center'] = $center;
 		//$config['onclick'] = 'alert(\'You just clicked at: \' + event.latLng.lat() + \', \' + event.latLng.lng());';
 		$config['onboundschanged'] = 'if (!centreGot) {
 			var mapCentre = map.getCenter();
@@ -33,7 +44,7 @@ class Aediadiem extends CI_Controller
 		$this->googlemaps->add_marker($marker);
 
 		$marker = array();
-		$marker['position'] = '10.021555, 105.764830';
+		$marker['position'] = $local;
 		$marker['draggable'] = TRUE;
 		$marker['animation'] = 'DROP';
 		$marker['icon'] = base_url().'/assets/images/movelocal.png';
@@ -49,9 +60,12 @@ class Aediadiem extends CI_Controller
 
 		";
 		$this->googlemaps->add_marker($marker);
+		return $this->googlemaps->create_map();
+	}
 
-		$data['map'] = $this->googlemaps->create_map();
-
+	public function index()
+	{
+		$data['map'] = $this->map("");
 		$this->load->view('admin/themdiadiem_view', $data);
 	}
 
@@ -196,6 +210,7 @@ class Aediadiem extends CI_Controller
 	            }
         	}
 
+        $this->_data['map'] = $this->map($info["DD_VITRI"]);
         $this->_data['info'] = $this->mdiadiem->getID($id);
        	$this->load->view("admin/suadiadiem_view", $this->_data);
 	}
