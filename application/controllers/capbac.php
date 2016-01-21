@@ -44,6 +44,7 @@ class Capbac extends CI_Controller
 		else
 		{
 			$this->mcapbac->insert($data);
+			$msg["insert"] = "insert";
 		}
 		$status = "success";
 

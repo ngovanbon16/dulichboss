@@ -59,7 +59,7 @@ class Avata extends CI_Controller{
                     $this->session->unset_userdata("avata");
                     $this->session->set_userdata($array);
 
-                    $this->_data['errors'] = $check;
+                    $this->_data['errors'] = "success";
                     $this->_data['title'] = "Avata";
                     $this->_data['subview'] = 'admin/avata_view';
                     $this->load->view('Main.php', $this->_data);

@@ -40,6 +40,7 @@ class Mua extends CI_Controller
 		else
 		{
 			$this->mmua->insert($data);
+			$msg["insert"] = "insert";
 		}
 		$status = "success";
 

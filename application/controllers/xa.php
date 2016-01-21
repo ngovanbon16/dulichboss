@@ -52,6 +52,7 @@ class Xa extends CI_Controller
                 else
                 {
                     $this->mxa->insert($data);
+                    $msg["insert"] = "insert";
                     $status = "success";
                 }
             }

@@ -1,167 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title id="Description">This demo illustrates the default functionality of the jqxPasswordInput widget.</title>
-    <link type="text/css" rel="Stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css">
+    <title id="Description">This demo shows the default functionality of jqxNotification.
+        Multiple instances of the same notification can be opened at the same time.</title>
+    <meta name="keywords" content="jQuery notification, jQWidgets, jqxNotification, notification, unobtrusive notification" />
+    <meta name="description" content="This demo shows the default functionality of jqxNotification. Multiple instances of the same notification can be opened at the same time." />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxpasswordinput.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxinput.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcalendar.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxtooltip.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxbuttons.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxlistbox.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdropdownlist.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxexpander.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxvalidator.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/demos.js"></script>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.metro.css" media="screen">
     <script type="text/javascript">
         $(document).ready(function () {
-            $.jqx.theme = "metro";
-            // Create jqxExpander.
-            $("#createAccount").jqxExpander({  toggleMode: 'none', width: '350px', showArrow: false });
-            // Create jqxInput.
-            $("#firstName").jqxInput({  width: '300px', height: '20px' });
-            $("#lastName").jqxInput({  width: '300px', height: '20px'});
-            $("#userName").jqxInput({  width: '300px', height: '20px' });
-            // Create jqxPasswordInput.
-            $("#password").jqxPasswordInput({  width: '300px', height: '20px', showStrength: true, showStrengthPosition: "right" });
-            $("#passwordConfirm").jqxPasswordInput({  width: '300px', height: '20px' });
-            // Create jqxDateTimeInpput.
-            $("#birthday").jqxDateTimeInput({  width: '300px', height: '20px' });
-            // Create jqxDropDownList.
-            var genders = ["male", "female"];
-            $("#gender").jqxDropDownList({  source: genders, selectedIndex: -1, width: '300px', height: '20px', promptText: "I am...", dropDownHeight: "50px" });
-            // Create jqxButton.
-            $("#submit").jqxButton({ theme: theme });
-            // Create jqxValidator.
-            $("#form").jqxValidator({
-                rules: [
-                        {
-                            input: "#firstName", message: "First name is required!", action: 'keyup, blur', rule: function (input, commit) {
-                                return input.val() != "" && input.val() != "First";
-                            }
-                        },
-                        {
-                            input: "#lastName", message: "Last name is required!", action: 'keyup, blur', rule: function (input, commit) {
-                                return input.val() != "" && input.val() != "Last";
-                            }
-                        },
-                        { input: "#userName", message: "Username is required!", action: 'keyup, blur', rule: 'required' },
-                        { input: "#password", message: "Password is required!", action: 'keyup, blur', rule: 'required' },
-                        { input: "#passwordConfirm", message: "Password is required!", action: 'keyup, blur', rule: 'required' },
-                        {
-                            input: "#passwordConfirm", message: "Passwords should match!", action: 'keyup, blur', rule: function (input, commit) {
-                                var firstPassword = $("#password").jqxPasswordInput('val');
-                                var secondPassword = $("#passwordConfirm").jqxPasswordInput('val');
-                                return firstPassword == secondPassword;
-                            }
-                        },
-                        {
-                            input: "#gender", message: "Gender is required!", action: 'blur', rule: function (input, commit) {
-                                var index = $("#gender").jqxDropDownList('getSelectedIndex');
-                                return index != -1;
-                            }
-                        }
-                ],  hintType: "label"
+            $("#messageNotification").jqxNotification({
+                width: 250, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
             });
-            // Validate the Form.
-            $("#submit").click(function () {
-                $('#form').jqxValidator('validate');
+
+            $("#timeNotification").jqxNotification({
+                width: 250, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "time"
             });
-            // Update the jqxExpander's content if the validation is successful.
-            $('#form').on('validationSuccess', function (event) {
-                $("#createAccount").jqxExpander('setContent', '<span style="margin: 10px;">Account created.</span>');
+
+            $("#openMessageNotification, #openTimeNotification").jqxButton({ width: 230, height: 30 });
+
+            $("#openMessageNotification").click(function () {
+                $("#messageNotification").jqxNotification("open");
+            });
+
+            $("#openTimeNotification").click(function () {
+                var date = new Date();
+                var minutes = date.getMinutes();
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+                var seconds = date.getSeconds();
+                if (seconds < 10) {
+                    seconds = "0" + seconds;
+                }
+                $("#currentTime").text(date.getHours() + ":" + minutes + ":" + seconds);
+                $("#timeNotification").jqxNotification("open");
             });
         });
     </script>
 </head>
 <body>
-    <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
+    <!--Notifications-->
+    <div id="messageNotification">
         <div>
-            Create a new account
-        </div>
-        <div style="font-family: Verdana; font-size: 13px;">
-            <form id="form" style="overflow: hidden; margin: 10px;" action="./">
-                <table>
-                    <tr>
-                        <td colspan="2">First Name
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input id="firstName" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Last Name
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input id="lastName" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Choose your username
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input id="userName" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Create a password
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input id="password" type="password" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Confirm your password
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input id="passwordConfirm" type="password" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Birthday
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div id="birthday">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Gender
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div id="gender">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input id="submit" type="button" value="Create account" />
-                        </td>
-                    </tr>
-                </table>
-            </form>
+            Welcome to our website.
         </div>
     </div>
+    <div id="timeNotification">
+        <div>Current time: <span id="currentTime" style="font-weight: bold;"></span>.</div>
+    </div>
+    <!--Layout-->
+    <button id="openMessageNotification">
+        Open a message notification</button>
+    <br />
+    <button id="openTimeNotification" style="margin-top: 10px;">
+        Open a current time notification</button>
 </body>
 </html>

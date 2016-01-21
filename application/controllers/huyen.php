@@ -48,6 +48,7 @@ class Huyen extends CI_Controller
             else
             {
                 $this->mhuyen->insert($data);
+                $msg["insert"] = "insert";
             }
             $status = "success";
         }

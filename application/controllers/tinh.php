@@ -46,6 +46,7 @@ class Tinh extends CI_Controller
 			else
 			{
 				$this->mtinh->insert($data);
+				$msg["insert"] = "insert";
 			}
 			$status = "success";
         }

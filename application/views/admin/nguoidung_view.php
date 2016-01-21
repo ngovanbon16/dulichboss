@@ -13,8 +13,38 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxtooltip.js"></script> 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxinput.js"></script> 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/demos.js"></script>
+    
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
     <script type="text/javascript">
         $(document).ready(function () { 
+
+            $.jqx.theme = "bootstrap";
+            var notificationWidth = 300;
+
+            $("#notiSuccess").jqxNotification({
+                width: notificationWidth, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "success"
+            });
+
+            $("#notiError").jqxNotification({
+                width: notificationWidth, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "error"
+            });
+
+            function openSuccess(str)
+            {
+                $("#result").html(str);
+                $("#notiSuccess").jqxNotification("open");
+                $("#notiSuccess").jqxNotification("open");
+            }
+
+            function openError(str)
+            {
+                $("#error").html(str);
+                $("#notiError").jqxNotification("open");
+                $("#notiError").jqxNotification("open");
+            }
 
             $("#button").click(function()
             {
@@ -77,6 +107,7 @@
                             else
                             {
                                 commit(true);
+                                openSuccess("Cập nhật thành công!");
                             }
                         }
                     }, 'json');
@@ -104,11 +135,13 @@
                             //alert(data.status);
                             if(data.status == "error")
                             {
-                                alert("Mã không tồn tại!");
+                                //alert("Mã không tồn tại!");
+                                openError("Mã người dùng không tồn tại!");
                             }
                             else
                             {
                                 commit(true);
+                                openSuccess("Xóa người dùng thành công!");
                             }
                         }
                     }, 'json');  
@@ -284,6 +317,12 @@
     </script>
 </head>
 <body class='default'>
+    <div id="notiSuccess">
+        <div id="result">Thông báo thành công!</div>
+    </div>
+    <div id="notiError">
+        <div id="error">Thông báo lỗi!</div>
+    </div>
     <div id="table"></div>  
     <!-- <button id="button">Kiểm tra gửi dữ liệu</button> -->
       

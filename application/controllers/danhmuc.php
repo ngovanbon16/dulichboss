@@ -46,6 +46,7 @@ class Danhmuc extends CI_Controller
 			else
 			{
 				$this->mdanhmuc->insert($data);
+				$msg["insert"] = "insert";
 			}
 			$status = "success";
         }

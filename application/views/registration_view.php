@@ -20,9 +20,37 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/demos.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxloader.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
+    
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
+            var notificationWidth = 300;
+
+            $("#notiSuccess").jqxNotification({
+                width: notificationWidth, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 5000, template: "success"
+            });
+
+            $("#notiError").jqxNotification({
+                width: notificationWidth, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "error"
+            });
+
+            function openSuccess(str)
+            {
+                $("#result").html(str);
+                $("#notiSuccess").jqxNotification("open");
+                //$("#notiSuccess").jqxNotification("open");
+            }
+
+            function openError(str)
+            {
+                $("#error").html(str);
+                $("#notiError").jqxNotification("open");
+                //$("#notiError").jqxNotification("open");
+            }
             // Create jqxExpander.
             $("#createAccount").jqxExpander({  toggleMode: 'none', width: '350px', showArrow: false });
             // Create jqxInput.
@@ -100,13 +128,15 @@
                     {  
                         if(data.status == "error")
                         {
-                            alert(data.msg["email"]);
+                            //alert(data.msg["email"]);
+                            openError(data.msg["email"]);
                         }
                         else
                         {
-                            alert("Đăng ký thành công! \n" + data.msg["email"]);
+                            //alert("Đăng ký thành công! \n" + data.msg["email"]);
+                            openSuccess(data.msg["email"]);
                             //setTimeout("location.href = '<?php echo site_url('login'); ?>';",500);
-                            setTimeout("location.href = 'https://mail.google.com/';",500);
+                            setTimeout("location.href = 'https://mail.google.com/';",3000);
                         }
                     }
                     $("#submit").show();
@@ -169,13 +199,26 @@
         }
         #submit{
             background-color: #FFF;
+            transition: font-weight 1s;
+            -o-transition: font-weight 1s;
+            -ms-transition: font-weight 1s;
+            -moz-transition: font-weight 1s;
+            -webkit-transition: font-weight 1s;
         }
         #submit:hover{
-            background-color: #CCC;
+            background-color: #09F;
+            font-weight: bold;
         }
     </style>
 </head>
-<body><center>
+<body>
+    <div id="notiSuccess">
+        <div id="result">Thông báo thành công!</div>
+    </div>
+    <div id="notiError">
+        <div id="error">Thông báo lỗi!</div>
+    </div>
+    <center>
     <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
         <div id="tieude">
             <div class="div1">Tạo tài khoản</div>

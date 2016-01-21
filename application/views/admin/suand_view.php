@@ -21,8 +21,37 @@
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdata.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
+    
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
+            $.jqx.theme = "bootstrap";
+            var notificationWidth = 300;
+
+            $("#notiSuccess").jqxNotification({
+                width: notificationWidth, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "success"
+            });
+
+            $("#notiError").jqxNotification({
+                width: notificationWidth, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "error"
+            });
+
+            function openSuccess(str)
+            {
+                $("#result").html(str);
+                $("#notiSuccess").jqxNotification("open");
+                //$("#notiSuccess").jqxNotification("open");
+            }
+
+            function openError(str)
+            {
+                $("#error").html(str);
+                $("#notiError").jqxNotification("open");
+                //$("#notiError").jqxNotification("open");
+            }
             // Create jqxExpander.
             $("#createAccount").jqxExpander({  toggleMode: 'none', width: '500px', showArrow: false });
             // Create jqxInput.
@@ -126,8 +155,9 @@
                         }
                         else
                         {
-                            alert("Sửa thành công");
-                            setTimeout("location.href = '<?php echo site_url('home'); ?>';",500);
+                            //alert("Sửa thành công");
+                            openSuccess("Sửa thành công!");
+                            setTimeout("location.href = '<?php echo site_url('home'); ?>';",1000);
                         }
                     }
                 }, 'json');
@@ -325,35 +355,77 @@
     </script>
 
     <style type="text/css">
-        #ND_HO{
+        .tieude{
+            color: #111;
             text-transform: capitalize;
+            font-size: 14px;
+            font-weight: bold;
+            background-color: #09F;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            padding: 5px;
+            text-shadow: 5px 5px 10px #FFF;
+            border-radius: 5px;
+            box-shadow: 1px 1px 3px #09F;
+            opacity: 0.7;
+            transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
+            -o-transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
+            -ms-transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
+            -moz-transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
+            -webkit-transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
         }
-        #ND_TEN{
-            text-transform: capitalize;
-        }
-        #ND_DIACHI{
-            text-transform: capitalize;
+        .tieude:hover{
+            box-shadow: 5px 5px 10px #09F;
+            opacity: 1;
         }
         .batbuoc{
             color: #F00;
         }
-        .tieude{
-            color: #111;
-            text-align: center;
-            text-transform: capitalize;
-            font-size: 18px;
-            background-color: #eee;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            padding: 5px;
+        a{
+            text-decoration: none;
+            color: #06F;
+        }
+        a:hover{
+            color: #00C;
+            
+        }
+        .div1{
+            float: left;
+        }
+        .div2{
+            float: left;
+            padding-left: 150px;
+        }
+        #submit{
+            background-color: #FFF;
+            transition: font-weight 1s;
+            -o-transition: font-weight 1s;
+            -ms-transition: font-weight 1s;
+            -moz-transition: font-weight 1s;
+            -webkit-transition: font-weight 1s;
+        }
+        #submit:hover{
+            background-color: #09F;
+            font-weight: bold;
         }
     </style>
 
 </head>
-<body><center>
+<body>
+     <div id="notiSuccess">
+        <div id="result">Thông báo thành công!</div>
+    </div>
+    <div id="notiError">
+        <div id="error">Thông báo lỗi!</div>
+    </div>
+    <center>
     <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
         <div>
-            Chỉnh sửa thông tin người dùng
+            <div class="div1">Chỉnh sửa thông tin người dùng</div>
+            <div class="div2">
+                <a href="<?php echo base_url(); ?>index.php/home">Trang chủ</a> |  
+                <a href="<?php echo base_url(); ?>index.php/login">Đăng nhập</a>
+            </div>
         </div>
         <div style="font-family: Verdana; font-size: 13px;">
             <form id="form" style="overflow: hidden; margin: 10px;" action="./">

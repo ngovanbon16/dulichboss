@@ -46,6 +46,7 @@ class Nhomquyen extends CI_Controller
 			else
 			{
 				$this->mnhomquyen->insert($data);
+				$msg["insert"] = "insert";
 			}
 			$status = "success";
         }
