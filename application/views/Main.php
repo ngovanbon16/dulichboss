@@ -127,9 +127,20 @@
                             <?php
                                 if($this->session->userdata("email") != "")
                                 {
-                                    ?>
+                                    $ten = $this->session->userdata('avata');
+                                    $file_path = "uploads/user/".$ten;
+                                    if(file_exists($file_path))
+                                    {  
+                                    ?>  
                                         <img id="avata" src="<?php echo base_url(); ?>uploads/user/<?php echo $this->session->userdata['avata']; ?>" height="18" width="18">
                                     <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                            <i class="fa fa-user fa-fw"></i>
+                                        <?php
+                                    }
                                 }
                                 else
                                 {
@@ -206,6 +217,9 @@
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/danhmuc"> Danh mục</a>
                                     </li>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>index.php/danhmuchinh"> Hình của danh mục</a>
+                                    </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
@@ -225,6 +239,9 @@
                                         <a href="<?php echo base_url(); ?>index.php/diadiem"> Địa điểm</a>
                                     </li>
                                     <li>
+                                        <a href="<?php echo base_url(); ?>index.php/diadiemhinh"> Địa điểm hình ảnh</a>
+                                    </li>
+                                    <li>
                                         <a href="<?php echo base_url(); ?>index.php/mua"> Mùa</a>
                                     </li>
                                 </ul>
@@ -234,7 +251,7 @@
                                 <a href="#"><i class="fa fa-camera-retro"></i> Đa phương tiện<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#"> Nhóm hình ảnh Y</a>
+                                        <a href="<?php echo base_url(); ?>index.php/loaihinhanh"> Nhóm hình ảnh</a>
                                     </li>
                                     <li>
                                         <a href="#"> Hình ảnh Y</a>

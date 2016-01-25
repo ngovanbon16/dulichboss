@@ -29,7 +29,10 @@ $upload=array(
 
     <div class="div1">
         <?php
-            if($this->session->userdata("email") != "")
+            $ten = $this->session->userdata('avata');
+            $file_path = "uploads/user/".$ten;
+
+            if(file_exists($file_path))
             {
                 ?>
                     <img id="avata" src="<?php echo base_url(); ?>uploads/user/<?php echo $this->session->userdata['avata']; ?>" height="" width="">
@@ -44,22 +47,22 @@ $upload=array(
         ?>
     </div>
     <div class="div1">
-         <?php
+            <?php
             //echo $this->session->userdata("id");
+            echo form_open_multipart(base_url()."index.php/avata/doupload");
+            echo form_label("Avartar: ").form_upload($upload)."<br />";
+            echo form_label(" ").form_submit("ok", "Tải lên");
+            echo form_close();
             if($errors != ""){
                 if($errors == "success")
                 {
-                    echo "Thành công!";
+                    echo "<h3>Thay đổi ảnh đại diện thành công!</h3>";
                 }
                 else
                 {
                     echo print_r($errors);
                 }
             }
-            echo form_open_multipart(base_url()."index.php/avata/doupload");
-            echo form_label("Avartar: ").form_upload($upload)."<br />";
-            echo form_label(" ").form_submit("ok", "Tải lên");
-            echo form_close();
         ?>
     </div>
                                

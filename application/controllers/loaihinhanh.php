@@ -3,55 +3,49 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Danhmuc extends CI_Controller
+class Loaihinhanh extends CI_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("mdanhmuc");
+		$this->load->model("mloaihinhanh");
 	}
 
 	public function index()
 	{
-		$this->_data['subview'] = 'admin/danhmuc_view';
-       	$this->_data['title'] = 'Danh mục địa điểm';
-       	$this->_data['info'] = $this->mdanhmuc->getList();
+		$this->_data['subview'] = 'admin/loaihinhanh_view';
+       	$this->_data['title'] = 'Loại hình ảnh';
+       	$this->_data['info'] = $this->mloaihinhanh->getList();
        	$this->load->view('main.php', $this->_data);
 	}
 
 	public function add()
 	{
-		$ma = $_POST["DM_MA"];
-		$ten = $_POST['DM_TEN'];
-		$hinh = $_POST['DM_HINH'];
-		if($hinh == "")
-		{
-			$hinh = "0.png";
-		}
+		$ma = $_POST["LHA_MA"];
+		$ten = $_POST['LHA_TEN'];
 
 		$msg = array();
 
 		$data = array(
-            "DM_MA" => $ma,
-       		"DM_TEN" => $ten,
-       		"DM_HINH" => $hinh
+            "LHA_MA" => $ma,
+       		"LHA_TEN" => $ten,
         );
 
 		$status = "error";
 
-        if($this->mdanhmuc->testTen($ten))
+        if($this->mloaihinhanh->testTen($ten))
         {
-        	$msg["DM_TEN"] = "Trùng tên";
+        	$msg["LHA_TEN"] = "Trùng tên";
         }
         else
         {
-        	if($this->mdanhmuc->testMa($ma))
+        	if($this->mloaihinhanh->testMa($ma))
 			{
-				$this->mdanhmuc->update($ma, $data);
+				$this->mloaihinhanh->update($ma, $data);
 			}
 			else
 			{
-				$this->mdanhmuc->insert($data);
+				$this->mloaihinhanh->insert($data);
 				$msg["insert"] = "insert";
 			}
 			$status = "success";
@@ -64,7 +58,7 @@ class Danhmuc extends CI_Controller
 
 	public function data()
 	{
-		$data = $this->mdanhmuc->getList();
+		$data = $this->mloaihinhanh->getList();
 
 		$jsonString = json_encode($data);
 		echo $jsonString;
@@ -75,7 +69,7 @@ class Danhmuc extends CI_Controller
 		$ma = $_POST["ma"];
 		$msg = array();
 
-		if(!($this->mdanhmuc->testMa($ma)))
+		if(!($this->mloaihinhanh->testMa($ma)))
 		{
 			$msg["ma"] = "Mã không tồn tại";
 		}
@@ -85,7 +79,7 @@ class Danhmuc extends CI_Controller
 		if(count($msg) == 0)
 		{
 			$status = "success";
-            $this->mdanhmuc->delete($ma);
+            $this->mloaihinhanh->delete($ma);
 		}
 
 		$response = array('status' => $status,'msg' => $msg,'dta' => $data);

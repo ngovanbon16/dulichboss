@@ -12,7 +12,7 @@ class Uploads extends CI_controller
          //Khai bao bien cau hinh upload
          $config = array();
          //thuc mục chứa file
-         $config['upload_path']   = './uploads/diadiem/';
+         $config['upload_path']   = './uploads/danhmuc/';
          //Định dạng file được phép tải
          $config['allowed_types'] = 'jpg|png|gif';
          //Dung lượng tối đa
@@ -27,6 +27,7 @@ class Uploads extends CI_controller
          
         //lưu biến môi trường khi thực hiện upload
         $file  = $_FILES['image_list'];
+        $ma = $_POST['ma'];
         $count = count($file['name']);//lấy tổng số file được upload
         for($i=0; $i<=$count-1; $i++) {
             echo $i;
@@ -37,6 +38,7 @@ class Uploads extends CI_controller
               $_FILES['userfile']['error']    = $file['error'][$i]; //khai báo lỗi của file thứ i
               $_FILES['userfile']['size']     = $file['size'][$i]; //khai báo kích cỡ của file thứ i
               //load thư viện upload và cấu hình
+              $config['file_name']=$ma;
               $this->load->library('upload', $config);
               //thực hiện upload từng file
               if($this->upload->do_upload())
@@ -44,9 +46,30 @@ class Uploads extends CI_controller
                   //nếu upload thành công thì lưu toàn bộ dữ liệu
                   $data = $this->upload->data();
                   //in cấu trúc dữ liệu của các file
-                 echo "<pre>";
-                 print_r($data);
-                 echo "</pre>";
+                  $ten = $data['file_name'];
+                  $this->load->model("mdanhmuc");
+                  $data = array(
+                      "DM_MA" => $ma,
+                      "DM_HINH" => $ten
+                  );
+                  $this->mdanhmuc->update($ma, $data);
+                  echo $ma;
+                  echo "<br><pre>";
+                  print_r($data);
+                  echo "</pre>";
+
+                    $this->load->library("image_lib");
+                    $config['image_library'] = 'gd2';
+                    $config['source_image'] = './uploads/danhmuc/'.$ten;
+                    $config['create_thumb'] = FALSE;
+                    $config['maintain_ratio'] = TRUE;
+                    $config['width']     = 38;
+                    $config['height']   = 38;
+                    $this->image_lib->initialize($config);
+                    $this->image_lib->resize();
+                    $this->image_lib->clear();
+                    unset($config);
+
               }
               else{
                   $this->_data['errors'] = $this->upload->display_errors();

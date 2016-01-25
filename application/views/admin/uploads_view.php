@@ -6,6 +6,7 @@
    <body>
        <h1>Tải ảnh lên</h1>
        <form method="post" action="" enctype="multipart/form-data">
+                <input type="text" id="ma" name="ma" />
                 <label>Ảnh kèm theo:</label><input type="file"  id="image_list" name="image_list[]" multiple>
                 <br />
                 <input type="submit" class="button" value="Upload" name='submit' />

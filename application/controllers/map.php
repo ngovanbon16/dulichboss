@@ -130,11 +130,12 @@ class Map extends CI_Controller {
 		$query = $this->mdiadiem->getList();
 		foreach ($query as $item) {
 			$local = $item['DD_VITRI'];
+			$danhmuc = $item['DM_MA'];
 			$marker = array();
 			$marker['position'] = $local;
 			$marker['infowindow_content'] = $item['DD_TEN'];
 			//$marker['onclick'] = 'alert("You just clicked me!!")';
-			$marker['icon'] = base_url().'/assets/images/local.png';
+			$marker['icon'] = base_url().'/uploads/danhmuc/'.$danhmuc.'.png';
 			$this->googlemaps->add_marker($marker);
 		}
 

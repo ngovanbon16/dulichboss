@@ -112,7 +112,7 @@
                                     <div class="form-group">
                                         <input class="form-control" placeholder="Password" name="password" id="password" type="password" value="">
                                     </div>
-                                    <button type="button" id="button" class="btn btn-lg btn-success btn-block">Đăng nhập</button>
+                                    <button type="button" id="button" class="btn btn-outline btn-success btn-lg btn-block">Đăng nhập</button>
                                 </fieldset>
                             </form>
                         </div>

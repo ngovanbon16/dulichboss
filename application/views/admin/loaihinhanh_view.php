@@ -16,7 +16,7 @@
     
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
-
+    
     <script type="text/javascript">
         $(document).ready(function () { 
 
@@ -51,7 +51,7 @@
             {
                 var url, dta;
                 //url="<?php echo base_url(); ?>index.php/tinh/add?t=" + Math.random();
-                url = "<?php echo base_url(); ?>index.php/danhmuc/data";
+                url = "<?php echo base_url(); ?>index.php/loaihinhanh/data";
                 dta = {
                   "ma" : $("#frmbox :text[name='ma']").val(),
                   "ten" : $("#frmbox :text[name='ten']").val()
@@ -65,16 +65,15 @@
                 }, 'json');
             });
 
-            var orderdetailsurl = "<?php echo base_url(); ?>index.php/danhmuc/data";
+            var orderdetailsurl = "<?php echo base_url(); ?>index.php/loaihinhanh/data";
             var ordersSource =
             {
                 dataFields: [
-                    { name: 'DM_MA', type: 'int' },
-                    { name: 'DM_TEN', type: 'string' },
-                    { name: 'DM_HINH', type: 'string' }
+                    { name: 'LHA_MA', type: 'int' },
+                    { name: 'LHA_TEN', type: 'string' }
                 ],
                 dataType: "json",
-                id: 'DM_MA',
+                id: 'LHA_MA',
                 url: orderdetailsurl,
                 addRow: function (rowID, rowData, position, commit) {
                     //alert("ID: " + rowID + " | rowData: " + rowData);
@@ -87,7 +86,7 @@
                 },
                 updateRow: function (rowID, rowData, commit) {
 
-                    url = "<?php echo base_url(); ?>index.php/danhmuc/add";
+                    url = "<?php echo base_url(); ?>index.php/loaihinhanh/add";
                     console.log(rowData);
 
                     $.post(url, rowData, function(data, status){
@@ -125,7 +124,7 @@
                     // and with parameter false if the synchronization failed.
                     //alert(rowID);
                     var dta, url, test;
-                    url = "<?php echo base_url(); ?>index.php/danhmuc/delete";
+                    url = "<?php echo base_url(); ?>index.php/loaihinhanh/delete";
                     dta = {
                         "ma" : rowID
                     };
@@ -145,7 +144,7 @@
                             else
                             {
                                 commit(true);
-                                openSuccess("Xóa thành công!");
+                                openSuccess("Xóa thành công");
                             }
                         }
                     }, 'json');  
@@ -299,9 +298,8 @@
                     });
                 },
                 columns: [
-                    { text: 'Mã', dataField: 'DM_MA', width: "20%" },
-                    { text: 'Tên', dataField: 'DM_TEN', width: "50%" },
-                    { text: 'Hình', dataField: 'DM_HINH', width: "30%" },
+                    { text: 'Mã', dataField: 'LHA_MA', width: "20%" },
+                    { text: 'Tên', dataField: 'LHA_TEN', width: "80%" }
                 ]
             });
         });
@@ -315,7 +313,7 @@
         <div id="error">Thông báo lỗi!</div>
     </div>
     <div id="table"></div>
-      
+
       <!-- <button id="button">Nhấp vào</button> -->
 </body>
 </html>

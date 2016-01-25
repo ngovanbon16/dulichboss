@@ -6,6 +6,24 @@ class Mdiadiem extends CI_Model {
             parent::__construct();
         }
 
+    public function show()
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('danhmuc', 'danhmuc.DM_MA = diadiem.DM_MA');
+        $this->db->join('nguoidung', 'nguoidung.ND_MA = diadiem.ND_MA');
+        $this->db->order_by("DD_NGAYDANG", "desc");
+        $query = $this -> db -> get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public function getList()
     {
         $this->db->select('*');

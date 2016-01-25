@@ -179,7 +179,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#DM_MA").jqxDropDownList({ selectedIndex: "<?php echo $indexdanhmuc; ?>", source: dataAdapter, placeHolder: "Chọn loại:", displayMember: "DM_TEN", valueMember: "DM_MA", width: 250, height: 25, dropDownHeight: "150px" });
+                $("#DM_MA").jqxDropDownList({ selectedIndex: <?php echo $indexdanhmuc; ?>, source: dataAdapter, placeHolder: "Chọn loại:", displayMember: "DM_TEN", valueMember: "DM_MA", width: 250, height: 25 });
 
                 var url = "<?php echo base_url(); ?>index.php/tinh/data";
                 // prepare the data
