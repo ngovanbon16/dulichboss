@@ -47,6 +47,13 @@ class Tinh extends CI_Controller
 			{
 				$this->mtinh->insert($data);
 				$msg["insert"] = "insert";
+				/*for($i = 0; $i < 100; $i++)
+	            {
+	            	$data_insert = array(
+	               		"T_TEN" => "Tỉnh số ".$i,
+		            );
+		            $this->mtinh->insert($data_insert);
+	            }*/
 			}
 			$status = "success";
         }
@@ -108,6 +115,22 @@ class Tinh extends CI_Controller
 		$data = $this->mtinh->getList();
 
 		$jsonString = json_encode($data);
+		echo $jsonString;
+	}
+
+	public function data1($size, $star)
+	{
+		$data = $this->mtinh->getList1($size, $star);
+
+		$jsonString = json_encode($data);
+		echo $jsonString;
+	}
+
+	public function countAll()
+	{
+		$total = $this->mtinh->countAll();
+		$response = array('total' => $total);
+		$jsonString = json_encode($response);
 		echo $jsonString;
 	}
 
