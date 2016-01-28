@@ -317,7 +317,6 @@
                     // Create a jqxInput
                     $("#X_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "Chọn Xã:", displayMember: "X_TEN", valueMember: "X_MA", width: 250, height: 25, dropDownHeight: "150px" });
                 });
-
             });
     </script>
 
@@ -349,8 +348,8 @@
                 var jqxWidget = $('#jqxWidget');
                 var offset = jqxWidget.offset();
                 $('#window').jqxWindow({
-                    position: { x: offset.left + -250, y: offset.top + -450} ,
-                    showCollapseButton: true, maxHeight: 1000, maxWidth: 1000, minHeight: 550, minWidth: 750, height: 550, width: 750,
+                    position: { x: offset.left + -200, y: offset.top + -480} ,
+                    showCollapseButton: true, maxHeight: 528, maxWidth: 800, minHeight: 528, minWidth: 800, height: 528, width: 800,
                     initContent: function () {
                         $('#window').jqxWindow('focus');
                     }
@@ -359,8 +358,9 @@
                 $('#window').jqxWindow('draggable', true);
                 $("#showWindowButton").jqxButton({ template: "success" , height: 30, width: 90 });
                 $("#hideWindowButton").jqxButton({ template: "success" , height: 30, width: 90 });
-                $("#lat").jqxInput({placeHolder: "Vĩ độ - Latitude", height: 25, width: 160 });
-                $("#lng").jqxInput({placeHolder: "Kinh độ - Longitude", height: 25, width: 160 });
+                $("#lat").jqxInput({placeHolder: "Vĩ độ - Latitude", height: 25, width: 150 });
+                $("#lng").jqxInput({placeHolder: "Kinh độ - Longitude", height: 25, width: 150 });
+                $("#myPlaceTextBox").jqxInput({placeHolder: "Nhập tên vị trí bạn muốn chọn", height: 30, width: 300 });
             };
             return {
                 config: {
@@ -562,10 +562,11 @@
                                 <div style="float: left;">
                                     <div>
                                         <input type="button" value="Mở bản đồ" id="showWindowButton" />
-                                        
+
                                     </div>
                                 </div>
                                 <div>
+                                    
                                     <div id="window">
                                         <div id="windowHeader">
                                             <span>
@@ -575,6 +576,7 @@
                                         <div style="overflow: hidden;" id="windowContent">
                                             
                                             <?php echo $map['html']; ?>
+                                            <input type="text" id="myPlaceTextBox" />
                                             Lat: <input type="text" id="lat" value="" readonly="readonly" >
                                             Lng: <input type="text" id="lng" value="" readonly="readonly" >
                                             <input type="button" value="Đóng bản đồ" id="hideWindowButton" style="margin-left: 5px" />

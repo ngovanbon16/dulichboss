@@ -296,6 +296,7 @@
                         { text: 'Ngày đăng', dataField: 'DD_NGAYDANG', width: "11%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'd', cellsalign: 'right' },
                         { text: 'Sửa', datafield: 'Edit', columntype: 'button', width: "10%", cellsrenderer: function () {
                                 return "Sửa";
+                                /*<img src='<?php echo base_url(); ?>assets/images/edit.png'>*/
                               }, buttonclick: function (row) {
                                 // open the popup window when the user clicks a button.
                                 //editrow = row;

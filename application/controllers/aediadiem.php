@@ -16,7 +16,7 @@ class Aediadiem extends CI_Controller
 		if($local == "")
 		{
 			$local = '10.021555, 105.764830';
-			$center = "auto";
+			$center = "can tho";
 		}
 		else
 		{
@@ -29,7 +29,7 @@ class Aediadiem extends CI_Controller
 		$config = array();
 		$config['center'] = $center;
 		//$config['onclick'] = 'alert(\'You just clicked at: \' + event.latLng.lat() + \', \' + event.latLng.lng());';
-		$config['onboundschanged'] = 'if (!centreGot) {
+		/*$config['onboundschanged'] = 'if (!centreGot) {
 			var mapCentre = map.getCenter();
 			marker_0.setOptions({
 				position: new google.maps.LatLng(mapCentre.lat(), mapCentre.lng()) 
@@ -41,7 +41,22 @@ class Aediadiem extends CI_Controller
 		// set up the marker ready for positioning 
 		// once we know the users location
 		$marker = array();
-		$this->googlemaps->add_marker($marker);
+		$this->googlemaps->add_marker($marker);*/
+
+		$config['zoom'] = 'auto';
+		$config['places'] = TRUE;
+		$config['placesAutocompleteInputID'] = 'myPlaceTextBox';
+		$config['placesAutocompleteBoundsMap'] = TRUE; // set results biased towards the maps viewport
+		$config['placesAutocompleteOnChange'] = "
+
+			var place = placesAutocomplete.getPlace();
+			map.setCenter(place.geometry.location);
+		    map.setZoom(15);
+		    markers_map[0].setPosition(place.geometry.location);
+		    markers_map[0].setVisible(true);
+
+		";
+		$this->googlemaps->initialize($config);
 
 		$marker = array();
 		$marker['position'] = $local;
