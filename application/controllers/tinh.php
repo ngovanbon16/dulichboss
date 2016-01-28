@@ -144,12 +144,19 @@ class Tinh extends CI_Controller
 			$msg["ma"] = "Mã không tồn tại";
 		}
 
+		if($this->mtinh->testhuyen($ma))
+        {
+           	$msg["ma"] = "Lỗi khóa ngoại";
+        }
+
 		$status = "error";
 		$data = "";
 		if(count($msg) == 0)
 		{
 			$status = "success";
+            //$this->mtinh->delete($ma);
             $this->mtinh->delete($ma);
+            $msg["ma"] = "Thành công";
 		}
 
 		$response = array('status' => $status,'msg' => $msg,'dta' => $data);

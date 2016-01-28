@@ -71,6 +71,14 @@ class Huyen extends CI_Controller
         echo $jsonString;
     }
 
+    public function data1()
+    {
+        $data = $this->mhuyen->getList();
+
+        $jsonString = json_encode($data);
+        echo $jsonString;
+    }
+
     public function delete()
     {
         $matinh = $_POST["T_MA"];

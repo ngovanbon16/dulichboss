@@ -63,22 +63,5 @@ class Mhinhanh extends CI_Model {
         $this->db->where("HA_MA", $id);
         $this->db->update($this->_table, $data_update);
     }
-
-    function testTen($ten) 
-    {
-        $this -> db -> select('HA_TEN');
-        $this -> db -> from($this->_table);
-        $this -> db -> where('HA_TEN', $matinh);
-        $this -> db -> limit(1);
-        $query = $this -> db -> get();           
-        if($query -> num_rows() == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    } 
            
 }

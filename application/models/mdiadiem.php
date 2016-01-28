@@ -40,6 +40,29 @@ class Mdiadiem extends CI_Model {
         }
     }
 
+    public function getList1($size, $star)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join("danhmuc", "danhmuc.DM_MA=diadiem.DM_MA");
+        $this->db->order_by("diadiem.DD_NGAYCAPNHAT", "desc");
+        $this->db->order_by("diadiem.DD_NGAYDANG", "desc");
+        $this->db->limit($size, $star);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function countAll(){
+        return $this->db->count_all($this->_table); 
+    }
+
     public function getID($id)
     {
         $this->db->select('*');
@@ -153,6 +176,23 @@ class Mdiadiem extends CI_Model {
         //$this -> db -> limit(1);
         $query = $this -> db -> get();           
         if($query -> num_rows() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function diadiemhinhanh($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('hinhanh', 'hinhanh.DD_MA = diadiem.DD_MA');
+        $this->db->where("diadiem.DD_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
         {
             return true;
         }

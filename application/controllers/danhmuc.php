@@ -77,15 +77,31 @@ class Danhmuc extends CI_Controller
 
 		if(!($this->mdanhmuc->testMa($ma)))
 		{
-			$msg["ma"] = "Mã không tồn tại";
+			$msg["ma"] = "Mã không tồn tại!";
+		}
+
+		if($this->mdanhmuc->danhmucdiadiem($ma))
+		{
+			$msg["ma"] = "Lỗi khóa ngoại!";
 		}
 
 		$status = "error";
 		$data = "";
 		if(count($msg) == 0)
 		{
-			$status = "success";
+			$query = $this->mdanhmuc->getId($ma);
+			$ten = $query['DM_HINH'];
+			//$status = print_r($query);
+			if($ten != "0.png")
+			{
+	            $file_path = "uploads/danhmuc/".$ten;
+	            if (file_exists($file_path)) 
+	            {
+	                   unlink("uploads/danhmuc/".$ten);
+	            } 
+        	}
             $this->mdanhmuc->delete($ma);
+            $status = "success";
 		}
 
 		$response = array('status' => $status,'msg' => $msg,'dta' => $data);

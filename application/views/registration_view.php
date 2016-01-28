@@ -57,6 +57,7 @@
             $("#firstName").jqxInput({  width: '300px', height: '25px' });
             $("#lastName").jqxInput({  width: '300px', height: '25px'});
             $("#userName").jqxInput({  width: '300px', height: '25px' });
+            $("#userName").jqxTooltip({ content: 'Email phải có dạng: <b><i>ex@gmail.com</i></b>', position: 'mouse', name: 'movieTooltip'});
             // Create jqxPasswordInput.
             $("#password").jqxPasswordInput({  width: '300px', height: '25px', showStrength: true, showStrengthPosition: "right" });
             $("#passwordConfirm").jqxPasswordInput({  width: '300px', height: '25px' });
@@ -81,7 +82,16 @@
                             }
                         },
                         { input: "#userName", message: "Địa chỉ Email không được rỗng!", action: 'keyup, blur', rule: 'required' },
+                        { input: "#userName", message: "Email không đúng định dạng!", action: 'keyup, blur', rule: function (input, commit) {
+                                var mau = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+                                return mau.test(input.val());
+                            }
+                        },
                         { input: "#password", message: "Password không được rỗng!", action: 'keyup, blur', rule: 'required' },
+                        { input: "#password", message: "Password phải dài hơn 6 ký tự!", action: 'keyup, blur', rule: function (input, commit) {
+                                return input.val().length > 5;
+                            }
+                        },
                         { input: "#passwordConfirm", message: "Password không được rỗng!", action: 'keyup, blur', rule: 'required' },
                         {
                             input: "#passwordConfirm", message: "Passwords không khớp!", action: 'keyup, blur', rule: function (input, commit) {

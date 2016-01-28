@@ -22,6 +22,23 @@ class Mdanhmuc extends CI_Model {
         }
     }
 
+    function getId($ma) 
+    {
+        $this ->db->select('*');
+        $this ->db->from($this->_table);
+        $this ->db->where('DM_MA', $ma);
+        $this ->db->limit(1);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return $query->row_array(); //row_array() moi co the lay du lieu truc tiep duoc
+        }
+    }
+
     public function insert($data_insert){
         $this->db->insert($this->_table,$data_insert);
     }
@@ -62,6 +79,23 @@ class Mdanhmuc extends CI_Model {
         $this -> db -> limit(1);
         $query = $this -> db -> get();           
         if($query -> num_rows() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function danhmucdiadiem($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('diadiem', 'diadiem.DM_MA = danhmuc.DM_MA');
+        $this->db->where("diadiem.DM_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
         {
             return true;
         }

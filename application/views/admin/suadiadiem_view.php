@@ -65,14 +65,19 @@
             $("#DD_TEN").jqxInput({  width: '400px', height: '25px' });
             $("#DD_DIACHI").jqxInput({  width: '400px', height: '25px'});
             $("#DD_SDT").jqxInput({  width: '400px', height: '25px' });
+            $("#DD_SDT").jqxTooltip({ content: 'Số điện thoại phải có dạng: <b><i>071... | 097...</i></b>', position: 'mouse', name: 'movieTooltip'});
             $("#DD_EMAIL").jqxInput({  width: '400px', height: '25px' });
+            $("#DD_EMAIL").jqxTooltip({ content: 'Email phải có dạng: <b><i>ex@gmail.com</i></b>', position: 'mouse', name: 'movieTooltip'});
             $("#DD_WEBSITE").jqxInput({  width: '400px', height: '25px' });
+            $("#DD_WEBSITE").jqxTooltip({ content: 'URL phải có dạng: <b><i>ex.com</i></b>', position: 'mouse', name: 'movieTooltip'});
             $("#DD_MOTA").jqxInput({  width: '400px', height: '50px' });
             $("#DD_VITRI").jqxInput({  width: '400px', height: '25px' });
+            $("#DD_VITRI").jqxTooltip({ content: '<b><i>Mở bản đồ và di chuyển đến đúng vị trí!</i></b>', position: 'mouse', name: 'movieTooltip'});
+
 
             $("#DD_GIOITHIEU").jqxInput({  width: '400px', height: '50px' });
-            $("#DD_BATDAU").jqxDateTimeInput({ formatString: 'yyyy-MM-dd',  width: '250px', height: '25px' });
-            $("#DD_KETTHUC").jqxDateTimeInput({ formatString: 'yyyy-MM-dd',  width: '250px', height: '25px' });
+            $("#DD_BATDAU").jqxDateTimeInput({ formatString: 'yyyy-MM-dd hh:mm:ss',  width: '250px', height: '25px' });
+            $("#DD_KETTHUC").jqxDateTimeInput({ formatString: 'yyyy-MM-dd hh:mm:ss',  width: '250px', height: '25px' });
             $("#DD_GIATU").jqxFormattedInput({ width: 250, height: 25, radix: "decimal", value: "<?php echo $info['DD_GIATU']; ?>", min: "0", max: "10000000", spinButtons: true });
              $("#DD_GIADEN").jqxFormattedInput({ width: 250, height: 25, radix: "decimal", value: "<?php echo $info['DD_GIADEN']; ?>", min: "0", max: "10000000", spinButtons: true });
             $("#DD_NOIDUNG").jqxInput({  width: '400px', height: '50px' });
@@ -82,13 +87,86 @@
             $("#form").jqxValidator({
                 rules: [
                         {
-                            input: "#DD_TEN", message: "Tên địa điểm không được rỗng!", action: 'keyup, blur', rule: 'required'
+                            input: "#DD_VITRI", message: "Vui lòng chọn vị trí!", action: 'keyup, blur', rule: 'required'
                         },
                         {
-                            input: "#DD_EMAIL", message: "Địa chỉ email không đúng! EX: e@gmail.com", action: 'keyup, blur', rule: 'email'
+                            input: "#DD_TEN", message: "Tên địa điểm không được rỗng!", action: 'keyup, blur, change', rule: 'required'
                         },
                         {
-                            input: "#DD_SDT", message: "Số điện thoại không đúng! EX: 090...", action: 'keyup, blur', rule: 'number'
+                            input: "#DD_SDT", message: "SĐT không đúng định dạng! EX: 071... | 098...", action: 'keyup, blur', rule: function (input, commit) {
+                                var mau = /^(01\d{9}|09\d{8})$/;
+                                var mau1 = /^(0\d{9}|0\d{10})$/;
+                                var chuoi = input.val();
+                                if(chuoi != "")
+                                {
+                                    if(mau.test(input.val()) || mau1.test(input.val()))
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                                //return mau.test(input.val());
+                            }
+                        },
+                        {
+                            input: "#DD_EMAIL", message: "Email không đúng định dạng! EX: e@gmail.com", action: 'keyup, blur', rule: function (input, commit) {
+                                var mau = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+                                var chuoi = input.val();
+                                if(chuoi != "")
+                                    return mau.test(input.val());
+                                else
+                                    return true;
+                            }
+                        },
+                        {
+                            input: "#DD_WEBSITE", message: "Website không đúng định dạng! EX: ex.com", action: 'keyup, blur', rule: function (input, commit) {
+                                var mau = /(\S+\.[^/\s]+(\/\S+|\/|))/g;
+                                var chuoi = input.val();
+                                if(chuoi != "")
+                                    return mau.test(input.val());
+                                else
+                                    return true;
+                            }
+                        },
+                        {
+                            input: "#DM_MA", message: "Vui lòng chọn danh mục!", action: 'keyup, blur, click, change', rule: function (input, commit) {
+                             
+                                var chuoi = input.val();
+                                //alert(chuoi);
+                                if(chuoi != "")
+                                    return true;
+                                else
+                                    return false;
+                            }
+                        },
+                        {
+                            input: "#T_MA", message: "Vui lòng chọn tỉnh!", action: 'keyup, blur, click, change', rule: function (input, commit) {
+                             
+                                var chuoi = input.val();
+                                //alert(chuoi);
+                                if(chuoi != "")
+                                    return true;
+                                else
+                                    return false;
+                            }
+                        },
+                        {
+                            input: "#H_MA", message: "Vui lòng chọn huyện!", action: 'keyup, blur, click, change', rule: function (input, commit) {
+                             
+                                var chuoi = input.val();
+                                //alert(chuoi);
+                                if(chuoi != "")
+                                    return true;
+                                else
+                                    return false;
+                            }
                         }
                 ],  hintType: "label"
             });
@@ -471,7 +549,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Thuộc loại
+                            Thuộc loại<b class="batbuoc"> * </b>
                         </td>
                          <td>
                              <div id="DM_MA"></div>
@@ -479,7 +557,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Tỉnh/Thành phố
+                            Tỉnh/Thành phố<b class="batbuoc"> * </b>
                         </td>
                          <td>
                             <div id="T_MA"></div>
@@ -487,7 +565,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Quận/Huyện
+                            Quận/Huyện<b class="batbuoc"> * </b>
                         </td>
                          <td>
                             <div id="H_MA"></div>
@@ -543,7 +621,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Vị trí
+                            Vị trí<b class="batbuoc"> * </b>
                         </td>
                          <td>
                             <input id="DD_VITRI" value="<?php echo $info['DD_VITRI']; ?>" placeholder="Nhập vị trí..." />
@@ -641,7 +719,7 @@
                     </tr>
                     <tr>
                         <td align="center" colspan="2">
-                            <input id="submit" type="button" value="Đăng ký" />
+                            <input id="submit" type="button" value="Sửa địa điểm" />
                         </td>
                     </tr>
                 </table>

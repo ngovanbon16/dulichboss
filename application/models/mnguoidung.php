@@ -125,6 +125,23 @@ class Mnguoidung extends CI_Model {
         {
             return false;
         }
+    }
+
+    function nguoidungdiadiem($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('diadiem', 'nguoidung.ND_MA = diadiem.ND_MA');
+        $this->db->where("nguoidung.ND_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }             
 }            
 ?>

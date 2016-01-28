@@ -16,7 +16,7 @@
     
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
-
+    
     <script type="text/javascript">
         $(document).ready(function () { 
 
@@ -51,12 +51,12 @@
             {
                 var url, dta;
                 //url="<?php echo base_url(); ?>index.php/tinh/add?t=" + Math.random();
-                url = "<?php echo base_url(); ?>index.php/danhmuc/data";
+                url = "<?php echo base_url(); ?>index.php/diadiem/data";
                 dta = {
-                  "ma" : $("#frmbox :text[name='ma']").val(),
-                  "ten" : $("#frmbox :text[name='ten']").val()
+                  "DD_MA" : $("#frmbox :text[name='DD_MA']").val(),
+                  "DD_TEN" : $("#frmbox :text[name='DD_TEN']").val()
                 };
-                console.log(dta);
+
                 $.post(url, dta, function(data, status){
 
                   console.log(status);
@@ -65,16 +65,21 @@
                 }, 'json');
             });
 
-            var orderdetailsurl = "<?php echo base_url(); ?>index.php/danhmuc/data";
+            var orderdetailsurl = "<?php echo base_url(); ?>index.php/diadiem/data";
             var ordersSource =
             {
                 dataFields: [
-                    { name: 'DM_MA', type: 'int' },
-                    { name: 'DM_TEN', type: 'string' },
-                    { name: 'DM_HINH', type: 'string' }
+                    { name: 'DD_MA', type: 'number' },
+                    { name: 'DM_MA', type: 'string' },
+                    { name: 'ND_MA', type: 'string' },
+                    { name: 'DD_TEN', type: 'string' },
+                    { name: 'DD_DUYET', type: 'string' },
+                    { name: 'DD_NGAYCAPNHAT', type: 'string' },
+                    { name: 'DD_NGAYDANG', type: 'string' }
+
                 ],
                 dataType: "json",
-                id: 'DM_MA',
+                id: 'DD_MA',
                 url: orderdetailsurl,
                 addRow: function (rowID, rowData, position, commit) {
                     //alert("ID: " + rowID + " | rowData: " + rowData);
@@ -83,38 +88,32 @@
                     // call commit with parameter true if the synchronization with the server is successful 
                     // and with parameter false if the synchronization failed.
                     // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
-                    commit(true);
+                    //commit(true);
+                    setTimeout("location.href = '<?php echo site_url('aediadiem'); ?>';",0);
                 },
                 updateRow: function (rowID, rowData, commit) {
 
-                    url = "<?php echo base_url(); ?>index.php/danhmuc/add";
-                    console.log(rowData);
-
-                    $.post(url, rowData, function(data, status){
+                    url = "<?php echo base_url(); ?>index.php/diadiem/add";
+                    //console.log(rowData);
+                    //alert(rowID);
+                    setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/edit/"+rowID+"';",0);
+                    
+                    /*$.post(url, rowData, function(data, status){
                         console.log(status);
                         console.log(data);
-                        //console.log(data.data);
+                        console.log(data.data);
                         if(status == "success")
                         {
                             if(data.status == "error")
                             {
-                                //alert("Tên không được trùng lập!");
-                                openError("Tên không được trùng lập!");
+                                alert("Tên không được trùng lập!");
                             }
                             else
                             {
                                 commit(true);
-                                if(data.msg['insert'] == "insert")
-                                {
-                                    openSuccess("Thêm thành công!");
-                                }
-                                else
-                                {
-                                    openSuccess("Sửa thành công!");
-                                }
                             }
                         }
-                    }, 'json');
+                    }, 'json');*/
                     // synchronize with the server - send update command
                     // call commit with parameter true if the synchronization with the server is successful 
                     // and with parameter false if the synchronization failed.
@@ -125,7 +124,7 @@
                     // and with parameter false if the synchronization failed.
                     //alert(rowID);
                     var dta, url, test;
-                    url = "<?php echo base_url(); ?>index.php/danhmuc/delete";
+                    url = "<?php echo base_url(); ?>index.php/diadiem/delete";
                     dta = {
                         "ma" : rowID
                     };
@@ -140,7 +139,7 @@
                             if(data.status == "error")
                             {
                                 //alert("Mã không tồn tại!");
-                                openError(data.msg['ma']);
+                                openError("Mã không tồn tại!");
                             }
                             else
                             {
@@ -299,23 +298,42 @@
                     });
                 },
                 columns: [
-                    { text: 'Mã', dataField: 'DM_MA', width: "20%" },
-                    { text: 'Tên', dataField: 'DM_TEN', width: "50%" },
-                    { text: 'Hình', dataField: 'DM_HINH', width: "30%" },
+                    { text: 'Mã địa điểm', dataField: 'DD_MA', width: "10%" },
+                    { text: 'Mã danh mục', dataField: 'DM_MA', width: "10%" },
+                    { text: 'Mã người dùng', dataField: 'ND_MA', width: "10%" },
+                    { text: 'Tên địa điểm', dataField: 'DD_TEN', width: "20%" },
+                    { text: 'Duyệt', dataField: 'DD_DUYET', width: "10%" },
+                    { text: 'Ngày cập nhật', dataField: 'DD_NGAYCAPNHAT', width: "20%" },
+                    { text: 'Ngày đăng', dataField: 'DD_NGAYDANG', width: "20%" }
                 ]
             });
+            
+            /*$("#messageNotification").jqxNotification({
+                width: 250, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
+            });
+            $("#openMessageNotification").jqxButton({ width: 230, height: 30 });
+            $("#openMessageNotification").click(function () {
+                $("#messageNotification").jqxNotification("open");
+            });*/
         });
     </script>
 </head>
 <body class='default'>
+
     <div id="notiSuccess">
         <div id="result">Thông báo thành công!</div>
     </div>
     <div id="notiError">
         <div id="error">Thông báo lỗi!</div>
     </div>
+
     <div id="table"></div>
+      <!-- <button id="button">Kiểm tra gửi dữ liệu</button> -->
       
-      <!-- <button id="button">Nhấp vào</button> -->
+      <!-- <div id="messageNotification">
+        Xóa thành công!
+      </div>
+      <button id="openMessageNotification">Open a message notification</button> -->
 </body>
 </html>

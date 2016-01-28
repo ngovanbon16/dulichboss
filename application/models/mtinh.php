@@ -58,6 +58,23 @@ class Mtinh extends CI_Model {
         $this->db->update($this->_table, $data_update);
     }
 
+    function testhuyen($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('huyen', 'huyen.T_MA = tinh.T_MA');
+        $this->db->where("huyen.T_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     function testMa($ma) 
     {
         $this -> db -> select('T_MA, T_TEN');

@@ -70,7 +70,7 @@
 </html>
  -->
 
- <!DOCTYPE html>
+ <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="keywords" content="jQuery SwitchButton, SwitchButton Widget, jqxSwitchButton" />
@@ -195,5 +195,40 @@
         <div>Events:</div>
         <div id="events"></div>
     </div>
+</body>
+</html> -->
+
+
+<!-- <head>
+          <style type='text/css'>
+            b{
+              text-align: center;
+              font-family: georgia;
+              color: #727272;
+            }
+            a{
+              text-align: center;
+              font-family: georgia;
+              color: #727272;
+              border-bottom: 1px solid #EEE;
+              padding: 5px;
+              font-size: x-large;
+              margin-top: 50px;
+            }
+          </style>
+        </head>
+        <body>
+        <b>Chào người dùng mới</b> 
+        <br/>
+        <a href='".base_url()."index.php/nguoidung/xacnhanemail/".md5($email)."'>Nhấn vào đây để xác nhận</a>
+        </body> -->
+
+<html>
+<head><?php echo $map['js']; ?></head>
+<body>
+    <input type="text" id="myPlaceTextBox" /> <br/>
+        Lat: <input type="text" id="lat" value="" readonly="readonly" >
+        Lng: <input type="text" id="lng" value="" readonly="readonly" >
+    <?php echo $map['html']; ?>
 </body>
 </html>

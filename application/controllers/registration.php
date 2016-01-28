@@ -110,10 +110,36 @@ class Registration extends CI_Controller
 
         $this->email->subject('Email được gửi từ admin của website dulich.com.vn');
 
-        $message = "<b>Chào người dùng mới</b> 
-                    <br/>
-                    <a href='".base_url()."index.php/nguoidung/xacnhanemail/".md5($email)."'>Nhấn vào đây để xác nhận</a>
-
+        $message = "
+        <head>
+          <style type='text/css'>
+            b{
+              text-align: center;
+              font-family: georgia;
+              color: #727272;
+            }
+            a{
+              text-align: center;
+              font-family: georgia;
+              color: #727272;
+              border-bottom: 1px solid #EEE;
+              padding: 5px;
+              font-size: x-large;
+              margin-top: 50px;
+            }
+          </style>
+        </head>
+        <body>
+        <b>Chào người dùng mới
+          <br/>
+          Đây là Email được gửi trang quản trị của Website du lịch!
+          <br/>
+          Để xác nhận người dùng mới vui lòng nhấn vào đường link bên dưới!
+          <br/>
+        </b> 
+        <br/>
+        <a href='".base_url()."index.php/nguoidung/xacnhanemail/".md5($email)."'>dulichdongbangsongcuulong.com.vn</a>
+        </body>
         ";
         $this->email->message($message);
         if ($this->email->send()) {

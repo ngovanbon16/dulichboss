@@ -125,6 +125,7 @@
                     dta = {
                         "ma" : rowID
                     };
+                    console.log(dta);
                     $.post(url, dta, function(data, status){
 
                         console.log(status);
@@ -136,7 +137,7 @@
                             if(data.status == "error")
                             {
                                 //alert("Mã không tồn tại!");
-                                openError("Mã người dùng không tồn tại!");
+                                openError(data.msg['ma']);
                             }
                             else
                             {

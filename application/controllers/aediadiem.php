@@ -215,6 +215,82 @@ class Aediadiem extends CI_Controller
        	$this->load->view("admin/suadiadiem_view", $this->_data);
 	}
 
+	public function detail($id)
+	{
+       	$info = $this->mdiadiem->getID($id);
+
+       		$this->_data['indexdanhmuc'] = "-1";
+       		$this->_data['indextinh'] = "-1";
+       		$this->_data['indexhuyen'] = "-1";
+       		$this->_data['indexxa'] = "-1";
+
+       		$this->load->model("mdanhmuc");
+       		$query = $this->mdanhmuc->getList();
+            $danhmuc = $info["DM_MA"]; 
+            $i = -1;
+            if($query != false)
+            {
+	            foreach ($query as $item) {
+	            	$i++;
+	            	if($danhmuc == $item["DM_MA"])
+	           		{
+	                	$this->_data['indexdanhmuc'] = $i;
+	                }
+	            }
+        	}
+
+       		$this->load->model("mtinh");
+       		$query = $this->mtinh->getList();
+            $matinh = $info["T_MA"]; 
+            $i = -1;
+            if($query != false)
+            {
+	            foreach ($query as $item) {
+	            	$i++;
+	            	if($matinh == $item["T_MA"])
+	           		{
+	                	$this->_data['indextinh'] = $i;
+	                }
+	            }
+        	}
+
+            $this->load->model("mhuyen");
+       		$query = $this->mhuyen->getid($matinh);
+            $mahuyen = $info["H_MA"]; 
+            $i = -1;
+            if($query != false)
+            {
+	            foreach ($query as $item) {
+	            	$i++;
+	            	if($mahuyen == $item["H_MA"])
+	           		{
+	                	$this->_data['indexhuyen'] = $i;
+	                }
+	            }
+        	}
+
+            $this->load->model("mxa");
+       		$query = $this->mxa->getid($matinh , $mahuyen);
+            $mahuyen = $info["X_MA"]; 
+            $i = -1;
+            if($query != false)
+            {
+	            foreach ($query as $item) {
+	            	$i++;
+	            	if($mahuyen == $item["X_MA"])
+	           		{
+	                	$this->_data['indexxa'] = $i;
+	                }
+	            }
+        	}
+
+        $this->_data['map'] = $this->map($info["DD_VITRI"]);
+        $this->_data['info'] = $this->mdiadiem->getID($id);
+        $this->load->model("mhinhanh");
+        $this->_data['info1'] = $this->mhinhanh->getList();
+       	$this->load->view("admin/chitietdiadiem_view", $this->_data);
+	}
+
 	public function update()
 	{
 		$DD_MA = $_POST["DD_MA"];

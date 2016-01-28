@@ -60,6 +60,22 @@ class Diadiem extends CI_Controller
 		echo $jsonString;
 	}
 
+	public function data1($size, $star)
+	{
+		$data = $this->mdiadiem->getList1($size, $star);
+
+		$jsonString = json_encode($data);
+		echo $jsonString;
+	}
+
+	public function countAll()
+	{
+		$total = $this->mdiadiem->countAll();
+		$response = array('total' => $total);
+		$jsonString = json_encode($response);
+		echo $jsonString;
+	}
+
 	public function delete()
 	{
 		$ma = $_POST["ma"];
@@ -67,7 +83,12 @@ class Diadiem extends CI_Controller
 
 		if(!($this->mdiadiem->testMa($ma)))
 		{
-			$msg["ma"] = "Mã không tồn tại";
+			$msg["ma"] = "Mã không tồn tại!";
+		}
+
+		if($this->mdiadiem->diadiemhinhanh($ma))
+		{
+			$msg["ma"] = "Lỗi khóa ngoại!";
 		}
 
 		$status = "error";

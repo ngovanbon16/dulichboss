@@ -228,6 +228,11 @@ class Nguoidung extends CI_Controller
 			$msg["ma"] = "Mã không tồn tại";
 		}
 
+		if($this->mnguoidung->nguoidungdiadiem($ma))
+		{
+			$msg["ma"] = "Lỗi khóa ngoại!";
+		}
+
 		$status = "error";
 		$data = "";
 		if(count($msg) == 0)
