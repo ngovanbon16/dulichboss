@@ -1,37 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title id='Description'>DataTable with Create, Remove and Update commands.</title>
+    <title id='Description'>This example shows how to enable the paging feature of the Grid.</title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
+
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdata.js"></script> 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxbuttons.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdatatable.js"></script> 
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxlistbox.js"></script> 
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdropdownlist.js"></script> 
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdata.js"></script> 
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxtooltip.js"></script> 
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxinput.js"></script> 
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxgrid.sort.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxgrid.filter.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxgrid.selection.js"></script> 
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxpanel.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/demos.js"></script>
-    
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxinput.js"></script>
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxtooltip.js"></script> 
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxgrid.edit.js"></script>
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxwindow.js"></script>
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnumberinput.js"></script>
+
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
+    
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
+
     <script type="text/javascript">
-        $(document).ready(function () { 
-
-            $.jqx.theme = "bootstrap";
-            var notificationWidth = 300;
-
-            $("#notiSuccess").jqxNotification({
-                width: notificationWidth, position: "top-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "success"
-            });
-
-            $("#notiError").jqxNotification({
-                width: notificationWidth, position: "top-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "error"
-            });
-
             function openSuccess(str)
             {
                 $("#result").html(str);
@@ -46,276 +53,250 @@
                 $("#notiError").jqxNotification("open");
             }
 
-            $("#button").click(function()
-            {
-                var url, dta;
-                //url="<?php echo base_url(); ?>index.php/tinh/add?t=" + Math.random();
-                url = "<?php echo base_url(); ?>index.php/nguoidung/data";
-                dta = {
-                  "ND_MA" : $("#frmbox :text[name='ND_MA']").val(),
-                  "ND_TEN" : $("#frmbox :text[name='ND_TEN']").val()
-                };
+        $(document).ready(function () {
+            $.jqx.theme = "bootstrap";
 
-                $.post(url, dta, function(data, status){
+            var notificationWidth = 300;
 
-                  console.log(status);
-                  console.log(data);
-
-                }, 'json');
+            $("#notiSuccess").jqxNotification({
+                width: notificationWidth, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "success"
             });
 
-            var orderdetailsurl = "<?php echo base_url(); ?>index.php/nguoidung/data";
-            var ordersSource =
-            {
-                dataFields: [
-                    { name: 'ND_MA', type: 'number' },
-                    { name: 'ND_HO', type: 'string' },
-                    { name: 'ND_TEN', type: 'string' },
-                    { name: 'ND_DIACHIMAIL', type: 'string' },
-                    { name: 'ND_KICHHOAT', type: 'string' },
-                    { name: 'ND_NGAYCAPNHAT', type: 'string' },
-                    { name: 'ND_NGAYTAO', type: 'string' }
-
-                ],
-                dataType: "json",
-                id: 'ND_MA',
-                url: orderdetailsurl,
-                addRow: function (rowID, rowData, position, commit) {
-                    //alert("ID: " + rowID + " | rowData: " + rowData);
-
-                    // synchronize with the server - send insert command
-                    // call commit with parameter true if the synchronization with the server is successful 
-                    // and with parameter false if the synchronization failed.
-                    // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
-                    commit(true);
-                },
-                updateRow: function (rowID, rowData, commit) {
-
-                    url = "<?php echo base_url(); ?>index.php/nguoidung/add";
-                    //console.log(rowData);
-
-                    $.post(url, rowData, function(data, status){
-                        console.log(status);
-                        console.log(data);
-                        console.log(data.data);
-                        if(status == "success")
-                        {
-                            if(data.status == "error")
-                            {
-                                alert("Tên không được trùng lập!");
-                            }
-                            else
-                            {
-                                commit(true);
-                                openSuccess("Cập nhật thành công!");
-                            }
-                        }
-                    }, 'json');
-                    // synchronize with the server - send update command
-                    // call commit with parameter true if the synchronization with the server is successful 
-                    // and with parameter false if the synchronization failed.
-                },
-                deleteRow: function (rowID, commit) {
-                    // synchronize with the server - send delete command
-                    // call commit with parameter true if the synchronization with the server is successful 
-                    // and with parameter false if the synchronization failed.
-                    //alert(rowID);
-                    var dta, url, test;
-                    url = "<?php echo base_url(); ?>index.php/nguoidung/delete";
-                    dta = {
-                        "ma" : rowID
-                    };
-                    console.log(dta);
-                    $.post(url, dta, function(data, status){
-
-                        console.log(status);
-                        console.log(data);
-                        //console.log(data);
-                        if(status == "success")
-                        {   
-                            //alert(data.status);
-                            if(data.status == "error")
-                            {
-                                //alert("Mã không tồn tại!");
-                                openError(data.msg['ma']);
-                            }
-                            else
-                            {
-                                commit(true);
-                                openSuccess("Xóa người dùng thành công!");
-                            }
-                        }
-                    }, 'json');  
-                }
-            };
-            var dataAdapter = new $.jqx.dataAdapter(ordersSource, {
-                loadComplete: function () {
-                    // data is loaded.
-                }
+            $("#notiError").jqxNotification({
+                width: notificationWidth, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "error"
             });
-            $("#table").jqxDataTable(
-            {
-                width: "100%",
-                height: "415",
-                source: dataAdapter,
+
+            $("#next").jqxButton({ width: '80', height: '30'});
+            $("#back").jqxButton({ width: '80', height: '30'});
+
+            var size = $("#oncepage").val();
+            var total = "0";
                 
-                pageable: true,
-                editable: true,
-                showToolbar: true,
-                altRows: true,
+            var url, dta;
+            url = "<?php echo base_url(); ?>index.php/nguoidung/countAll";
+            $.post(url, function(data, status){
+                console.log(status);
+                console.log(data);
+                total = data.total;
+                var page = Math.ceil(total/size);
+                $("#numberpage").html("0 / " + page);
+            }, 'json');
 
-                columnsResize: true,
+            var star = 0;
+            var numpage = -1;
 
-                sortable: true, // sặp xếp
-                filterable: true, // tìm kiếm
-                filterMode: 'simple',
-
-                ready: function()
+            $("#oncepage").change(function(){
+                //alert("chao");
+                size = this.value;
+                var page = Math.ceil(total/size);
+                $("#numberpage").html(page);
+                numpage = 0;
+                star = numpage*size;
+                if(numpage > page - 1)
                 {
-                    // called when the DataTable is loaded.         
-                },
-                pagerButtonsCount: 8,
-                toolbarHeight: 35,
-                renderToolbar: function(toolBar)
+                    numpage = page - 1;
+                    return;
+                }
+                load(page);
+            });
+
+            $("#next").click(function(){
+                numpage++;
+                star = numpage*size;
+
+                var page = Math.ceil(total/size);
+
+                if(numpage > page - 1)
                 {
-                    var toTheme = function (className) {
-                        if (theme == "") return className;
-                        return className + " " + className + "-" + theme;
-                    }
-                    // appends buttons to the status bar.
-                    var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
-                    var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
-                    var addButton = $(buttonTemplate);
-                    var editButton = $(buttonTemplate);
-                    var deleteButton = $(buttonTemplate);
-                    var cancelButton = $(buttonTemplate);
-                    var updateButton = $(buttonTemplate);
-                    container.append(addButton);
-                    container.append(editButton);
-                    container.append(deleteButton);
-                    container.append(cancelButton);
-                    container.append(updateButton);
-                    toolBar.append(container);
-                    addButton.jqxButton({cursor: "pointer", enableDefault: false,  height: 25, width: 25 });
-                    addButton.find('div:first').addClass(toTheme('jqx-icon-plus'));
-                    addButton.jqxTooltip({ position: 'bottom', content: "Add"});
-                    editButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
-                    editButton.find('div:first').addClass(toTheme('jqx-icon-edit'));
-                    editButton.jqxTooltip({ position: 'bottom', content: "Edit"});
-                    deleteButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
-                    deleteButton.find('div:first').addClass(toTheme('jqx-icon-delete'));
-                    deleteButton.jqxTooltip({ position: 'bottom', content: "Delete"});
-                    updateButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
-                    updateButton.find('div:first').addClass(toTheme('jqx-icon-save'));
-                    updateButton.jqxTooltip({ position: 'bottom', content: "Save Changes"});
-                    cancelButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
-                    cancelButton.find('div:first').addClass(toTheme('jqx-icon-cancel'));
-                    cancelButton.jqxTooltip({ position: 'bottom', content: "Cancel"});
-                    var updateButtons = function (action) {
-                        switch (action) {
-                            case "Select":
-                                addButton.jqxButton({ disabled: false });
-                                deleteButton.jqxButton({ disabled: false });
-                                editButton.jqxButton({ disabled: false });
-                                cancelButton.jqxButton({ disabled: true });
-                                updateButton.jqxButton({ disabled: true });
-                                break;
-                            case "Unselect":
-                                addButton.jqxButton({ disabled: false });
-                                deleteButton.jqxButton({ disabled: true });
-                                editButton.jqxButton({ disabled: true });
-                                cancelButton.jqxButton({ disabled: true });
-                                updateButton.jqxButton({ disabled: true });
-                                break;
-                            case "Edit":
-                                addButton.jqxButton({ disabled: true });
-                                deleteButton.jqxButton({ disabled: true });
-                                editButton.jqxButton({ disabled: true });
-                                cancelButton.jqxButton({ disabled: false });
-                                updateButton.jqxButton({ disabled: false });
-                                break;
-                            case "End Edit":
-                                addButton.jqxButton({ disabled: false });
-                                deleteButton.jqxButton({ disabled: false });
-                                editButton.jqxButton({ disabled: false });
-                                cancelButton.jqxButton({ disabled: true });
-                                updateButton.jqxButton({ disabled: true });
-                                break;
-                        }
-                    }
-                    var rowIndex = null;
-                    $("#table").on('rowSelect', function (event) {
-                        var args = event.args;
-                        rowIndex = args.index;
-                        updateButtons('Select');
+                    numpage = page - 1;
+                    return;
+                }
+                load(page);
+                
+            });
+
+            $("#back").click(function(){
+                numpage--;
+                star = numpage*size;
+                if(numpage < 0)
+                {
+                    numpage = 0;
+                    return;
+                }
+                var page = Math.ceil(total/size);
+                load(page);
+            });
+
+            function load(page)
+            {
+
+                $("#numberpage").html(numpage + 1 + " / " + page);
+
+                var url = "<?php echo base_url(); ?>index.php/nguoidung/data1/"+size+"/"+star;
+                // prepare the data
+                var source =
+                {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'ND_MA', type: 'number' },
+                        { name: 'ND_HO', type: 'string' },
+                        { name: 'ND_TEN', type: 'string' },
+                        { name: 'ND_DIACHIMAIL', type: 'string' },
+                        { name: 'ND_KICHHOAT', type: 'bool' },
+                        { name: 'ND_NGAYCAPNHAT', type: 'date' },
+                        { name: 'ND_NGAYTAO', type: 'date' }
+                    ],
+                    //root: "entry",
+                    //record: "content",
+                    id: 'ND_MA',
+                    url: url,
+                    pager: function (pagenum, pagesize, oldpagenum) {
+                        // callback called when a page or page size is changed.
+                    },
+                    deleterow: function (rowid, commit) {
+                        var dta, url, test;
+                        url = "<?php echo base_url(); ?>index.php/nguoidung/delete";
+                        dta = {
+                            "ma" : rowid
+                        };
+                        console.log(dta);
+                        $.post(url, dta, function(data, status){
+
+                            console.log(status);
+                            console.log(data);
+                            //console.log(data);
+                            if(status == "success")
+                            {   
+                                //alert(data.status);
+                                if(data.status == "error")
+                                {
+                                    //alert("Mã không tồn tại!");
+                                    openError(data.msg['ma']);
+                                }
+                                else
+                                {
+                                    commit(true);
+                                    openSuccess("Xóa thành công");
+                                    //alert("Xóa thành công!");
+                                }
+                            }
+                        }, 'json');  
+                        //commit(true);
+                    },
+
+                };
+                var dataAdapter = new $.jqx.dataAdapter(source);
+
+                $("#jqxgrid").jqxGrid(
+                {
+                    width: "100%",
+                    source: dataAdapter,
+                    selectionmode: 'multiplerowsextended',
+                    sortable: true, // tap sap xep
+                    pageable: true, // phan trang
+                    pagermode: 'simple', // kieu phan trang
+                    autoheight: true,
+                    columnsresize: true,
+                    showfilterrow: true, // hien thi tim kiem
+                    filterable: true, // hien thi du lieu
+                    selectionmode: 'checkbox',
+
+                    /*editable: true, // cho truc tiep tren bang hay khong
+
+                    showeverpresentrow: show,
+                    everpresentrowposition: "top",*/
+                    showtoolbar: true,
+
+                    rendertoolbar: function (toolbar) {
+                    var me = this;
+                    var container = $("<div style='margin: 5px;'></div>");
+                    toolbar.append(container);
+                    container.append('<input id="addrowbutton" type="button" value="Thêm" />');
+                    container.append('<input style="margin-left: 5px;" id="deleterowbutton" type="button" value="Xóa" />');
+                    $("#addrowbutton").jqxButton();
+                    $("#deleterowbutton").jqxButton();
+                    // create new row.
+                    $("#addrowbutton").on('click', function () {
+                        setTimeout("location.href = '<?php echo site_url('registration'); ?>';",0);
                     });
-                    $("#table").on('rowUnselect', function (event) {
-                        updateButtons('Unselect');
-                    });
-                    $("#table").on('rowEndEdit', function (event) {
-                        updateButtons('End Edit');
-                    });
-                    $("#table").on('rowBeginEdit', function (event) {
-                        updateButtons('Edit');
-                    });
-                    addButton.click(function (event) {
-                        if (!addButton.jqxButton('disabled')) {
-                            // add new empty row.
-                            $("#table").jqxDataTable('addRow', null, {}, 'first');
-                            // select the first row and clear the selection.
-                            $("#table").jqxDataTable('clearSelection');
-                            $("#table").jqxDataTable('selectRow', 0);
-                            // edit the new row.
-                            $("#table").jqxDataTable('beginRowEdit', 0);
-                            updateButtons('add');
-                        }
-                    });
-                    cancelButton.click(function (event) {
-                        if (!cancelButton.jqxButton('disabled')) {
-                            // cancel changes.
-                            $("#table").jqxDataTable('endRowEdit', rowIndex, true);
-                        }
-                    });
-                    updateButton.click(function (event) {
-                        if (!updateButton.jqxButton('disabled')) {
-                            // save changes.
-                            $("#table").jqxDataTable('endRowEdit', rowIndex, false);
-                        }
-                    });
-                    editButton.click(function () {
-                        if (!editButton.jqxButton('disabled')) {
-                            $("#table").jqxDataTable('beginRowEdit', rowIndex);
-                            updateButtons('edit');
-                        }
-                    });
-                    deleteButton.click(function () {
-                        if (!deleteButton.jqxButton('disabled')) {
-                            $("#table").jqxDataTable('deleteRow', rowIndex);
-                            updateButtons('delete');
-                        }
+                    // delete row.
+                    $("#deleterowbutton").on('click', function () {
+                       
+
+                        for (var i = 0; i < size; i++) {
+                            var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
+                            var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+                            if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                                var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
+                                var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                            }
+                        };
                     });
                 },
-                columns: [
-                    { text: 'Mã', dataField: 'ND_MA', width: "5%" },
-                    { text: 'Họ', dataField: 'ND_HO', width: "10%" },
-                    { text: 'Tên', dataField: 'ND_TEN', width: "10%" },
-                    { text: 'Địa chỉ mail', dataField: 'ND_DIACHIMAIL', width: "25%" },
-                    { text: 'Kích hoạt', dataField: 'ND_KICHHOAT', width: "10%" },
-                    { text: 'Ngày cập nhật', dataField: 'ND_NGAYCAPNHAT', width: "20%" },
-                    { text: 'Ngày tạo', dataField: 'ND_NGAYTAO', width: "20%" }
-                ]
-            });
-            
-            /*$("#messageNotification").jqxNotification({
-                width: 250, position: "top-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
-            });
-            $("#openMessageNotification").jqxButton({ width: 230, height: 30 });
-            $("#openMessageNotification").click(function () {
-                $("#messageNotification").jqxNotification("open");
-            });*/
+
+                    columns: [
+                        { text: 'Mã', dataField: 'ND_MA', width: "5%", cellsalign: 'center' },
+                        { text: 'Họ', dataField: 'ND_HO', width: "10%" },
+                        /*{ text: 'Mã người dùng', dataField: 'ND_MA', width: "10%" },*/
+                        { text: 'Tên', dataField: 'ND_TEN', width: "13%" },
+                        { text: 'Email', dataField: 'ND_DIACHIMAIL', width: "20%" },
+                        { text: 'Kích hoạt', dataField: 'ND_KICHHOAT', width: "5%", columntype: 'checkbox', filtertype: 'bool' },
+                        { text: 'Ngày cập nhật', dataField: 'ND_NGAYCAPNHAT', width: "10%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'd', cellsalign: 'right' },
+                        { text: 'Ngày tạo', dataField: 'ND_NGAYTAO', width: "10%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'd', cellsalign: 'right' },
+                        { text: 'Sửa', datafield: 'Edit', columntype: 'button', width: "8%", cellsrenderer: function () {
+                                return "Sửa";
+                                /*<img src='<?php echo base_url(); ?>assets/images/edit.png'>*/
+                              }, buttonclick: function (row) {
+                                // open the popup window when the user clicks a button.
+                                //editrow = row;
+                                var offset = $("#jqxgrid").offset();
+                                var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                                var id = dataRecord.ND_MA;
+                                console.log(id);
+                                setTimeout("location.href = '<?php echo base_url(); ?>index.php/nguoidung/edit/"+id+"';",0);
+                            }
+                        },
+                        { text: 'Xóa', datafield: 'Delete', columntype: 'button', width: "8%", cellsrenderer: function () {
+                                return "Xóa";
+                              }, buttonclick: function (row) {
+                                //editrow = row;
+                                var offset = $("#jqxgrid").offset();
+                                var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                                var id = dataRecord.ND_MA;
+                                console.log(id);
+                                var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                             }
+                        },
+                        { text: 'Chi tiết', datafield: 'detail', columntype: 'button', width: "8%", cellsrenderer: function () {
+                                return "Chi tiết";
+                              }, buttonclick: function (row) {
+                                // open the popup window when the user clicks a button.
+                                var offset = $("#jqxgrid").offset();
+                                var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                                var id = dataRecord.ND_MA;
+                                console.log(id);
+                                setTimeout("location.href = '<?php echo base_url(); ?>index.php/aenguoidung/detail/"+id+"';",0);
+                            }
+                        },
+                      
+                    ],
+                });
+            }
         });
     </script>
+    <style type="text/css">
+        #numberpage{
+            padding-left: 5px;
+        }
+        #oncepage{
+            width: 80px;
+            height: 30px;
+            border-radius: 5px;
+            opacity: 0.7;
+        }
+    </style>
 </head>
 <body class='default'>
     <div id="notiSuccess">
@@ -324,12 +305,31 @@
     <div id="notiError">
         <div id="error">Thông báo lỗi!</div>
     </div>
-    <div id="table"></div>  
-    <!-- <button id="button">Kiểm tra gửi dữ liệu</button> -->
-      
-      <!-- <div id="messageNotification">
-        Xóa thành công!
-      </div>
-      <button id="openMessageNotification">Open a message notification</button> -->
+
+    <table>
+        <tr>
+            <td>
+                <select id="oncepage">
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="500">500</option>
+                    <option value="1000">1000</option>
+                </select>
+                <button id="back">Back</button><button id="next">Next</button> 
+                Trang:
+            </td>
+            <td>
+                <div id="numberpage"></div>
+            </td>
+        </tr>
+    </table>
+    
+    <br/>
+    <div id='jqxWidget' style="font-size: 13px; font-family: Verdana;">
+        <div id="jqxgrid">
+        </div>
+    </div>
 </body>
 </html>

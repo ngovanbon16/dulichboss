@@ -29,80 +29,273 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxtabs.js"></script>
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdatatable.js"></script>
 
     <script type="text/javascript">
+        
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
+
+            var notificationWidth = 300;
+
+            $("#notiSuccess").jqxNotification({
+                width: notificationWidth, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "success"
+            });
+
+            $("#notiError").jqxNotification({
+                width: notificationWidth, position: "top-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "error"
+            });
 
             // Create jqxExpander.
             $("#createAccount").jqxExpander({  toggleMode: 'none', width: '80%', showArrow: false });
             // Create jqxButton.
-            /*$("#submit").jqxButton({ template: "primary", height: "30px", width: "150px" });*/
-            $(".duyet").jqxButton({ template: "success", height: "30px", width: "110px" });
-            $(".xoa").jqxButton({ template: "danger", height: "30px", width: "110px" });
+            $("#submit").jqxButton({ template: "primary", height: "30px", width: "150px" });
+            $("#duyettatca").jqxButton({ template: "success", height: "30px", width: "150px" });
+            $("#huytatca").jqxButton({ template: "warning", height: "30px", width: "150px" });
             // Validate the Form.
-            /*$("#submit").click(function () {
+            $("#submit").click(function () {
                 //alert("chao");
                 window.history.back();
-            });*/
-            $(".duyet").click(function(){
-              var duyet = this.value;
-              //alert(duyet);
-              var id = "#"+duyet;
-              var idvalue = $(id).val();
-              var tg = "0";
-              if(idvalue == "0")
-              {
-                document.getElementById(duyet).value = '1';
-                tg = "1";
-                $(id+"1").html("Đã duyệt");
-              }
-              else
-              {
-                document.getElementById(duyet).value = '0';
-                $(id+"1").html("Chưa duyệt");
-              }
-
-              var url, dta;
-                url = "<?php echo base_url(); ?>index.php/diadiemhinh/duyet";
-                dta = {
-                  "HA_MA" : duyet,
-                  "HA_DUYET" : tg
-                };
-
-                $.post(url, dta, function(data, status){
-
-                  console.log(status);
-                  console.log(data);
-
-                }, 'json');
-
             });
 
-            $(".xoa").click(function(){
-              var xoa = this.value;
-              //alert(xoa);
+            var data = [
+                {
+                    dulieus:
+                    [
+                        <?php
+                        $count = 0; 
+                          $madd = $info["DD_MA"];
+                          if($info1 != "") 
+                          foreach ($info1 as $item) {  
+                            $madd1 = $item['DD_MA'];
+                            if($madd == $madd1)
+                            {
+                        ?>
+                          { 
+                            img: '<?php echo base_url(); ?>uploads/diadiem/<?php echo $item["HA_TEN"]; ?>', HA_MA:
+                            '<?php echo $item['HA_MA']; ?>', HA_DUYET: '<?php echo $item['HA_DUYET']; ?>', 
+                            HA_TEN: '<?php echo $item['HA_TEN']; ?>'
+                          }, 
+                        <?php 
+                            }
+                          }
+                        ?>
+                    ]
+                }
+            ];
 
-              var url, dta;
-                url = "<?php echo base_url(); ?>index.php/diadiemhinh/xoa";
-                dta = {
-                  "HA_TEN" : xoa
-                };
-                console.log(dta);
-                $.post(url, dta, function(data, status){
+            var source =
+            {
+                localData: data,
+                dataType: "array"
+            };
 
-                  console.log(status);
-                  console.log(data);
-                  document.getElementById(xoa).value = 'Đã bị xóa';
-                  /*var id = "#"+xoa;
-                  alert(id);
-                  $(id).html("Đã xóa");*/
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            var itemsInCart = 0;
 
-                }, 'json');
+            $("#dataTable").jqxDataTable(
+            {
+                width: "100%",
+                //height: "500",
+                source: dataAdapter,
+                /*sortable: true,
+                pageable: true,
+                pageSize: 2,*/
+                /*pagerButtonsCount: 5,*/
+                enableHover: false,
+                selectionMode: 'none',
+                rendered: function () {
+                    $(".duyet").jqxButton();
+                    $(".duyet").click(function () {
+                        //alert(this.value);
+                        var ma = this.value;
+                      //alert(ma);
+                      var id = "#1"+ma;
+                      var idvalue = $(id).val();
+                      var tg = "0";
+                      if(idvalue == "0")
+                      {
+                        document.getElementById("1"+ma).value = '1';
+                        document.getElementById(ma).style.color = "#00f";
+                        tg = "1";
+                        openSuccess("Duyệt ảnh thành công!");
+                      }
+                      else
+                      {
+                        document.getElementById("1"+ma).value = '0';
+                        document.getElementById(ma).style.color = "#000";
+                        openError("Đã bỏ duyệt!");
+                      }
 
+                      var url, dta;
+                        url = "<?php echo base_url(); ?>index.php/diadiemhinh/duyet";
+                        dta = {
+                          "HA_MA" : ma,
+                          "HA_DUYET" : tg
+                        };
+
+                        $.post(url, dta, function(data, status){
+
+                          console.log(status);
+                          console.log(data);
+
+                        }, 'json');
+
+                    });
+
+                    $(".xoa").jqxButton();
+                    $(".xoa").click(function () {
+
+                         var ten = this.value;
+
+                          var url, dta;
+                            url = "<?php echo base_url(); ?>index.php/diadiemhinh/xoa";
+                            dta = {
+                              "HA_TEN" : ten
+                            };
+                            console.log(dta);
+                            $.post(url, dta, function(data, status){
+
+                              console.log(status);
+                              console.log(data);
+                              document.getElementById(ten).style.color = "#f00";
+                              document.getElementById(ten).disabled = true;
+                              openSuccess("Xóa ảnh thành công");
+
+                            }, 'json');
+
+                    });
+                },
+                columns: [
+                      {
+                          text: 'Hình ảnh', align: 'left', dataField: 'model',
+                          // row - row's index.
+                          // column - column's data field.
+                          // value - cell's value.
+                          // rowData - rendered row's object.
+                          cellsRenderer: function (row, column, value, rowData) {
+                              var dulieus = rowData.dulieus;
+                              var container = "<div style='overflow: scroll; height: 500px;'>";
+                              for (var i = 0; i < dulieus.length; i++) {
+                                  var dulieu = dulieus[i];
+                                  var item = "<div style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
+                                  var image = "<div style='margin: 5px; margin-bottom: 3px;'>";
+                                  var imgurl = dulieu.img;
+                                  var img = '<button id="'+ dulieu.HA_MA +'2" onclick="daidien('+ dulieu.HA_MA +');"><img class="img1" width=150 height=100 style="display: block;" src="' + imgurl + '"/></button>';
+                                  image += img;
+                                  image += "</div>";
+
+                                  var info = "<div style='margin: 5px; margin-left: 10px; margin-bottom: 3px;'>";
+                                  info += "<div>Mã hình: " + dulieu.HA_MA + "</div>";
+                                  info += "<div>Tên hình: " + dulieu.HA_TEN + "</div>";
+                                  info += "<div>Trạng thái: <input class='input' id='1" + dulieu.HA_MA + "' type='text' value='" + dulieu.HA_DUYET + "' /></div>";
+                                  info += "</div>";
+                                  var maud = "#000";
+                                  if(dulieu.HA_DUYET == "1")
+                                  {
+                                    maud = "#00f";
+                                  }
+                                  var duyet = "<button class='duyet' id='" + dulieu.HA_MA + "' value='" + dulieu.HA_MA + "' style='color: " + maud + "; margin: 5px; width: 70px; height: 30px; left: -100px; position: relative; margin-left: 50%; margin-bottom: 3px;'>Duyệt</button>";
+                                  var xoa = "<button class='xoa' id='" + dulieu.HA_TEN + "' value='" + dulieu.HA_TEN + "' style='margin: 5px; width: 70px; height: 30px; left: -200px; position: relative; margin-left: 50%; margin-bottom: 3px;'>Xóa</button>";
+
+                                  item += image;
+                                  item += info;
+                                  item += duyet;
+                                  item += xoa;
+                                  item += "</div>";
+                                  container += item;
+                              }
+                              container += "</div>";
+                              return container;
+                          }
+                      }
+                ]
             });
-            
         });
+
+            function openSuccess(str)
+            {
+                $("#result").html(str);
+                $("#notiSuccess").jqxNotification("open");
+            }
+
+            function openError(str)
+            {
+                $("#error").html(str);
+                $("#notiError").jqxNotification("open");
+            }
+
+    function daidien(ma)
+    {
+        var madd = "<?php echo $info['DD_MA']; ?>";
+        //alert(ma);
+        var url, dta;
+        url = "<?php echo base_url(); ?>index.php/diadiemhinh/daidien";
+        dta = {
+            "DD_MA" : madd,
+            "HA_MA" : ma,
+            "HA_DAIDIEN" : "1"
+        };
+        console.log(dta);
+        $.post(url, dta, function(data, status){
+
+            console.log(status);
+            console.log(data);
+            if(data.msg == "success")
+            {
+                openSuccess("Cập nhật ảnh đại diện thành công!");
+                document.getElementById(ma+'2').style.backgroundColor = "#00F";
+            }
+            else
+            {
+                openError("Cập nhật ảnh đại diện thất bại!");
+            }
+        }, 'json');
+    }
+    
+    function duyettatca(giatri, mau){
+                /*var count = "<?php echo $count; ?>";
+                alert(count);*/
+                <?php 
+                        $madd = $info["DD_MA"];
+                          if($info1 != "") 
+                          foreach ($info1 as $item) {  
+                            $madd1 = $item['DD_MA'];
+                            if($madd == $madd1)
+                            {
+                                ?>
+
+                                  var ma = "<?php echo $item['HA_MA']; ?>";
+                                  var id = "#1"+ma;
+                                  var idvalue = $(id).val();
+                                  if(idvalue != giatri)
+                                  {
+                                        var url, dta;
+                                        url = "<?php echo base_url(); ?>index.php/diadiemhinh/duyet";
+                                        dta = {
+                                          "HA_MA" : ma,
+                                          "HA_DUYET" : giatri
+                                        };
+
+                                        $.post(url, dta, function(data, status){
+
+                                          console.log(status);
+                                          console.log(data);
+
+                                        }, 'json');
+
+                                        document.getElementById("1"+ma).value = giatri;
+                                        document.getElementById(ma).style.color = mau;
+                                  }
+
+                                <?php
+                            }
+                        }
+                ?>
+            };
+
         
     </script>
 
@@ -119,25 +312,17 @@
     <?php echo $map['js']; ?>
 
     <style type="text/css">
-        #firstName{
-            text-transform: capitalize;
-        }
-        #lastName{
-            text-transform: capitalize;
-        }
         .tieude{
             color: #111;
             text-transform: capitalize;
             font-size: 14px;
             font-weight: bold;
-            background-color: #09F;
+            background-color: #9CF;
             margin-top: 5px;
             margin-bottom: 5px;
             padding: 5px;
-            text-shadow: 5px 5px 10px #FFF;
-            border-radius: 5px;
-            box-shadow: 1px 1px 3px #09F;
-            opacity: 0.7;
+            border-radius: 2px;
+            opacity: 1;
             transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
             -o-transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
             -ms-transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
@@ -164,25 +349,9 @@
             float: left;
             padding-left: 300px;
         }
-        .thongtin{
-            padding: 10px;
-            margin: 10px;
-            font-size: 18px;
-            font-family: sans-serif;
-        }
         .input{
-        position: absolute;
-        z-index: -1;
-          width: 5px;
-          border-radius: 5px;
-          visibility: visible;
-        }
-        .input1{
-          width: 80px;
-          border-radius: 5px;
-          color: #F00;
+          width: 10px;
           border: none;
-          text-align: center;
         }
         /*.img:hover{
           position: absolute;
@@ -198,14 +367,41 @@
           z-index: 10;
           transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
         }*/
-        .khung{
-            float: left;
-            margin-top: 10px;
-            margin-bottom: 10px;
+        .noidungthongtin{
+            padding: 5px;
+            width: "100%";
+            border: solid 2px #6CF;
+        }
+        .ten{
+            background-color: #6CF;
+            color: #03C;
+            font-style: italic;
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+            text-transform: capitalize;
+        }
+        .cot1{
+            font-weight: bold;
+            width: 160px;
+            border-bottom: solid 1px #99F;
+        }
+        .cot2{
+            font-style: italic;
+            border-bottom: solid 1px #99F;
+        }
+        .tablenoidung{
+            padding: 5px;
         }
     </style>
 </head>
 <body>
+    <div id="notiSuccess">
+        <div id="result">Thông báo thành công!</div>
+    </div>
+    <div id="notiError">
+        <div id="error">Thông báo lỗi!</div>
+    </div>
     <center>
     <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
         <div id="tieude">
@@ -216,11 +412,6 @@
         </div>
         <div style="font-family: Verdana; font-size: 13px;">
                 <table width="100%">
-                    <!-- <tr>
-                        <td align="center">
-                            <input id="submit" type="button" value="Trở lại" />
-                        </td>
-                    </tr> -->
                      <tr>
                         <td>
                             <div class="tieude">Thông tin cơ bản</div>
@@ -228,20 +419,181 @@
                     </tr>
                     <tr>
                         <td class="thongtin">
-                            <h1><?php echo $info['DD_MA']; ?>. <?php echo $info['DD_TEN']; ?> </h1>
-                            Thuộc dạng du lịch <?php echo $info['DM_MA']; ?> <br/>
-                            Nằm trên tuyến đường <?php echo $info['DD_DIACHI']; ?> thuộc xã <?php echo $info['X_MA']; ?> huyện <?php echo $info['H_MA']; ?> tỉnh <?php echo $info['T_MA']; ?> <br/>
-                            Một số thông tin liên hệ: <br/>
-                            - Số điện thoại: <?php echo $info['DD_SDT']; ?> <br/>
-                            - Địa chỉ Email: <?php echo $info['DD_EMAIL']; ?> <br/>
-                            - Địa chỉ Website: <?php echo $info['DD_WEBSITE']; ?> <br/>
-                            Mô tả đôi nét: <?php echo $info['DD_MOTA']; ?> <br/>
-                            Giới thiệu chi tiết: <?php echo $info['DD_GIOITHIEU']; ?> <br/>
-                            Thời gian mở cửa: <?php echo $info['DD_BATDAU']; ?> <br/>
-                            Thời gian đóng cửa: <?php echo $info['DD_KETTHUC']; ?> <br/>
-                            Giá cả từ: <?php echo $info['DD_GIATU']; ?> VNĐ<br/>
-                            Giá cả đến: <?php echo $info['DD_GIADEN']; ?> VNĐ<br/>
-                            Chương trình (Nếu có): <?php echo $info['DD_NOIDUNG']; ?>
+
+                        <table class="noidungthongtin" width="100%">
+                            <tr>
+                                <td width="320">
+                                    <?php 
+                                        $madd = $info['DD_MA'];
+                                        $anhdaidien = "anhdaidien.jpg";
+                                        if($info1 != "") 
+                                        foreach ($info1 as $item) {  
+                                            $madd1 = $item['DD_MA'];
+                                            if($madd == $madd1)
+                                            {
+                                                $dd = $item['HA_DAIDIEN'];
+                                                if($dd == "1")
+                                                {
+                                                    $anhdaidien = $item['HA_TEN'];
+                                                }
+                                            }
+                                        }
+                                    ?>
+                                    <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width='300' height='300'>
+                                </td>
+                                <td>
+                                    <?php //echo $info['DD_MA']; ?>
+                                    <table class="tablenoidung" width="100%">
+                                        <tr>
+                                            <td colspan="2">
+                                                <div class="ten"><?php echo $info['DD_TEN']; ?></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cot1">
+                                                Thuộc dạng du lịch
+                                            </td>
+                                            <td class="cot2">
+                                                <?php echo $tendanhmuc; ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cot1">
+                                                Nằm trên đường
+                                            </td>
+                                            <td class="cot2">
+                                                <?php echo $info['DD_DIACHI']; ?> thuộc xã <?php echo $tenxa; ?>
+                                                 huyện <?php echo $tenhuyen; ?> tỉnh <?php echo $tentinh; ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cot1">
+                                                Số điện thoại
+                                            </td>
+                                            <td class="cot2">
+                                                <?php 
+                                                  $value = $info['DD_SDT'];
+                                                  if($value == "")
+                                                  {
+                                                    echo "Đang được cập nhật";
+                                                  }
+                                                  else
+                                                  {
+                                                    echo $value;
+                                                  }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cot1">
+                                                Địa chỉ Email
+                                            </td>
+                                            <td class="cot2">
+                                                <?php 
+                                                  $value = $info['DD_EMAIL'];
+                                                  if($value == "")
+                                                  {
+                                                    echo "Đang được cập nhật";
+                                                  }
+                                                  else
+                                                  {
+                                                    echo $value;
+                                                  }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cot1">
+                                               Địa chỉ Website
+                                            </td>
+                                            <td class="cot2">
+                                                <?php 
+                                                  $value = $info['DD_WEBSITE'];
+                                                  if($value == "")
+                                                  {
+                                                    echo "Đang được cập nhật";
+                                                  }
+                                                  else
+                                                  {
+                                                    echo $value;
+                                                  }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cot1">
+                                                Mô tả đôi nét
+                                            </td>
+                                            <td class="cot2">
+                                                <?php 
+                                                  $value = $info['DD_MOTA'];
+                                                  if($value == "")
+                                                  {
+                                                    echo "Đang được cập nhật";
+                                                  }
+                                                  else
+                                                  {
+                                                    echo $value;
+                                                  }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cot1">
+                                                Giới thiệu chi tiết
+                                            </td>
+                                            <td class="cot2">
+                                                <?php 
+                                                  $value = $info['DD_GIOITHIEU'];
+                                                  if($value == "")
+                                                  {
+                                                    echo "Đang được cập nhật";
+                                                  }
+                                                  else
+                                                  {
+                                                    echo $value;
+                                                  }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cot1">
+                                                Thời gian mở cửa
+                                            </td>
+                                            <td class="cot2">
+                                                <?php echo $info['DD_BATDAU']; ?> - <?php echo $info['DD_KETTHUC']; ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cot1">
+                                                Giá bán
+                                            </td>
+                                            <td class="cot2">
+                                                <?php echo $info['DD_GIATU']; ?> - <?php echo $info['DD_GIADEN']; ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cot1">
+                                                Nội dung
+                                            </td>
+                                            <td class="cot2">
+                                                <?php 
+                                                  $value = $info['DD_NOIDUNG'];
+                                                  if($value == "")
+                                                  {
+                                                    echo "Đang được cập nhật";
+                                                  }
+                                                  else
+                                                  {
+                                                    echo $value;
+                                                  }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
 
                         </td>
                     </tr>
@@ -252,54 +604,32 @@
                     </tr>
                     <tr>
                         <td>
-                            <?php 
-                              $madd = $info["DD_MA"];
-                              foreach ($info1 as $item) 
-                              {      
-                                $madd1 = $item['DD_MA'];
-                                if($madd == $madd1)
-                                {
-                                  ?>
-                                        <div class="khung">
-                                        <img class="img" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $item['HA_TEN'] ?>" width="250" height="250">
-                                        <br/>
-                                        <center>
-                                        <button class="duyet" value="<?php echo $item['HA_MA']; ?>" ><div class="divduyet" id="<?php echo $item['HA_MA']; ?>1">
-                                            
-                                            <?php if($item['HA_DUYET'] == 0) 
-                                                    {echo "Chưa Duyệt";} 
-                                                    else {echo "Đã Duyệt";} 
-                                            ?>
-
-                                        </div></button>
-                                        <!-- Tên: <?php echo $item['HA_TEN']; ?> |  --><input class="input" id="<?php echo $item['HA_MA']; ?>" type="text" value="<?php echo $item['HA_DUYET']; ?>" readonly="readonly" />
-                                        <!-- <input class="duyet" type="button" value="<?php echo $item['HA_MA']; ?>" />
-                                        <input class="xoa" type="button" value="<?php echo $item['HA_TEN']; ?>" /> -->
-                                        
-                                        <button class="xoa" value="<?php echo $item['HA_TEN']; ?>"><input class="input1" type="text" id="<?php echo $item['HA_TEN']; ?>" readonly="readonly" value="Xóa" /></button> </center> <br/>
-
-                                        </div>
-                                  <?php 
-                                  //echo $item['HA_TEN']." | Duyệt: ".$item['HA_DUYET'];
-                                }
-                              }
-                            ?>
+                            <button id='duyettatca' onclick="duyettatca('1','#00F');">Duyệt tất cả</button>
+                            <button id='huytatca' onclick="duyettatca('0','#000');">Hủy tất cả</button>
+                            <!-- <select id='locduyet'>
+                              <option value="true">Tất cả</option>
+                              <option value="1">Đã duyệt</option>
+                              <option value="0">Chưa duyệt</option>
+                            </select> -->
+                            <div style="margin-top: 0px;" id="dataTable"></div>
                         </td>
-                    </tr> 
+                    </tr>
                     <tr>
                         <td>
                             <div class="tieude">Vị trí</div>
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td> <input type="text" id="myPlaceTextBox" />
                             <?php echo $map['html']; ?>
-                            Lat: <input type="text" id="lat" value="" readonly="readonly" >
-                            Lng: <input type="text" id="lng" value="" readonly="readonly" >
+                            Lat: <input type="text" id="lat" value="" readonly >
+                            Lng: <input type="text" id="lng" value="" readonly >
                         </td>
                     </tr>
                 </table>
         </div>
-    </div></center>
+    </div>
+    <input id="submit" type="button" value="Trở lại" />
+    </center>
 </body>
 </html>

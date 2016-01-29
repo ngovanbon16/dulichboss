@@ -11,6 +11,7 @@ class Mhinhanh extends CI_Model {
         $this->db->select('*');
         $this->db->from($this->_table);
         $this->db->order_by("HA_NGAYDANG", "desc");
+        $this->db->order_by("HA_DUYET", "asc");
         $query = $this -> db -> get();           
         if($query->num_rows() > 0)
         {
@@ -60,6 +61,12 @@ class Mhinhanh extends CI_Model {
     }
 
     public function update($id, $data_update){
+        $this->db->where("HA_MA", $id);
+        $this->db->update($this->_table, $data_update);
+    }
+
+    public function updateanhdaidien($madd, $id, $data_update){ // update anh dai dien cho mot dia diem madd: mã địa điểm, 
+        $this->db->where("DD_MA", $madd);
         $this->db->where("HA_MA", $id);
         $this->db->update($this->_table, $data_update);
     }

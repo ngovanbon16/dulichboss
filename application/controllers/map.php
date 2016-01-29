@@ -127,13 +127,33 @@ class Map extends CI_Controller {
 		$this->googlemaps->add_marker($marker);
 
 		$this->load->model("mdiadiem");
+		$this->load->model("mhinhanh");
 		$query = $this->mdiadiem->getList();
 		foreach ($query as $item) {
 			$local = $item['DD_VITRI'];
 			$danhmuc = $item['DM_MA'];
 			$marker = array();
 			$marker['position'] = $local;
-			$marker['infowindow_content'] = $item['DD_TEN'];
+
+			$madd = $item['DD_MA'];
+            $anhdaidien = "anhdaidien.jpg";
+            $info1 = $this->mhinhanh->getList();
+            if($info1 != "") 
+            foreach ($info1 as $key) {  
+            	$madd1 = $key['DD_MA'];
+	            if($madd == $madd1)
+	            {
+	                $dd = $key['HA_DAIDIEN'];
+	                if($dd == "1")
+	                {
+	                    $anhdaidien = $key['HA_TEN'];
+	                }
+	            }
+            }
+
+			$hinh = "<img src='".base_url()."uploads/diadiem/".$anhdaidien."' width='150' hgiht='150'>";
+			$noidung = "<a href='".base_url()."index.php/aediadiem/detail/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a><br/>".$item['DD_DIACHI'];
+			$marker['infowindow_content'] = $hinh.$noidung;
 			//$marker['onclick'] = 'alert("You just clicked me!!")';
 			$marker['icon'] = base_url().'/uploads/danhmuc/'.$danhmuc.'.png';
 			$this->googlemaps->add_marker($marker);

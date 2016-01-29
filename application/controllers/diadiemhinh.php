@@ -250,6 +250,34 @@ class Diadiemhinh extends CI_Controller
 	$this->mhinhanh->update($HA_MA, $data);
   }
 
+  public function daidien()
+  {
+  	$DD_MA = $_POST["DD_MA"];
+  	$HA_MA = $_POST["HA_MA"];
+  	$HA_DAIDIEN = $_POST["HA_DAIDIEN"];
+
+  	$data = array(
+	    "HA_DAIDIEN" => $HA_DAIDIEN
+	);
+	$this->mhinhanh->update($HA_MA, $data);
+
+	$query = $this->mhinhanh->getList();
+	foreach ($query as $iteam) {
+		$maha = $iteam['HA_MA'];
+		if($maha != $HA_MA)
+		{
+			$data = array(
+			    "HA_DAIDIEN" => "0"
+			);
+			$this->mhinhanh->updateanhdaidien($DD_MA, $maha, $data);
+		}
+	}
+
+	$response = array('msg' => 'success');
+    $jsonString = json_encode($response);
+    echo $jsonString;
+  }
+
   public function xoa()
     {
         $HA_TEN = $_POST["HA_TEN"];

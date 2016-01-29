@@ -38,6 +38,23 @@ class Mhuyen extends CI_Model {
         }
      }
 
+    public function getten($matinh, $id)// lay ten cua huyen
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where("T_MA", $matinh);
+        $this->db->where("H_MA", $id);
+        $query = $this ->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return $query->row_array();
+        }
+    }
+
     public function insert($data_insert){
         $this->db->insert($this->_table,$data_insert);
     }

@@ -60,7 +60,7 @@ class Diadiem extends CI_Controller
 		echo $jsonString;
 	}
 
-	public function data1($size, $star)
+	public function data1($size, $star) // dung cho load du lieu tung phan co kich thuoc va vitri bat dau
 	{
 		$data = $this->mdiadiem->getList1($size, $star);
 
@@ -68,7 +68,7 @@ class Diadiem extends CI_Controller
 		echo $jsonString;
 	}
 
-	public function countAll()
+	public function countAll() // dem tong so hang trong bang
 	{
 		$total = $this->mdiadiem->countAll();
 		$response = array('total' => $total);

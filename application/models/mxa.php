@@ -39,6 +39,24 @@ class Mxa extends CI_Model {
         }
      }
 
+     public function getten($matinh, $mahuyen, $id)// lay ten cua xa
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where("T_MA", $matinh);
+        $this->db->where("H_MA", $mahuyen);
+        $this->db->where("X_MA", $id);
+        $query = $this ->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return $query->row_array();
+        }
+    }
+
     public function insert($data_insert){
         $this->db->insert($this->_table,$data_insert);
     }

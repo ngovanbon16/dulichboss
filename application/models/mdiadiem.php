@@ -40,7 +40,7 @@ class Mdiadiem extends CI_Model {
         }
     }
 
-    public function getList1($size, $star)
+    public function getList1($size, $star) // dung cho load du lieu tung phan
     {
         $this->db->select('*');
         $this->db->from($this->_table);
@@ -59,7 +59,7 @@ class Mdiadiem extends CI_Model {
         }
     }
 
-    public function countAll(){
+    public function countAll(){ // dung cho load du lieu tung phan
         return $this->db->count_all($this->_table); 
     }
 

@@ -61,6 +61,22 @@ class Nguoidung extends CI_Controller
 		echo $jsonString;
 	}
 
+	public function data1($size, $star) // dung cho load du lieu tung phan co kich thuoc va vitri bat dau
+	{
+		$data = $this->mnguoidung->getList1($size, $star);
+
+		$jsonString = json_encode($data);
+		echo $jsonString;
+	}
+
+	public function countAll() // dem tong so hang trong bang
+	{
+		$total = $this->mnguoidung->countAll();
+		$response = array('total' => $total);
+		$jsonString = json_encode($response);
+		echo $jsonString;
+	}
+
 	public function edit()
 	{
 		//$this->_data['subview'] = 'admin/suand_view';

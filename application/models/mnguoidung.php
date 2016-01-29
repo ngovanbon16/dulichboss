@@ -22,6 +22,28 @@ class Mnguoidung extends CI_Model {
         }
     }
 
+    public function getList1($size, $star) // dung cho load du lieu tung phan
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->order_by("ND_NGAYCAPNHAT", "desc");
+        $this->db->order_by("ND_NGAYTAO", "desc");
+        $this->db->limit($size, $star);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function countAll(){ // dung cho load du lieu tung phan
+        return $this->db->count_all($this->_table); 
+    }
+
     public function getID($id)
     {
         $this->db->select('*');

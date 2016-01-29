@@ -39,6 +39,20 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
 
     <script type="text/javascript">
+            function openSuccess(str)
+            {
+                $("#result").html(str);
+                $("#notiSuccess").jqxNotification("open");
+                $("#notiSuccess").jqxNotification("open");
+            }
+
+            function openError(str)
+            {
+                $("#error").html(str);
+                $("#notiError").jqxNotification("open");
+                $("#notiError").jqxNotification("open");
+            }
+
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
 
@@ -53,20 +67,6 @@
                 width: notificationWidth, position: "top-right", opacity: 0.9,
                 autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "error"
             });
-
-            function openSuccess(str)
-            {
-                $("#result").html(str);
-                $("#notiSuccess").jqxNotification("open");
-                $("#notiSuccess").jqxNotification("open");
-            }
-
-            function openError(str)
-            {
-                $("#error").html(str);
-                $("#notiError").jqxNotification("open");
-                $("#notiError").jqxNotification("open");
-            }
 
             $("#next").jqxButton({ width: '80', height: '30'});
             $("#back").jqxButton({ width: '80', height: '30'});

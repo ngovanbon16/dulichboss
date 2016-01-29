@@ -233,72 +233,28 @@ class Aediadiem extends CI_Controller
 	public function detail($id)
 	{
        	$info = $this->mdiadiem->getID($id);
+       	$madanhmuc = $info['DM_MA'];
+       	$matinh = $info['T_MA'];
+       	$mahuyen = $info['H_MA'];
+       	$maxa = $info['X_MA'];
 
-       		$this->_data['indexdanhmuc'] = "-1";
-       		$this->_data['indextinh'] = "-1";
-       		$this->_data['indexhuyen'] = "-1";
-       		$this->_data['indexxa'] = "-1";
+       	$this->load->model("mdanhmuc");
+       	$xa = $this->mdanhmuc->getID($madanhmuc);
+       	$this->_data['tendanhmuc'] = $xa["DM_TEN"];
 
-       		$this->load->model("mdanhmuc");
-       		$query = $this->mdanhmuc->getList();
-            $danhmuc = $info["DM_MA"]; 
-            $i = -1;
-            if($query != false)
-            {
-	            foreach ($query as $item) {
-	            	$i++;
-	            	if($danhmuc == $item["DM_MA"])
-	           		{
-	                	$this->_data['indexdanhmuc'] = $i;
-	                }
-	            }
-        	}
+       	$this->load->model("mtinh");
+       	$tinh = $this->mtinh->getID($matinh);
+       	$this->_data['tentinh'] = $tinh["T_TEN"];
 
-       		$this->load->model("mtinh");
-       		$query = $this->mtinh->getList();
-            $matinh = $info["T_MA"]; 
-            $i = -1;
-            if($query != false)
-            {
-	            foreach ($query as $item) {
-	            	$i++;
-	            	if($matinh == $item["T_MA"])
-	           		{
-	                	$this->_data['indextinh'] = $i;
-	                }
-	            }
-        	}
+       	$this->load->model("mhuyen");
+       	$huyen = $this->mhuyen->getten($matinh, $mahuyen);
+       	$this->_data['tenhuyen'] = $huyen["H_TEN"];
 
-            $this->load->model("mhuyen");
-       		$query = $this->mhuyen->getid($matinh);
-            $mahuyen = $info["H_MA"]; 
-            $i = -1;
-            if($query != false)
-            {
-	            foreach ($query as $item) {
-	            	$i++;
-	            	if($mahuyen == $item["H_MA"])
-	           		{
-	                	$this->_data['indexhuyen'] = $i;
-	                }
-	            }
-        	}
+       	$this->load->model("mxa");
+       	$xa = $this->mxa->getten($matinh, $mahuyen, $maxa);
+       	$this->_data['tenxa'] = $xa["X_TEN"];
 
-            $this->load->model("mxa");
-       		$query = $this->mxa->getid($matinh , $mahuyen);
-            $mahuyen = $info["X_MA"]; 
-            $i = -1;
-            if($query != false)
-            {
-	            foreach ($query as $item) {
-	            	$i++;
-	            	if($mahuyen == $item["X_MA"])
-	           		{
-	                	$this->_data['indexxa'] = $i;
-	                }
-	            }
-        	}
-
+       	
         $this->_data['map'] = $this->map($info["DD_VITRI"]);
         $this->_data['info'] = $this->mdiadiem->getID($id);
         $this->load->model("mhinhanh");
@@ -326,13 +282,22 @@ class Aediadiem extends CI_Controller
 		$DD_GIATU = $_POST["DD_GIATU"];
 		$DD_GIADEN = $_POST["DD_GIADEN"];
 		$DD_NOIDUNG = $_POST["DD_NOIDUNG"];
+		$DD_DUYET = $_POST["DD_DUYET"];
+
+		if($DD_DUYET == 'true')
+		{
+			$DD_DUYET = "1";
+		}
+		else
+		{
+			$DD_DUYET = "0";
+		}
 
 		date_default_timezone_set('Asia/Ho_Chi_Minh');  
 	    $date = date('Y-m-d H:i:s');
 
 		$ND_MA = $this->session->userdata('id');
 		$DD_LUOTXEM = "0";
-		$DD_DUYET = "0";
 		$DD_NGAYDANG = $date;
 		$DD_NGAYCAPNHAT = $date;
 
@@ -361,7 +326,7 @@ class Aediadiem extends CI_Controller
 		        "DD_MOTA" => $DD_MOTA,
 		        "DD_VITRI" => $DD_VITRI,
 		        //"DD_LUOTXEM" => $DD_LUOTXEM,
-		        //"DD_DUYET" => $DD_DUYET,
+		        "DD_DUYET" => $DD_DUYET,
 		        //"DD_NGAYDANG" => $DD_NGAYDANG,
 		        "DD_NGAYCAPNHAT" => $DD_NGAYCAPNHAT,
 		        "DD_GIOITHIEU" => $DD_GIOITHIEU,

@@ -29,6 +29,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxtabs.js"></script>
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -180,6 +181,7 @@
                 //$("#createAccount").jqxExpander('setContent', '<span style="margin: 10px;">Account created.</span>');
                 //$('#jqxLoader').jqxLoader('open');
                 //$("#submit").hide();
+                /*alert($("#DD_DUYET").val());*/
                 var url, dta;
                 url="<?php echo base_url(); ?>index.php/aediadiem/update?t=" + Math.random();
                 dta = {
@@ -200,7 +202,8 @@
                     "DD_KETTHUC" : $("#DD_KETTHUC").val(),
                     "DD_GIATU" : $("#DD_GIATU").val(),
                     "DD_GIADEN" : $("#DD_GIADEN").val(),
-                    "DD_NOIDUNG" : $("#DD_NOIDUNG").val()
+                    "DD_NOIDUNG" : $("#DD_NOIDUNG").val(),
+                    "DD_DUYET" : $("#DD_DUYET").val()
                 };
                 console.log(dta);
                 $.post(url, dta, function(data, status){
@@ -230,6 +233,28 @@
 
 
             });
+            
+            var duyet = "<?php if($info['DD_DUYET'] == '1') { echo true; } else { echo false; } ?>";
+            $("#DD_DUYET").jqxCheckBox({ width: 120, height: 25, checked: duyet});
+            if(duyet)
+            {
+                $("#DD_DUYET").find('span')[1].innerHTML = 'Đã duyệt';
+            }
+            else
+            {
+                $("#DD_DUYET").find('span')[1].innerHTML = 'Chưa duyệt';
+            }
+            
+            $("#DD_DUYET").on('change', function (event) {
+                var checked = event.args.checked;
+                if (checked) {
+                    $("#DD_DUYET").find('span')[1].innerHTML = 'Đã duyệt';
+                }
+                else {
+                    $("#DD_DUYET").find('span')[1].innerHTML = 'Chưa duyệt';
+                }
+            });
+
         });
         
     </script>
@@ -717,6 +742,15 @@
                         </td>
                          <td>
                             <textarea id="DD_NOIDUNG" placeholder="Nội dụng..."><?php echo $info['DD_NOIDUNG']; ?></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Duyệt bài đăng
+                        </td>
+                         <td>
+                            <div id='DD_DUYET' style='margin-left: 10px; float: left;'>
+                            <span></span></div>
                         </td>
                     </tr>
                     <tr>
