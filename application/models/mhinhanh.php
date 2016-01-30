@@ -19,11 +19,27 @@ class Mhinhanh extends CI_Model {
         }
         else
         {
-            return false;
+            return $query->result_array();
         }
     }
 
-    public function getID($id)
+    public function getList1($size, $star) // dung cho load du lieu tung phan
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->limit($size, $star);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
+    public function getID($id) // trả về một dòng không cần dùng for để lấy giá trị
     {
         $this->db->select('*');
         $this->db->from($this->_table);
@@ -36,6 +52,22 @@ class Mhinhanh extends CI_Model {
         else
         {
             return $query->row_array();
+        }
+    }
+
+    public function getloc($madd)// loc hinh anh da duyet trong xem chi tiet dia diem
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where('DD_MA', $madd);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array(); // trả về một mảng nhiều hơn 1 dòng phải dùng for để lấy giá trị
+        }
+        else
+        {
+            return $query->result_array();
         }
     }
 

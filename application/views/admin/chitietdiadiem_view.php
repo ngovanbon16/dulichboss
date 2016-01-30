@@ -65,13 +65,10 @@
                     dulieus:
                     [
                         <?php
-                        $count = 0; 
-                          $madd = $info["DD_MA"];
+                          $count = 0; 
                           if($info1 != "") 
                           foreach ($info1 as $item) {  
-                            $madd1 = $item['DD_MA'];
-                            if($madd == $madd1)
-                            {
+                            $count++;
                         ?>
                           { 
                             img: '<?php echo base_url(); ?>uploads/diadiem/<?php echo $item["HA_TEN"]; ?>', HA_MA:
@@ -79,12 +76,12 @@
                             HA_TEN: '<?php echo $item['HA_TEN']; ?>'
                           }, 
                         <?php 
-                            }
-                          }
+                        }
                         ?>
                     ]
                 }
             ];
+          
 
             var source =
             {
@@ -213,6 +210,487 @@
                       }
                 ]
             });
+
+            $("#locduyet").change(function(){
+            var loc = this.value;
+            if(loc == "0")
+            {
+            
+
+            var data = [
+                {
+                    dulieus:
+                    [
+                        <?php
+                          $count = 0; 
+                          if($info1 != "") 
+                          foreach ($info1 as $item) {  
+                            if($item['HA_DUYET'] == "0"){
+                              $count++;
+                        ?>
+                          { 
+                            img: '<?php echo base_url(); ?>uploads/diadiem/<?php echo $item["HA_TEN"]; ?>', HA_MA:
+                            '<?php echo $item['HA_MA']; ?>', HA_DUYET: '<?php echo $item['HA_DUYET']; ?>', 
+                            HA_TEN: '<?php echo $item['HA_TEN']; ?>'
+                          }, 
+                        <?php 
+                          }
+                        }
+                        ?>
+                    ]
+                }
+            ];
+          
+            $("#count").html('<?php echo $count; ?>');
+
+            var source =
+            {
+                localData: data,
+                dataType: "array"
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            var itemsInCart = 0;
+
+            $("#dataTable").jqxDataTable(
+            {
+                width: "100%",
+                //height: "500",
+                source: dataAdapter,
+                /*sortable: true,
+                pageable: true,
+                pageSize: 2,*/
+                /*pagerButtonsCount: 5,*/
+                enableHover: false,
+                selectionMode: 'none',
+                rendered: function () {
+                    $(".duyet").jqxButton();
+                    $(".duyet").click(function () {
+                        //alert(this.value);
+                        var ma = this.value;
+                      //alert(ma);
+                      var id = "#1"+ma;
+                      var idvalue = $(id).val();
+                      var tg = "0";
+                      if(idvalue == "0")
+                      {
+                        document.getElementById("1"+ma).value = '1';
+                        document.getElementById(ma).style.color = "#00f";
+                        tg = "1";
+                        openSuccess("Duyệt ảnh thành công!");
+                      }
+                      else
+                      {
+                        document.getElementById("1"+ma).value = '0';
+                        document.getElementById(ma).style.color = "#000";
+                        openError("Đã bỏ duyệt!");
+                      }
+
+                      var url, dta;
+                        url = "<?php echo base_url(); ?>index.php/diadiemhinh/duyet";
+                        dta = {
+                          "HA_MA" : ma,
+                          "HA_DUYET" : tg
+                        };
+
+                        $.post(url, dta, function(data, status){
+
+                          console.log(status);
+                          console.log(data);
+
+                        }, 'json');
+
+                    });
+
+                    $(".xoa").jqxButton();
+                    $(".xoa").click(function () {
+
+                         var ten = this.value;
+
+                          var url, dta;
+                            url = "<?php echo base_url(); ?>index.php/diadiemhinh/xoa";
+                            dta = {
+                              "HA_TEN" : ten
+                            };
+                            console.log(dta);
+                            $.post(url, dta, function(data, status){
+
+                              console.log(status);
+                              console.log(data);
+                              document.getElementById(ten).style.color = "#f00";
+                              document.getElementById(ten).disabled = true;
+                              openSuccess("Xóa ảnh thành công");
+
+                            }, 'json');
+
+                    });
+                },
+                columns: [
+                      {
+                          text: 'Hình ảnh', align: 'left', dataField: 'model',
+                          // row - row's index.
+                          // column - column's data field.
+                          // value - cell's value.
+                          // rowData - rendered row's object.
+                          cellsRenderer: function (row, column, value, rowData) {
+                              var dulieus = rowData.dulieus;
+                              var container = "<div style='overflow: scroll; height: 500px;'>";
+                              for (var i = 0; i < dulieus.length; i++) {
+                                  var dulieu = dulieus[i];
+                                  var item = "<div style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
+                                  var image = "<div style='margin: 5px; margin-bottom: 3px;'>";
+                                  var imgurl = dulieu.img;
+                                  var img = '<button id="'+ dulieu.HA_MA +'2" onclick="daidien('+ dulieu.HA_MA +');"><img class="img1" width=150 height=100 style="display: block;" src="' + imgurl + '"/></button>';
+                                  image += img;
+                                  image += "</div>";
+
+                                  var info = "<div style='margin: 5px; margin-left: 10px; margin-bottom: 3px;'>";
+                                  info += "<div>Mã hình: " + dulieu.HA_MA + "</div>";
+                                  info += "<div>Tên hình: " + dulieu.HA_TEN + "</div>";
+                                  info += "<div>Trạng thái: <input class='input' id='1" + dulieu.HA_MA + "' type='text' value='" + dulieu.HA_DUYET + "' /></div>";
+                                  info += "</div>";
+                                  var maud = "#000";
+                                  if(dulieu.HA_DUYET == "1")
+                                  {
+                                    maud = "#00f";
+                                  }
+                                  var duyet = "<button class='duyet' id='" + dulieu.HA_MA + "' value='" + dulieu.HA_MA + "' style='color: " + maud + "; margin: 5px; width: 70px; height: 30px; left: -100px; position: relative; margin-left: 50%; margin-bottom: 3px;'>Duyệt</button>";
+                                  var xoa = "<button class='xoa' id='" + dulieu.HA_TEN + "' value='" + dulieu.HA_TEN + "' style='margin: 5px; width: 70px; height: 30px; left: -200px; position: relative; margin-left: 50%; margin-bottom: 3px;'>Xóa</button>";
+
+                                  item += image;
+                                  item += info;
+                                  item += duyet;
+                                  item += xoa;
+                                  item += "</div>";
+                                  container += item;
+                              }
+                              container += "</div>";
+                              return container;
+                          }
+                      }
+                ]
+            });
+            }
+
+            if(loc == "1")
+            {
+            
+
+            var data = [
+                {
+                    dulieus:
+                    [
+                        <?php
+                          $count = 0; 
+                          if($info1 != "") 
+                          foreach ($info1 as $item) {  
+                            if($item['HA_DUYET'] == "1"){
+                              $count++;
+                        ?>
+                          { 
+                            img: '<?php echo base_url(); ?>uploads/diadiem/<?php echo $item["HA_TEN"]; ?>', HA_MA:
+                            '<?php echo $item['HA_MA']; ?>', HA_DUYET: '<?php echo $item['HA_DUYET']; ?>', 
+                            HA_TEN: '<?php echo $item['HA_TEN']; ?>'
+                          }, 
+                        <?php 
+                          }
+                        }
+                        ?>
+                    ]
+                }
+            ];
+          
+          $("#count").html('<?php echo $count; ?>');
+
+            var source =
+            {
+                localData: data,
+                dataType: "array"
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            var itemsInCart = 0;
+
+            $("#dataTable").jqxDataTable(
+            {
+                width: "100%",
+                //height: "500",
+                source: dataAdapter,
+                /*sortable: true,
+                pageable: true,
+                pageSize: 2,*/
+                /*pagerButtonsCount: 5,*/
+                enableHover: false,
+                selectionMode: 'none',
+                rendered: function () {
+                    $(".duyet").jqxButton();
+                    $(".duyet").click(function () {
+                        //alert(this.value);
+                        var ma = this.value;
+                      //alert(ma);
+                      var id = "#1"+ma;
+                      var idvalue = $(id).val();
+                      var tg = "0";
+                      if(idvalue == "0")
+                      {
+                        document.getElementById("1"+ma).value = '1';
+                        document.getElementById(ma).style.color = "#00f";
+                        tg = "1";
+                        openSuccess("Duyệt ảnh thành công!");
+                      }
+                      else
+                      {
+                        document.getElementById("1"+ma).value = '0';
+                        document.getElementById(ma).style.color = "#000";
+                        openError("Đã bỏ duyệt!");
+                      }
+
+                      var url, dta;
+                        url = "<?php echo base_url(); ?>index.php/diadiemhinh/duyet";
+                        dta = {
+                          "HA_MA" : ma,
+                          "HA_DUYET" : tg
+                        };
+
+                        $.post(url, dta, function(data, status){
+
+                          console.log(status);
+                          console.log(data);
+
+                        }, 'json');
+
+                    });
+
+                    $(".xoa").jqxButton();
+                    $(".xoa").click(function () {
+
+                         var ten = this.value;
+
+                          var url, dta;
+                            url = "<?php echo base_url(); ?>index.php/diadiemhinh/xoa";
+                            dta = {
+                              "HA_TEN" : ten
+                            };
+                            console.log(dta);
+                            $.post(url, dta, function(data, status){
+
+                              console.log(status);
+                              console.log(data);
+                              document.getElementById(ten).style.color = "#f00";
+                              document.getElementById(ten).disabled = true;
+                              openSuccess("Xóa ảnh thành công");
+
+                            }, 'json');
+
+                    });
+                },
+                columns: [
+                      {
+                          text: 'Hình ảnh', align: 'left', dataField: 'model',
+                          // row - row's index.
+                          // column - column's data field.
+                          // value - cell's value.
+                          // rowData - rendered row's object.
+                          cellsRenderer: function (row, column, value, rowData) {
+                              var dulieus = rowData.dulieus;
+                              var container = "<div style='overflow: scroll; height: 500px;'>";
+                              for (var i = 0; i < dulieus.length; i++) {
+                                  var dulieu = dulieus[i];
+                                  var item = "<div style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
+                                  var image = "<div style='margin: 5px; margin-bottom: 3px;'>";
+                                  var imgurl = dulieu.img;
+                                  var img = '<button id="'+ dulieu.HA_MA +'2" onclick="daidien('+ dulieu.HA_MA +');"><img class="img1" width=150 height=100 style="display: block;" src="' + imgurl + '"/></button>';
+                                  image += img;
+                                  image += "</div>";
+
+                                  var info = "<div style='margin: 5px; margin-left: 10px; margin-bottom: 3px;'>";
+                                  info += "<div>Mã hình: " + dulieu.HA_MA + "</div>";
+                                  info += "<div>Tên hình: " + dulieu.HA_TEN + "</div>";
+                                  info += "<div>Trạng thái: <input class='input' id='1" + dulieu.HA_MA + "' type='text' value='" + dulieu.HA_DUYET + "' /></div>";
+                                  info += "</div>";
+                                  var maud = "#000";
+                                  if(dulieu.HA_DUYET == "1")
+                                  {
+                                    maud = "#00f";
+                                  }
+                                  var duyet = "<button class='duyet' id='" + dulieu.HA_MA + "' value='" + dulieu.HA_MA + "' style='color: " + maud + "; margin: 5px; width: 70px; height: 30px; left: -100px; position: relative; margin-left: 50%; margin-bottom: 3px;'>Duyệt</button>";
+                                  var xoa = "<button class='xoa' id='" + dulieu.HA_TEN + "' value='" + dulieu.HA_TEN + "' style='margin: 5px; width: 70px; height: 30px; left: -200px; position: relative; margin-left: 50%; margin-bottom: 3px;'>Xóa</button>";
+
+                                  item += image;
+                                  item += info;
+                                  item += duyet;
+                                  item += xoa;
+                                  item += "</div>";
+                                  container += item;
+                              }
+                              container += "</div>";
+                              return container;
+                          }
+                      }
+                ]
+            });
+            }
+
+            if(loc == "")
+            {
+            
+
+            var data = [
+                {
+                    dulieus:
+                    [
+                        <?php
+                          $count = 0; 
+                          if($info1 != "") 
+                          foreach ($info1 as $item) {  
+                            $count++;
+                        ?>
+                          { 
+                            img: '<?php echo base_url(); ?>uploads/diadiem/<?php echo $item["HA_TEN"]; ?>', HA_MA:
+                            '<?php echo $item['HA_MA']; ?>', HA_DUYET: '<?php echo $item['HA_DUYET']; ?>', 
+                            HA_TEN: '<?php echo $item['HA_TEN']; ?>'
+                          }, 
+                        <?php 
+                        }
+                        ?>
+                    ]
+                }
+            ];
+            
+            $("#count").html(<?php echo $count; ?>)
+
+            var source =
+            {
+                localData: data,
+                dataType: "array"
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            var itemsInCart = 0;
+
+            $("#dataTable").jqxDataTable(
+            {
+                width: "100%",
+                //height: "500",
+                source: dataAdapter,
+                /*sortable: true,
+                pageable: true,
+                pageSize: 2,*/
+                /*pagerButtonsCount: 5,*/
+                enableHover: false,
+                selectionMode: 'none',
+                rendered: function () {
+                    $(".duyet").jqxButton();
+                    $(".duyet").click(function () {
+                        //alert(this.value);
+                        var ma = this.value;
+                      //alert(ma);
+                      var id = "#1"+ma;
+                      var idvalue = $(id).val();
+                      var tg = "0";
+                      if(idvalue == "0")
+                      {
+                        document.getElementById("1"+ma).value = '1';
+                        document.getElementById(ma).style.color = "#00f";
+                        tg = "1";
+                        openSuccess("Duyệt ảnh thành công!");
+                      }
+                      else
+                      {
+                        document.getElementById("1"+ma).value = '0';
+                        document.getElementById(ma).style.color = "#000";
+                        openError("Đã bỏ duyệt!");
+                      }
+
+                      var url, dta;
+                        url = "<?php echo base_url(); ?>index.php/diadiemhinh/duyet";
+                        dta = {
+                          "HA_MA" : ma,
+                          "HA_DUYET" : tg
+                        };
+
+                        $.post(url, dta, function(data, status){
+
+                          console.log(status);
+                          console.log(data);
+
+                        }, 'json');
+
+                    });
+
+                    $(".xoa").jqxButton();
+                    $(".xoa").click(function () {
+
+                         var ten = this.value;
+
+                          var url, dta;
+                            url = "<?php echo base_url(); ?>index.php/diadiemhinh/xoa";
+                            dta = {
+                              "HA_TEN" : ten
+                            };
+                            console.log(dta);
+                            $.post(url, dta, function(data, status){
+
+                              console.log(status);
+                              console.log(data);
+                              document.getElementById(ten).style.color = "#f00";
+                              document.getElementById(ten).disabled = true;
+                              openSuccess("Xóa ảnh thành công");
+
+                            }, 'json');
+
+                    });
+                },
+                columns: [
+                      {
+                          text: 'Hình ảnh', align: 'left', dataField: 'model',
+                          // row - row's index.
+                          // column - column's data field.
+                          // value - cell's value.
+                          // rowData - rendered row's object.
+                          cellsRenderer: function (row, column, value, rowData) {
+                              var dulieus = rowData.dulieus;
+                              var container = "<div style='overflow: scroll; height: 500px;'>";
+                              for (var i = 0; i < dulieus.length; i++) {
+                                  var dulieu = dulieus[i];
+                                  var item = "<div style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
+                                  var image = "<div style='margin: 5px; margin-bottom: 3px;'>";
+                                  var imgurl = dulieu.img;
+                                  var img = '<button id="'+ dulieu.HA_MA +'2" onclick="daidien('+ dulieu.HA_MA +');"><img class="img1" width=150 height=100 style="display: block;" src="' + imgurl + '"/></button>';
+                                  image += img;
+                                  image += "</div>";
+
+                                  var info = "<div style='margin: 5px; margin-left: 10px; margin-bottom: 3px;'>";
+                                  info += "<div>Mã hình: " + dulieu.HA_MA + "</div>";
+                                  info += "<div>Tên hình: " + dulieu.HA_TEN + "</div>";
+                                  info += "<div>Trạng thái: <input class='input' id='1" + dulieu.HA_MA + "' type='text' value='" + dulieu.HA_DUYET + "' /></div>";
+                                  info += "</div>";
+                                  var maud = "#000";
+                                  if(dulieu.HA_DUYET == "1")
+                                  {
+                                    maud = "#00f";
+                                  }
+                                  var duyet = "<button class='duyet' id='" + dulieu.HA_MA + "' value='" + dulieu.HA_MA + "' style='color: " + maud + "; margin: 5px; width: 70px; height: 30px; left: -100px; position: relative; margin-left: 50%; margin-bottom: 3px;'>Duyệt</button>";
+                                  var xoa = "<button class='xoa' id='" + dulieu.HA_TEN + "' value='" + dulieu.HA_TEN + "' style='margin: 5px; width: 70px; height: 30px; left: -200px; position: relative; margin-left: 50%; margin-bottom: 3px;'>Xóa</button>";
+
+                                  item += image;
+                                  item += info;
+                                  item += duyet;
+                                  item += xoa;
+                                  item += "</div>";
+                                  container += item;
+                              }
+                              container += "</div>";
+                              return container;
+                          }
+                      }
+                ]
+            });
+            }
+
+
+            });
+
         });
 
             function openSuccess(str)
@@ -392,6 +870,22 @@
         }
         .tablenoidung{
             padding: 5px;
+        }
+        #locduyet{
+          margin-left: 10px;
+          width: 150px;
+          height: 30px;
+          border: solid 1px #00F;
+          box-shadow: 2px 2px solid #00F;
+          border-radius: 2px;
+          font-size: 16px;
+        }
+        .count{
+          float: left;
+          margin-left: 10px;
+          margin-top: 4px;
+          font-size: 16px;
+          font-weight: bolder;
         }
     </style>
 </head>
@@ -604,13 +1098,20 @@
                     </tr>
                     <tr>
                         <td>
+                          <div style="float: left;">
                             <button id='duyettatca' onclick="duyettatca('1','#00F');">Duyệt tất cả</button>
                             <button id='huytatca' onclick="duyettatca('0','#000');">Hủy tất cả</button>
-                            <!-- <select id='locduyet'>
-                              <option value="true">Tất cả</option>
-                              <option value="1">Đã duyệt</option>
-                              <option value="0">Chưa duyệt</option>
-                            </select> -->
+                          </div>
+                          <div>
+                              <div style="float: left;">
+                              <select id='locduyet'>
+                                <option value="">Tất cả</option>
+                                <option value="1">Đã duyệt</option>
+                                <option value="0">Chưa duyệt</option>
+                              </select>
+                              </div>
+                              <div class="count" >Tổng: </div><div class="count" id="count"><?php echo $count; ?></div>
+                          </div>
                             <div style="margin-top: 0px;" id="dataTable"></div>
                         </td>
                     </tr>

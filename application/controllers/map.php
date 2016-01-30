@@ -137,17 +137,13 @@ class Map extends CI_Controller {
 
 			$madd = $item['DD_MA'];
             $anhdaidien = "anhdaidien.jpg";
-            $info1 = $this->mhinhanh->getList();
+            $info1 = $this->mhinhanh->getloc($madd);
             if($info1 != "") 
             foreach ($info1 as $key) {  
-            	$madd1 = $key['DD_MA'];
-	            if($madd == $madd1)
+	            $dd = $key['HA_DAIDIEN'];
+	            if($dd == "1")
 	            {
-	                $dd = $key['HA_DAIDIEN'];
-	                if($dd == "1")
-	                {
-	                    $anhdaidien = $key['HA_TEN'];
-	                }
+	                $anhdaidien = $key['HA_TEN'];
 	            }
             }
 
