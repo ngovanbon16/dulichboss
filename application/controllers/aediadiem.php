@@ -262,7 +262,7 @@ class Aediadiem extends CI_Controller
        	$this->load->view("admin/chitietdiadiem_view", $this->_data);
 	}
 
-	public function detailuser($id)
+	public function detailuser($id) // id là mã cua địa điểm
 	{
        	$info = $this->mdiadiem->getID($id);
        	$madanhmuc = $info['DM_MA'];
@@ -291,7 +291,14 @@ class Aediadiem extends CI_Controller
         $this->_data['info'] = $this->mdiadiem->getID($id);
         $this->load->model("mhinhanh");
         $this->_data['info1'] = $this->mhinhanh->getloc($id);
-       	$this->load->view("user/chitietdiadiem_view", $this->_data);
+
+        $this->load->model("mnguoidungdiadiem");
+        $mand = $this->session->userdata('id');
+        $this->_data['danhgia'] = $this->mnguoidungdiadiem->getchitiet($mand, $id);
+
+        $this->_data['subview'] = "user/chitietdiadiem_view";
+        $this->_data['title'] = "Địa điểm";
+       	$this->load->view("user/main.php", $this->_data);
 	}
 
 	public function update()
