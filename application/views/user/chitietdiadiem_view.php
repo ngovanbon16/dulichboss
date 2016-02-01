@@ -8,7 +8,11 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxpanel.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
-    <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxfileupload.js"></script>
+  <!--   /*<script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-modal.js"></script>
+    <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-modalmanager.js"></script>*/ -->
 
 <style type="text/css">
 .noidungthongtin {
@@ -164,9 +168,11 @@
 						}
 						else
 						{
-							$('#myModalbl').modal('toggle');
+							//$('#myModalbl').modal('toggle');
 							openSuccess("Gửi bình luận thành công!");
-							setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $info['DD_MA']; ?>';",1500);
+							$("#jqxFileUpload").show();
+							 document.getElementById("btngui").disabled = true;
+							//setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $info['DD_MA']; ?>';",1500);
 							//alert("Thêm thành công");
 						}
 					}
@@ -314,6 +320,15 @@
  				document.getElementById('iconmuonden').className = "fa fa-star fa-fw";
  			}
 
+ 			$('#jqxFileUpload').jqxFileUpload({ width: 300, uploadUrl: '<?php echo base_url(); ?>index.php/upload/upload', fileInputName: 'fileToUpload' });
+
+ 			$("#btnbinhluan").click(function(){
+ 				$("#jqxFileUpload").hide();
+ 				document.getElementById("btngui").disabled = false;
+ 				document.getElementById("BL_TIEUDE").value = "";
+ 				document.getElementById("BL_NOIDUNG").value = "";
+
+ 			});
         });
     </script>
 
@@ -459,7 +474,7 @@
         	<table class="table table-bordered">
         		<tr>
         			<td width="220">
-	        			<button class="btn" data-toggle='modal' data-target='#myModalbl'> 
+	        			<button id="btnbinhluan" class="btn" data-toggle='modal' data-target='#myModalbl'> 
 	        				<i class="fa fa-comment fa-fw"></i> Bình luận
 	        			</button>
         			</td>
@@ -563,7 +578,7 @@
 </div>    
 
 <!-- Modal -->
-<div id="myModalbl" class="modal fade" role="dialog">
+<div id="myModalbl" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -606,6 +621,10 @@
         		</td><!-- dong cot 2 -->
         	</tr>
         </table>
+
+        <div id="jqxFileUpload">
+    	</div>
+
       </div>
       <div class="modal-footer">
       	<button type="button" id="btngui" class="btn btn-outline btn-success">Gửi</button>

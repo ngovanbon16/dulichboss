@@ -17,5 +17,6 @@
     <div id="jqxFileUpload">
     </div>
     <br />
+    <?php echo $id ?>
 </body>
 </html>

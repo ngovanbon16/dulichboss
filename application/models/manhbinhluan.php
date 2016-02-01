@@ -1,6 +1,6 @@
 <?php
-class Mbinhluan extends CI_Model {
-    protected $_table = 'binhluan';
+class Manhbinhluan extends CI_Model {
+    protected $_table = 'anhbinhluan';
     function __construct()
         {
             parent::__construct();
@@ -25,7 +25,7 @@ class Mbinhluan extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from($this->_table);
-        $this->db->order_by("BL_MA", "asc");
+        $this->db->order_by("ABL_MA", "asc");
         $this->db->limit($size, $star);
         $query = $this->db->get();           
         if($query->num_rows() > 0)
@@ -42,7 +42,7 @@ class Mbinhluan extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from($this->_table);
-        $this->db->where("BL_MA", $id);
+        $this->db->where("ABL_MA", $id);
         $query = $this ->db->get();           
         if($query->num_rows() > 0)
         {
@@ -56,12 +56,8 @@ class Mbinhluan extends CI_Model {
 
     public function max()// được sử dụng để up anh cho bình luận: luu y id luon tang len nen trong du lieu phai co it nhat mot dong
     {
-        $query = $this->db->query("SELECT MAX(BL_MA) maxid FROM binhluan");
+        $query = $this->db->query("SELECT MAX(ABL_MA) maxid FROM anhbinhluan");
         return $query->row_array();
-    }
-
-    public function countAll(){
-        return $this->db->count_all($this->_table); 
     }
 
     public function insert($data_insert){
@@ -70,13 +66,8 @@ class Mbinhluan extends CI_Model {
 
     public function delete($id)
     {
-        $this->db->where('BL_MA', $id);
+        $this->db->where('ABL_MA', $id);
         return $this->db->delete($this->_table);
-    }
-
-    public function update($id, $data_update){
-        $this->db->where("BL_MA", $id);
-        $this->db->update($this->_table, $data_update);
-    }             
+    }            
 }            
 ?>
