@@ -1116,6 +1116,16 @@
                         </td>
                     </tr>
                     <tr>
+                      <td>
+                        <div class="tieude">Quản lý bình luận</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        
+                      </td>
+                    </tr>
+                    <tr>
                         <td>
                             <div class="tieude">Vị trí</div>
                         </td>

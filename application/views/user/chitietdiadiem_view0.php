@@ -240,7 +240,7 @@
                         </ul>
                         <div><!-- tab thong tin -->
                             
-                             <h2><?php echo $info['DD_TEN'] ?></h2>
+                            <h2><?php echo $info['DD_TEN'] ?></h2>
                 
                             <table class="noidungthongtin" width="100%">
                                 <tr>

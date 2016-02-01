@@ -171,7 +171,13 @@
 							//$('#myModalbl').modal('toggle');
 							openSuccess("Gửi bình luận thành công!");
 							$("#jqxFileUpload").show();
+              $("#idbinhluan").show();
 							 document.getElementById("btngui").disabled = true;
+               var idbinhluan = data.msg['idbinhluan'];
+               //alert(idbinhluan);
+               document.getElementById("idbinhluan").value = idbinhluan;
+               var path = "<?php echo base_url(); ?>index.php/upload/upload/" + idbinhluan;
+               $('#jqxFileUpload').jqxFileUpload({ width: 300, uploadUrl: path, fileInputName: 'fileToUpload' });
 							//setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $info['DD_MA']; ?>';",1500);
 							//alert("Thêm thành công");
 						}
@@ -320,10 +326,11 @@
  				document.getElementById('iconmuonden').className = "fa fa-star fa-fw";
  			}
 
- 			$('#jqxFileUpload').jqxFileUpload({ width: 300, uploadUrl: '<?php echo base_url(); ?>index.php/upload/upload', fileInputName: 'fileToUpload' });
+ 			
 
  			$("#btnbinhluan").click(function(){
  				$("#jqxFileUpload").hide();
+        $("#idbinhluan").hide();
  				document.getElementById("btngui").disabled = false;
  				document.getElementById("BL_TIEUDE").value = "";
  				document.getElementById("BL_NOIDUNG").value = "";
@@ -621,7 +628,7 @@
         		</td><!-- dong cot 2 -->
         	</tr>
         </table>
-
+        <input type="text" id="idbinhluan" />
         <div id="jqxFileUpload">
     	</div>
 

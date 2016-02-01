@@ -266,7 +266,7 @@
                                 <a href="#"><i class="fa fa-comments"></i> Phản hồi<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">Bình luận Y</a>
+                                        <a href="<?php echo base_url(); ?>index.php/binhluan">Bình luận</a>
                                     </li>
                                     <li>
                                         <a href="#">Thảo luận Y</a>

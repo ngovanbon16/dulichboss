@@ -21,11 +21,13 @@ class Mbinhluan extends CI_Model {
         }
     }
 
-    public function getList1($size, $star)
+    public function getList1($size, $star) // dung cho load du lieu tung phan
     {
         $this->db->select('*');
         $this->db->from($this->_table);
-        $this->db->order_by("BL_MA", "asc");
+        $this->db->join("diadiem", "diadiem.DD_MA=binhluan.DD_MA");
+        $this->db->join("nguoidung", "nguoidung.ND_MA=binhluan.ND_MA");
+        $this->db->order_by("binhluan.BL_NGAYDANG", "desc");
         $this->db->limit($size, $star);
         $query = $this->db->get();           
         if($query->num_rows() > 0)
@@ -34,8 +36,12 @@ class Mbinhluan extends CI_Model {
         }
         else
         {
-            return false;
+            return $query->result_array();
         }
+    }
+
+    public function countAll(){ // dung cho load du lieu tung phan
+        return $this->db->count_all($this->_table); 
     }
 
     public function getID($id)
@@ -58,10 +64,6 @@ class Mbinhluan extends CI_Model {
     {
         $query = $this->db->query("SELECT MAX(BL_MA) maxid FROM binhluan");
         return $query->row_array();
-    }
-
-    public function countAll(){
-        return $this->db->count_all($this->_table); 
     }
 
     public function insert($data_insert){

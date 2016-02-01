@@ -20,7 +20,7 @@ class Upload extends CI_Controller
         $this->load->view('main.php', $this->_data);
     }
 
-    public function upload()
+    public function upload($idbinhluan)
     {
         $target_dir = "./uploads/binhluan/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -60,15 +60,24 @@ class Upload extends CI_Controller
         } else {
 
             $this->load->model("manhbinhluan");
+
+            /*$this->load->model("mbinhluan");
+            $max = $this->mbinhluan->max();
+            $idbinhluan = $max['maxid'];*/
+
+            $data = array(
+                'BL_MA' => $idbinhluan
+            );
+            $this->manhbinhluan->insert($data);
+
             $max = $this->manhbinhluan->max();
-            $id = $max['maxid'] + 1;
+            $id = $max['maxid'];
             $name = $id.".".$imageFileType;
             $names = $target_dir.$name;
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $names)) {
                 echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
 
                         $this->load->library("image_lib");
-                        $config['file_name']= "20";
                         $config['image_library'] = 'gd2';
                         $config['source_image'] = './uploads/binhluan/'.$name;
                         $config['create_thumb'] = FALSE;
@@ -98,11 +107,11 @@ class Upload extends CI_Controller
                         $idbinhluan = $max['maxid'];
 
                         $data = array(
-                            'BL_MA' => $idbinhluan,
                             'ABL_TEN' => $name
                         );
-                        $this->manhbinhluan->insert($data);
+                        $this->manhbinhluan->update($id, $data);
             } else {
+                $this->manhbinhluan->deleteabl($id);
                 echo "Sorry, there was an error uploading your file.";
             }
         }
