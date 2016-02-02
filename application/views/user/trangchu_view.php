@@ -82,7 +82,7 @@
     <section id="recent-works">
         <div class="container">
             <div class="center wow fadeInDown">
-                <h2>Một số hình ảnh nổi bật</h2>
+                <h2>Một số địa điểm mới được cập nhật</h2>
             </div>
 
             <div class="row">
@@ -92,16 +92,20 @@
                     $ma = $iteam['DD_MA'];
                     $ten = $iteam['DD_TEN'];
                     $mota = $iteam['DD_MOTA'];
-                    $hinh = "";
-                    foreach ($info1 as $key) {
-                        if($ma == $key['DD_MA'])
-                        {
-                            if($key['HA_DAIDIEN'] == "1")
+                    $duyet = $iteam['DD_DUYET'];
+                    if($duyet == "1")
+                    {
+                        $hinh = "";
+                        foreach ($info1 as $key) {
+                            if($ma == $key['DD_MA'])
                             {
-                                $hinh = $key['HA_TEN'];
+                                if($key['HA_DAIDIEN'] == "1")
+                                {
+                                    $hinh = $key['HA_TEN'];
+                                }
                             }
                         }
-                    }
+
                 ?>
 
                 <div class="col-xs-12 col-sm-4 col-md-3">
@@ -118,56 +122,12 @@
                 </div> 
 
                 <?php
+                        }
                     }
                 ?>
 
             </div><!--/.row-->
         </div><!--/.container-->
     </section><!--/#recent-works-->
-
-    <section id="bottom">
-	   <div class="container">
-            <div class="center wow fadeInDown">
-                <h2>Một số địa điểm nổi tiếng</h2>
-            </div>
-
-            <div class="row">
-            <?php 
-                foreach ($info as $iteam) {
-                $ma = $iteam['DD_MA'];
-                $ten = $iteam['DD_TEN'];
-                $mota = $iteam['DD_MOTA'];
-                $hinh = "";
-                foreach ($info1 as $key) {
-                    if($ma == $key['DD_MA'])
-                    {
-                        if($key['HA_DAIDIEN'] == "1")
-                        {
-                            $hinh = $key['HA_TEN'];
-                        }
-                    }
-                }
-            ?>
-
-                <div class="col-sm-6 col-md-4">
-                    <div class="media services-wrap wow fadeInDown">
-                        <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" width='150' height='150'>
-                        </div>
-                        <div class="media-body" style="height: 150px; overflow: auto;">
-                            <a href="<?php echo base_url(); ?>index.php/aediadiem/detail/<?php echo $ma; ?>"> <h3 class="media-heading"> <?php echo $ten ?> </h3> </a>
-                            <p><?php echo $mota ?></p>
-                        </div>
-                    </div>
-                </div>
-
-            <?php
-                }
-            ?>
-                                               
-            </div><!--/.row-->
-        </div><!--/.container-->
-    </section><!--/#services-->
-
    
 </body>

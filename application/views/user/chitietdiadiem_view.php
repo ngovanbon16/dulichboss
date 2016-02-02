@@ -49,6 +49,16 @@
 	width: 180px;
 	text-align: left;
 }
+
+.tieude{
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: rgb(98, 159, 255);
+  border-radius: 2px;
+  padding: 5px;
+
+}
 </style>
 
   <script type="text/javascript">
@@ -81,10 +91,12 @@
                 var eventData = event.type;
                 eventData += ': ' + event.args.value;
                 $('#events').jqxPanel('clearContent');
-                $('#events').jqxPanel('prepend', '<div class="item" style="margin-top: 5px;">' + eventData + '</div>');
+                $('#events').jqxPanel('prepend', '<div class="item" style="margin-top: 5px;">' + event.args.value + '</div>');
+                var tb = ($("#BL_PHUCVU").val() + $("#BL_KHONGGIAN").val() + event.args.value)/3;
+                $("#diemtrungbinh").html(tb.toFixed(1));
             }
 
-            $('#events').jqxPanel({  height: '30px', width: '100px' });
+            $('#events').jqxPanel({  height: '30px', width: '10px' });
             $('#jqxSlider div').css('margin', '5px');
             //change event
             $('#BL_CHATLUONG').jqxSlider({ showButtons: false, value: 5, mode: 'fixed', width: '150' });
@@ -96,9 +108,11 @@
                 var eventData = event.type;
                 eventData += ': ' + event.args.value;
                 $('#events1').jqxPanel('clearContent');
-                $('#events1').jqxPanel('prepend', '<div class="item" style="margin-top: 5px;">' + eventData + '</div>');
+                $('#events1').jqxPanel('prepend', '<div class="item" style="margin-top: 5px;">' + event.args.value + '</div>');
+                var tb = ($("#BL_CHATLUONG").val() + $("#BL_KHONGGIAN").val() + event.args.value)/3;
+                $("#diemtrungbinh").html(tb.toFixed(1));
             }
-            $('#events1').jqxPanel({  height: '30px', width: '100px' });
+            $('#events1').jqxPanel({  height: '30px', width: '10px' });
             //change event
             $('#BL_PHUCVU').jqxSlider({ showButtons: false, value: 5, mode: 'fixed', width: '150' });
             $('#BL_PHUCVU').on('change', function (event) {
@@ -109,9 +123,11 @@
                 var eventData = event.type;
                 eventData += ': ' + event.args.value;
                 $('#events2').jqxPanel('clearContent');
-                $('#events2').jqxPanel('prepend', '<div class="item" style="margin-top: 5px;">' + eventData + '</div>');
+                $('#events2').jqxPanel('prepend', '<div class="item" style="margin-top: 5px;">' + event.args.value + '</div>');
+                var tb = ($("#BL_CHATLUONG").val() + $("#BL_PHUCVU").val() + event.args.value)/3;
+                $("#diemtrungbinh").html(tb.toFixed(1));
             }
-            $('#events2').jqxPanel({  height: '30px', width: '100px' });
+            $('#events2').jqxPanel({  height: '30px', width: '10px' });
             //change event
             $('#BL_KHONGGIAN').jqxSlider({ showButtons: false, value: 5, mode: 'fixed', width: '150' });
             $('#BL_KHONGGIAN').on('change', function (event) {
@@ -171,13 +187,13 @@
 							//$('#myModalbl').modal('toggle');
 							openSuccess("Gửi bình luận thành công!");
 							$("#jqxFileUpload").show();
-              $("#idbinhluan").show();
+              //$("#idbinhluan").show();
 							 document.getElementById("btngui").disabled = true;
                var idbinhluan = data.msg['idbinhluan'];
                //alert(idbinhluan);
                document.getElementById("idbinhluan").value = idbinhluan;
                var path = "<?php echo base_url(); ?>index.php/upload/upload/" + idbinhluan;
-               $('#jqxFileUpload').jqxFileUpload({ width: 300, uploadUrl: path, fileInputName: 'fileToUpload' });
+               $('#jqxFileUpload').jqxFileUpload({ width: 558, uploadUrl: path, fileInputName: 'fileToUpload' });
 							//setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $info['DD_MA']; ?>';",1500);
 							//alert("Thêm thành công");
 						}
@@ -219,7 +235,8 @@
 						}
 						else
 						{
-
+              //alert(data.msg['count']);
+              $("#countcheckin").html(data.msg['count']);
 						}
 					}
 				}, 'json');
@@ -259,7 +276,7 @@
 						}
 						else
 						{
-
+              $("#countyeuthich").html(data.msg['count']);
 						}
 					}
 				}, 'json');
@@ -299,7 +316,7 @@
 						}
 						else
 						{
-
+              $("#countmuonden").html(data.msg['count']);
 						}
 					}
 				}, 'json');
@@ -329,6 +346,16 @@
  			
 
  			$("#btnbinhluan").click(function(){
+
+        <?php 
+          if($this->session->userdata('id') == "")
+          { 
+            ?>
+              setTimeout("location.href = '<?php echo base_url(); ?>index.php/login';",0);
+            <?php
+          }
+        ?>
+
  				$("#jqxFileUpload").hide();
         $("#idbinhluan").hide();
  				document.getElementById("btngui").disabled = false;
@@ -473,9 +500,54 @@
                                                       }
                                                     ?></td>
                   </tr>
-                </table></td>
+                </table>
+              </td>
             </tr>
-          </table></td>
+            <tr>
+              <td colspan="2"> <!-- danh gia binh luan -->
+                <hr/>
+                <div class="tieude">Bình luận</div> <hr/>
+                  <?php
+                    foreach ($binhluan as $iteam) {
+                      $mabinhluan = $iteam['BL_MA'];
+                      $tieude = $iteam['BL_TIEUDE'];
+                      $noidung = $iteam['BL_NOIDUNG'];
+                      $chatluong = $iteam['BL_CHATLUONG'];
+                      $phucvu = $iteam['BL_PHUCVU'];
+                      $khonggian = $iteam['BL_KHONGGIAN'];
+                      $ngaydang = $iteam['BL_NGAYDANG'];
+
+                      $honguoidang = $iteam['ND_HO'];
+                      $tennguoidang = $iteam['ND_TEN'];
+                      $hinhnguoidang = $iteam['ND_HINH'];
+                  ?>
+                    
+                    <img style="border-radius: 50px;" src="<?php echo base_url(); ?>uploads/user/<?php echo $hinhnguoidang ?>" width="50" height="50">
+                    <b style="font-size: 16px; text-transform: capitalize;"> <?php echo $honguoidang." ".$tennguoidang ?> </b> - <?php echo $ngaydang ?> <b>Đã bình luận</b>
+                    <h2 style="font-size: 20px; text-transform: capitalize;"><?php echo $tieude ?></h2>
+                    <?php echo $noidung ?> <br/>
+
+                  <?php
+                     foreach ($anhbinhluan as $key) {
+                        if($key['BL_MA'] == $mabinhluan)
+                        {
+                          $tenanh = $key['ABL_TEN'];
+                  ?>
+                          <!-- <div style="float: left; z-index: 0;"> -->
+                            <img src="<?php echo base_url(); ?>uploads/binhluan/<?php echo $tenanh ?>" width="120" height="120">
+                          <!-- </div> -->
+                  <?php
+                        }
+                      }
+                      echo "<hr/>";
+                    }
+                  ?>
+                <div class="tieude">Bình luận</div>
+
+              </td> <!-- dong danh gia binh luan -->
+            </tr>
+          </table>
+        </td>
         <td width="300"> 
 
         	<table class="table table-bordered">
@@ -486,7 +558,7 @@
 	        			</button>
         			</td>
         			<td>
-        				
+        				<div id="" style="font-size: 20px;"><?php echo $countbinhluan ?></div>
         			</td>
         		</tr>
         		<tr>
@@ -496,7 +568,7 @@
         				</button>
         			</td>
         			<td>
-        				
+        				<div id="" style="font-size: 20px;">0</div>
         			</td>
         		</tr>
         		<tr>
@@ -507,7 +579,7 @@
         				<input class="value" type="text" value="0" id="checkinvalue" />
         			</td>
         			<td>
-        				
+        				<div id="countcheckin" style="font-size: 20px;"><?php echo $countcheckin ?></div>
         			</td>
         		</tr>
         		<tr>
@@ -518,7 +590,7 @@
         				<input class="value" type="text" value="0" id="yeuthichvalue" />
         			</td>
         			<td>
-        				
+        				<div id="countyeuthich" style="font-size: 20px;"><?php echo $countyeuthich ?></div>
         			</td>
         		</tr>
         		<tr>
@@ -529,7 +601,7 @@
         				<input class="value" type="text" value="0" id="muondenvalue" />
         			</td>
         			<td>
-        				
+        				<div id="countmuonden" style="font-size: 20px;"><?php echo $countmuonden ?></div>
         			</td>
         		</tr>
         	</table>
@@ -552,9 +624,7 @@
     </div>
     <div class="modal-body">
       <form method="post" action="<?php echo base_url(); ?>diadiemhinh/uploadsuser/<?php echo $info['DD_MA'] ?>" enctype="multipart/form-data">
-        Mã danh mục: <br/>
-        <input type="text" id="ma" name="ma" value="<?php echo $info['DD_MA'] ?>" readonly />
-        <br/>
+        <input type="text" id="ma" name="ma" value="<?php echo $info['DD_MA'] ?>" style="display: none;" readonly />
         <label>Ảnh kèm theo:</label>
         <input type="file"  id="image_list" name="image_list[]" multiple>
         <br />
@@ -601,7 +671,7 @@
         			Tiêu đề: <input type="text" class="form-control" id="BL_TIEUDE" placeholder="Nhập tiêu đề bình luận" >
         			Nội dung: <textarea id="BL_NOIDUNG" class="form-control" rows="5" placeholder="Nhập nội dung" ></textarea>
         		</td> <!-- dong cot 1 -->
-        		<td width="300"><!-- cot 2 -->
+        		<td width="180"><!-- cot 2 -->
         			<div>Chất lượng</div>
         			<div id='jqxWidget'>
 				        <div id="container" style="float: left">
@@ -625,10 +695,12 @@
 				        </div>   
 				        <div id="events2" style="border-width: 0px;"></div>  
 				    </div>
+            <div style="float: left; padding-right: 5px;">Điểm trung bình: </div>  
+            <div id="diemtrungbinh" style="float: left">5</div>
         		</td><!-- dong cot 2 -->
         	</tr>
         </table>
-        <input type="text" id="idbinhluan" />
+        <input type="text" id="idbinhluan" style="border-width: 0px; display: none;" readonly="readonly" />
         <div id="jqxFileUpload">
     	</div>
 

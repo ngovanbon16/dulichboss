@@ -74,6 +74,27 @@ class Mnguoidungdiadiem extends CI_Model {
         return $this->db->count_all($this->_table); 
     }
 
+    public function countcheckin($iddd){ // dung cho dem so luong nguoi check in cho dia diem
+        $this->db->where("DD_MA", $iddd);
+        $this->db->where("NDDD_DADEN", '1');
+        $this->db->from($this->_table);
+        return $this->db->count_all_results();
+    }
+
+    public function countyeuthich($iddd){ // dung cho dem so luong nguoi yeu thich
+        $this->db->where("DD_MA", $iddd);
+        $this->db->where("NDDD_YEUTHICH", '1');
+        $this->db->from($this->_table);
+        return $this->db->count_all_results();
+    }
+
+    public function countmuonden($iddd){ // dung cho dem so luong nguoi muon den
+        $this->db->where("DD_MA", $iddd);
+        $this->db->where("NDDD_MUONDEN", '1');
+        $this->db->from($this->_table);
+        return $this->db->count_all_results();
+    }
+
     public function insert($data_insert){
         return $this->db->insert($this->_table,$data_insert);
     }

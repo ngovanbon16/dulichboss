@@ -38,6 +38,8 @@ class Nguoidungdiadiem extends CI_Controller
 			$status = "success";
 		}
 
+		$msg['count'] = $this->mnguoidungdiadiem->countcheckin($DD_MA); // dem so luong check in
+
         $response = array('status' => $status,'msg' => $msg,'data' => $data);
 		$jsonString = json_encode($response);
         echo $jsonString;
@@ -70,6 +72,8 @@ class Nguoidungdiadiem extends CI_Controller
 			$status = "success";
 		}
 
+		$msg['count'] = $this->mnguoidungdiadiem->countyeuthich($DD_MA); // dem so luong yeu thich
+
         $response = array('status' => $status,'msg' => $msg,'data' => $data);
 		$jsonString = json_encode($response);
         echo $jsonString;
@@ -101,6 +105,8 @@ class Nguoidungdiadiem extends CI_Controller
 			$this->mnguoidungdiadiem->insert($data);
 			$status = "success";
 		}
+
+		$msg['count'] = $this->mnguoidungdiadiem->countmuonden($DD_MA); // dem so luong muon den
 
         $response = array('status' => $status,'msg' => $msg,'data' => $data);
 		$jsonString = json_encode($response);

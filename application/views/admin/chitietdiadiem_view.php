@@ -159,6 +159,7 @@
                               console.log(data);
                               document.getElementById(ten).style.color = "#f00";
                               document.getElementById(ten).disabled = true;
+                              document.getElementById(ten+"3").style.display = "none";
                               openSuccess("Xóa ảnh thành công");
 
                             }, 'json');
@@ -177,7 +178,7 @@
                               var container = "<div style='overflow: scroll; height: 500px;'>";
                               for (var i = 0; i < dulieus.length; i++) {
                                   var dulieu = dulieus[i];
-                                  var item = "<div style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
+                                  var item = "<div id='"+dulieu.HA_TEN+"3' style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
                                   var image = "<div style='margin: 5px; margin-bottom: 3px;'>";
                                   var imgurl = dulieu.img;
                                   var img = '<button id="'+ dulieu.HA_MA +'2" onclick="daidien('+ dulieu.HA_MA +');"><img class="img1" width=150 height=100 style="display: block;" src="' + imgurl + '"/></button>';
@@ -319,6 +320,7 @@
                               console.log(data);
                               document.getElementById(ten).style.color = "#f00";
                               document.getElementById(ten).disabled = true;
+                              document.getElementById(ten+"3").style.display = "none";
                               openSuccess("Xóa ảnh thành công");
 
                             }, 'json');
@@ -337,7 +339,7 @@
                               var container = "<div style='overflow: scroll; height: 500px;'>";
                               for (var i = 0; i < dulieus.length; i++) {
                                   var dulieu = dulieus[i];
-                                  var item = "<div style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
+                                  var item = "<div id='"+dulieu.HA_TEN+"3' style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
                                   var image = "<div style='margin: 5px; margin-bottom: 3px;'>";
                                   var imgurl = dulieu.img;
                                   var img = '<button id="'+ dulieu.HA_MA +'2" onclick="daidien('+ dulieu.HA_MA +');"><img class="img1" width=150 height=100 style="display: block;" src="' + imgurl + '"/></button>';
@@ -478,6 +480,7 @@
                               console.log(data);
                               document.getElementById(ten).style.color = "#f00";
                               document.getElementById(ten).disabled = true;
+                              document.getElementById(ten+"3").style.display = "none";
                               openSuccess("Xóa ảnh thành công");
 
                             }, 'json');
@@ -496,7 +499,7 @@
                               var container = "<div style='overflow: scroll; height: 500px;'>";
                               for (var i = 0; i < dulieus.length; i++) {
                                   var dulieu = dulieus[i];
-                                  var item = "<div style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
+                                  var item = "<div id='"+dulieu.HA_TEN+"3' style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
                                   var image = "<div style='margin: 5px; margin-bottom: 3px;'>";
                                   var imgurl = dulieu.img;
                                   var img = '<button id="'+ dulieu.HA_MA +'2" onclick="daidien('+ dulieu.HA_MA +');"><img class="img1" width=150 height=100 style="display: block;" src="' + imgurl + '"/></button>';
@@ -635,6 +638,7 @@
                               console.log(data);
                               document.getElementById(ten).style.color = "#f00";
                               document.getElementById(ten).disabled = true;
+                              document.getElementById(ten+"3").style.display = "none";
                               openSuccess("Xóa ảnh thành công");
 
                             }, 'json');
@@ -653,7 +657,7 @@
                               var container = "<div style='overflow: scroll; height: 500px;'>";
                               for (var i = 0; i < dulieus.length; i++) {
                                   var dulieu = dulieus[i];
-                                  var item = "<div style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
+                                  var item = "<div id='"+dulieu.HA_TEN+"3' style='float: left; width: 210px; overflow: hidden; white-space: nowrap; height: 265px;'>";
                                   var image = "<div style='margin: 5px; margin-bottom: 3px;'>";
                                   var imgurl = dulieu.img;
                                   var img = '<button id="'+ dulieu.HA_MA +'2" onclick="daidien('+ dulieu.HA_MA +');"><img class="img1" width=150 height=100 style="display: block;" src="' + imgurl + '"/></button>';
@@ -774,6 +778,54 @@
                 ?>
             };
 
+        function xoaanh(maanh, tenanh)
+        {
+          var url, dta;
+          url = "<?php echo base_url(); ?>index.php/binhluan/deleteanhbinhluan";
+          dta = {
+            "ma" : maanh,
+            "ten" : tenanh
+          };
+
+          $.post(url, dta, function(data, status){
+
+            console.log(status);
+            console.log(data);
+            document.getElementById(maanh).style.display = "none";
+
+          }, 'json');
+        }
+
+        function xoabinhluan(id)
+        {
+          var dta, url, test;
+          url = "<?php echo base_url(); ?>index.php/binhluan/delete";
+          dta = {
+              "ma" : id
+          };
+          console.log(dta);
+          $.post(url, dta, function(data, status){
+
+              console.log(status);
+              console.log(data);
+              //console.log(data);
+              if(status == "success")
+              {   
+                  //alert(data.status);
+                  if(data.status == "error")
+                  {
+                      //alert("Mã không tồn tại!");
+                      openError(data.msg['ma']);
+                  }
+                  else
+                  {
+                      openSuccess("Xóa thành công");
+                      document.getElementById(id).style.display = "none";
+                      //alert("Xóa thành công!");
+                  }
+              }
+          }, 'json');  
+        }    
         
     </script>
 
@@ -1122,7 +1174,72 @@
                     </tr>
                     <tr>
                       <td>
-                        
+                        <div style='overflow: auto; height: 500px;'>
+                        <?php 
+                          foreach ($binhluan as $iteam) {
+                              $mabinhluan = $iteam['BL_MA'];
+                              $tieude = $iteam['BL_TIEUDE'];
+                              $noidung = $iteam['BL_NOIDUNG'];
+                              $chatluong = $iteam['BL_CHATLUONG'];
+                              $phucvu = $iteam['BL_PHUCVU'];
+                              $khonggian = $iteam['BL_KHONGGIAN'];
+                              $ngaydang = $iteam['BL_NGAYDANG'];
+                        ?>
+                          <div id="<?php echo $mabinhluan ?>">
+                          <b style="font-size: 20px;">Bình luận <?php echo $mabinhluan ?></b>
+                          <img src="<?php echo base_url(); ?>assets/images/delete.png" width="20" height="20" onclick="xoabinhluan('<?php echo $mabinhluan ?>');">
+                          <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+                          <table class="table table-condensed">
+                            <tr>
+                              <th width="20%">
+                                TIÊU ĐỀ
+                              </th>
+                              <th>
+                                NỘI DUNG
+                              </th>
+                              <th width="10%">
+                                CHẤT LƯỢNG
+                              </th>
+                              <th width="10%">
+                                PHỤC VỤ
+                              </th>
+                              <th width="12%">
+                                KHÔNG GIAN
+                              </th>
+                              <th width="10%">
+                                NGÀY ĐĂNG
+                              </th>
+                            </tr>
+                            <tr>
+                              <td> <?php echo $tieude ?> </td>
+                              <td> <?php echo $noidung ?> </td>
+                              <td> <?php echo $chatluong ?> </td>
+                              <td> <?php echo $phucvu ?> </td>
+                              <td> <?php echo $khonggian ?> </td>
+                              <td> <?php echo $ngaydang ?> </td>
+                            </tr>
+                          </table>
+                          <table><tr><td>
+                        <?php
+                            foreach ($anhbinhluan as $key) {
+                              if($key['BL_MA'] == $mabinhluan)
+                              {
+                                $tenanh = $key['ABL_TEN'];
+                                $maanh = $key['ABL_MA'];
+                                ?>
+                                  <div id="<?php echo $maanh ?>" style="float: left; z-index: 0;">
+                                    <!-- <div style="position: fix; float: left; z-index: 1">
+                                      <img src="<?php echo base_url(); ?>assets/images/delete.png" width="26" height="26" onclick="xoaanh('<?php echo $maanh ?>', '<?php echo $tenanh ?>');">
+                                    </div> -->
+                                    <img src="<?php echo base_url(); ?>uploads/binhluan/<?php echo $tenanh ?>" width="150" height="150">
+                                    <img src="<?php echo base_url(); ?>assets/images/delete.png" width="26" height="26" onclick="xoaanh('<?php echo $maanh ?>', '<?php echo $tenanh ?>');">
+                                  </div>
+                                <?php
+                              }
+                            } echo "</td></tr></table></div><br>";
+                          }
+                        ?>
+                        </div>
                       </td>
                     </tr>
                     <tr>

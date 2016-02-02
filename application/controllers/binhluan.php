@@ -106,4 +106,27 @@ class Binhluan extends CI_Controller
 		$jsonString = json_encode($response);
 		echo $jsonString;
 	}
+
+	public function deleteanhbinhluan()
+	{
+		$maanh = $_POST['ma'];
+		$ten = $_POST['ten'];
+
+		$status = "error";
+
+		$this->load->model("manhbinhluan");
+		if($this->manhbinhluan->deleteabl($maanh))
+		{
+            $file_path = "uploads/binhluan/".$ten;
+            if (file_exists($file_path)) 
+            {
+                unlink($file_path);
+            } 
+            $status = "success";
+		}
+
+		$response = array('status' => $status, 'dta' => $maanh);
+		$jsonString = json_encode($response);
+		echo $jsonString;
+	}
 }

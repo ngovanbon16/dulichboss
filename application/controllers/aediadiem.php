@@ -230,7 +230,7 @@ class Aediadiem extends CI_Controller
        	$this->load->view("admin/suadiadiem_view", $this->_data);
 	}
 
-	public function detail($id)
+	public function detail($id) // id la ma cua dia diem - ham dung cho quan ly dia diem
 	{
        	$info = $this->mdiadiem->getID($id);
        	$madanhmuc = $info['DM_MA'];
@@ -254,6 +254,11 @@ class Aediadiem extends CI_Controller
        	$xa = $this->mxa->getten($matinh, $mahuyen, $maxa);
        	$this->_data['tenxa'] = $xa["X_TEN"];
 
+       	$this->load->model("mbinhluan"); // them binh luan
+       	$this->_data['binhluan'] = $this->mbinhluan->getdd($id);
+
+       	$this->load->model("manhbinhluan"); // them anh binh luan
+       	$this->_data['anhbinhluan'] = $this->manhbinhluan->getList();
        	
         $this->_data['map'] = $this->map($info["DD_VITRI"]);
         $this->_data['info'] = $this->mdiadiem->getID($id);
@@ -262,7 +267,7 @@ class Aediadiem extends CI_Controller
        	$this->load->view("admin/chitietdiadiem_view", $this->_data);
 	}
 
-	public function detailuser($id) // id là mã cua địa điểm
+	public function detailuser($id) // id là mã cua địa điểm - ham dung cho user
 	{
        	$info = $this->mdiadiem->getID($id);
        	$madanhmuc = $info['DM_MA'];
@@ -295,6 +300,22 @@ class Aediadiem extends CI_Controller
         $this->load->model("mnguoidungdiadiem");
         $mand = $this->session->userdata('id');
         $this->_data['danhgia'] = $this->mnguoidungdiadiem->getchitiet($mand, $id);
+
+        $this->_data['active'] = "khuvuc"; // co the bi  thay doi
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+
+		$this->load->model("mbinhluan"); // them binh luan
+       	$this->_data['binhluan'] = $this->mbinhluan->getdd($id);
+
+       	$this->load->model("manhbinhluan"); // them anh binh luan
+       	$this->_data['anhbinhluan'] = $this->manhbinhluan->getList();
+
+       	$this->_data['countbinhluan'] = $this->mbinhluan->countbinhluan($id); // dem so luong binh luan
+
+       	$this->_data['countcheckin'] = $this->mnguoidungdiadiem->countcheckin($id); // dem so luong check in
+       	$this->_data['countyeuthich'] = $this->mnguoidungdiadiem->countyeuthich($id); // dem so luong yeu thich
+       	$this->_data['countmuonden'] = $this->mnguoidungdiadiem->countmuonden($id); // dem so luong muon den
 
         $this->_data['subview'] = "user/chitietdiadiem_view";
         $this->_data['title'] = "Địa điểm";

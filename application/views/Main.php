@@ -254,9 +254,6 @@
                                         <a href="<?php echo base_url(); ?>index.php/loaihinhanh"> Nhóm hình ảnh</a>
                                     </li>
                                     <li>
-                                        <a href="#"> Hình ảnh Y</a>
-                                    </li>
-                                    <li>
                                         <a href="<?php echo base_url(); ?>index.php/upload"> Upload hình ảnh</a>
                                     </li>
                                 </ul>
@@ -267,9 +264,6 @@
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/binhluan">Bình luận</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Thảo luận Y</a>
                                     </li>
                                     <li>
                                         <a href="#">Hình ảnh bình luận Y</a>
@@ -291,18 +285,6 @@
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/capbac"> Cấp bậc người dùng</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Cài đặt <span class="fa arrow"></span></a>
-                                        <ul class="nav nav-third-level">
-                                            <li>
-                                                <a href="#">Cài đặt Y</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Giá trị Y</a>
-                                            </li>
-                                        </ul>
-                                        <!-- /.nav-third-level -->
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->

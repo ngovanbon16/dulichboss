@@ -44,6 +44,12 @@ class Mbinhluan extends CI_Model {
         return $this->db->count_all($this->_table); 
     }
 
+    public function countbinhluan($iddd){ // dung cho dem so luong binh luan
+        $this->db->where("DD_MA", $iddd);
+        $this->db->from($this->_table);
+        return $this->db->count_all_results();
+    }
+
     public function getID($id)
     {
         $this->db->select('*');
@@ -60,17 +66,34 @@ class Mbinhluan extends CI_Model {
         }
     }
 
+    public function getdd($id) // su dung quan ly chi tiet dia diem get them ma dd
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join("nguoidung", "nguoidung.ND_MA=binhluan.ND_MA");
+        $this->db->where("DD_MA", $id);
+        $query = $this ->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
     public function max()// được sử dụng để up anh cho bình luận: luu y id luon tang len nen trong du lieu phai co it nhat mot dong
     {
         $query = $this->db->query("SELECT MAX(BL_MA) maxid FROM binhluan");
         return $query->row_array();
     }
 
-    public function insert($data_insert){
+    public function insert($data_insert){ // su dung cho them binh luan
         return $this->db->insert($this->_table,$data_insert);
     }
 
-    public function delete($id)
+    public function delete($id) // su dung xoa binh luan them ma binh luan
     {
         $this->db->where('BL_MA', $id);
         return $this->db->delete($this->_table);
