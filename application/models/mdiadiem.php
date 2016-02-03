@@ -200,6 +200,30 @@ class Mdiadiem extends CI_Model {
         {
             return false;
         }
-    }             
+    }       
+
+    public function getloc($T_MA, $H_MA, $X_MA, $DM_MA) // view map cho user nguoi dung xem va loc
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        if($T_MA != "")
+            $this->db->where("T_MA", $T_MA);
+        if($H_MA != "")
+            $this->db->where("H_MA", $H_MA);
+        if($X_MA != "")
+            $this->db->where("X_MA", $X_MA);
+        if($DM_MA != "")
+            $this->db->where("DM_MA", $DM_MA);
+        
+        $query = $this -> db -> get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }      
 }            
 ?>

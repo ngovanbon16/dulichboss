@@ -295,7 +295,7 @@ class Aediadiem extends CI_Controller
         $this->_data['map'] = $this->map($info["DD_VITRI"]);
         $this->_data['info'] = $this->mdiadiem->getID($id);
         $this->load->model("mhinhanh");
-        $this->_data['info1'] = $this->mhinhanh->getloc($id);
+        $this->_data['info1'] = $this->mhinhanh->getloc($id); // load hinh anh theo ma dia diem
 
         $this->load->model("mnguoidungdiadiem");
         $mand = $this->session->userdata('id');

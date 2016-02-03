@@ -1,6 +1,10 @@
+<section id="contact-info">
+<div class="gmap-area">
+            <div class="container">
+                <div class="row">
 <html>
 <head>
-        <link type="text/css" rel="Stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" />
+    <link type="text/css" rel="Stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" />
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxpasswordinput.js"></script>
@@ -32,12 +36,6 @@
     <script type="text/javascript">
 		var centreGot = false;
 
-        $(document).ready(function(e){
-            $("#lat").jqxInput({  width: '180px', height: '25px' });
-            $("#lng").jqxInput({  width: '180px', height: '25px' });
-            $("#submit").jqxButton({ template: "success", height: "30px", width: "100px" });
-        });
-
    /*     if (!$marker['visible']) {
             $marker_output .= ',
                 visible: false';
@@ -57,7 +55,8 @@
 
     <script type="text/javascript">
      $(document).ready(function () {
-
+     			$("#xoa").jqxButton({ theme: 'success', width: '100', height: '27'});
+     			$("#loc").jqxButton({ theme: 'success', width: '100', height: '27'});
                 var url = "<?php echo base_url(); ?>index.php/danhmuc/data";
                 // prepare the data
                 var source =
@@ -133,23 +132,179 @@
                     // Create a jqxInput
                     $("#X_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "Chọn Xã:", displayMember: "X_TEN", valueMember: "X_MA", width: 250, height: 25, dropDownHeight: "150px" });
                 });
+
+            //alert("<?php echo $this->session->userdata('DM_MA') ?>");
+
+            $("#DM_MA").change(function(){
+            	//alert($("#DM_MA").val());
+            	var url, dta;
+				url="<?php echo base_url(); ?>index.php/home/danhmuc/?t=" + Math.random();
+				dta = {
+					"DM_MA" : $("#DM_MA").val()
+				};
+				console.log(dta);
+				$.post(url, dta, function(data, status){
+
+					console.log(status);
+					console.log(data);
+					if(status == "success")
+					{	
+						if(data.status == "error")
+						{
+
+						}
+						else
+						{
+
+						}
+					}
+				}, 'json');
+            }); 
+
+            $("#T_MA").change(function(){
+            	var url, dta;
+				url="<?php echo base_url(); ?>index.php/home/tinh/?t=" + Math.random();
+				dta = {
+					"T_MA" : $("#T_MA").val()
+				};
+				console.log(dta);
+				$.post(url, dta, function(data, status){
+
+					console.log(status);
+					console.log(data);
+					if(status == "success")
+					{	
+						if(data.status == "error")
+						{
+
+						}
+						else
+						{
+
+						}
+					}
+				}, 'json');
             });
+
+            $("#H_MA").change(function(){
+            	var url, dta;
+				url="<?php echo base_url(); ?>index.php/home/huyen/?t=" + Math.random();
+				dta = {
+					"H_MA" : $("#H_MA").val()
+				};
+				console.log(dta);
+				$.post(url, dta, function(data, status){
+
+					console.log(status);
+					console.log(data);
+					if(status == "success")
+					{	
+						if(data.status == "error")
+						{
+
+						}
+						else
+						{
+
+						}
+					}
+				}, 'json');
+            });  
+
+            $("#X_MA").change(function(){
+            	var url, dta;
+				url="<?php echo base_url(); ?>index.php/home/xa/?t=" + Math.random();
+				dta = {
+					"X_MA" : $("#X_MA").val()
+				};
+				console.log(dta);
+				$.post(url, dta, function(data, status){
+
+					console.log(status);
+					console.log(data);
+					if(status == "success")
+					{	
+						if(data.status == "error")
+						{
+
+						}
+						else
+						{
+
+						}
+					}
+				}, 'json');
+            }); 
+
+            $("#xoa").click(function(){
+            	var url, dta;
+				url="<?php echo base_url(); ?>index.php/home/xoa/?t=" + Math.random();
+				dta = {
+					"xoa" : 'xoa'
+				};
+				console.log(dta);
+				$.post(url, dta, function(data, status){
+
+					console.log(status);
+					console.log(data);
+					if(status == "success")
+					{	
+						location.reload(true);
+						if(data.status == "error")
+						{
+
+						}
+						else
+						{
+
+						}
+					}
+				}, 'json');
+            });  
+
+       		$("#loc").click(function(){
+       			location.reload(true);
+       		});
+        });
     </script>
 </head>
 <body>
-    <form action="<?=site_url('map/mapfromAtoB')?>" method="post">
-        <label for="place1">Vị trí bắt đầu: </label><input type="text" name="lat" value="<?php 
-            if(isset($lat)) { echo $lat; } ?>" id="lat" readonly="readonly" />
-        <label for="place2">Vị trí kết thúc: </label><input type="text" name="lng" value="<?php 
-            if(isset($lng)) { echo $lng; } ?>" id="lng" readonly="readonly" />
-        <input type="submit" id="submit" name="submit" value="Dẫn đường" />
-
-    </form>
-
-    <div id="DM_MA"></div>
-    <div id="T_MA"></div>
-    <div id="H_MA"></div>
-    <div id="X_MA"></div>
+	<table width="100%">
+		<tr>
+			<td>
+				<div id="T_MA" style="float: left;"></div>
+			</td>
+			<td>
+		    	<div id="H_MA" style="float: left;"></div>
+		    </td>
+		    <td>
+		    	<div id="X_MA" style="float: left;"></div>
+		    </td>
+		    <td>
+		    	<div id="DM_MA" style="float: left;"></div>
+			</td>
+			<td>
+				<button id="loc">Lọc</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<?php echo $tentinh ?>
+			</td>
+			<td>
+				<?php echo $tenhuyen ?>
+			</td>
+			<td>
+				<?php echo $tenxa ?>
+			</td>
+			<td>
+				<?php echo $tendanhmuc ?>
+			</td>
+			<td>
+				<button id="xoa">Xóa</button>
+			</td>
+		</tr>
+	</table>
 
     <table width="100%">
         <tr>
@@ -165,3 +320,6 @@
     </table>
 </body>
 </html>
+
+</div></div></div>
+</section>

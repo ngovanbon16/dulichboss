@@ -1252,6 +1252,7 @@
                             <?php echo $map['html']; ?>
                             Lat: <input type="text" id="lat" value="" readonly >
                             Lng: <input type="text" id="lng" value="" readonly >
+                            Local: <input type="text" id="DD_VITRI" value="" readonly >
                         </td>
                     </tr>
                 </table>

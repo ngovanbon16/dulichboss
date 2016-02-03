@@ -60,6 +60,7 @@ class Mhinhanh extends CI_Model {
         $this->db->select('*');
         $this->db->from($this->_table);
         $this->db->where('DD_MA', $madd);
+        $this->db->order_by("HA_NGAYDANG", "desc");
         $query = $this->db->get();           
         if($query->num_rows() > 0)
         {

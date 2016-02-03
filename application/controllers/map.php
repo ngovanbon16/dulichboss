@@ -39,6 +39,7 @@ class Map extends CI_Controller {
 			});
 		}
 		centreGot = true;';
+
 		$this->googlemaps->initialize($config);
 		   
 		// set up the marker ready for positioning 
@@ -101,6 +102,11 @@ class Map extends CI_Controller {
 			});
 		}
 		centreGot = true;';
+
+		/*$config['places'] = TRUE; // them cac maker xung quanh dia diem dinh san
+		$config['placesLocation'] = '10.033046, 105.784651';
+		$config['placesRadius'] = 200; */
+
 		$this->googlemaps->initialize($config);
 		   
 		// set up the marker ready for positioning 
@@ -150,6 +156,7 @@ class Map extends CI_Controller {
 			$hinh = "<img src='".base_url()."uploads/diadiem/".$anhdaidien."' width='150' hgiht='150'>";
 			$noidung = "<a href='".base_url()."index.php/aediadiem/detail/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a><br/>".$item['DD_DIACHI'];
 			$marker['infowindow_content'] = $hinh.$noidung;
+			$marker['id'] = $madd;
 			//$marker['onclick'] = 'alert("You just clicked me!!")';
 			$marker['icon'] = base_url().'/uploads/danhmuc/'.$danhmuc.'.png';
 			$this->googlemaps->add_marker($marker);

@@ -66,12 +66,13 @@ class Mbinhluan extends CI_Model {
         }
     }
 
-    public function getdd($id) // su dung quan ly chi tiet dia diem get them ma dd
+    public function getdd($id) // su dung quan ly chi tiet dia diem get theo ma dd
     {
         $this->db->select('*');
         $this->db->from($this->_table);
         $this->db->join("nguoidung", "nguoidung.ND_MA=binhluan.ND_MA");
         $this->db->where("DD_MA", $id);
+        $this->db->order_by("BL_NGAYDANG", "desc");
         $query = $this ->db->get();           
         if($query->num_rows() > 0)
         {

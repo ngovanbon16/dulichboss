@@ -79,7 +79,7 @@
                         <li class="<?php if($active == 'trangchu') echo 'active'; ?>"><a href="<?php echo site_url('home/trangchu') ?>">Trang chủ</a></li>
                         <li><a href="about-us.html">Địa điểm nổi bật</a></li>
                         <li><a href="services.html">Nhiều người yêu thích</a></li>
-                        <li><a href="portfolio.html">Văn hóa du lịch</a></li>
+                        <li class="<?php if($active == 'map') echo 'active'; ?>"><a href="<?php echo site_url('home/map') ?>">Bản đồ</a></li>
                         <li  class="<?php if($active == 'khuvuc') echo 'active'; ?>" >
                             <a href="#" class="<?php if($active == 'khuvuc') echo 'active'; ?>" data-toggle="dropdown">Tỉnh <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
