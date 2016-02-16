@@ -103,6 +103,15 @@ class Mbinhluan extends CI_Model {
     public function update($id, $data_update){
         $this->db->where("BL_MA", $id);
         $this->db->update($this->_table, $data_update);
-    }             
+    }  
+
+    public function diemtrungbinh($iddd, $loai)// lay diem trung binh cua chat luong, phuc vu, khong gian
+    {
+        $this->db->select_avg($loai);
+        $this->db->from($this->_table);
+        $this->db->where("DD_MA", $iddd);
+        $query = $this->db->get();        
+        return $query->row_array();
+    }           
 }            
 ?>

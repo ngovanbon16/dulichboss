@@ -72,6 +72,14 @@ class Mhinhanh extends CI_Model {
         }
     }
 
+    public function counthinhanh($iddd)
+    {
+        $this->db->where("DD_MA", $iddd);
+        $this->db->where("HA_DUYET", "1");
+        $this->db->from($this->_table);
+        return $this->db->count_all_results();
+    }
+
     public function insert($data_insert){
         $this->db->insert($this->_table,$data_insert);
     }

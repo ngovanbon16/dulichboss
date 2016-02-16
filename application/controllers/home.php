@@ -29,6 +29,9 @@ class Home extends CI_Controller
 		$this->load->model("mtinh");
 		$this->_data['tinh'] = $this->mtinh->getList();
 
+		$this->load->model("mhuyen");
+		$this->_data["huyen"] = $this->mhuyen->getList();
+
        	$this->_data['title'] = 'Trang chủ';
        	$this->load->view('user/main.php', $this->_data);
 	}
@@ -64,6 +67,45 @@ class Home extends CI_Controller
 		$this->load->model("mtinh");
 		$this->_data['tinh'] = $this->mtinh->getList();
 
+		$tinh = $this->mtinh->getID($matinh);//lay ten tinh
+       	$this->_data['tentinh'] = $tinh["T_TEN"];
+
+		$this->load->model("mhuyen");
+		$this->_data['huyen'] = $this->mhuyen->getid($matinh);
+
+		$this->load->model("mdiadiem");
+		$this->load->model("mhinhanh");
+		$this->_data['info'] = $this->mdiadiem->getList();
+		$this->_data['info1'] = $this->mhinhanh->getList();
+
+		if(isset($this->session->userdata['H_MA']))
+		{
+			$this->session->unset_userdata("H_MA");
+		}
+
+		// $this->_data['T_MA'] = $matinh; 
+		$datatinh = array( 
+			'T_MA' => $matinh 
+		);
+		$this->session->set_userdata($datatinh); // tao session tinh
+
+       	$this->_data['title'] = 'Khu vực';
+       	$this->load->view('user/main.php', $this->_data);
+	}
+
+	public function theohuyen($matinh, $mahuyen)
+	{
+		$this->_data['subview'] = 'user/khuvuc_view';
+		$this->_data['active'] = "khuvuc";
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+
+		$tinh = $this->mtinh->getID($matinh);//lay ten tinh
+       	$this->_data['tentinh'] = $tinh["T_TEN"];
+
+		$this->load->model("mhuyen");
+		$this->_data['huyen'] = $this->mhuyen->getid($matinh);
+
 		$this->load->model("mdiadiem");
 		$this->load->model("mhinhanh");
 		$this->_data['info'] = $this->mdiadiem->getList();
@@ -71,7 +113,8 @@ class Home extends CI_Controller
 
 		// $this->_data['T_MA'] = $matinh; 
 		$datatinh = array( 
-			'T_MA' => $matinh 
+			'T_MA' => $matinh,
+			'H_MA' => $mahuyen 
 		);
 		$this->session->set_userdata($datatinh); // tao session tinh
 

@@ -76,12 +76,31 @@
                 
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
-                        <li class="<?php if($active == 'trangchu') echo 'active'; ?>"><a href="<?php echo site_url('home/trangchu') ?>">Trang chủ</a></li>
-                        <li><a href="about-us.html">Địa điểm nổi bật</a></li>
-                        <li><a href="services.html">Nhiều người yêu thích</a></li>
-                        <li class="<?php if($active == 'map') echo 'active'; ?>"><a href="<?php echo site_url('home/map') ?>">Bản đồ</a></li>
+                        <li class="<?php if($active == 'trangchu') echo 'active'; ?>"><a href="<?php echo site_url('home/trangchu') ?>"><i class="fa fa-home fa-fw"></i> Trang chủ</a></li>
+                        <li><a href="about-us.html"><i class="fa fa-star fa-fw"></i> Nổi bật</a></li>
+                        <li><a href="services.html"><i class="fa fa-heart fa-fw"></i> Yêu thích</a></li>
+                        <li class="<?php if($active == 'map') echo 'active'; ?>"><a href="<?php echo site_url('home/map') ?>"><i class="fa fa-location-arrow fa-fw"></i> Bản đồ</a></li>
                         <li  class="<?php if($active == 'khuvuc') echo 'active'; ?>" >
-                            <a href="#" class="<?php if($active == 'khuvuc') echo 'active'; ?>" data-toggle="dropdown">Tỉnh <i class="fa fa-angle-down"></i></a>
+                            <a href="#" class="<?php if($active == 'khuvuc') echo 'active'; ?>" data-toggle="dropdown"><i class="fa fa-qrcode fa-fw"></i> 
+                                <?php
+                                    if(isset($this->session->userdata['T_MA']))
+                                    {
+                                        $matinh = $this->session->userdata['T_MA'];
+                                        foreach ($tinh as $iteam) {
+                                            $ma = $iteam['T_MA'];
+                                            $ten = $iteam['T_TEN'];
+                                            if($ma == $matinh)
+                                            {
+                                                echo $ten;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        echo "Chọn tỉnh";
+                                    }
+                                ?> 
+                            <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
                                 <?php
                                     foreach ($tinh as $iteam) {
@@ -94,8 +113,8 @@
                                 ?>
                             </ul>
                         </li>
-                        <li class="<?php if($active == 'gioithieu') echo 'active'; ?>"><a href="<?php echo site_url('home/gioithieu'); ?>">Giới thiệu</a></li> 
-                        <li class="<?php if($active == 'lienhe') echo 'active'; ?>"><a href="<?php echo site_url('home/lienhe'); ?>">Liên hệ</a></li>                        
+                        <li class="<?php if($active == 'gioithieu') echo 'active'; ?>"><a href="<?php echo site_url('home/gioithieu'); ?>"><i class="fa fa-info-circle fa-fw"></i> Giới thiệu</a></li> 
+                        <li class="<?php if($active == 'lienhe') echo 'active'; ?>"><a href="<?php echo site_url('home/lienhe'); ?>"><i class="fa fa-linkedin-square fa-fw"></i> Liên hệ</a></li>                        
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -163,9 +182,9 @@
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="#">Trang chủ</a></li>
-                        <li><a href="#">Giới thiệu</a></li>
-                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="<?php echo site_url('home/trangchu') ?>">Trang chủ</a></li>
+                        <li><a href="<?php echo site_url('home/gioithieu') ?>">Giới thiệu</a></li>
+                        <li><a href="<?php echo site_url('home/lienhe') ?>">Liên hệ</a></li>
                     </ul>
                 </div>
             </div>

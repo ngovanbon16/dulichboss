@@ -22,7 +22,8 @@ class Mhuyen extends CI_Model {
         }
     }
 
-    public function getid($id){
+    public function getid($id) // lay cac huyen theo ma tinh
+    {
         $this->db->select('*');
         $this->db->where('T_MA',$id);
         $this->db->order_by("H_TEN", "asc");
@@ -34,7 +35,7 @@ class Mhuyen extends CI_Model {
         }
         else
         {
-            return false;
+            return $query->result_array();
         }
      }
 

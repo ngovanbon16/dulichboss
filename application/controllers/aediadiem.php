@@ -78,6 +78,57 @@ class Aediadiem extends CI_Controller
 		return $this->googlemaps->create_map();
 	}
 
+	function mapuser($id, $local)
+	{
+		$this->load->library('googlemaps');
+
+		$config = array();
+		$config['center'] = $local;
+		$config['zoom'] = '17';
+
+		$this->googlemaps->initialize($config);
+
+		$this->load->model("mdiadiem");
+		$this->load->model("mhinhanh");
+
+		$diadiem = $this->mdiadiem->getID($id);
+		$matinhdd = $diadiem['T_MA'];
+		$mahuyendd = $diadiem['H_MA']; 
+
+		$query = $this->mdiadiem->getList();
+		foreach ($query as $item) {
+			if($matinhdd == $item['T_MA'] && $mahuyendd == $item['H_MA'])
+			{
+				$local = $item['DD_VITRI'];
+				$danhmuc = $item['DM_MA'];
+				$marker = array();
+				$marker['position'] = $local;
+
+				$madd = $item['DD_MA'];
+	            $anhdaidien = "anhdaidien.jpg";
+	            $info1 = $this->mhinhanh->getloc($madd);
+	            if($info1 != "") 
+	            foreach ($info1 as $key) {  
+		            $dd = $key['HA_DAIDIEN'];
+		            if($dd == "1")
+		            {
+		                $anhdaidien = $key['HA_TEN'];
+		            }
+	            }
+
+				$hinh = "<img src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
+				$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: -20px 0px -20px 0px; padding: 0px; width: 180px;'><a href='".base_url()."index.php/aediadiem/detailuser/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a></div><br/><div style='width: 180px; text-transform: capitalize; color: #FFF; background-color: #39F; padding: 5px; font-weight: bold;'>".$item['DD_DIACHI']."</div>";
+				$marker['infowindow_content'] = $hinh.$noidung;
+				$marker['id'] = $madd;
+				//$marker['onclick'] = 'alert("You just clicked me!!")';
+				$marker['icon'] = base_url().'/uploads/danhmuc/'.$danhmuc.'.png';
+				$this->googlemaps->add_marker($marker);
+			}
+		}
+		
+		return $this->googlemaps->create_map();
+	}
+
 	public function index()
 	{
 		$data['map'] = $this->map("");
@@ -292,7 +343,7 @@ class Aediadiem extends CI_Controller
        	$this->_data['tenxa'] = $xa["X_TEN"];
 
        	
-        $this->_data['map'] = $this->map($info["DD_VITRI"]);
+        $this->_data['map'] = $this->mapuser($id, $info["DD_VITRI"]);
         $this->_data['info'] = $this->mdiadiem->getID($id);
         $this->load->model("mhinhanh");
         $this->_data['info1'] = $this->mhinhanh->getloc($id); // load hinh anh theo ma dia diem
@@ -311,11 +362,22 @@ class Aediadiem extends CI_Controller
        	$this->load->model("manhbinhluan"); // them anh binh luan
        	$this->_data['anhbinhluan'] = $this->manhbinhluan->getList();
 
+       	$this->_data['counthinhanh'] = $this->mhinhanh->counthinhanh($id); // dem so luong binh luan
+
        	$this->_data['countbinhluan'] = $this->mbinhluan->countbinhluan($id); // dem so luong binh luan
 
        	$this->_data['countcheckin'] = $this->mnguoidungdiadiem->countcheckin($id); // dem so luong check in
        	$this->_data['countyeuthich'] = $this->mnguoidungdiadiem->countyeuthich($id); // dem so luong yeu thich
        	$this->_data['countmuonden'] = $this->mnguoidungdiadiem->countmuonden($id); // dem so luong muon den
+
+       	$diem = $this->mbinhluan->diemtrungbinh($id, "BL_CHATLUONG");
+       	$this->_data['diemchatluong'] = round($diem['BL_CHATLUONG'], 1);
+
+       	$diem = $this->mbinhluan->diemtrungbinh($id, "BL_PHUCVU");
+       	$this->_data['diemphucvu'] = round($diem['BL_PHUCVU'], 1); 
+
+       	$diem = $this->mbinhluan->diemtrungbinh($id, "BL_KHONGGIAN");
+       	$this->_data['diemkhonggian'] = round($diem['BL_KHONGGIAN'], 1); 
 
         $this->_data['subview'] = "user/chitietdiadiem_view";
         $this->_data['title'] = "Địa điểm";

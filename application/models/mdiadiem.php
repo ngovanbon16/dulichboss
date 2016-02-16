@@ -75,7 +75,7 @@ class Mdiadiem extends CI_Model {
         }
         else
         {
-            return false;
+            return $query->row_array();
         }
     }
 

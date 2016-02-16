@@ -81,18 +81,33 @@
 
     <section id="recent-works">
         <div class="container">
-            <div class="center wow fadeInDown">
-                <h2>Một số địa điểm mới được cập nhật</h2>
-            </div>
-
             <div class="row">
-                
+                <h2 style="background-color: #F66; height: 50px; font-weight: bolder; padding: 12px; font-style: italic; font-size: 22px;">Một số địa điểm mới được cập nhật</h2>
                 <?php 
                     foreach ($info as $iteam) {
                     $ma = $iteam['DD_MA'];
                     $ten = $iteam['DD_TEN'];
                     $mota = $iteam['DD_MOTA'];
                     $duyet = $iteam['DD_DUYET'];
+                    $matinh = $iteam['T_MA'];
+                    $mahuyen = $iteam['H_MA'];
+                    $tentinh = '';
+                    $tenhuyen = '';
+
+                    foreach ($tinh as $key) {
+                        if($matinh == $key['T_MA'])
+                        {
+                            $tentinh = $key['T_TEN'];
+                        }
+                    }
+
+                    foreach ($huyen as $key) {
+                        if($matinh == $key['T_MA'] && $mahuyen == $key['H_MA'])
+                        {
+                            $tenhuyen = $key['H_TEN'];
+                        }
+                    }
+
                     if($duyet == "1")
                     {
                         $hinh = "";
@@ -113,8 +128,8 @@
                         <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="" height='200'>
                         <div class="overlay">
                             <div class="recent-work-inner">
-                                <h3><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $ma; ?>"><?php echo $ten; ?></a> </h3>
-                                <p>Giới thiệu đôi nét</p>
+                                <h3 style="text-transform: uppercase;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $ma; ?>"><?php echo $ten; ?></a> </h3>
+                                <p><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>
                                 <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" rel="prettyPhoto"><i class="fa fa-eye"></i> Xem</a>
                             </div> 
                         </div>
