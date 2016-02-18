@@ -56,7 +56,7 @@
             $("#createAccount").jqxExpander({  toggleMode: 'none', width: '500px', showArrow: false });
             // Create jqxInput.
             $("#ND_MA").jqxInput({  width: '300px', height: '25px' });
-            $("#NQ_MA").jqxInput({  width: '300px', height: '25px' });
+            /*$("#NQ_MA").jqxInput({  width: '300px', height: '25px' });*/
             $("#CB_MA").jqxInput({  width: '300px', height: '25px' });
 
             $("#ND_HO").jqxInput({  width: '300px', height: '25px' });
@@ -169,6 +169,22 @@
 
     <script type="text/javascript">
      $(document).ready(function () {
+
+                var url = "<?php echo base_url(); ?>index.php/nhomquyen/data";
+                // prepare the data
+                var source =
+                {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'NQ_MA' },
+                        { name: 'NQ_TEN' }
+                    ],
+                    url: url,
+                    async: true
+                };
+                var dataAdapter = new $.jqx.dataAdapter(source);
+                // Create a jqxInput
+                $("#NQ_MA").jqxDropDownList({ selectedIndex: <?php echo $indexnhomquyen; ?>, source: dataAdapter, placeHolder: "Chọn nhóm quyền:", displayMember: "NQ_TEN", valueMember: "NQ_MA", width: 300, height: 25});
 
                 var url = "<?php echo base_url(); ?>index.php/tinh/data";
                 // prepare the data
@@ -441,7 +457,7 @@
                             Mã:
                         </td>
                         <td>
-                            <input id="ND_MA" value="<?php echo $info['ND_MA'] ?>" />
+                            <input id="ND_MA" value="<?php echo $info['ND_MA'] ?>" readonly="readonly" />
                         </td>
                     </tr>
                     <tr>
@@ -449,7 +465,8 @@
                             Nhóm quyền:
                         </td>
                         <td>
-                            <input id="NQ_MA" value="<?php echo $info['NQ_MA'] ?>" />
+                            <div id="NQ_MA"></div>
+                            <!-- <input id="NQ_MA" value="<?php echo $info['NQ_MA'] ?>" /> -->
                         </td>
                     </tr>
                     <tr>
@@ -457,7 +474,7 @@
                             Cấp bậc:
                         </td>
                         <td>
-                            <input id="CB_MA" value="<?php echo $info['CB_MA'] ?>" />
+                            <input id="CB_MA" value="<?php echo $info['CB_MA'] ?>" readonly="readonly" />
                         </td>
                     </tr>
                     <tr>
@@ -481,7 +498,7 @@
                             Địa chỉa mail:<b class="batbuoc"> * </b>
                         </td>
                          <td>
-                            <input type="email" id="ND_DIACHIMAIL" value="<?php echo $info['ND_DIACHIMAIL'] ?>" placeholder="Nhập Email..." />
+                            <input type="email" id="ND_DIACHIMAIL" value="<?php echo $info['ND_DIACHIMAIL'] ?>" readonly="readonly" placeholder="Nhập Email..." />
                         </td>
                     </tr>
                     <tr>
@@ -604,7 +621,7 @@
                             Điểm:
                         </td>
                         <td>
-                            <input id="ND_DIEM" value="<?php echo $info['ND_DIEM'] ?>" />
+                            <input id="ND_DIEM" value="<?php echo $info['ND_DIEM'] ?>" readonly="readonly" />
                         </td>
                     </tr>
                     <tr>
@@ -612,7 +629,7 @@
                             Thưởng:
                         </td>
                          <td>
-                            <input id="ND_THUONG" value="<?php echo $info['ND_THUONG'] ?>" />
+                            <input id="ND_THUONG" value="<?php echo $info['ND_THUONG'] ?>" readonly="readonly" />
                         </td>
                     </tr>
                     <tr>

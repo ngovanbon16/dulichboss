@@ -85,9 +85,26 @@ class Nguoidung extends CI_Controller
        	//$this->load->view('main.php', $this->_data);
        	$info = $this->mnguoidung->getID($this->session->userdata("id"));
 
+       		$this->_data['indexnhomquyen'] = "-1";
        		$this->_data['indextinh'] = "-1";
        		$this->_data['indexhuyen'] = "-1";
        		$this->_data['indexxa'] = "-1";
+
+       		$this->load->model("mnhomquyen");
+       		$query = $this->mnhomquyen->getList();
+            $manhomquyen = $info["NQ_MA"]; 
+            $i = -1;
+            if($query != false)
+            {
+	            foreach ($query as $item) {
+	            	$i++;
+	            	if($manhomquyen == $item["NQ_MA"])
+	           		{
+	                	$this->_data['indexnhomquyen'] = $i;
+	                }
+	            }
+        	}
+
        		$this->load->model("mtinh");
        		$query = $this->mtinh->getList();
             $matinh = $info["T_MA"]; 

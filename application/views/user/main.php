@@ -39,7 +39,63 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-xs-4">
-                        <div class="top-number"><p><i class="fa fa-phone-square"></i>  +84982770090</p></div>
+                        <div class="top-number"><p>
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+                                <?php //echo $this->session->userdata['avata']; ?>
+                                <!-- <a href="<?php echo base_url(); ?>index.php/avata"> -->
+                                <?php
+                                    if($this->session->userdata("email") != "")
+                                    {
+                                        $ten = $this->session->userdata('avata');
+                                        $file_path = "uploads/user/".$ten;
+                                        if(file_exists($file_path))
+                                        {  
+                                        ?>  
+                                            <img id="avata" src="<?php echo base_url(); ?>uploads/user/<?php echo $this->session->userdata['avata']; ?>" height="18" width="18">
+                                        <?php
+                                        }
+                                        else
+                                        {
+                                            ?>
+                                                <i class="fa fa-user fa-fw"></i>
+                                            <?php
+                                        }
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                            <i class="fa fa-user fa-fw"></i>
+                                        <?php
+                                    }
+                                ?>
+                                <?php echo $this->session->userdata("email"); ?> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="<?php echo base_url(); ?>index.php/nguoidung/edit"><i class="fa fa-user fa-fw"></i> Thông tin người dùng</a>
+                                </li>
+                                <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-camera"></i> Đổi Avatar</a>
+                                </li>
+                                </li>
+                                <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-gear fa-fw"></i> Cài đặt</a>
+                                </li>
+                                <li class="divider"></li>
+
+                                <?php if($this->session->userdata("id") != ""){ ?>
+                                <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-mail-forward"></i> Đổi tài khoản</a>
+                                <li><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                                <?php }else{ ?>
+                                <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-sign-in"></i> Đăng nhập</a>
+                                </li>
+                                </li>
+                                <li><a href="<?php echo base_url(); ?>index.php/registration"><i class="fa fa-pencil-square-o"></i> Đăng ký</a>
+                                </li>
+                                <?php } ?>
+                            </ul>    
+                        </li>
+
+                        </p></div>
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
@@ -47,13 +103,16 @@
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fa fa-linkedin"></i></a></li> 
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
                                 <li><a href="#"><i class="fa fa-skype"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
                             </ul>
                             <div class="search">
                                 <form role="form">
                                     <input type="text" class="search-form" autocomplete="off" placeholder="Search">
                                     <i class="fa fa-search"></i>
+                                    <!-- <a href="<?php echo base_url(); ?>index.php/login">
+                                        <button type="button" class="btn btn-outline btn-danger" data-toggle="modal" data-target="#modaldangnhap"><i class="fa fa-sign-in"></i> Đăng nhập</button>
+                                    </a> -->
                                 </form>
                            </div>
                        </div>
@@ -77,7 +136,6 @@
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
                         <li class="<?php if($active == 'trangchu') echo 'active'; ?>"><a href="<?php echo site_url('home/trangchu') ?>"><i class="fa fa-home fa-fw"></i> Trang chủ</a></li>
-                        <li><a href="about-us.html"><i class="fa fa-star fa-fw"></i> Nổi bật</a></li>
                         <li><a href="services.html"><i class="fa fa-heart fa-fw"></i> Yêu thích</a></li>
                         <li class="<?php if($active == 'map') echo 'active'; ?>"><a href="<?php echo site_url('home/map') ?>"><i class="fa fa-location-arrow fa-fw"></i> Bản đồ</a></li>
                         <li  class="<?php if($active == 'khuvuc') echo 'active'; ?>" >
@@ -114,7 +172,7 @@
                             </ul>
                         </li>
                         <li class="<?php if($active == 'gioithieu') echo 'active'; ?>"><a href="<?php echo site_url('home/gioithieu'); ?>"><i class="fa fa-info-circle fa-fw"></i> Giới thiệu</a></li> 
-                        <li class="<?php if($active == 'lienhe') echo 'active'; ?>"><a href="<?php echo site_url('home/lienhe'); ?>"><i class="fa fa-linkedin-square fa-fw"></i> Liên hệ</a></li>                        
+                        <li class="<?php if($active == 'lienhe') echo 'active'; ?>"><a href="<?php echo site_url('home/lienhe'); ?>"><i class="fa fa-linkedin-square fa-fw"></i> Liên hệ</a></li>                
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -178,13 +236,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
+                    <i class="fa fa-phone-square"></i>  +84982770090 
                     &copy; 2016 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">dulichkhapnoi.com.vn</a>. Cùng nhau đi đến khắp mọi miền.
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
                         <li><a href="<?php echo site_url('home/trangchu') ?>">Trang chủ</a></li>
                         <li><a href="<?php echo site_url('home/gioithieu') ?>">Giới thiệu</a></li>
-                        <li><a href="<?php echo site_url('home/lienhe') ?>">Liên hệ</a></li>
+                        <li><a href="<?php echo site_url('home/lienhe') ?>">Liên hệ</a> </li>
                     </ul>
                 </div>
             </div>
@@ -192,3 +251,21 @@
     </footer><!--/#footer-->
 </body>
 </html>
+
+
+<!-- Modal -->
+<div id="modaldangnhap" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 600px;">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <!-- <h4 class="modal-title"><i class="fa fa-camera fa-fw"></i> Đăng nhập</h4> -->
+      </div>
+      <div class="modal-body"> <!-- body -->
+          <!-- <?php $this->load->view("login_view"); ?> -->
+      </div> <!-- dong body -->
+    </div><!-- dong Modal content -->
+  </div>
+</div><!-- dóng modal -->

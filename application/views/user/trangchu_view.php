@@ -1,3 +1,69 @@
+<head>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#btnthem").click(function(){
+                var url, dta;
+                url="<?php echo base_url(); ?>index.php/home/loadthemdiadiem?t=" + Math.random();
+                dta = {
+                    "count" : $("#count").val(),
+                };
+                console.log(dta);
+                $.post(url, dta, function(data, status){
+
+                    console.log(status);
+                    console.log(data);
+                    if(status == "success")
+                    {   
+                        if(data.status == "error")
+                        {
+
+                        }
+                        else
+                        {
+                            for (var i = 0 ; i < data.data.length; i++) 
+                            {
+                                var hinh = "";
+                                var tentinh = "";
+                                var tenhuyen = "";
+                                var ma = data.data[i]["DD_MA"];
+                                var ten = data.data[i]["DD_TEN"];
+                                var tinh = data.data[i]["T_MA"];
+                                var huyen = data.data[i]["H_MA"];
+
+                                for (var j = 0; j < data.hinh.length; j++) {
+                                    if(ma == data.hinh[j]["DD_MA"] && data.hinh[j]["HA_DAIDIEN"] == "1")
+                                    {
+                                        hinh = data.hinh[j]["HA_TEN"];
+                                    }
+                                }
+
+                                for (var j = 0; j < data.tinh.length; j++) {
+                                    if(tinh == data.tinh[j]["T_MA"])
+                                    {
+                                        tentinh = data.tinh[j]["T_TEN"];
+                                    }
+                                }
+
+                                for (var j = 0; j < data.huyen.length; j++) {
+                                    if(tinh == data.huyen[j]["T_MA"] && huyen == data.huyen[j]["H_MA"])
+                                    {
+                                        tenhuyen = data.huyen[j]["H_TEN"];
+                                    }
+                                }
+
+
+                                document.getElementById("diadiem").innerHTML += '<div class="col-xs-12 col-sm-4 col-md-3"><div class="recent-work-wrap"><img src="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" alt="" height="200"><div class="overlay"><div class="recent-work-inner"><h3 style="text-transform: uppercase;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/'+ma+'">'+ten+'</a> </h3><p>'+tenhuyen+' <i class="fa fa-angle-double-right fa-fw"></i> '+tentinh+'</p><a class="preview" target="_blank" href="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" rel="prettyPhoto"><i class="fa fa-eye"></i> Xem</a></div></div></div></div>';
+                            }
+                            var tong = eval(data.data.length+"+"+$("#count").val());
+                            $("#count").val(tong);
+                            
+                        }
+                    }
+                }, 'json');
+            });
+        });
+    </script>
+</head>
 <body class="homepage">
 
     <section id="main-slider" class="no-margin">
@@ -81,9 +147,10 @@
 
     <section id="recent-works">
         <div class="container">
-            <div class="row">
+            <div id="diadiem1" class="row">
                 <h2 style="background-color: #F66; height: 50px; font-weight: bolder; padding: 12px; font-style: italic; font-size: 22px;">Một số địa điểm mới được cập nhật</h2>
                 <?php 
+                    $count = 0;
                     foreach ($info as $iteam) {
                     $ma = $iteam['DD_MA'];
                     $ten = $iteam['DD_TEN'];
@@ -110,6 +177,7 @@
 
                     if($duyet == "1")
                     {
+                        $count++;
                         $hinh = "";
                         foreach ($info1 as $key) {
                             if($ma == $key['DD_MA'])
@@ -125,7 +193,7 @@
 
                 <div class="col-xs-12 col-sm-4 col-md-3">
                     <div class="recent-work-wrap">
-                        <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="" height='200'>
+                        <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="" height="200">
                         <div class="overlay">
                             <div class="recent-work-inner">
                                 <h3 style="text-transform: uppercase;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $ma; ?>"><?php echo $ten; ?></a> </h3>
@@ -140,8 +208,18 @@
                         }
                     }
                 ?>
-
+                <div id="diadiem"></div>
             </div><!--/.row-->
+            <div class="row">
+                 <center>
+                    <div style="border: 1px #00F; background-color: #F66; font-weight: bolder; font-size: 18px; padding: 5px; margin-top: 10px; ">
+                        Tổng số các địa điểm <input id="count" style="width: 40px; height: 40px; border-radius: 50%; text-align: center; border: ; font-weight: bolder; background-color: #F66; font-size: 15px; " value="<?php echo $count ?>" readonly="readonly"></input>
+                    </div>
+                    <div style="border: 1px #00F; background-color: #F66; font-weight: bolder; font-size: 18px; padding: 10px; margin-top: 10px; cursor: pointer; " id="btnthem"><i class="fa  fa-eye fa-fw"></i> Xem thêm</div>
+                 </center> 
+            </div>
+            
+            
         </div><!--/.container-->
     </section><!--/#recent-works-->
    

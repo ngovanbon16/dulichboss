@@ -63,6 +63,7 @@
 }
 
 .tieude{
+  border: 1px solid #F00;
   text-align: left;
   font-size: 20px;
   font-weight: bold;
@@ -359,24 +360,48 @@
 
  			
 
- 			$("#btnbinhluan").click(function(){
+     			$("#btnbinhluan").click(function(){
 
-        <?php 
-          if($this->session->userdata('id') == "")
-          { 
+            <?php 
+              if($this->session->userdata('id') == "")
+              { 
+                ?>
+                  setTimeout("location.href = '<?php echo base_url(); ?>index.php/login';",0);
+                <?php
+              }
             ?>
-              setTimeout("location.href = '<?php echo base_url(); ?>index.php/login';",0);
-            <?php
-          }
-        ?>
 
- 				$("#jqxFileUpload").hide();
-        $("#idbinhluan").hide();
- 				document.getElementById("btngui").disabled = false;
- 				document.getElementById("BL_TIEUDE").value = "";
- 				document.getElementById("BL_NOIDUNG").value = "";
+     				$("#jqxFileUpload").hide();
+            $("#idbinhluan").hide();
+     				document.getElementById("btngui").disabled = false;
+     				document.getElementById("BL_TIEUDE").value = "";
+     				document.getElementById("BL_NOIDUNG").value = "";
 
- 			});
+     			});
+
+          var url, dta;
+          url="<?php echo base_url(); ?>index.php/aediadiem/updateluotxem?t=" + Math.random();
+          dta = {
+            "DD_MA" : "<?php echo $info['DD_MA']; ?>"
+          };
+          console.log(dta);
+          $.post(url, dta, function(data, status){
+
+            console.log(status);
+            console.log(data);
+            if(status == "success")
+            { 
+              if(data.status == "error")
+              {
+
+              }
+              else
+              {
+                console.log(data.data["DD_LUOTXEM"]);
+                $("#countluotxem").val(data.data["DD_LUOTXEM"]);
+              }
+            }
+          }, 'json');
         });
 
       function showbando()
@@ -413,6 +438,29 @@
 
     </script>
 
+    <script> 
+      $(document).ready(function(){
+          var x = true;
+          $(".span").click(function(){
+              var span = $(this);
+              if(x)
+              { 
+                span.animate({width: '400', opacity: '1'}, "slow");
+                x = false;
+              }
+              else
+              {
+                span.animate({width: '0', opacity: '0'}, "slow");
+                x = true;
+              }
+          });
+
+          $("#thubinhluan").click(function(){
+            $("#diembinhluan").slideToggle("slow");
+          });
+      });
+    </script>
+
 </head>
 
 <section id="about-us" style="padding: 5px;"><!-- thong tin -->
@@ -427,7 +475,7 @@
       <tr>
         <td>
           <div style="font-style: italic; opacity: 0.7; font-size: 16px; margin: 5px 5px 5px 0px;"> <?php echo $tenhuyen; ?> <i class="fa fa-angle-double-right fa-fw"></i> <?php echo $tentinh; ?></div>
-          <h2 style="padding-top: 0px; margin-top: 0px; text-transform: uppercase; font-size: 25px; color: #FFF; background-color: #F66; padding: 15px;"><?php echo $info['DD_TEN'] ?></h2>
+          <h2 style="border: 1px solid #C00; padding-top: 0px; margin-top: 0px; text-transform: uppercase; font-size: 25px; color: #FFF; background-color: #F66; padding: 15px;"><?php echo $info['DD_TEN'] ?></h2>
           <table class="noidungthongtin" width="100%">
             <tr id='thongtin'>
               <td width="320"><?php 
@@ -563,11 +611,65 @@
                 </table>
               </td>
             </tr>
+            <tr>
+              <td td colspan="2" width="1000">
+                <hr/>
+                <div style="font-size: 20px; font-weight: bolder;">
+                  <i id="thubinhluan" style="cursor: pointer;" class="fa fa-unsorted fa-fw"></i> <?php echo $countbinhluan ?> bình luận đã chia sẻ 
+                </div>
+                <div id="diembinhluan" style="width: 100%; background-color: #cef; text-align: center; border: 1px solid #39F; padding: 5px;">
+                  <table width="100%">
+                    <tr style="font-size: 20px; font-weight: bolder; color: #090">
+                      <td width="25%">
+                        <?php echo $diemchatluong?>
+                      </td>
+                      <td width="25%">
+                        <?php echo $diemphucvu ?>
+                      </td>
+                      <td width="25%">
+                        <?php echo $diemkhonggian ?>
+                      </td>
+                      <td width="25%">
+                        <?php 
+                          $diemtb = ($diemchatluong + $diemphucvu + $diemkhonggian)/3;
+                          $diemtb = round($diemtb, 1);
+                          echo round($diemtb, 1)." <i class='fa fa-flag-checkered fa-fw'></i>";
+                          if(0 < $diemtb && $diemtb < 2)
+                          {
+                            echo "Kém";
+                          }
+                          if(2 <= $diemtb && $diemtb < 4)
+                          {
+                            echo "Trung bình";
+                          }
+                          if(4 <= $diemtb && $diemtb < 6)
+                          {
+                            echo "Khá";
+                          }
+                          if(6 <= $diemtb && $diemtb < 8)
+                          {
+                            echo "Tốt";
+                          }
+                          if(8 <= $diemtb && $diemtb <= 10)
+                          {
+                            echo "Tuyệt vời";
+                          }
+
+                        ?>
+                      </td>
+                    </tr>
+                    <tr style="font-style: italic;">
+                      <td>Chất lượng</td>
+                      <td>Phục vụ</td>
+                      <td>Không gian</td>
+                      <td>Trung bình</td>
+                    </tr>
+                  </table>
+                </div>
+              </td>
+            </tr>
             <tr id='binhluan'>
               <td colspan="2" width="1000"> <!-- danh gia binh luan -->
-                <?php echo "Chat luong: ".$diemchatluong."<br/>" ?>
-                <?php echo "Chat luong: ".$diemphucvu."<br/>" ?>
-                <?php echo "Chat luong: ".$diemkhonggian."<br/>" ?>
                 <hr/>
                 <div class="tieude"><i class="fa fa-comment fa-fw"></i> Bình luận</div>
                 <hr/>
@@ -588,13 +690,28 @@
                       $hinhnguoidang = $iteam['ND_HINH'];
                   ?>
                     
-                    <img style="border-radius: 50px;" src="<?php echo base_url(); ?>uploads/user/<?php echo $hinhnguoidang ?>" width="50" height="50">
+                    <table>
+                      <tr>
+                        <td>
+                          <img style="border-radius: 50px;" src="<?php echo base_url(); ?>uploads/user/<?php echo $hinhnguoidang ?>" width="50" height="50">
 
-                    <b style="font-size: 16px; text-transform: capitalize;"> <?php echo $honguoidang." ".$tennguoidang ?> </b> - <?php echo $ngaydang ?> <b>Đã bình luận</b> - Điểm: 
-                      <input type="text" style="width: 40px; height: 40px; border-radius: 40px; text-align: center; font-weight: bolder; font-size: 16px; color: #FF0; background-color: #09F;" value="<?php echo round($diem, 1); ?>" readonly="readonly" ></input>
-                        Chất lượng: <?php echo $chatluong ?> -
-                        Phục vụ: <?php echo $phucvu ?> -
-                        Không gian: <?php echo $khonggian ?>
+                          <b style="font-size: 16px; text-transform: capitalize;"> <?php echo $honguoidang." ".$tennguoidang ?> </b> - <?php echo $ngaydang ?> <b>Đã bình luận</b> 
+                        </td>
+                        <td>
+                          <div style="border: 1px solid #00F; float: left; padding-top: 8px; width: 40px; height: 40px; border-radius: 40px; text-align: center; font-weight: bolder; font-size: 16px; color: #009; background-color: #09F;" ><?php echo round($diem, 1); ?> 
+                          </div> 
+                          <div class="span" style="border: 1px solid #00F; cursor: pointer; position: absolute; opacity: 0; z-index: 10; padding-top: 8px; width: 0px; height: 40px; border-radius: 40px; text-align: center; font-weight: bolder; font-size: 16px; color: #009; background-color: #09F;">Chất lượng <?php echo $chatluong ?> <i class="fa fa-angle-double-right fa-fw"></i> Phục vụ <?php echo $phucvu ?> <i class="fa fa-angle-double-right fa-fw"></i> Không gian <?php echo $khonggian ?></div>
+                        </td>
+                      </tr>
+                    </table>
+
+                   
+                      
+
+                        
+                        <!-- <span class="span" style="background:#98bf21;width:0px; display: none;"> Chất lượng: <?php echo $chatluong ?> - Phục vụ: <?php echo $phucvu ?> - Không gian: <?php echo $khonggian ?>
+                        </span> -->
+
                     <h2 style="font-size: 20px; text-transform: uppercase;"><i class="fa fa-comments-o fa-fw"></i> <?php echo $tieude ?></h2>
                     <?php echo $noidung ?> <br/>
 
@@ -710,6 +827,17 @@
         				<!-- <div class="count" id="countmuonden" ><?php echo $countmuonden ?></div> -->
         			</td>
         		</tr>
+            <tr>
+              <td>
+                <button class="btn1" id='luotxem'> 
+                  <i id="iconluotxem" class="fa fa-eye"></i> Lượt xem
+                </button>
+                <input class="value" type="text" value="0" id="luotxemvalue" />
+              </td>
+              <td>
+                <input type="text" id="countluotxem" class="count" readonly="readonly"></input>
+              </td>
+            </tr>
         	</table>
 
         </td>

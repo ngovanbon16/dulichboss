@@ -465,4 +465,28 @@ class Aediadiem extends CI_Controller
 		$jsonString = json_encode($response);
 		echo $jsonString;
 	}
+
+	public function updateluotxem()
+	{
+		$DD_MA = $_POST["DD_MA"];
+
+		$diadiem = $this->mdiadiem->getID($DD_MA);
+
+		$DD_LUOTXEM = $diadiem['DD_LUOTXEM'] + 1;
+
+		$msg = array();
+		$status = "error";
+		$data_update = array();
+		if(count($msg) == 0)
+		{
+		      $data_update = array(
+		        "DD_LUOTXEM" => $DD_LUOTXEM
+		      );
+	          $this->mdiadiem->update($DD_MA, $data_update);
+	          $status = "success";
+		}
+		$response = array('status' => $status,'msg' => $msg, 'data' => $data_update);
+		$jsonString = json_encode($response);
+		echo $jsonString;
+	}
 }
