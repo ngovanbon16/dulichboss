@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title id='Description'>This example shows how to enable the paging feature of the Grid.</title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
@@ -31,170 +30,139 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnumberinput.js"></script>
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
+
+    </script><link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.metro.css" media="screen">
     
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
-    
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets\jqwidgets\demos\jqxgrid\localization.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
-            $.jqx.theme = "bootstrap";
+            $.jqx.theme = "metro";
+            var theme = 'metro';
 
             var notificationWidth = 300;
 
             $("#notiSuccess").jqxNotification({
-                width: notificationWidth, position: "top-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "success"
+                width: notificationWidth, position: "bottom-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "success"
             });
 
             $("#notiError").jqxNotification({
-                width: notificationWidth, position: "top-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "error"
+                width: notificationWidth, position: "bottom-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "error"
             });
 
             function openSuccess(str)
             {
                 $("#result").html(str);
                 $("#notiSuccess").jqxNotification("open");
-                $("#notiSuccess").jqxNotification("open");
+                //$("#notiSuccess").jqxNotification("open");
             }
 
             function openError(str)
             {
                 $("#error").html(str);
                 $("#notiError").jqxNotification("open");
-                $("#notiError").jqxNotification("open");
+                //$("#notiError").jqxNotification("open");
             }
 
-            $("#next").jqxButton({ width: '80', height: '30'});
-            $("#back").jqxButton({ width: '80', height: '30'});
-
-            var size = $("#oncepage").val();
-            var total = "0";
-                
-            var url, dta;
-            url = "<?php echo base_url(); ?>index.php/tinh/countAll";
-            $.post(url, function(data, status){
-                console.log(status);
-                console.log(data);
-                total = data.total;
-                var page = Math.ceil(total/size);
-                $("#numberpage").html("0 / " + page);
-            }, 'json');
-
-            var star = 0;
-            var numpage = -1;
-
-            $("#oncepage").change(function(){
-                //alert("chao");
-                size = this.value;
-                var page = Math.ceil(total/size);
-                $("#numberpage").html(page);
-                numpage = 0;
-                star = numpage*size;
-                if(numpage > page - 1)
-                {
-                    numpage = page - 1;
-                    return;
-                }
-                load(page, true);
-            });
-
-            $("#next").click(function(){
-                numpage++;
-                star = numpage*size;
-
-                var page = Math.ceil(total/size);
-
-                if(numpage > page - 1)
-                {
-                    numpage = page - 1;
-                    return;
-                }
-                if(numpage == 0)
-                {
-                    load(page, true);
-                }
-                else
-                {
-                    load(page, false);
-                }
-                
-            });
-
-            $("#back").click(function(){
-                numpage--;
-                star = numpage*size;
-                if(numpage < 0)
-                {
-                    numpage = 0;
-                    return;
-                }
-                var page = Math.ceil(total/size);
-                if(numpage == 0)
-                {
-                    load(page, true);
-                }
-                else
-                {
-                    load(page, false);
-                }
-            });
-
-            function load(page, show)
+            // prepare the data
+            var data = {};
+            var source =
             {
+                datatype: "json",
+                datafields: [
+                     { name: 'T_MA', type: 'int' },
+                     { name: 'T_TEN', type: 'string' }
+                ],
+                id: 'T_MA',
+                url: '<?php echo base_url(); ?>index.php/tinh/data0',
+                filter: function () {
+                    // update the grid and send a request to the server.
+                    $("#jqxgrid").jqxGrid('updatebounddata');
+                },
+                sort: function () {
+                    // update the grid and send a request to the server.
+                    $("#jqxgrid").jqxGrid('updatebounddata');
+                },
+                root: 'Rows',
+                beforeprocessing: function (data) {
+                    source.totalrecords = data[0].TotalRows;
+                },
+                addRow: function (rowID, rowData, position, commit) {
+                    url = "<?php echo base_url(); ?>index.php/tinh/add";
 
-                $("#numberpage").html(numpage + 1 + " / " + page);
+                    var reg = /^\d+$/;
+                    if(!reg.test(rowID))
+                    {
+                        openError("Lỗi! Mã phải là một số nguyên dương");
+                        return;
+                    }
+                    
+                    rowData.T_MA = rowID; 
+                    console.log(rowData);
 
-                var url = "<?php echo base_url(); ?>index.php/tinh/data1/"+size+"/"+star;
-                // prepare the data
-                var source =
-                {
-                    datatype: "json",
-                    datafields: [
-                        { name: 'T_MA', type: 'int' },
-                        { name: 'T_TEN', type: 'string' }
-                    ],
-                    //root: "entry",
-                    //record: "content",
-                    id: 'T_MA',
-                    url: url,
-                    pager: function (pagenum, pagesize, oldpagenum) {
-                        // callback called when a page or page size is changed.
-                    },
-                    updaterow: function (rowid, rowdata, commit) {
-                        url = "<?php echo base_url(); ?>index.php/tinh/add";
-                        //console.log(rowData);
-
-                        $.post(url, rowdata, function(data, status){
-                            console.log(status);
-                            console.log(data);
-                            console.log(data.data);
-                            if(status == "success")
+                    $.post(url, rowData, function(data, status){
+                        console.log(status);
+                        console.log(data);
+                        /*console.log(data.data);*/
+                        if(status == "success")
+                        {
+                            if(data.status == "error")
                             {
-                                if(data.status == "error")
+                                commit(false);
+                                var error = data.msg["error"];
+                                if(error  == "tt")
                                 {
-                                    //alert("Tên không được trùng lập!");
-                                    openError("Tên không được trùng lập!");
-                                    commit(false);
+                                    openError("Lỗi! Tên đã tồn tại.");
                                 }
-                                else
+                                if(error == "tm")
                                 {
-                                    commit(true);
-                                    if(data.msg['insert'] == "insert")
-                                    {
-                                        openSuccess("Thêm thành công!");
-                                        //alert("Thêm thàn công!");
-                                    }
-                                    else
-                                    {
-                                        openSuccess("Sửa thành công!");
-                                        //alert("Sửa thành công!");
-                                    }
+                                    openError("Lỗi! Mã "+data.data["T_MA"]+" đã tồn tại.");
                                 }
                             }
-                        }, 'json');
-                        //commit(true);
-                    },
-                    deleterow: function (rowid, commit) {
+                            else
+                            {
+                                commit(true);
+                                openSuccess("Thêm thành công!");
+                            }
+                        }
+                    }, 'json');
+                },
+                updaterow: function (rowid, rowdata, commit) {
+                    // synchronize with the server - send update command
+                    var data = "update=true&T_TEN=" + rowdata.T_TEN;
+                    data = data + "&T_MA=" + rowdata.T_MA;
+                    console.log(data);
+                    $.ajax({
+                        dataType: 'json',
+                        url: '<?php echo base_url(); ?>index.php/tinh/data0',
+                        data: data,
+                        success: function (data, status, xhr) {
+                            // update command is executed.
+                            console.log(data);
+                            if(data)
+                            {
+                                commit(true);
+                                openSuccess("Sửa thành công!");
+                            }
+                            else
+                            {
+                                commit(false);
+                                openError("Tên không được trùng lập!");
+                            }
+                        },
+                        error: function () {
+                            console.log("Lỗi không xác định!");
+                            commit(false);
+                        }
+                    });
+                },
+                deleterow: function (rowid, commit) {
                         var dta, url, test;
                         url = "<?php echo base_url(); ?>index.php/tinh/delete";
                         dta = {
@@ -211,46 +179,76 @@
                                 //alert(data.status);
                                 if(data.status == "error")
                                 {
-                                    //alert("Mã không tồn tại!");
-                                    openError(data.msg['ma']);
+                                    openError("Mã không tồn tại!");
                                 }
                                 else
                                 {
                                     commit(true);
-                                    openSuccess("Xóa thành công");
-                                    //alert("Xóa thành công!");
+                                    openSuccess("Xóa thành công!");
                                 }
                             }
                         }, 'json');  
-                        //commit(true);
                     },
+            };
+            var dataadapter = new $.jqx.dataAdapter(source);
 
-                };
-                var dataAdapter = new $.jqx.dataAdapter(source);
+            // initialize jqxGrid
+            $("#jqxgrid").jqxGrid(
+            {
+                width: "100%",
+                selectionmode: 'multiplerowsextended', // multiplerowsextended - singlecell
+                selectionmode: 'checkbox', // tao checkbox de xoa nhieu dong
+                source: dataadapter,
+                theme: theme,
+                editable: true, // cho truc tiep tren bang hay khong
+                autoheight: true,
+                columnsresize: true, // them
+                pageable: true, // phan trang
+                //pagermode: 'simple', // kieu phan trang
+                virtualmode: true, // phan them cho tuong tac sever
+                showfilterrow: true, // hien thi tim kiem
+                filterable: true, // hien thi du lieu
+                sortable: true, // tap sap xep
 
-                $("#jqxgrid").jqxGrid(
-                {
-                    width: "100%",
-                    source: dataAdapter,
-                    selectionmode: 'multiplerowsextended',
-                    sortable: true, // tap sap xep
-                    pageable: true, // phan trang
-                    pagermode: 'simple', // kieu phan trang
-                    autoheight: true,
-                    columnsresize: true,
-                    showfilterrow: true, // hien thi tim kiem
-                    filterable: true, // hien thi du lieu
+                showeverpresentrow: true,
+                everpresentrowposition: "top",
 
-                    editable: true, // cho truc tiep tren bang hay khong
+                localization: getLocalization("<?php echo lang('lang') ?>"), // tai ngon ngu
 
-                    showeverpresentrow: show,
-                    everpresentrowposition: "top",
-                    /*showtoolbar: true,*/
-                    columns: [
-                        { text: 'Mã', /*columntype: 'textbox', filtertype: 'input',*/ datafield: 'T_MA', width: "20%", cellsalign: 'center' },
-                        { text: 'Tên', /*columntype: 'textbox', filtertype: 'input',*/ datafield: 'T_TEN', width: "40%" },
-                        { text: 'Sửa', datafield: 'Edit', columntype: 'button', width: "20%", cellsrenderer: function () {
-                                return "Edit";
+                showtoolbar: true,
+                rendertoolbar: function (toolbar) {
+                    var me = this;
+                    var container = $("<div style='margin: 5px;'></div>");
+                    toolbar.append(container);
+                    /*container.append('<input id="addrowbutton" type="button" value="Thêm" />');*/
+                    container.append(' <img id="deleterowbutton" style="margin-left: 5px; margin: -4px -4px -4px 3px;" src="<?php echo base_url(); ?>assets/images/delete64.png" width="22" height="22"> ');
+                    /*$("#addrowbutton").jqxButton();*/
+                    $("#deleterowbutton").jqxButton();
+                    // create new row.
+                   /* $("#addrowbutton").on('click', function () {
+                        setTimeout("location.href = '<?php echo site_url('aediadiem'); ?>';",0);
+                    });*/
+                    // delete row.
+                    $("#deleterowbutton").on('click', function () {
+                        var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
+                        for (var i = 0; i < rowscount; i++) {
+                            var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+                            if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                                var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
+                                var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                            }
+                        };
+                    });
+                },
+                
+                rendergridrows: function () {
+                    return dataadapter.records;
+                },
+                columns: [
+                      { text: "<?php echo lang('key') ?>", editable: false, datafield: 'T_MA', width: "20%", cellsalign: 'center' },
+                      { text: "<?php echo lang('name') ?>", datafield: 'T_TEN', width: "36%" },
+                      { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'button', width: "20%", cellsrenderer: function () {
+                                return "<?php echo lang('edit') ?>";
                               }, buttonclick: function (row) {
                                  // open the popup window when the user clicks a button.
                                  editrow = row;
@@ -264,22 +262,19 @@
                                  $("#popupWindow").jqxWindow('open');
                              }
                         },
-                        { text: 'Xóa', datafield: 'Delete', columntype: 'button', width: "20%", cellsrenderer: function () {
-                                return "Delete";
+                      { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'button', width: "20%", cellsrenderer: function () {
+                                return "<?php echo lang('delete') ?>";
                               }, buttonclick: function (row) {
-                                var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
-                                var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
-                                if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                                    var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
-                                    var commit = $("#jqxgrid").jqxGrid('deleterow', id);
-                                }
-
+                                //editrow = row;
+                                var offset = $("#jqxgrid").offset();
+                                var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                                var id = dataRecord.T_MA;
+                                console.log(id);
+                                var commit = $("#jqxgrid").jqxGrid('deleterow', id);
                              }
-                        }
-                      
-                    ],
-                });
-            }
+                        },
+                  ]
+            });
 
             // initialize the popup window and buttons.
             $("#popupWindow").jqxWindow({
@@ -302,120 +297,51 @@
                 }
             });
 
-            /*$("#back").click(function(){
-            numpage--;
-            star = numpage*size;
-
-            if(numpage < 0)
-            {
-                numpage = 0;
-                return;
-            }
-
-            var page = Math.ceil(total/size);
-            $("#numberpage").html(numpage + 1 + " / " + page);
-
-            var url = "<?php echo base_url(); ?>index.php/tinh/data1/"+size+"/"+star;
-            // prepare the data
-            var source =
-            {
-                datatype: "json",
-                datafields: [
-                    { name: 'T_MA', type: 'int' },
-                    { name: 'T_TEN', type: 'string' }
-                ],
-                //root: "entry",
-                //record: "content",
-                id: 'T_MA',
-                url: url,
-                pager: function (pagenum, pagesize, oldpagenum) {
-                    // callback called when a page or page size is changed.
-                }
-            };
-            var dataAdapter = new $.jqx.dataAdapter(source);
-            $("#jqxgrid").jqxGrid(
-            {
-                width: "50%",
-                source: dataAdapter,
-                selectionmode: 'multiplerowsextended',
-                sortable: true,
-                pageable: true,
-                autoheight: true,
-                columnsresize: true,
-                showfilterrow: true,
-                filterable: true,
-                columns: [
-                    { text: 'Mã', columntype: 'textbox', filtertype: 'input', datafield: 'T_MA', width: "20%", cellsalign: 'center' },
-                    { text: 'Tên', columntype: 'textbox', filtertype: 'input', datafield: 'T_TEN', width: "80%" }
-                  
-                ]
-            });
-            });*/
         });
+
+        function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds){
+                    break;
+                }
+            }
+        }
+
     </script>
-    <style type="text/css">
-        #numberpage{
-            padding-left: 5px;
-        }
-        #oncepage{
-            width: 80px;
-            height: 30px;
-            border-radius: 5px;
-            opacity: 0.7;
-        }
-    </style>
 </head>
 <body class='default'>
-    <div id="notiSuccess">
+    <div id="notiSuccess" >
         <div id="result">Thông báo thành công!</div>
     </div>
-    <div id="notiError">
+    <div id="notiError" >
         <div id="error">Thông báo lỗi!</div>
     </div>
 
-    <table>
-        <tr>
-            <td>
-                <select id="oncepage">
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                    <option value="200">200</option>
-                    <option value="500">500</option>
-                    <option value="1000">1000</option>
-                </select>
-                <button id="back">Back</button><button id="next">Next</button> 
-                Trang:
-            </td>
-            <td>
-                <div id="numberpage"></div>
-            </td>
-        </tr>
-    </table>
-    
-    <br/>
-    <div id='jqxWidget' style="font-size: 13px; font-family: Verdana;">
-        <div id="jqxgrid">
-        </div>
-        <div id="popupWindow">
-            <div>Sửa</div>
-            <div style="overflow: hidden;">
-                <table>
-                    <tr>
-                        <td align="right">Mã tỉnh:</td>
-                        <td align="left"><input id="T_MA" /></td>
-                    </tr>
-                    <tr>
-                        <td align="right">Tên tỉnh:</td>
-                        <td align="left"><input id="T_TEN" /></td>
-                    </tr>
-                    <tr>
-                        <td align="right"></td>
-                        <td style="padding-top: 10px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="Lưu" /><input id="Cancel" type="button" value="Hủy" /></td>
-                    </tr>
-                </table>
-            </div>
-       </div>
+    <div id="jqxgrid">
     </div>
+
+    <div id="popupWindow">
+        <div>Sửa</div>
+        <div style="overflow: hidden;">
+            <table>
+                <tr>
+                    <td align="right">Mã tỉnh:</td>
+                    <td align="left"><input id="T_MA" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td align="right">Tên tỉnh:</td>
+                    <td align="left"><input id="T_TEN" /></td>
+                </tr>
+                <tr>
+                    <td align="right"></td>
+                    <td style="padding-top: 10px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="Lưu" /><input id="Cancel" type="button" value="Hủy" /></td>
+                </tr>
+            </table>
+        </div>
+   </div>
+
+   <a href='<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english'>English</a> - 
+   <a href='<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese'>Vietnamese</a>
 </body>
 </html>

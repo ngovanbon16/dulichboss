@@ -32,18 +32,22 @@ class Login extends CI_Controller
 		{
 			$msg["email"] = "Email không tồn tại";
 		}
-
-		if(empty($password))
+		else
 		{
-			$msg["password"] = "Mật khẩu không được rỗng";
-		} else if(!($this->mlogin->testpassword($email, $password)))
-		{
-			$msg["password"] = "Mật khẩu không đúng";
-		}
-
-		if(!($this->mlogin->kichhoat($email)))
-		{
-			$msg["kichhoat"] = "Tài khoản chưa được kích hoạt vui lòng vào gmail kích hoạt tài khoản!";
+			if(!($this->mlogin->kichhoat($email)))
+			{
+				$msg["kichhoat"] = "error";
+			}
+			else
+			{
+				if(empty($password))
+				{
+					$msg["password"] = "Mật khẩu không được rỗng";
+				} else if(!($this->mlogin->testpassword($email, $password)))
+				{
+					$msg["password"] = "Mật khẩu không đúng";
+				}
+			}
 		}
 
 		$status = "error";
@@ -62,7 +66,6 @@ class Login extends CI_Controller
                     $this->session->set_userdata($newdata); // Tạo Session cho Users                 
                     //redirect(base_url() . "index.php/home");
 				}
-
 			}
 		}
 
@@ -81,7 +84,7 @@ class Login extends CI_Controller
         return true;
     }
 
-    public function logout()
+    public function logout($trang)
     {
         if($this->_user_is_login())
         {
@@ -90,7 +93,7 @@ class Login extends CI_Controller
            $this->session->unset_userdata('email');
            $this->session->unset_userdata('avata');
            $this->session->set_flashdata('flash_message', 'Đăng xuất thành công');
-           redirect(base_url() . "index.php/home");
+           redirect(base_url() . "index.php/home/".$trang);
         }
         else
         {

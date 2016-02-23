@@ -15,7 +15,7 @@ class Tinh extends CI_Controller
 	{
 		$this->_data['subview'] = 'admin/tinh_view';
        	$this->_data['title'] = 'Tỉnh/Thành phố';
-       	$this->_data['info'] = $this->mtinh->getList();
+       	/*$this->_data['info'] = $this->mtinh->getList();*/
        	$this->load->view('main.php', $this->_data);
 	}
 
@@ -35,79 +35,30 @@ class Tinh extends CI_Controller
 
         if($this->mtinh->testTen($ten))
         {
-        	$msg["T_TEN"] = "Trùng tên";
+        	$msg["error"] = "tt";
         }
         else
         {
         	if($this->mtinh->testMa($ma))
-			{
-				$this->mtinh->update($ma, $data);
-			}
-			else
-			{
-				$this->mtinh->insert($data);
-				$msg["insert"] = "insert";
-				/*for($i = 0; $i < 100; $i++)
-	            {
-	            	$data_insert = array(
-	               		"T_TEN" => "Tỉnh số ".$i,
-		            );
-		            $this->mtinh->insert($data_insert);
-	            }*/
-			}
-			$status = "success";
+        	{
+	        	$msg["error"] = "tm";
+	        }
+	        else
+	        {
+	        	if($this->mtinh->insert($data))
+	        	{
+	        		$status = "success";
+	        	}
+	        	else
+	        	{
+	        		$msg["error"] = "kd";
+	        	}	
+	        }
         }
 
         $response = array('status' => $status,'msg' => $msg,'data' => $data);
 		$jsonString = json_encode($response);
         echo $jsonString;
-	}
-
-	public function add1()
-	{
-		$ma = $_POST["ma"];
-		$ten = $_POST["ten"];
-		$msg = array();
-
-		if($this->mtinh->testMa($ma))
-		{
-			$msg["ma"] = "Mã đã tồn tại";
-		}
-
-		if(empty($ten))
-		{
-			$msg["ten"] = "Tên không được rỗng";
-		} else if($this->mtinh->testTen($ten))
-		{
-			$msg["ten"] = "Tên đã tồn tại";
-		}
-
-		$status = "error";
-		$data = "";
-		if(count($msg) == 0)
-		{
-			/*$i=0;
-			for($i; $i<1000; $i++)
-			{
-				$status = "success";
-				$data_insert = array(
-               "T_TEN" => "Tỉnh ".$i,
-            	);
-            	$this->mtinh->insert($data_insert);
-            	$data = $this->show();
-			}*/
-			$status = "success";
-			$data_insert = array(
-               "T_MA" => $ma,
-               "T_TEN" => $ten,
-            );
-            $this->mtinh->insert($data_insert);
-            $data = $this->show();
-		}
-
-		$response = array('status' => $status,'msg' => $msg,'dta' => $data);
-		$jsonString = json_encode($response);
-		echo $jsonString;
 	}
 
 	public function data()
@@ -116,6 +67,162 @@ class Tinh extends CI_Controller
 
 		$jsonString = json_encode($data);
 		echo $jsonString;
+	}
+
+	public function data0()
+	{
+		if (isset($_GET['update'])) // code update
+		{
+			$ma = $_GET['T_MA'];
+			$ten = $_GET['T_TEN'];
+			$result = "0";
+			if(!$this->mtinh->testTen($ten))
+			{
+				$data = array(
+	               "T_MA" => $ma,
+	               "T_TEN" => $ten
+	            );
+	            if($this->mtinh->update($ma, $data))
+	            {
+	            	$result = "1";
+	            }
+			}
+			echo $result;
+		}
+		else
+		{
+			$pagenum = $_GET['pagenum'];
+			$pagesize = $_GET['pagesize'];
+			$start = $pagenum * $pagesize;
+			$where = "";
+			$sort = "";
+			$total_rows = $this->mtinh->countAll();
+			
+			$query = "SELECT * FROM tinh ".$where." LIMIT $start, $total_rows";
+			$table = $this->mtinh->getList2($query);
+
+			if (isset($_GET['sortdatafield'])) // code sap xep
+			{
+				$sortfield = $_GET['sortdatafield'];
+				$sortorder = $_GET['sortorder'];
+				
+				if ($sortfield != NULL)
+				{
+					
+					if ($sortorder == "desc")
+					{
+						/*$query = "SELECT * FROM tinh ORDER BY" . " " . $sortfield . " DESC LIMIT $start, $pagesize";*/
+						$sort = " ORDER BY ".$sortfield." DESC ";
+					}
+					else if ($sortorder == "asc")
+					{
+						/*$query = "SELECT * FROM tinh ORDER BY" . " " . $sortfield . " ASC LIMIT $start, $pagesize";*/
+						$sort = " ORDER BY ".$sortfield." ASC ";
+					}
+					/*$table = $this->mtinh->getList2($query);*/			
+				}
+			}
+			else
+			{
+				/* code neu khong tim thay du lieu */
+			}
+
+			if (isset($_GET['filterscount'])) // code tim kiem
+			{
+				$filterscount = $_GET['filterscount'];
+				
+				if ($filterscount > 0)
+				{
+					$where = " WHERE (";
+					$tmpdatafield = "";
+					$tmpfilteroperator = "";
+					for ($i=0; $i < $filterscount; $i++)
+				    {
+						// get the filter's value.
+						$filtervalue = $_GET["filtervalue" . $i];
+						// get the filter's condition.
+						$filtercondition = $_GET["filtercondition" . $i];
+						// get the filter's column.
+						$filterdatafield = $_GET["filterdatafield" . $i];
+						// get the filter's operator.
+						$filteroperator = $_GET["filteroperator" . $i];
+						
+						if ($tmpdatafield == "")
+						{
+							$tmpdatafield = $filterdatafield;			
+						}
+						else if ($tmpdatafield <> $filterdatafield)
+						{
+							$where .= ")AND(";
+						}
+						else if ($tmpdatafield == $filterdatafield)
+						{
+							if ($tmpfilteroperator == 0)
+							{
+								$where .= " AND ";
+							}
+							else $where .= " OR ";	
+						}
+						
+						// build the "WHERE" clause depending on the filter's condition, value and datafield.
+						switch($filtercondition)
+						{
+							case "CONTAINS":
+								$where .= " " . $filterdatafield . " LIKE '%" . $filtervalue ."%'";
+								break;
+							case "DOES_NOT_CONTAIN":
+								$where .= " " . $filterdatafield . " NOT LIKE '%" . $filtervalue ."%'";
+								break;
+							case "EQUAL":
+								$where .= " " . $filterdatafield . " = '" . $filtervalue ."'";
+								break;
+							case "NOT_EQUAL":
+								$where .= " " . $filterdatafield . " <> '" . $filtervalue ."'";
+								break;
+							case "GREATER_THAN":
+								$where .= " " . $filterdatafield . " > '" . $filtervalue ."'";
+								break;
+							case "LESS_THAN":
+								$where .= " " . $filterdatafield . " < '" . $filtervalue ."'";
+								break;
+							case "GREATER_THAN_OR_EQUAL":
+								$where .= " " . $filterdatafield . " >= '" . $filtervalue ."'";
+								break;
+							case "LESS_THAN_OR_EQUAL":
+								$where .= " " . $filterdatafield . " <= '" . $filtervalue ."'";
+								break;
+							case "STARTS_WITH":
+								$where .= " " . $filterdatafield . " LIKE '" . $filtervalue ."%'";
+								break;
+							case "ENDS_WITH":
+								$where .= " " . $filterdatafield . " LIKE '%" . $filtervalue ."'";
+								break;
+						}
+										
+						if ($i == $filterscount - 1)
+						{
+							$where .= ")";
+						}
+						
+						$tmpfilteroperator = $filteroperator;
+						$tmpdatafield = $filterdatafield;			
+					}
+					// build the query.
+				
+					/*$query = "SELECT * FROM tinh ".$where." LIMIT $start, $total_rows";
+					$table = $this->mtinh->getList2($query);*/			
+				}
+			}
+
+			$query = "SELECT * FROM tinh ".$where." ".$sort." LIMIT $start, $total_rows";
+			$table = $this->mtinh->getList2($query);
+			 
+			$data[] = array(
+			   'TotalRows' => $total_rows,
+			   'Rows' => $table
+			);
+			echo json_encode($data);
+		}
 	}
 
 	public function data1($size, $star)

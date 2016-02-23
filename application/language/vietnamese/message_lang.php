@@ -1,0 +1,39 @@
+<?php
+$lang['fullname'] = "Họ tên";
+$lang['email'] = "Hòm thư";
+$lang['phone'] = "Điện thoại";
+$lang['address'] = "Địa chỉ";
+
+$lang['home'] = "Trang chủ";
+$lang['admin'] = "Quản trị";
+$lang['management'] = "Quản lý";
+$lang['user'] = "Người dùng";
+$lang['area'] = "Khu vực"; // khu vực
+$lang['provincial'] = "Tỉnh"; // tỉnh
+$lang['district'] = "Huyện"; // huyện
+$lang['town'] = "Xã"; // thị trấn
+$lang['category'] = "Danh mục"; // thể loại
+$lang['place'] = "Địa điểm"; // địa điểm
+$lang['map'] = "Bản đồ";
+$lang['comment'] = "Bình luận";
+$lang['picture'] = "Hình ảnh";
+$lang['authority'] = "Quyền";
+$lang['account'] = "Tài khoản"; // người dùng
+$lang['photo'] = "Hình ảnh"; // ảnh đại diện
+$lang['information'] = "Thông tin"; // thông tin
+$lang['logout'] = "Đăng xuất"; 
+$lang['login'] = "Đăng nhập"; 
+$lang['street'] = "Đường";
+$lang['setting'] = "Cài đặt";
+$lang['register'] = "Đăng ký";
+$lang['change'] = "Đổi";
+$lang['search'] = "Tìm kiếm";
+$lang['add'] = "Thêm";
+$lang['reset'] = "Xóa";
+$lang['enter'] = "Nhập";
+$lang['key'] = "Mã";
+$lang['name'] = "Tên";
+$lang['edit'] = "Sửa";
+$lang['delete'] = "Xóa";
+$lang['lang'] = "vi";
+?>

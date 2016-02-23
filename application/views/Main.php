@@ -51,7 +51,7 @@
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="<?php echo base_url(); ?>./">Trang quản trị</a>
+                    <a class="navbar-brand" href="<?php echo base_url(); ?>./"> <?php echo lang('admin') ?> </a>
                 </div>
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -62,7 +62,7 @@
                 </button>
 
                 <ul class="nav navbar-nav navbar-left navbar-top-links">
-                    <li><a href="#"><i class="fa fa-home fa-fw"></i> Trang chủ</a></li>
+                    <li><a href="#"><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a></li>
                 </ul>
 
                 <ul class="nav navbar-right navbar-top-links">
@@ -144,6 +144,7 @@
                                 }
                                 else
                                 {
+                                    redirect(site_url("login"));
                                     ?>
                                         <i class="fa fa-user fa-fw"></i>
                                     <?php
@@ -152,23 +153,23 @@
                             <?php echo $this->session->userdata("email"); ?> <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="<?php echo base_url(); ?>index.php/nguoidung/edit"><i class="fa fa-user fa-fw"></i> Thông tin người dùng</a>
+                            <li><a href="<?php echo base_url(); ?>index.php/nguoidung/edit"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
                             </li>
-                            <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-camera"></i> Đổi Avatar</a>
+                            <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-camera fa-fw"></i> <?php echo lang('photo') ?></a>
                             </li>
                             </li>
-                            <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-gear fa-fw"></i> Cài đặt</a>
+                            <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-gear fa-fw"></i> <?php echo lang('setting') ?></a>
                             </li>
                             <li class="divider"></li>
 
                             <?php if($this->session->userdata("id") != ""){ ?>
-                            <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-mail-forward"></i> Đổi tài khoản</a>
-                            <li><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                            <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-mail-forward fa-fw"></i> <?php echo lang('change').' '.lang('account') ?></a>
+                            <li><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out fa-fw"></i> <?php echo lang('logout') ?></a>
                             <?php }else{ ?>
-                            <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-sign-in"></i> Đăng nhập</a>
+                            <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-sign-in"></i> <?php echo lang('login') ?></a>
                             </li>
                             </li>
-                            <li><a href="<?php echo base_url(); ?>index.php/registration"><i class="fa fa-pencil-square-o"></i> Đăng ký</a>
+                            <li><a href="<?php echo base_url(); ?>index.php/registration"><i class="fa fa-pencil-square-o"></i> <?php echo lang('register') ?></a>
                             </li>
                             <?php } ?>
                         </ul>
@@ -181,7 +182,7 @@
                         <ul class="nav" id="side-menu">
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
-                                    <input type="text" class="form-control" placeholder="Tìm kiếm...">
+                                    <input type="text" class="form-control" placeholder="<?php echo lang('search') ?>...">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default" type="button">
                                         <i class="fa fa-search"></i>
@@ -191,63 +192,63 @@
                                 <!-- /input-group -->
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/nguoidung" class="active"><i class="fa fa-user fa-fw"></i> Quản lý người dùng</a>
+                                <a href="<?php echo base_url(); ?>index.php/nguoidung" class="active"><i class="fa fa-user fa-fw"></i> <?php echo lang('user') ?></a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-dribbble"></i> Khu vực<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-dribbble"></i> <?php echo lang('area') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/tinh"> Tỉnh/Thành phố</a>
+                                        <a href="<?php echo base_url(); ?>index.php/tinh"> <?php echo lang('provincial') ?></a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/huyen"> Quận/Huyện</a>
+                                        <a href="<?php echo base_url(); ?>index.php/huyen"> <?php echo lang('district') ?></a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/xa"> Xã/Phường/Thị trấn</a>
+                                        <a href="<?php echo base_url(); ?>index.php/xa"> <?php echo lang('town') ?></a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-th-list"></i> Danh mục<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-th-list"></i> <?php echo lang('category') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/danhmuc"> Nhóm danh mục</a>
                                     </li> -->
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/danhmuc"> Danh mục</a>
+                                        <a href="<?php echo base_url(); ?>index.php/danhmuc"> <?php echo lang('category') ?></a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/danhmuchinh"> Hình của danh mục</a>
+                                        <a href="<?php echo base_url(); ?>index.php/danhmuchinh"><?php echo lang('picture') ?></a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-map-marker"></i> Bài đăng<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-map-marker"></i> <?php echo lang('place') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
-                                    <li>
+                                    <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/map"> Map Codeigniter</a>
+                                    </li> -->
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>index.php/map/map"> <?php echo lang('map') ?></a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/map/map"> Các địa điểm đã thêm</a>
+                                        <a href="<?php echo base_url(); ?>index.php/map/mapfromAtoB"> A -> B</a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/map/mapfromAtoB"> Dẫn đường từ A -> B</a>
+                                        <a href="<?php echo base_url(); ?>index.php/diadiem"> <?php echo lang('place') ?></a>
                                     </li>
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>index.php/diadiem"> Địa điểm</a>
-                                    </li>
-                                    <li>
+                                    <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/diadiemhinh"> Địa điểm hình ảnh</a>
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/mua"> Mùa</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="#"><i class="fa fa-camera-retro"></i> Đa phương tiện<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
@@ -257,39 +258,38 @@
                                         <a href="<?php echo base_url(); ?>index.php/upload"> Upload hình ảnh</a>
                                     </li>
                                 </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
+                            </li> -->
                             <li>
-                                <a href="#"><i class="fa fa-comments"></i> Phản hồi<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-comments"></i> <?php echo lang('comment') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/binhluan">Bình luận</a>
+                                        <a href="<?php echo base_url(); ?>index.php/binhluan"><?php echo lang('comment') ?></a>
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <a href="#">Hình ảnh bình luận Y</a>
                                     </li>
                                     <li>
                                         <a href="#">Đánh giá Y</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Quyền<span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-sitemap fa-fw"></i> <?php echo lang('authority') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/nhomquyen"> Nhóm quyền</a>
+                                        <a href="<?php echo base_url(); ?>index.php/nhomquyen"> <?php echo lang('authority') ?></a>
                                     </li>
-                                    <li>
+                                   <!--  <li>
                                         <a href="<?php echo base_url(); ?>index.php/quyen"> Quyền</a>
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/capbac"> Cấp bậc người dùng</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="#"><i class="fa fa-bar-chart-o"></i> Thống kê<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
@@ -299,8 +299,7 @@
                                         <a href="#">Thống kê Y</a>
                                     </li>
                                 </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>

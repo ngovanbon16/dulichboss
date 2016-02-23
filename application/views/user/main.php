@@ -41,7 +41,7 @@
                     <div class="col-sm-6 col-xs-4">
                         <div class="top-number"><p>
 
-                        <li class="dropdown">
+                        <li style="list-style: none;" class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
                                 <?php //echo $this->session->userdata['avata']; ?>
                                 <!-- <a href="<?php echo base_url(); ?>index.php/avata"> -->
@@ -53,7 +53,7 @@
                                         if(file_exists($file_path))
                                         {  
                                         ?>  
-                                            <img id="avata" src="<?php echo base_url(); ?>uploads/user/<?php echo $this->session->userdata['avata']; ?>" height="18" width="18">
+                                            <img id="avata" src="<?php echo base_url(); ?>uploads/user/<?php echo $this->session->userdata['avata']; ?>" height="25" width="25">
                                         <?php
                                         }
                                         else
@@ -83,10 +83,10 @@
                                 <li class="divider"></li>
 
                                 <?php if($this->session->userdata("id") != ""){ ?>
-                                <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-mail-forward"></i> Đổi tài khoản</a>
-                                <li><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                                <li data-toggle="modal" data-target="#modaldangnhap"><a href=""><i class="fa fa-mail-forward"></i> Đổi tài khoản</a>
+                                <li><a href="<?php echo base_url(); ?>index.php/login/logout/trangchu"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
                                 <?php }else{ ?>
-                                <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-sign-in"></i> Đăng nhập</a>
+                                <li data-toggle="modal" data-target="#modaldangnhap" style="cursor: pointer;"><a><!-- <a href="<?php echo base_url(); ?>index.php/login"> --><i class="fa fa-sign-in"></i> Đăng nhập</a>
                                 </li>
                                 </li>
                                 <li><a href="<?php echo base_url(); ?>index.php/registration"><i class="fa fa-pencil-square-o"></i> Đăng ký</a>
@@ -136,7 +136,7 @@
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
                         <li class="<?php if($active == 'trangchu') echo 'active'; ?>"><a href="<?php echo site_url('home/trangchu') ?>"><i class="fa fa-home fa-fw"></i> Trang chủ</a></li>
-                        <li><a href="services.html"><i class="fa fa-heart fa-fw"></i> Yêu thích</a></li>
+                        <!-- <li><a href="services.html"><i class="fa fa-heart fa-fw"></i> Yêu thích</a></li> -->
                         <li class="<?php if($active == 'map') echo 'active'; ?>"><a href="<?php echo site_url('home/map') ?>"><i class="fa fa-location-arrow fa-fw"></i> Bản đồ</a></li>
                         <li  class="<?php if($active == 'khuvuc') echo 'active'; ?>" >
                             <a href="#" class="<?php if($active == 'khuvuc') echo 'active'; ?>" data-toggle="dropdown"><i class="fa fa-qrcode fa-fw"></i> 
@@ -253,18 +253,122 @@
 </html>
 
 
+<style type="text/css">
+    #btn{
+        text-decoration: none;
+        color: #FFF;
+    }
+    #lbldangnhap{
+        float: left;
+    }
+    #lbldangky{
+        text-decoration: none;
+        font-size: 16px;
+        padding-left: 180px;
+    }
+    .txterror{
+        color: #F00;
+        font-style: italic;
+        position: absolute;
+    }
+    #info{
+        font-style: italic;
+        position: absolute;
+        margin-top: -20px;
+        text-align: center;
+        width: 90%;
+    }
+</style>
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function(e)
+    {
+        $("#button").click(function()
+        {
+            var url, dta;
+            url="<?php echo base_url(); ?>index.php/login/login?t=" + Math.random();
+            dta = {
+                "email" : $("#login :text[name='email']").val(),
+                "password" : $("#login :password[name='password']").val()
+            };
+
+            $.post(url, dta, function(data, status){
+
+                console.log(status);
+                //console.log(data);
+                if(status == "success")
+                {   
+                    $("#login *").remove(".txterror").removeClass("bg01");
+                    //alert(data.status);
+                    if(data.status == "error")
+                    {
+                        if(data.msg["kichhoat"] == "error")
+                        {
+                            document.getElementById("info").style.color = "#F00";
+                            $("#info").addClass("bg01").text("Tài khoản chưa được kích hoạt!");
+                        }
+                        else
+                        {
+                            $("#info").addClass("bg01").text("");
+                        }
+                        
+                        $.each(data.msg, function(i, val)
+                        {
+                            var ele = "#login [name='" + i + "']";
+                            //console.log(ele);
+                            $(ele).addClass("bg01")
+                                        .after("<span class='txterror'>" + val + "</span>");
+                        });
+                    }
+                    else
+                    {
+                        document.getElementById("info").style.color = "#00F";
+                        document.getElementById("info").style.fontSize = "18px";
+                        $("#info").addClass("bg02").text("Đăng nhập thành công");
+                        $("#login").remove();
+                        setTimeout("location.href = '<?php echo site_url('home/trangchu'); ?>';",1000);
+                    }
+                }
+            }, 'json');
+        });
+
+        $("input").focus(function()
+        {
+            //$(this).css("background-color", "#ff0000");
+
+        });
+        $("input").blur(function()
+        {
+            //$(this).css("background-color", "#ffffff");
+        });
+    });
+</script>
+
 <!-- Modal -->
 <div id="modaldangnhap" class="modal fade" role="dialog">
-  <div class="modal-dialog" style="width: 600px;">
+  <div class="modal-dialog" style="width: 400px;">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+            <h3 id='lbldangnhap' class="panel-title">Đăng nhập</h3>
+            <a id="lbldangky" href="<?php echo base_url(); ?>index.php/registration">Đăng Ký</a>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <!-- <h4 class="modal-title"><i class="fa fa-camera fa-fw"></i> Đăng nhập</h4> -->
       </div>
       <div class="modal-body"> <!-- body -->
-          <!-- <?php $this->load->view("login_view"); ?> -->
+        <center>
+            <div id="info" class="form-group"></div>
+        </center> 
+        <form name="login" id="login" method="post" role="form">
+            <div style="margin-bottom: 20px;" class="form-group">
+                <input class="form-control" placeholder="E-mail" name="email" id="email" type="text" autofocus>
+            </div>
+            <div style="margin-bottom: 20px;" class="form-group">
+                <input class="form-control" placeholder="Password" name="password" id="password" type="password" value="">
+            </div>
+            <button type="button" id="button" class="btn btn-outline btn-success btn-lg btn-block">Đăng nhập</button>
+        </form>
       </div> <!-- dong body -->
     </div><!-- dong Modal content -->
   </div>

@@ -35,7 +35,20 @@ class Mtinh extends CI_Model {
         }
         else
         {
-            return false;
+            return $query->result_array();
+        }
+    }
+
+    public function getList2($chuoi)
+    {
+        $query = $this->db->query($chuoi);          
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
         }
     }
 
@@ -60,7 +73,7 @@ class Mtinh extends CI_Model {
     }
 
     public function insert($data_insert){
-        $this->db->insert($this->_table,$data_insert);
+        return $this->db->insert($this->_table,$data_insert);
     }
 
     public function delete($id)
@@ -71,7 +84,7 @@ class Mtinh extends CI_Model {
 
     public function update($id, $data_update){
         $this->db->where("T_MA", $id);
-        $this->db->update($this->_table, $data_update);
+        return $this->db->update($this->_table, $data_update);
     }
 
     function testhuyen($id)

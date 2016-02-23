@@ -478,28 +478,29 @@
           <h2 style="border: 1px solid #C00; padding-top: 0px; margin-top: 0px; text-transform: uppercase; font-size: 25px; color: #FFF; background-color: #F66; padding: 15px;"><?php echo $info['DD_TEN'] ?></h2>
           <table class="noidungthongtin" width="100%">
             <tr id='thongtin'>
-              <td width="320"><?php 
-                                            $madd = $info['DD_MA'];
-                                            $anhdaidien = "anhdaidien.jpg";
-                                            if($info1 != "") 
-                                            foreach ($info1 as $item) {  
-                                                $madd1 = $item['DD_MA'];
-                                                if($madd == $madd1)
-                                                {
-                                                    $dd = $item['HA_DAIDIEN'];
-                                                    if($dd == "1")
-                                                    {
-                                                        $anhdaidien = $item['HA_TEN'];
-                                                    }
-                                                }
-                                            }
-                                        ?>
-                <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" rel="prettyPhoto">
-                  <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width='300' height='300'>
-                </a>
-                </td>
               <td><?php //echo $info['DD_MA']; ?>
-                <table class="tablenoidung" width="100%">
+
+                <?php 
+                  $madd = $info['DD_MA'];
+                  $anhdaidien = "anhdaidien.jpg";
+                  if($info1 != "") 
+                  foreach ($info1 as $item) {  
+                      $madd1 = $item['DD_MA'];
+                      if($madd == $madd1)
+                      {
+                          $dd = $item['HA_DAIDIEN'];
+                          if($dd == "1")
+                          {
+                              $anhdaidien = $item['HA_TEN'];
+                          }
+                      }
+                  }
+                ?>
+                <a style="float: left;" class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" rel="prettyPhoto">
+                  <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width='100%' height='300'>
+                </a>
+
+                <table style="min-width: 278px; opacity: 1; color: #000;" class="tablenoidung" width="100%">
                   <tr>
                     <td class="cot1"><i class="fa fa-th-large fa-fw"></i> Thuộc dạng du lịch </td>
                     <td class="cot2"><?php echo $tendanhmuc; ?></td>
@@ -714,7 +715,7 @@
 
                     <h2 style="font-size: 20px; text-transform: uppercase;"><i class="fa fa-comments-o fa-fw"></i> <?php echo $tieude ?></h2>
                     <?php echo $noidung ?> <br/>
-
+                  <div style="width: 100%;">
                   <?php
                      foreach ($anhbinhluan as $key) {
                         if($key['BL_MA'] == $mabinhluan)
@@ -722,12 +723,12 @@
                           $tenanh = $key['ABL_TEN'];
                   ?>
                           <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" rel="prettyPhoto">
-                            <img src="<?php echo base_url(); ?>uploads/binhluan/<?php echo $tenanh ?>" width="120" height="120">
+                            <img src="<?php echo base_url(); ?>uploads/binhluan/<?php echo $tenanh ?>" width="24%" height="120">
                           </a>
                   <?php
                         }
                       }
-                      echo "<hr/>";
+                      echo "</div><hr/>";
                     }
                   ?>
 

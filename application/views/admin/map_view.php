@@ -1,7 +1,6 @@
 <html>
 <head>
         <link type="text/css" rel="Stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" />
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxpasswordinput.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxinput.js"></script>
@@ -56,7 +55,7 @@
 	</script>
 
     <script type="text/javascript">
-     $(document).ready(function () {
+     /*$(document).ready(function () {
 
                 var url = "<?php echo base_url(); ?>index.php/danhmuc/data";
                 // prepare the data
@@ -133,7 +132,7 @@
                     // Create a jqxInput
                     $("#X_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "Chọn Xã:", displayMember: "X_TEN", valueMember: "X_MA", width: 250, height: 25, dropDownHeight: "150px" });
                 });
-            });
+            });*/
     </script>
 </head>
 <body>
@@ -146,10 +145,10 @@
 
     </form>
 
-    <div id="DM_MA"></div>
+    <!-- <div id="DM_MA"></div>
     <div id="T_MA"></div>
     <div id="H_MA"></div>
-    <div id="X_MA"></div>
+    <div id="X_MA"></div> -->
 
     <table width="100%">
         <tr>
