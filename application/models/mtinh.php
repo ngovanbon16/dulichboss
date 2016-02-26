@@ -22,7 +22,7 @@ class Mtinh extends CI_Model {
         }
     }
 
-    public function getList1($size, $star)
+    /*public function getList1($size, $star)
     {
         $this->db->select('*');
         $this->db->from($this->_table);
@@ -37,11 +37,12 @@ class Mtinh extends CI_Model {
         {
             return $query->result_array();
         }
-    }
+    }*/
 
-    public function getList2($chuoi)
+    public function getList2($query) // dung cho trang quan ly
     {
-        $query = $this->db->query($chuoi);          
+        $string = "SELECT * FROM ".$this->_table." ".$query;
+        $query = $this->db->query($string);          
         if($query->num_rows() > 0)
         {
             return $query->result_array();

@@ -17,25 +17,25 @@
                 firstDay: 0,
                 days: {
                     // full day names
-                    names: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                    names: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
                     // abbreviated day names
-                    namesAbbr: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                    namesAbbr: ["C.Nhật", "T.Hai", "T.Ba", "T.Tư", "T.Năm", "T.Sáu", "T.Bảy"],
                     // shortest day names
-                    namesShort: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+                    namesShort: ["CN", "Ha", "Ba", "Tu", "Na", "Sa", "Ba"]
                 },
                 months: {
                     // full month names (13 months for lunar calendards -- 13th month should be "" if not lunar)
-                    names: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""],
+                    names: ["Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu", "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai", ""],
                     // abbreviated month names
-                    namesAbbr: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", ""]
+                    namesAbbr: ["Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu", "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai", ""],
                 },
                 // AM and PM designators in one of these forms:
                 // The usual view, and the upper and lower case versions
                 //      [standard,lowercase,uppercase]
                 // The culture does not use AM or PM (likely all standard date formats use 24 hour time)
                 //      null
-                AM: ["AM", "am", "AM"],
-                PM: ["PM", "pm", "PM"],
+                AM: ["Sáng", "sáng", "Sáng"],
+                PM: ["Chiều", "chiều", "Chiều"],
                 eras: [
                 // eras in reverse chronological order.
                 // name: the name of the era in this culture (e.g. A.D., C.E.)
@@ -80,7 +80,7 @@
                 },
                 percentsymbol: "%",
                 currencysymbol: "$",
-                currencysymbolposition: "before",
+                currencysymbolposition: "Trước",
                 decimalseparator: '.',
                 thousandsseparator: ',',
                 pagergotopagestring: "Đi đến trang:",
@@ -88,16 +88,16 @@
                 pagerrangestring: " của ",
                 pagerpreviousbuttonstring: "trở lại",
                 pagernextbuttonstring: "kế tiếp",
-                pagerfirstbuttonstring: "first",
-                pagerlastbuttonstring: "last",
+                pagerfirstbuttonstring: "đầu tiên",
+                pagerlastbuttonstring: "cuối cùng",
                 groupsheaderstring: "Drag a column and drop it here to group by that column",
-                sortascendingstring: "Sort Ascending",
-                sortdescendingstring: "Sort Descending",
-                sortremovestring: "Remove Sort",
-                groupbystring: "Group By this column",
+                sortascendingstring: "Sắp xếp tăng dần",
+                sortdescendingstring: "Sắp xếp giảm dần",
+                sortremovestring: "Xóa sắp xếp",
+                groupbystring: "Nhóm theo cột này",
                 groupremovestring: "Remove from groups",
-                filterclearstring: "Clear",
-                filterstring: "Filter",
+                filterclearstring: "Làm sạch",
+                filterstring: "Lọc",
                 filtershowrowstring: "Show rows where:",
                 filterorconditionstring: "Or",
                 filterandconditionstring: "And",
@@ -113,8 +113,8 @@
                 emptydatastring: "No data to display",
                 filterselectstring: "Select Filter",
                 loadtext: "Đang tải...",
-                clearstring: "Clear",
-                todaystring: "Today"
+                clearstring: "Làm sạch",
+                todaystring: "Hôm nay"
              }
             break;
         case "en":

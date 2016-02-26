@@ -14,7 +14,7 @@ class Danhmuchinh extends CI_Controller
 	public function index()
 	{
 		$this->_data['subview'] = 'admin/danhmuchinh_view';
-       	$this->_data['title'] = 'Hình của danh mục địa điểm';
+       	$this->_data['title'] = lang('picture');
        	$this->_data['info'] = $this->mdanhmuc->getList();
        	$this->load->view('main.php', $this->_data);
 	}

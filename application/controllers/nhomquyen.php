@@ -14,7 +14,7 @@ class Nhomquyen extends CI_Controller
 	public function index()
 	{
 		$this->_data['subview'] = 'admin/nhomquyen_view';
-       	$this->_data['title'] = 'Nhóm quyền';
+       	$this->_data['title'] = lang('authority');
        	$this->_data['info'] = $this->mnhomquyen->getList();
        	$this->load->view('main.php', $this->_data);
 	}

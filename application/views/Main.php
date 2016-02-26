@@ -51,7 +51,7 @@
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="<?php echo base_url(); ?>./"> <?php echo lang('admin') ?> </a>
+                    <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/home"> <?php echo lang('admin') ?> </a>
                 </div>
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -159,6 +159,22 @@
                             </li>
                             </li>
                             <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-gear fa-fw"></i> <?php echo lang('setting') ?></a>
+                            </li>
+                            <li>
+                                <?php
+                                    if(lang('lang') == 'vi') 
+                                    {
+                                    ?>
+                                        <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english"><i class="fa fa-language fa-fw"> English</i></a> 
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                    ?>
+                                        <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese"><i class="fa fa-language fa-fw"> Vietnamese</i></a> 
+                                    <?php
+                                    } 
+                                ?>
                             </li>
                             <li class="divider"></li>
 

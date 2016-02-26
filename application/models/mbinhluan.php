@@ -40,6 +40,20 @@ class Mbinhluan extends CI_Model {
         }
     }
 
+    public function getList2($query) // dung cho trang quan ly
+    {
+        $string = "SELECT * FROM ".$this->_table." JOIN nguoidung ON nguoidung.ND_MA = binhluan.ND_MA JOIN diadiem ON diadiem.DD_MA = binhluan.DD_MA ".$query;
+        $query = $this->db->query($string);          
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
     public function countAll(){ // dung cho load du lieu tung phan
         return $this->db->count_all($this->_table); 
     }

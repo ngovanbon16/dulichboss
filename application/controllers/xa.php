@@ -14,7 +14,7 @@ class Xa extends CI_Controller
     public function index()
     {
         $this->_data['subview'] = 'admin/xa_view';
-        $this->_data['title'] = 'Xã/Phường/Thị trấn';
+        $this->_data['title'] = lang('town');
         //$this->_data['info'] = $this->mxa->getList();
         $this->load->view('main.php', $this->_data);
     }

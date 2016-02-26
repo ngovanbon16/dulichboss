@@ -36,4 +36,14 @@ $lang['name'] = "Tên";
 $lang['edit'] = "Sửa";
 $lang['delete'] = "Xóa";
 $lang['lang'] = "vi";
+$lang['language'] = "Ngôn ngữ";
+$lang['lastname'] = "Họ";
+$lang['firstname'] = "Tên";
+$lang['activate'] = "Kích hoạt";
+$lang['date'] = "Ngày";
+$lang['update'] = "Cập nhật";
+$lang['create'] = "Tạo";
+$lang['detail'] = "Chi tiết";
+$lang['content'] = "Nội dung";
+$lang['title'] = "Tiêu đề";
 ?>

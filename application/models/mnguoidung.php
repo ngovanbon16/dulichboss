@@ -40,6 +40,20 @@ class Mnguoidung extends CI_Model {
         }
     }
 
+    public function getList2($query) // dung cho trang quan ly
+    {
+        $string = "SELECT * FROM ".$this->_table." ".$query;
+        $query = $this->db->query($string);          
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
     public function countAll(){ // dung cho load du lieu tung phan
         return $this->db->count_all($this->_table); 
     }

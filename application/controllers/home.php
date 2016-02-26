@@ -13,7 +13,7 @@ class Home extends CI_Controller
 	public function index()
 	{
 		$this->_data['subview'] = 'home';
-       	$this->_data['title'] = 'Trang chủ';
+       	$this->_data['title'] = lang('home');
        	$this->load->view('main.php', $this->_data);
 	}
 

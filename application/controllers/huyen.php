@@ -14,7 +14,7 @@ class Huyen extends CI_Controller
     public function index()
     {
         $this->_data['subview'] = 'admin/huyen_view';
-        $this->_data['title'] = 'Quận/Huyện';
+        $this->_data['title'] = lang('district');
         $this->_data['info'] = $this->mhuyen->getList();
         $this->load->view('main.php', $this->_data);
     }

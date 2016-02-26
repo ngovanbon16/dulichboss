@@ -14,7 +14,7 @@ class Tinh extends CI_Controller
 	public function index()
 	{
 		$this->_data['subview'] = 'admin/tinh_view';
-       	$this->_data['title'] = 'Tỉnh/Thành phố';
+       	$this->_data['title'] = lang('provincial');
        	/*$this->_data['info'] = $this->mtinh->getList();*/
        	$this->load->view('main.php', $this->_data);
 	}
@@ -98,7 +98,7 @@ class Tinh extends CI_Controller
 			$sort = "";
 			$total_rows = $this->mtinh->countAll();
 			
-			$query = "SELECT * FROM tinh ".$where." LIMIT $start, $total_rows";
+			$query = $where." LIMIT $start, $total_rows";
 			$table = $this->mtinh->getList2($query);
 
 			if (isset($_GET['sortdatafield'])) // code sap xep
@@ -214,7 +214,7 @@ class Tinh extends CI_Controller
 				}
 			}
 
-			$query = "SELECT * FROM tinh ".$where." ".$sort." LIMIT $start, $total_rows";
+			$query = $where." ".$sort." LIMIT $start, $total_rows";
 			$table = $this->mtinh->getList2($query);
 			 
 			$data[] = array(
@@ -225,7 +225,7 @@ class Tinh extends CI_Controller
 		}
 	}
 
-	public function data1($size, $star)
+	/*public function data1($size, $star)
 	{
 		$data = $this->mtinh->getList1($size, $star);
 
@@ -239,7 +239,7 @@ class Tinh extends CI_Controller
 		$response = array('total' => $total);
 		$jsonString = json_encode($response);
 		echo $jsonString;
-	}
+	}*/
 
 	public function delete()
 	{

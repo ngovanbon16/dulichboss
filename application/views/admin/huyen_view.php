@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
 
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets\jqwidgets\demos\jqxgrid\localization.js"></script>
+
 </head>
 <body>
     <div id='content'>
@@ -65,7 +67,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#jqxInput").jqxDropDownList({ source: dataAdapter, placeHolder: "Tên tỉnh:", displayMember: "T_TEN", valueMember: "T_MA", width: 200, height: 30});
+                $("#jqxInput").jqxDropDownList({ source: dataAdapter, placeHolder: "<?php echo lang('provincial').':' ?>", displayMember: "T_TEN", valueMember: "T_MA", width: 200, height: 30});
                 
                 /*$("#jqxInput").jqxDropDownList({
                     selectedIndex: 2, source: dataAdapter, displayMember: "T_MA", valueMember: "T_TEN", width: 200, height: 25
@@ -198,6 +200,8 @@
                                 filterable: true, // tìm kiếm
                                 filterMode: 'simple',
 
+                                localization: getLocalization("<?php echo lang('lang') ?>"), // tai ngon ngu
+
                                 ready: function()
                                 {
                                     // called when the DataTable is loaded.         
@@ -324,8 +328,8 @@
                                     });
                                 },
                                 columns: [
-                                    { text: 'Mã', dataField: 'H_MA', width: "20%" },
-                                    { text: 'Tên', dataField: 'H_TEN', width: "80%" }
+                                    { text: "<?php echo lang('key') ?>", dataField: 'H_MA', width: "20%" },
+                                    { text: "<?php echo lang('name') ?>", dataField: 'H_TEN', width: "80%" }
                                 ]
                             });
 
@@ -337,8 +341,8 @@
         </script>
         <!-- <input id="jqxInput" /> -->
         <div id='jqxInput'></div>
-        <label style="font-family: Verdana; font-size: 14px;">Thông tin tỉnh được chọn</label>
-        <div style="font-family: Verdana; font-size: 13px;" id='selectionlog'></div>
+        <!-- <label style="font-family: Verdana; font-size: 14px;">Thông tin tỉnh được chọn</label>
+        <div style="font-family: Verdana; font-size: 13px;" id='selectionlog'></div> -->
 
         <div id="notiSuccess">
             <div id="result">Thông báo thành công!</div>

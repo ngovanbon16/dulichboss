@@ -41,8 +41,8 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $.jqx.theme = "metro";
-            var theme = 'metro';
+            $.jqx.theme = "bootstrap";
+            var theme = 'bootstrap';
 
             var notificationWidth = 300;
 
@@ -218,10 +218,10 @@
                 showtoolbar: true,
                 rendertoolbar: function (toolbar) {
                     var me = this;
-                    var container = $("<div style='margin: 5px;'></div>");
+                    var container = $("<div style='margin: 1px 1px 1px 1px;'></div>");
                     toolbar.append(container);
                     /*container.append('<input id="addrowbutton" type="button" value="Thêm" />');*/
-                    container.append(' <img id="deleterowbutton" style="margin-left: 5px; margin: -4px -4px -4px 3px;" src="<?php echo base_url(); ?>assets/images/delete64.png" width="22" height="22"> ');
+                    container.append(' <img id="deleterowbutton" style="margin-left: 2px;" src="<?php echo base_url(); ?>assets/images/delete1.png" width="20" height="20"> ');
                     /*$("#addrowbutton").jqxButton();*/
                     $("#deleterowbutton").jqxButton();
                     // create new row.
@@ -246,7 +246,7 @@
                 },
                 columns: [
                       { text: "<?php echo lang('key') ?>", editable: false, datafield: 'T_MA', width: "20%", cellsalign: 'center' },
-                      { text: "<?php echo lang('name') ?>", datafield: 'T_TEN', width: "36%" },
+                      { text: "<?php echo lang('name') ?>", datafield: 'T_TEN', width: "37%" },
                       { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'button', width: "20%", cellsrenderer: function () {
                                 return "<?php echo lang('edit') ?>";
                               }, buttonclick: function (row) {
@@ -341,7 +341,7 @@
         </div>
    </div>
 
-   <a href='<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english'>English</a> - 
-   <a href='<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese'>Vietnamese</a>
+   <!-- <a href='<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english'>English</a> - 
+   <a href='<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese'>Vietnamese</a> -->
 </body>
 </html>

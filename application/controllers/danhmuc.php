@@ -14,7 +14,7 @@ class Danhmuc extends CI_Controller
 	public function index()
 	{
 		$this->_data['subview'] = 'admin/danhmuc_view';
-       	$this->_data['title'] = 'Danh mục địa điểm';
+       	$this->_data['title'] = lang('category');
        	$this->_data['info'] = $this->mdanhmuc->getList();
        	$this->load->view('main.php', $this->_data);
 	}
