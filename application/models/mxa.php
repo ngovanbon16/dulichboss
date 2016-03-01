@@ -35,7 +35,7 @@ class Mxa extends CI_Model {
         }
         else
         {
-            return false;
+            return $query->result_array();
         }
      }
 

@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
 
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets\jqwidgets\demos\jqxgrid\localization.js"></script>
+
 </head>
 <body>
     <div id='content'>
@@ -69,7 +71,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#jqxInput").jqxDropDownList({ source: dataAdapter, placeHolder: "Tên tỉnh:", displayMember: "T_TEN", valueMember: "T_MA", width: 200, height: 30});
+                $("#jqxInput").jqxDropDownList({ source: dataAdapter, placeHolder: "<?php echo lang('provincial') ?>", displayMember: "T_TEN", valueMember: "T_MA", width: 200, height: 30});
                 
                 /*$("#jqxInput").jqxDropDownList({
                     selectedIndex: 2, source: dataAdapter, displayMember: "T_MA", valueMember: "T_TEN", width: 200, height: 25
@@ -111,7 +113,7 @@
                             var dataAdapter = new $.jqx.dataAdapter(source);
                             // Create a jqxDropDownList
                             $("#jqxWidget1").jqxDropDownList({
-                                selectedIndex: -1, source: dataAdapter, displayMember: "H_TEN", valueMember: "H_MA", width: 200, height: 30
+                                selectedIndex: -1, source: dataAdapter, placeHolder: "<?php echo lang('district') ?>", displayMember: "H_TEN", valueMember: "H_MA", width: 200, height: 30
                             });
                             // subscribe to the select event.
                             $("#jqxWidget1").change('select', function (event) {
@@ -195,18 +197,18 @@
                                             if(data.status == "error")
                                             {
                                                 //alert("Tên không được trùng lập!");
-                                                openError("Tên không được trùng lập!");
+                                                openError("<?php echo lang('name_not_be_repeated') ?>");
                                             }
                                             else
                                             {
                                                 commit(true);
                                                 if(data.msg['insert'] == "insert")
                                                 {
-                                                    openSuccess("Thêm thành công!");
+                                                    openSuccess("<?php echo lang('inserted_successfully') ?>");
                                                 }
                                                 else
                                                 {
-                                                    openSuccess("Sửa thành công!");
+                                                    openSuccess("<?php echo lang('updated_successfully') ?>");
                                                 }
                                             }
                                         }
@@ -240,12 +242,12 @@
                                             if(data.status == "error")
                                             {
                                                 //alert("Mã không tồn tại!");
-                                                openError("Mã không tồn tại!");
+                                                openError("<?php echo lang('code_does_not_exist') ?>");
                                             }
                                             else
                                             {
                                                 commit(true);
-                                                openSuccess("Xóa thành công!");
+                                                openSuccess("<?php echo lang('deleted_successfully') ?>");
                                             }
                                         }
                                     }, 'json');  
@@ -263,6 +265,7 @@
                                 source: dataAdapter,
                                 
                                 pageable: true,
+                                pagerMode: 'advanced',
                                 editable: true,
                                 showToolbar: true,
                                 altRows: true,
@@ -272,6 +275,7 @@
                                 sortable: true, // sặp xếp
                                 filterable: true, // tìm kiếm
                                 filterMode: 'simple',
+                                localization: getLocalization("<?php echo lang('lang') ?>"), // tai ngon ngu
 
                                 ready: function()
                                 {
@@ -301,19 +305,19 @@
                                     toolBar.append(container);
                                     addButton.jqxButton({cursor: "pointer", enableDefault: false,  height: 25, width: 25 });
                                     addButton.find('div:first').addClass(toTheme('jqx-icon-plus'));
-                                    addButton.jqxTooltip({ position: 'bottom', content: "Add"});
+                                    addButton.jqxTooltip({ position: 'bottom', content: "<?php echo lang('add') ?>"});
                                     editButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
                                     editButton.find('div:first').addClass(toTheme('jqx-icon-edit'));
-                                    editButton.jqxTooltip({ position: 'bottom', content: "Edit"});
+                                    editButton.jqxTooltip({ position: 'bottom', content: "<?php echo lang('edit') ?>"});
                                     deleteButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
                                     deleteButton.find('div:first').addClass(toTheme('jqx-icon-delete'));
-                                    deleteButton.jqxTooltip({ position: 'bottom', content: "Delete"});
+                                    deleteButton.jqxTooltip({ position: 'bottom', content: "<?php echo lang('delete') ?>"});
                                     updateButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
                                     updateButton.find('div:first').addClass(toTheme('jqx-icon-save'));
-                                    updateButton.jqxTooltip({ position: 'bottom', content: "Save Changes"});
+                                    updateButton.jqxTooltip({ position: 'bottom', content: "<?php echo lang('save') ?>"});
                                     cancelButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
                                     cancelButton.find('div:first').addClass(toTheme('jqx-icon-cancel'));
-                                    cancelButton.jqxTooltip({ position: 'bottom', content: "Cancel"});
+                                    cancelButton.jqxTooltip({ position: 'bottom', content: "<?php echo lang('cancel') ?>"});
                                     var updateButtons = function (action) {
                                         switch (action) {
                                             case "Select":
@@ -399,8 +403,8 @@
                                     });
                                 },
                                 columns: [
-                                    { text: 'Mã', dataField: 'X_MA', width: "20%" },
-                                    { text: 'Tên', dataField: 'X_TEN', width: "80%" }
+                                    { text: "<?php echo lang('key') ?>", dataField: 'X_MA', width: "20%" },
+                                    { text: "<?php echo lang('name') ?>", dataField: 'X_TEN', width: "80%" }
                                 ]
                             });
                 });
@@ -418,13 +422,13 @@
             <tr>
                 <td width="20%" valign="top">
                     <div id='jqxInput'></div>
-                    <label style="font-family: Verdana; font-size: 14px;">Thông tin tỉnh được chọn</label>
-                    <div style="font-family: Verdana; font-size: 13px;" id='selectionlog'></div>
+                    <!-- <label style="font-family: Verdana; font-size: 14px;">Thông tin tỉnh được chọn</label>
+                    <div style="font-family: Verdana; font-size: 13px;" id='selectionlog'></div> -->
 
                     <div id="jqxWidget1"></div>
-                    <label style="font-family: Verdana; font-size: 14px;">Thông tin huyện được chọn</label>
-                    <div style="font-family: Verdana; font-size: 13px;" id='selectionlog1'></div>
-                    <button id="btn">Tải dữ liệu</button>
+                    <!-- <label style="font-family: Verdana; font-size: 14px;">Thông tin huyện được chọn</label>
+                    <div style="font-family: Verdana; font-size: 13px;" id='selectionlog1'></div> -->
+                    <button id="btn"><?php echo lang('load') ?></button>
                 </td>
                 <td width="80%">
                     <div id="table"></div>

@@ -37,27 +37,32 @@ class Xa extends CI_Controller
 
         $status = "error";
 
+        $mdata = $this->mxa->getten($matinh, $mahuyen, $ma);
+        $mten = $mdata['X_TEN'];
+
+        if($mten == $ten)
+        {
+            return;
+        }
         
-            if($this->mxa->testMa($matinh, $mahuyen, $ma))
+        if($this->mxa->testMa($matinh, $mahuyen, $ma))
+        {
+            $this->mxa->update($matinh, $mahuyen, $ma, $data);
+            $status = "success";
+        }
+        else
+        {
+            if($this->mxa->testTen($matinh, $mahuyen, $ten))
             {
-                $this->mxa->update($matinh, $mahuyen, $ma, $data);
-                $status = "success";
+                $msg["X_TEN"] = "Trùng tên";
             }
             else
             {
-                if($this->mxa->testTen($matinh, $mahuyen, $ten))
-                {
-                    $msg["X_TEN"] = "Trùng tên";
-                }
-                else
-                {
-                    $this->mxa->insert($data);
-                    $msg["insert"] = "insert";
-                    $status = "success";
-                }
+                $this->mxa->insert($data);
+                $msg["insert"] = "insert";
+                $status = "success";
             }
-            
-        
+        }
 
         $response = array('status' => $status,'msg' => $msg,'data' => $data);
         $jsonString = json_encode($response);

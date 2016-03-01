@@ -159,7 +159,7 @@
                             else
                             {
                                 commit(true);
-                                openSuccess("Xóa thành công");
+                                openSuccess("<?php echo lang('deleted_successfully') ?>");
                                 //alert("Xóa thành công!");
                             }
                         }
@@ -200,7 +200,9 @@
                     container.append('<button id="addrowbutton"> <img src="<?php echo site_url("assets/images/add1.png") ?>" style="width: 20px; height: 20px;" /> </button>');
                     container.append('<button style="margin-left: 2px; " id="deleterowbutton"> <img src="<?php echo site_url("assets/images/delete1.png") ?>" style="width: 20px; height: 20px;" /> </button> ');
                     $("#addrowbutton").jqxButton();
+                    $("#addrowbutton").jqxTooltip({ content: "<?php echo lang('add') ?>"});
                     $("#deleterowbutton").jqxButton();
+                    $("#deleterowbutton").jqxTooltip({ content: "<?php echo lang('delete') ?>"});
                     // create new row.
                     $("#addrowbutton").on('click', function () {
                         setTimeout("location.href = '<?php echo site_url('aediadiem'); ?>';",0);

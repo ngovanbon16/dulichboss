@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
 
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets\jqwidgets\demos\jqxgrid\localization.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () { 
 
@@ -99,18 +101,18 @@
                             if(data.status == "error")
                             {
                                 //alert("Tên không được trùng lập!");
-                                openError("Tên không được trùng lập!");
+                                openError("<?php echo lang('name_not_be_repeated') ?>");
                             }
                             else
                             {
                                 commit(true);
                                 if(data.msg['insert'] == "insert")
                                 {
-                                    openSuccess("Thêm thành công!");
+                                    openSuccess("<?php echo lang('inserted_successfully') ?>");
                                 }
                                 else
                                 {
-                                    openSuccess("Sửa thành công!");
+                                    openSuccess("<?php echo lang('updated_successfully') ?>");
                                 }
                             }
                         }
@@ -145,7 +147,7 @@
                             else
                             {
                                 commit(true);
-                                openSuccess("Xóa thành công!");
+                                openSuccess("<?php echo lang('deleted_successfully') ?>");
                             }
                         }
                     }, 'json');  
@@ -163,6 +165,7 @@
                 source: dataAdapter,
                 
                 pageable: true,
+                pagerMode: 'advanced',
                 editable: true,
                 showToolbar: true,
                 altRows: true,
@@ -172,6 +175,7 @@
                 sortable: true, // sặp xếp
                 filterable: true, // tìm kiếm
                 filterMode: 'simple',
+                localization: getLocalization("<?php echo lang('lang') ?>"), // tai ngon ngu
 
                 ready: function()
                 {
@@ -201,19 +205,19 @@
                     toolBar.append(container);
                     addButton.jqxButton({cursor: "pointer", enableDefault: false,  height: 25, width: 25 });
                     addButton.find('div:first').addClass(toTheme('jqx-icon-plus'));
-                    addButton.jqxTooltip({ position: 'bottom', content: "Add"});
+                    addButton.jqxTooltip({ position: 'bottom', content: "<?php echo lang('add') ?>"});
                     editButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
                     editButton.find('div:first').addClass(toTheme('jqx-icon-edit'));
-                    editButton.jqxTooltip({ position: 'bottom', content: "Edit"});
+                    editButton.jqxTooltip({ position: 'bottom', content: "<?php echo lang('edit') ?>"});
                     deleteButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
                     deleteButton.find('div:first').addClass(toTheme('jqx-icon-delete'));
-                    deleteButton.jqxTooltip({ position: 'bottom', content: "Delete"});
+                    deleteButton.jqxTooltip({ position: 'bottom', content: "<?php echo lang('delete') ?>"});
                     updateButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
                     updateButton.find('div:first').addClass(toTheme('jqx-icon-save'));
-                    updateButton.jqxTooltip({ position: 'bottom', content: "Save Changes"});
+                    updateButton.jqxTooltip({ position: 'bottom', content: "<?php echo lang('save') ?>"});
                     cancelButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
                     cancelButton.find('div:first').addClass(toTheme('jqx-icon-cancel'));
-                    cancelButton.jqxTooltip({ position: 'bottom', content: "Cancel"});
+                    cancelButton.jqxTooltip({ position: 'bottom', content: "<?php echo lang('cancel') ?>"});
                     var updateButtons = function (action) {
                         switch (action) {
                             case "Select":
@@ -299,9 +303,9 @@
                     });
                 },
                 columns: [
-                    { text: 'Mã', dataField: 'DM_MA', width: "20%" },
-                    { text: 'Tên', dataField: 'DM_TEN', width: "50%" },
-                    { text: 'Hình', dataField: 'DM_HINH', width: "30%" },
+                    { text: "<?php echo lang('key') ?>", dataField: 'DM_MA', width: "20%" },
+                    { text: "<?php echo lang('name') ?>", dataField: 'DM_TEN', width: "50%" },
+                    { text: "<?php echo lang('picture') ?>", dataField: 'DM_HINH', width: "30%" },
                 ]
             });
         });

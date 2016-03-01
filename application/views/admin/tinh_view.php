@@ -99,7 +99,7 @@
                     var reg = /^\d+$/;
                     if(!reg.test(rowID))
                     {
-                        openError("Lỗi! Mã phải là một số nguyên dương");
+                        openError("<?php echo lang('code_must_be_a_positive_integer') ?>");
                         return;
                     }
                     
@@ -118,17 +118,17 @@
                                 var error = data.msg["error"];
                                 if(error  == "tt")
                                 {
-                                    openError("Lỗi! Tên đã tồn tại.");
+                                    openError("<?php echo lang('name_not_be_repeated') ?>");
                                 }
                                 if(error == "tm")
                                 {
-                                    openError("Lỗi! Mã "+data.data["T_MA"]+" đã tồn tại.");
+                                    openError(data.data["T_MA"]+" - <?php echo lang('code_already_exists') ?>");
                                 }
                             }
                             else
                             {
                                 commit(true);
-                                openSuccess("Thêm thành công!");
+                                openSuccess("<?php echo lang('inserted_successfully') ?>");
                             }
                         }
                     }, 'json');
@@ -148,12 +148,12 @@
                             if(data)
                             {
                                 commit(true);
-                                openSuccess("Sửa thành công!");
+                                openSuccess("<?php echo lang('updated_successfully') ?>");
                             }
                             else
                             {
                                 commit(false);
-                                openError("Tên không được trùng lập!");
+                                openError("<?php echo lang('name_not_be_repeated') ?>");
                             }
                         },
                         error: function () {
@@ -179,12 +179,12 @@
                                 //alert(data.status);
                                 if(data.status == "error")
                                 {
-                                    openError("Mã không tồn tại!");
+                                    openError("<?php echo lang('code_does_not_exist') ?>");
                                 }
                                 else
                                 {
                                     commit(true);
-                                    openSuccess("Xóa thành công!");
+                                    openSuccess("<?php echo lang('deleted_successfully') ?>");
                                 }
                             }
                         }, 'json');  
@@ -224,6 +224,7 @@
                     container.append(' <img id="deleterowbutton" style="margin-left: 2px;" src="<?php echo base_url(); ?>assets/images/delete1.png" width="20" height="20"> ');
                     /*$("#addrowbutton").jqxButton();*/
                     $("#deleterowbutton").jqxButton();
+                    $("#deleterowbutton").jqxTooltip({ content: "<?php echo lang('delete') ?>"});
                     // create new row.
                    /* $("#addrowbutton").on('click', function () {
                         setTimeout("location.href = '<?php echo site_url('aediadiem'); ?>';",0);

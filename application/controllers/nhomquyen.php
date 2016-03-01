@@ -33,6 +33,14 @@ class Nhomquyen extends CI_Controller
 
 		$status = "error";
 
+		$mdata = $this->mnhomquyen->getid($ma);
+        $mten = $mdata['NQ_TEN'];
+
+        if($mten == $ten)
+        {
+            return;
+        }
+
         if($this->mnhomquyen->testTen($ten))
         {
         	$msg["NQ_TEN"] = "Trùng tên";

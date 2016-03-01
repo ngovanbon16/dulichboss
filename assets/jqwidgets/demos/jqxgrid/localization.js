@@ -114,7 +114,8 @@
                 filterselectstring: "Select Filter",
                 loadtext: "Đang tải...",
                 clearstring: "Làm sạch",
-                todaystring: "Hôm nay"
+                todaystring: "Hôm nay",
+                filtersearchstring: "Tìm kiếm:",
              }
             break;
         case "en":
@@ -231,7 +232,8 @@
                 filterselectstring: "Select Filter",
                 loadtext: "Loading...",
                 clearstring: "Clear",
-                todaystring: "Today"
+                todaystring: "Today",
+                filtersearchstring: "Search:",
             }
             break;
     }

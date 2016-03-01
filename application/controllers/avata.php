@@ -8,7 +8,7 @@ class Avata extends CI_Controller{
     public function index(){
         //$data['errors'] = '';
         //$this->load->view("upload_view", $data);
-        $this->_data['title'] = 'Avata';
+        $this->_data['title'] = lang('photo');
         $this->_data['errors'] = '';
         $this->_data['subview'] = 'admin/avata_view';
         $this->load->view('Main.php', $this->_data);
@@ -80,7 +80,7 @@ class Avata extends CI_Controller{
             }
             else
             {
-                $this->_data['title'] = "Avata";
+                $this->_data['title'] = lang('photo');
                 $this->_data['errors'] = $this->upload->display_errors();
                 $this->_data['subview'] = 'admin/avata_view';
                 $this->load->view('Main.php', $this->_data);

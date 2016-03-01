@@ -124,7 +124,7 @@
                             else
                             {
                                 commit(true);
-                                openSuccess("Xóa thành công");
+                                openSuccess("<?php echo lang('deleted_successfully') ?>");
                             }
                         }
                     }, 'json');  
@@ -164,7 +164,9 @@
                     container.append('<button id="addrowbutton"> <img src="<?php echo site_url("assets/images/add1.png") ?>" style="width: 20px; height: 20px;" /> </button>');
                     container.append('<button style="margin-left: 2px; " id="deleterowbutton"> <img src="<?php echo site_url("assets/images/delete1.png") ?>" style="width: 20px; height: 20px;" /> </button> ');
                     $("#addrowbutton").jqxButton();
+                    $("#addrowbutton").jqxTooltip({ content: "<?php echo lang('add') ?>"});
                     $("#deleterowbutton").jqxButton();
+                    $("#deleterowbutton").jqxTooltip({ content: "<?php echo lang('delete') ?>"});
                     // create new row.
                     $("#addrowbutton").on('click', function () {
                         setTimeout("location.href = '<?php echo site_url('registration'); ?>';",0);
@@ -227,7 +229,7 @@
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.ND_MA;
                             console.log(id);
-                            openError("Tính năng đang được cập nhật.");
+                            openError("<?php echo lang('feature_is_being_updated') ?>");
                             /*setTimeout("location.href = '<?php echo base_url(); ?>index.php/aenguoidung/detail/"+id+"';",0);*/
                         }
                     },
@@ -240,10 +242,10 @@
 </head>
 <body class='default'>
     <div id="notiSuccess">
-        <div id="result">Thông báo thành công!</div>
+        <div id="result"><?php echo lang('notification') ?></div>
     </div>
     <div id="notiError">
-        <div id="error">Thông báo lỗi!</div>
+        <div id="error"><?php echo lang('notification') ?></div>
     </div>
 
     <div id='jqxWidget' style="font-size: 13px; font-family: Verdana;">

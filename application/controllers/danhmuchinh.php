@@ -73,7 +73,7 @@ class Danhmuchinh extends CI_Controller
 	                  );
 	                  $this->mdanhmuc->update($ma, $data);
 
-	                  $this->_data['errors'] = "<h3>Thay đổi hình thành công!</h3>";
+	                  $this->_data['errors'] = "<h3>".lang('update_sucess')."</h3>";
 
 	                    $this->load->library("image_lib");
 	                    $config['image_library'] = 'gd2';
@@ -98,7 +98,7 @@ class Danhmuchinh extends CI_Controller
 	      // Hien thi view
 	      //$this->load->view('admin/uploads_view',$this->_data);
 	    $this->_data['subview'] = 'admin/danhmuchinh_view';
-       	$this->_data['title'] = 'Hình của danh mục địa điểm';
+       	$this->_data['title'] = lang('photo');
        	$this->_data['info'] = $this->mdanhmuc->getList();
        	$this->load->view('main.php', $this->_data);  
 	  }

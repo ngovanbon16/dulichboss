@@ -22,6 +22,21 @@ class Mnhomquyen extends CI_Model {
         }
     }
 
+    public function getid($id){
+        $this->db->select('*');
+        $this->db->where('NQ_MA',$id);
+        $this->db->from($this->_table);
+         $query = $this -> db -> get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return $query->row_array();
+        }
+     }
+
     public function insert($data_insert){
         $this->db->insert($this->_table,$data_insert);
     }

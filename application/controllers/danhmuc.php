@@ -39,9 +39,17 @@ class Danhmuc extends CI_Controller
 
 		$status = "error";
 
+		$mdata = $this->mdanhmuc->getid($ma);
+		$mten = $mdata['DM_TEN'];
+
+		if($mten == $ten)
+		{
+			return;
+		}
+
         if($this->mdanhmuc->testTen($ten))
         {
-        	$msg["DM_TEN"] = "Trùng tên";
+        	$msg["DM_TEN"] = lang('name_not_be_repeated');
         }
         else
         {
@@ -77,12 +85,12 @@ class Danhmuc extends CI_Controller
 
 		if(!($this->mdanhmuc->testMa($ma)))
 		{
-			$msg["ma"] = "Mã không tồn tại!";
+			$msg["ma"] = lang('code_does_not_exist');
 		}
 
 		if($this->mdanhmuc->danhmucdiadiem($ma))
 		{
-			$msg["ma"] = "Lỗi khóa ngoại!";
+			$msg["ma"] = lang('errors_associated_foreign_key');
 		}
 
 		$status = "error";

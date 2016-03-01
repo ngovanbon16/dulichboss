@@ -35,6 +35,14 @@ class Huyen extends CI_Controller
 
         $status = "error";
 
+        $mdata = $this->mhuyen->getten($matinh, $ma);
+        $mten = $mdata['H_TEN'];
+
+        if($mten == $ten)
+        {
+            return;
+        }
+
         if($this->mhuyen->testTen($matinh, $ten))
         {
             $msg["H_TEN"] = "Trùng tên";

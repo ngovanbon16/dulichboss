@@ -13,6 +13,9 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxtabs.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/demos.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets\jqwidgets\demos\jqxgrid\localization.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             // prepare the data
@@ -64,6 +67,7 @@
                 pagerButtonsCount: 5,
                 enableHover: false,
                 selectionMode: 'none',
+                localization: getLocalization("<?php echo lang('lang') ?>"), // tai ngon ngu
                 rendered: function () {
                     $(".buy").jqxButton();
                     $(".buy").click(function () {
@@ -72,7 +76,7 @@
                 },
                 columns: [
                       {
-                          text: 'Products', align: 'left', dataField: 'model',
+                          text: "<?php echo lang('photo') ?>", align: 'left', dataField: 'model',
                           // row - row's index.
                           // column - column's data field.
                           // value - cell's value.
@@ -90,12 +94,12 @@
                                   image += "</div>";
 
                                   var info = "<div style='margin: 5px; margin-left: 10px; margin-bottom: 3px;'>";
-                                  info += "<div><i>" + dulieu.DM_MA + "</i></div>";
-                                  info += "<div>Tên: " + dulieu.DM_TEN + "</div>";
-                                  info += "<div>Tên hình: " + dulieu.DM_HINH + "</div>";
+                                  //info += "<div><i>" + dulieu.DM_MA + "</i></div>";
+                                  info += "<div><?php echo lang('name') ?>: " + dulieu.DM_TEN + "</div>";
+                                  //info += "<div>Tên hình: " + dulieu.DM_HINH + "</div>";
                                   info += "</div>";
 
-                                  var buy = "<button class='buy' style='margin: 5px; width: 80px; height: 35px; left: -100px; position: relative; margin-left: 50%; margin-bottom: 3px;' value='"+dulieu.DM_MA+"' data-toggle='modal' data-target='#myModal'>Đổi hình</button>";
+                                  var buy = "<button class='buy' style='margin: 5px; width: 80px; height: 35px; left: -100px; position: relative; margin-left: 50%; margin-bottom: 3px;' value='"+dulieu.DM_MA+"' data-toggle='modal' data-target='#myModal'><?php echo lang('change') ?></button>";
 
                                   item += image;
                                   item += info;
@@ -186,18 +190,16 @@ h4 {
       <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel">Form</h4>
+            <h4 class="modal-title" id="myModalLabel"><?php echo lang('photo') ?></h4>
         </div>
         <div class="modal-body">
-          <h1>Tải ảnh lên</h1>
+          <h1><?php echo lang('load') ?></h1>
           <form method="post" action="<?php echo base_url(); ?>danhmuchinh/upload" enctype="multipart/form-data">
-            Mã danh mục: <br/>
-            <input type="text" id="ma" name="ma" readonly />
-            <br/>
-            <label>Ảnh kèm theo:</label>
+            <input style="display: none;" type="text" id="ma" name="ma" readonly />
+            <label><?php echo lang('picture') ?>:</label>
             <input type="file"  id="image_list" name="image_list[]" multiple>
             <br />
-            <input type="submit" class="button" value="Tải lên" name='submit' id="submit" />
+            <input type="submit" class="button" value="<?php echo lang('load') ?>" name='submit' id="submit" />
           </form>
           <?php
             if(isset($errors)){
@@ -206,7 +208,7 @@ h4 {
           ?>
         </div>
         <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close') ?></button>
               <!-- <button type="button" class="btn btn-primary">Save changes</button> --> 
         </div>
       </div>

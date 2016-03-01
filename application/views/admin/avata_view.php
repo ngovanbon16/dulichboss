@@ -51,12 +51,12 @@ $upload=array(
             //echo $this->session->userdata("id");
             echo form_open_multipart(base_url()."index.php/avata/doupload");
             echo form_label("Avartar: ").form_upload($upload)."<br />";
-            echo form_label(" ").form_submit("ok", "Tải lên");
+            echo form_label(" ").form_submit("ok", lang('load'));
             echo form_close();
             if($errors != ""){
                 if($errors == "success")
                 {
-                    echo "<h3>Thay đổi ảnh đại diện thành công!</h3>";
+                    echo "<h3>".lang('updated_successfully')."</h3>";
                 }
                 else
                 {

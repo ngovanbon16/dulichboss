@@ -239,12 +239,12 @@ class Diadiem extends CI_Controller
 
 		if(!($this->mdiadiem->testMa($ma)))
 		{
-			$msg["ma"] = "Mã không tồn tại!";
+			$msg["ma"] = lang('code_does_not_exist');
 		}
 
 		if($this->mdiadiem->diadiemhinhanh($ma))
 		{
-			$msg["ma"] = "Lỗi! có liên kết dữ liệu.";
+			$msg["ma"] = lang('errors_associated_foreign_key');
 		}
 
 		$status = "error";
