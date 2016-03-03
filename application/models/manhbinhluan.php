@@ -54,6 +54,22 @@ class Manhbinhluan extends CI_Model {
         }
     }
 
+    public function getanhbinhluan($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where('BL_MA', $id);
+        $query = $this -> db -> get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
     public function max()// được sử dụng để up anh cho bình luận: luu y id luon tang len nen trong du lieu phai co it nhat mot dong
     {
         $query = $this->db->query("SELECT MAX(ABL_MA) maxid FROM anhbinhluan");

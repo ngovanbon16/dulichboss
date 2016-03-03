@@ -186,10 +186,88 @@
 	        }, 'json');
 		}
 
+		function xoahinhbinhluan(ma, ten)
+		{
+			if(!confirm("<?php echo lang('are_you_sure') ?>"))
+			{
+				return;
+			}
+			var url, dta;
+            url = "<?php echo base_url(); ?>index.php/binhluan/deleteanhbinhluan";
+            dta = {
+            	"ma" : ma,
+            	"ten" : ten
+            };
+
+            $.post(url, dta, function(data, status){
+
+	            console.log(status);
+	            console.log(data);
+	            document.getElementById(ma).style.display = "none";
+
+            }, 'json');
+		}
+
 		function hinhbinhluan(id)
 		{
-			document.getElementById('hinhbinhluan').innerHTML = id;
+			var dta, url;
+            url = "<?php echo base_url(); ?>index.php/binhluan/anhbinhluan";
+            dta = {
+            	"ma" : id
+            };
+            console.log(dta);
+            $.post(url, dta, function(data, status){
+
+                console.log(status);
+                console.log(data);
+                if(status == "success")
+                {
+                	var chuoi = "";
+                	for (var i = 0; i < data.data.length; i++) {
+                		var ma = data.data[i]['ABL_MA'];
+                		var ten = data.data[i]['ABL_TEN'];
+                		chuoi += "<span id='"+ma+"' class='span'> <i style='font-size: 20px; color: #f00; position: absolute; margin: 3px; cursor: pointer;' class='fa fa-times' onclick=\"xoahinhbinhluan('"+ma+"','"+ten+"');\" ></i> <img src='<?php echo base_url(); ?>uploads/binhluan/" + ten + "' width='100%' height='100%'> </span>";
+                	}
+                	
+                	document.getElementById('hinhbinhluan').innerHTML = chuoi;
+                }
+
+            }, 'json');
 		}
+
+		function xoabinhluan(id)
+        {
+        	if(!confirm("<?php echo lang('are_you_sure') ?>"))
+			{
+				return;
+			}
+
+            var dta, url;
+            url = "<?php echo base_url(); ?>index.php/binhluan/delete";
+            dta = {
+            	"ma" : id
+            };
+            console.log(dta);
+            $.post(url, dta, function(data, status){
+
+                console.log(status);
+                console.log(data);
+                if(status == "success")
+                {   
+                    if(data.status == "error")
+                    {
+                        //alert("Mã không tồn tại!");
+                        //openError(data.msg['ma']);
+                    }
+                    else
+                    {
+                        //openSuccess("Xóa thành công");
+                        document.getElementById(id).style.display = "none";
+                        //alert("Xóa thành công!");
+                    }
+                }
+            }, 'json');  
+        }
 	</script>
 
 	<style type="text/css">
@@ -213,6 +291,20 @@
 		width: 30px;
 		height: 30px;
 		cursor: pointer;
+	}
+	.divbinhluan{
+		padding: 5px;
+		margin: 5px; 
+		float: left; 
+		width: 48%; 
+		height: 150px; 
+		border: solid 1px #000; 
+		overflow: auto;
+		border-radius: 2px;
+		box-shadow: 0 0 2px rgba(0,0,0,4);
+		-moz-box-shadow: 0 0 2px rgba(0,0,0,4);
+		-webkit-box-shadow: 0 0 2px rgba(0,0,0,4);
+		-o-box-shadow: 0 0 2px rgba(0,0,0,4);
 	}
 	.tool{
 		background-color: #eee;
@@ -243,7 +335,7 @@
 	<div>
 		 <h3><?php echo $info['DD_TEN'] ?></h3>
 	</div>
-	<div style="width: 100%; height: 250px; border: solid 1px #000;">
+	<div style="border-radius: 2px; padding: 15px; width: 100%; height: 280px; border: solid 1px #888;">
 		<div style="float: left; width: 28%; height: 250px;">
 			<?php 
 	            $madd = $info['DD_MA'];
@@ -382,7 +474,7 @@
             </table>
 		</div>
 	</div>
-	<div style="padding: 10px; width: 100%; height: 500px; border: solid 1px #000;">
+	<div style="padding: 10px; width: 100%; height: 500px; overflow: auto;">
 		<?php 
           	foreach ($binhluan as $iteam) {
 	            $mabinhluan = $iteam['BL_MA'];
@@ -398,11 +490,12 @@
 	            $hinhnd = $iteam['ND_HINH'];
 
 	    ?>
-	    		<div style="padding: 5px; float: left; width: 50%; height: 150px; border: solid 1px #000; overflow: auto;">
+	    		<div class="divbinhluan" id="<?php echo $mabinhluan ?>">
 	    			<img style="border-radius: 50px;" src="<?php echo base_url(); ?>uploads/user/<?php echo $hinhnd ?>" width="30" height="30">
 
                   	<b style="font-size: 16px; text-transform: capitalize;"> <?php echo $hond." ".$tennd ?> </b> - <?php echo $ngaydang ?> <b>Đã bình luận</b> 
-                  	<button id="btnbinhluan" class="btn1" data-toggle='modal' data-target='#modalbinhluan' onclick="hinhbinhluan('<?php echo $mabinhluan ?>')">Hình ảnh</button>
+                  	<button class="tool" data-toggle='modal' data-target='#modalbinhluan' onclick="hinhbinhluan('<?php echo $mabinhluan ?>')"><i class="fa fa-photo fa-fw"></i></button>
+                  	<button class="tool" onclick="xoabinhluan('<?php echo $mabinhluan ?>')"><i class="fa fa-trash-o fa-fw"></i></button>
                   	<br/>
 	    			<b style="font-size: 18px; text-transform: uppercase;"><i class="fa fa-comments-o fa-fw"></i> <?php echo $tieude ?></b>
 	    			<p><?php echo $noidung ?></p>
@@ -497,13 +590,17 @@
 	<div> <!-- modal binh luan -->
 		<!-- Modal -->
 		<div id="modalbinhluan" class="modal fade" role="dialog" tabindex="-1">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog" style="width: 90%; ">
 
 		    <!-- Modal content-->
-		    <div class="modal-content">
+		    <div class="modal-content" style="height: 500px;">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
 		        <h4 class="modal-title"><i class="fa fa-comments-o fa-fw"></i> <?php echo $info['DD_TEN']; ?></h4>
+		        <?php echo lang('view') ?>:
+		        <button class="tool" onclick="kieu('1')"><i class="fa fa-th"></i></button>
+		        <button class="tool" onclick="kieu('2')"><i class="fa fa-th-list"></i></button>
+		        <button class="tool" onclick="kieu('3')"><i class="fa fa-th-large"></i></button>
 		      </div>
 		      <div id="hinhbinhluan" class="modal-body">
 		      	chao

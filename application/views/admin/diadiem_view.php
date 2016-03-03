@@ -265,7 +265,7 @@
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.DD_MA;
                             console.log(id);
-                            setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/detail/"+id+"';",0);
+                            setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/detailadmin/"+id+"';",0);
                         }
                     },
                   

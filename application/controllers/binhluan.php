@@ -182,6 +182,18 @@ class Binhluan extends CI_Controller
 		echo $jsonString;
 	}
 
+	public function anhbinhluan()
+	{
+		$ma = $_POST["ma"];
+
+		$this->load->model("manhbinhluan");
+		$anhbinhluan = $this->manhbinhluan->getanhbinhluan($ma);
+
+		$response = array('data' => $anhbinhluan);
+	    $jsonString = json_encode($response);
+	    echo $jsonString;
+	}
+
 	public function countAll() // dem tong so hang trong bang dung cho lot du lieu tung phan
 	{
 		$total = $this->mbinhluan->countAll();
