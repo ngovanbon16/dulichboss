@@ -60,9 +60,14 @@ $lang['notification'] = "Notification";
 $lang['feature_is_being_updated'] = "Feature is being updated";
 $lang['code_already_exists'] = "Code already exists";
 $lang['code_must_be_a_positive_integer'] = "Code must be a positive integer";
-$lang[''] = "";
-$lang[''] = "";
-$lang[''] = "";
+$lang['note'] = "Note";
+$lang['click_to_delete'] = "Click to delete";
+$lang['click_to_change_avatar'] = "Click to change avatar";
+$lang['click_to_accept_photos'] = "Click to accept photos";
+$lang['view'] = "View";
+$lang['filter'] = "Filter";
+$lang['are_you_sure'] = "Are you sure?";
+$lang['agree'] = "Agree";
 $lang[''] = "";
 $lang[''] = "";
 

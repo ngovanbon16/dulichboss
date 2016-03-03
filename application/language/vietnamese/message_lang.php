@@ -60,4 +60,12 @@ $lang['notification'] = "Thông báo";
 $lang['feature_is_being_updated'] = "Tính năng đang được cập nhật.";
 $lang['code_already_exists'] = "Mã đã tồn tại.";
 $lang['code_must_be_a_positive_integer'] = "Mã phải là một số nguyên dương.";
+$lang['note'] = "Ghi chú";
+$lang['click_to_delete'] = "Bấm vào để xóa.";
+$lang['click_to_change_avatar'] = "Bấm vào để đổi ảnh đại diện.";
+$lang['click_to_accept_photos'] = "Bấm vào để chấp nhận ảnh.";
+$lang['view'] = "Xem";
+$lang['filter'] = "Lọc";
+$lang['are_you_sure'] = "Bạn có chắc không?";
+$lang['agree'] = "Đồng ý";
 ?>

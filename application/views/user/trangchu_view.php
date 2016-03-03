@@ -191,16 +191,13 @@
 
                 ?>
 
-                <div class="col-xs-12 col-sm-4 col-md-3">
+                <div style="margin: 10px; width: 210px;" class="col-xs-12 col-sm-4 col-md-3">
                     <div class="recent-work-wrap">
-                        <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="" height="200">
-                        <div class="overlay">
-                            <div class="recent-work-inner">
-                                <h3 style="text-transform: uppercase;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $ma; ?>"><?php echo $ten; ?></a> </h3>
-                                <p><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>
-                                <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" rel="prettyPhoto"><i class="fa fa-eye"></i> Xem</a>
-                            </div> 
-                        </div>
+                        <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" rel="prettyPhoto">
+                            <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="" height="100">
+                        </a>
+                        <b style="text-transform: uppercase;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b>
+                        <p><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>
                     </div>
                 </div> 
 

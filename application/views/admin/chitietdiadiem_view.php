@@ -52,8 +52,8 @@
             $("#createAccount").jqxExpander({  toggleMode: 'none', width: '80%', showArrow: false });
             // Create jqxButton.
             $("#submit").jqxButton({ template: "primary", height: "30px", width: "150px" });
-            $("#duyettatca").jqxButton({ template: "success", height: "30px", width: "150px" });
-            $("#huytatca").jqxButton({ template: "warning", height: "30px", width: "150px" });
+            $("#duyettatca").jqxButton({ template: "", height: "30px", width: "150px" });
+            $("#huytatca").jqxButton({ template: "", height: "30px", width: "150px" });
             // Validate the Form.
             $("#submit").click(function () {
                 //alert("chao");
@@ -1247,7 +1247,7 @@
                             <div class="tieude">Vị trí</div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="display: none;">
                         <td> <input type="text" id="myPlaceTextBox" />
                             <?php echo $map['html']; ?>
                             Lat: <input type="text" id="lat" value="" readonly >

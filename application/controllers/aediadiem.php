@@ -318,6 +318,46 @@ class Aediadiem extends CI_Controller
        	$this->load->view("admin/chitietdiadiem_view", $this->_data);
 	}
 
+	public function detailadmin($id) // id la ma cua dia diem - ham dung cho quan ly dia diem
+	{
+       	$info = $this->mdiadiem->getID($id);
+       	$madanhmuc = $info['DM_MA'];
+       	$matinh = $info['T_MA'];
+       	$mahuyen = $info['H_MA'];
+       	$maxa = $info['X_MA'];
+
+       	$this->load->model("mdanhmuc");
+       	$xa = $this->mdanhmuc->getID($madanhmuc);
+       	$this->_data['tendanhmuc'] = $xa["DM_TEN"];
+
+       	$this->load->model("mtinh");
+       	$tinh = $this->mtinh->getID($matinh);
+       	$this->_data['tentinh'] = $tinh["T_TEN"];
+
+       	$this->load->model("mhuyen");
+       	$huyen = $this->mhuyen->getten($matinh, $mahuyen);
+       	$this->_data['tenhuyen'] = $huyen["H_TEN"];
+
+       	$this->load->model("mxa");
+       	$xa = $this->mxa->getten($matinh, $mahuyen, $maxa);
+       	$this->_data['tenxa'] = $xa["X_TEN"];
+
+       	$this->load->model("mbinhluan"); // them binh luan
+       	$this->_data['binhluan'] = $this->mbinhluan->getdd($id);
+
+       	$this->load->model("manhbinhluan"); // them anh binh luan
+       	$this->_data['anhbinhluan'] = $this->manhbinhluan->getList();
+       	
+        $this->_data['map'] = $this->map($info["DD_VITRI"]);
+        $this->_data['info'] = $this->mdiadiem->getID($id);
+        $this->load->model("mhinhanh");
+        $this->_data['info1'] = $this->mhinhanh->getloc($id);
+
+        $this->_data['title'] = lang('detail');
+        $this->_data['subview'] = "admin/ctdd_view";
+       	$this->load->view("main.php", $this->_data);
+	}
+
 	public function detailuser($id) // id là mã cua địa điểm - ham dung cho user
 	{
        	$info = $this->mdiadiem->getID($id);

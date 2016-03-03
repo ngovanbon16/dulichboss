@@ -369,6 +369,10 @@ class Diadiemhinh extends CI_Controller
 	    "HA_DUYET" => $HA_DUYET
 	);
 	$this->mhinhanh->update($HA_MA, $data);
+
+	$response = array('HA_MA' => $HA_MA, 'HA_DUYET' => $HA_DUYET);
+    $jsonString = json_encode($response);
+    echo $jsonString;
   }
 
   public function daidien()
@@ -393,8 +397,18 @@ class Diadiemhinh extends CI_Controller
 			$this->mhinhanh->updateanhdaidien($DD_MA, $maha, $data);
 		}
 	}
+	$hinh = $this->mhinhanh->getloc($DD_MA);
+	$response = array('data' => $hinh);
+    $jsonString = json_encode($response);
+    echo $jsonString;
+  }
 
-	$response = array('msg' => 'success');
+  public function loc()
+  {
+  	$DD_MA = $_POST["DD_MA"];
+	$hinh = $this->mhinhanh->getloc($DD_MA);
+
+	$response = array('data' => $hinh);
     $jsonString = json_encode($response);
     echo $jsonString;
   }
@@ -402,6 +416,8 @@ class Diadiemhinh extends CI_Controller
   public function xoa()
     {
         $HA_TEN = $_POST["HA_TEN"];
+        $DD_MA = $_POST["DD_MA"];
+		
         /*$msg = array();
 
         if(!($this->mhinhanh->testTen($HA_TEN)))
@@ -429,7 +445,8 @@ class Diadiemhinh extends CI_Controller
 
         $this->mhinhanh->delete($HA_TEN);
 
-        $response = array('msg' => $HA_TEN);
+        $hinh = $this->mhinhanh->getloc($DD_MA);
+        $response = array('data' => $hinh);
         $jsonString = json_encode($response);
         echo $jsonString;
     }
