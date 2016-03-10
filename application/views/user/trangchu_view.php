@@ -52,7 +52,7 @@
                                 }
 
 
-                                document.getElementById("diadiem").innerHTML += '<div class="col-xs-12 col-sm-4 col-md-3"><div class="recent-work-wrap"><img src="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" alt="" height="200"><div class="overlay"><div class="recent-work-inner"><h3 style="text-transform: uppercase;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/'+ma+'">'+ten+'</a> </h3><p>'+tenhuyen+' <i class="fa fa-angle-double-right fa-fw"></i> '+tentinh+'</p><a class="preview" target="_blank" href="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" rel="prettyPhoto"><i class="fa fa-eye"></i> Xem</a></div></div></div></div>';
+                                document.getElementById("diadiem").innerHTML += '<div class="col-md-3 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms"><div style="float: left; height: 200px;"><table><tr><td><a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" rel="prettyPhoto"><img class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" alt=""></a></td></tr><tr><td><b style="text-transform: uppercase; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/'+ma+'">'+ten+'</a> </b><p style="font-size: 11px; font-style: italic;">'+tenhuyen+'<i class="fa fa-angle-double-right fa-fw"></i>'+tentinh+'</p></td></tr></table></div></div><!--/.col-md-4-->';
                             }
                             var tong = eval(data.data.length+"+"+$("#count").val());
                             $("#count").val(tong);
@@ -63,6 +63,52 @@
             });
         });
     </script>
+
+    <style type="text/css">
+        .grad1 {
+            padding: 5px;
+            height: 50px;
+            border-radius: 3px;
+            margin-top: 5px;
+            background: -webkit-linear-gradient(left, rgba(105,105,105,105), rgba(255,0,0,0)); /* For Safari 5.1 to 6.0 */
+            background: -o-linear-gradient(right, rgba(105,105,105,105), rgba(255,0,0,0)); /* For Opera 11.1 to 12.0 */
+            background: -moz-linear-gradient(right, rgba(105,105,105,105), rgba(255,0,0,0)); /* For Firefox 3.6 to 15 */
+            background: linear-gradient(to right, rgba(105,105,105,105), rgba(255,0,0,0)); /* Standard syntax (must be last) */
+            -webkit-box-shadow:0 -4px 4px -4px #000;
+            box-shadow: 0 -4px 4px -4px #000;
+            /*hoặc*/
+            box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -moz-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -webkit-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -o-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+        }
+
+        #imghuyen {
+            border-radius: 5px;
+            -webkit-box-shadow:0 -4px 4px -4px #000;
+            box-shadow: 0 -4px 4px -4px #000;
+            /*hoặc*/
+            box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -moz-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -webkit-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -o-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+        }
+
+        .imgdiadiem {
+            width: 100%; 
+            height: 100px; 
+            border-radius: 5px;
+            box-shadow: 0 0 4px #000;
+            -webkit-box-shadow: 0 0 4px #000;
+            /*or*/
+            box-shadow: 0 0 4px rgba(0,0,0,4);
+            -moz-box-shadow: 0 0 4px rgba(0,0,0,4);
+            -webkit-box-shadow: 0 0 4px rgba(0,0,0,4);
+            -o-box-shadow: 0 0 4px rgba(0,0,0,4);
+        }
+
+    </style>
+
 </head>
 <body class="homepage">
 
@@ -145,78 +191,137 @@
         </a>
     </section><!--/#main-slider-->
 
+    <section id="feature" >
+        <div class="container">
+           <div class="center wow fadeInDown">
+                <h2>Các huyện trong tỉnh</h2>
+                <p class="lead">Các huyện trong tỉnh</p>
+            </div>
+
+            <div class="row">
+                <div class="features">
+
+                    <?php 
+                        foreach ($huyentt as $iteam) {
+                            $ma = $iteam['H_MA'];
+                            $ten = $iteam['H_TEN'];
+                    ?>
+
+                    <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div style="float: left; height: 150px;">
+                            <b style="font-size: 16px; text-transform: capitalize;"><?php echo $ten; ?></b>
+                            <img id="imghuyen" src="<?php echo base_url(); ?>assets/images/thiencamson.jpg" alt="" width="100%" height="100">
+                            
+                        </div>
+                    </div><!--/.col-md-4-->
+
+                    <?php
+                        }
+                    ?>
+
+                </div><!--/.services-->
+            </div><!--/.row-->    
+        </div><!--/.container-->
+    </section><!--/#feature-->
+
     <section id="recent-works">
         <div class="container">
-            <div id="diadiem1" class="row">
-                <h2 style="background-color: #F66; height: 50px; font-weight: bolder; padding: 12px; font-style: italic; font-size: 22px;">Một số địa điểm mới được cập nhật</h2>
-                <?php 
-                    $count = 0;
-                    foreach ($info as $iteam) {
-                    $ma = $iteam['DD_MA'];
-                    $ten = $iteam['DD_TEN'];
-                    $mota = $iteam['DD_MOTA'];
-                    $duyet = $iteam['DD_DUYET'];
-                    $matinh = $iteam['T_MA'];
-                    $mahuyen = $iteam['H_MA'];
-                    $tentinh = '';
-                    $tenhuyen = '';
+            <div class="center wow fadeInDown">
+                <h2>Một số địa điểm nổi bậc</h2>
+                <p class="lead">Một số địa điểm nổi bậc</p>
+            </div>
 
-                    foreach ($tinh as $key) {
-                        if($matinh == $key['T_MA'])
-                        {
-                            $tentinh = $key['T_TEN'];
-                        }
-                    }
+            <div class="row">
+                <div id="diadiem" class="features">
 
-                    foreach ($huyen as $key) {
-                        if($matinh == $key['T_MA'] && $mahuyen == $key['H_MA'])
-                        {
-                            $tenhuyen = $key['H_TEN'];
-                        }
-                    }
+                    <?php 
+                        $count = 0;
+                        foreach ($info as $iteam) {
+                        $ma = $iteam['DD_MA'];
+                        $ten = $iteam['DD_TEN'];
+                        $mota = $iteam['DD_MOTA'];
+                        $duyet = $iteam['DD_DUYET'];
+                        $matinh = $iteam['T_MA'];
+                        $mahuyen = $iteam['H_MA'];
+                        $tentinh = '';
+                        $tenhuyen = '';
 
-                    if($duyet == "1")
-                    {
-                        $count++;
-                        $hinh = "";
-                        foreach ($info1 as $key) {
-                            if($ma == $key['DD_MA'])
+                        foreach ($tinh as $key) {
+                            if($matinh == $key['T_MA'])
                             {
-                                if($key['HA_DAIDIEN'] == "1")
-                                {
-                                    $hinh = $key['HA_TEN'];
-                                }
+                                $tentinh = $key['T_TEN'];
                             }
                         }
 
-                ?>
-
-                <div style="margin: 10px; width: 210px;" class="col-xs-12 col-sm-4 col-md-3">
-                    <div class="recent-work-wrap">
-                        <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" rel="prettyPhoto">
-                            <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="" height="100">
-                        </a>
-                        <b style="text-transform: uppercase;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b>
-                        <p><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>
-                    </div>
-                </div> 
-
-                <?php
+                        foreach ($huyen as $key) {
+                            if($matinh == $key['T_MA'] && $mahuyen == $key['H_MA'])
+                            {
+                                $tenhuyen = $key['H_TEN'];
+                            }
                         }
-                    }
-                ?>
-                <div id="diadiem"></div>
-            </div><!--/.row-->
+
+                        if($duyet == "1")
+                        {
+                            $count++;
+                            $hinh = "";
+                            foreach ($info1 as $key) {
+                                if($ma == $key['DD_MA'])
+                                {
+                                    if($key['HA_DAIDIEN'] == "1")
+                                    {
+                                        $hinh = $key['HA_TEN'];
+                                    }
+                                }
+                            }
+
+                    ?>
+
+                    <div class="col-md-3 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div style="float: left; height: 200px;">
+                    
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" rel="prettyPhoto">
+                                            <img class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>    
+                                    <td>
+                                        <b style="text-transform: uppercase; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b>
+                                        <p style="font-size: 11px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                        </div>
+                    </div><!--/.col-md-4-->
+
+                    <?php
+                            }
+                        }
+                    ?>
+
+                </div><!--/.services-->
+            </div><!--/.row-->   
             <div class="row">
                  <center>
-                    <div style="border: 1px #00F; background-color: #F66; font-weight: bolder; font-size: 18px; padding: 5px; margin-top: 10px; ">
-                        Tổng số các địa điểm <input id="count" style="width: 40px; height: 40px; border-radius: 50%; text-align: center; border: ; font-weight: bolder; background-color: #F66; font-size: 15px; " value="<?php echo $count ?>" readonly="readonly"></input>
+                    <div class="grad1">
+                        Tổng số các địa điểm <input id="count" style="width: 40px; height: 40px; border-radius: 50%; text-align: center; border: ; font-weight: bolder; background-color: #4F4F4F; font-size: 15px; color: #fff;" value="<?php echo $count ?>" readonly="readonly" />
                     </div>
-                    <div style="border: 1px #00F; background-color: #F66; font-weight: bolder; font-size: 18px; padding: 10px; margin-top: 10px; cursor: pointer; " id="btnthem"><i class="fa  fa-eye fa-fw"></i> Xem thêm</div>
+                    <div style="cursor: pointer;" class="grad1" id="btnthem"><i class="fa  fa-eye fa-fw"></i> Xem thêm</div>
+
+                    <!-- <div style="width: 100px; height: 5px; font-size: 10px;" class="progress-wrap">
+                        <h3>Graphic Design</h3>
+                        <div style="width: 100px; height: 5px;" class="progress">
+                            <div style="height: 5px; width: 20%;" class="progress-bar  color1" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                <span style="" class="bar-width">KG: 2</span>
+                            </div>
+                        </div>
+                    </div> -->
                  </center> 
-            </div>
-            
-            
+            </div>  
         </div><!--/.container-->
     </section><!--/#recent-works-->
    

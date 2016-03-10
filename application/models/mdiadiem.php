@@ -93,6 +93,23 @@ class Mdiadiem extends CI_Model {
         }
     }
 
+    public function getuser($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('nguoidung', 'nguoidung.ND_MA = diadiem.ND_MA');
+        $this->db->where("DD_MA", $id);
+        $query = $this -> db -> get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return $query->row_array();
+        }
+    }
+
     public function insert($data_insert){
         $this->db->insert($this->_table,$data_insert);
     }

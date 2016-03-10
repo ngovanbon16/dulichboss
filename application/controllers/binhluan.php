@@ -277,13 +277,12 @@ class Binhluan extends CI_Controller
 
 	public function deleteanhbinhluan()
 	{
-		$maanh = $_POST['ma'];
 		$ten = $_POST['ten'];
 
 		$status = "error";
 
 		$this->load->model("manhbinhluan");
-		if($this->manhbinhluan->deleteabl($maanh))
+		if($this->manhbinhluan->deleteabl($ten))
 		{
             $file_path = "uploads/binhluan/".$ten;
             if (file_exists($file_path)) 
@@ -293,7 +292,7 @@ class Binhluan extends CI_Controller
             $status = "success";
 		}
 
-		$response = array('status' => $status, 'dta' => $maanh);
+		$response = array('status' => $status, 'dta' => $ten);
 		$jsonString = json_encode($response);
 		echo $jsonString;
 	}

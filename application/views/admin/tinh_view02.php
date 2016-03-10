@@ -32,27 +32,57 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
 
     </script><link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.metro.css" media="screen">
+    
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/demos/jqxgrid/localization.js"></script>
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcombobox.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
             var theme = 'bootstrap';
 
+            var notificationWidth = 300;
+
+            $("#notiSuccess").jqxNotification({
+                width: notificationWidth, position: "bottom-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "success"
+            });
+
+            $("#notiError").jqxNotification({
+                width: notificationWidth, position: "bottom-right", opacity: 0.9,
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "error"
+            });
+
+            function openSuccess(str)
+            {
+                $("#result").html(str);
+                $("#notiSuccess").jqxNotification("open");
+                //$("#notiSuccess").jqxNotification("open");
+            }
+
+            function openError(str)
+            {
+                $("#error").html(str);
+                $("#notiError").jqxNotification("open");
+                //$("#notiError").jqxNotification("open");
+            }
+
+            // prepare the data
             var data = {};
             var source =
             {
                 datatype: "json",
                 datafields: [
-                     { name: 'DM_MA', type: 'int' },
-                     { name: 'DM_TEN', type: 'string' },
-                     { name: 'DM_HINH', type: 'string' }
+                     { name: 'T_MA', type: 'int' },
+                     { name: 'T_TEN', type: 'string' }
                 ],
-                id: 'DM_MA',
-                url: '<?php echo base_url(); ?>index.php/danhmuc/data0',
+                id: 'T_MA',
+                url: '<?php echo base_url(); ?>index.php/tinh/data0',
                 filter: function () {
                     // update the grid and send a request to the server.
                     $("#jqxgrid").jqxGrid('updatebounddata');
@@ -66,7 +96,7 @@
                     source.totalrecords = data[0].TotalRows;
                 },
                 addRow: function (rowID, rowData, position, commit) {
-                    url = "<?php echo base_url(); ?>index.php/danhmuc/add";
+                    url = "<?php echo base_url(); ?>index.php/tinh/add";
 
                     var reg = /^\d+$/;
                     if(!reg.test(rowID))
@@ -75,7 +105,7 @@
                         return;
                     }
                     
-                    rowData.DM_MA = rowID; 
+                    rowData.T_MA = rowID; 
                     console.log(rowData);
 
                     $.post(url, rowData, function(data, status){
@@ -94,7 +124,7 @@
                                 }
                                 if(error == "tm")
                                 {
-                                    openError(data.data["DM_MA"]+" - <?php echo lang('code_already_exists') ?>");
+                                    openError(data.data["T_MA"]+" - <?php echo lang('code_already_exists') ?>");
                                 }
                             }
                             else
@@ -107,12 +137,12 @@
                 },
                 updaterow: function (rowid, rowdata, commit) {
                     // synchronize with the server - send update command
-                    var data = "update=true&DM_TEN=" + rowdata.DM_TEN;
-                    data = data + "&DM_MA=" + rowdata.DM_MA;
+                    var data = "update=true&T_TEN=" + rowdata.T_TEN;
+                    data = data + "&T_MA=" + rowdata.T_MA;
                     console.log(data);
                     $.ajax({
                         dataType: 'json',
-                        url: '<?php echo base_url(); ?>index.php/danhmuc/data0',
+                        url: '<?php echo base_url(); ?>index.php/tinh/data0',
                         data: data,
                         success: function (data, status, xhr) {
                             // update command is executed.
@@ -136,7 +166,7 @@
                 },
                 deleterow: function (rowid, commit) {
                         var dta, url, test;
-                        url = "<?php echo base_url(); ?>index.php/danhmuc/delete";
+                        url = "<?php echo base_url(); ?>index.php/tinh/delete";
                         dta = {
                             "ma" : rowid
                         };
@@ -163,13 +193,6 @@
                     },
             };
             var dataadapter = new $.jqx.dataAdapter(source);
-
-            var cellsrenderer = function (row, column, value) {
-                return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
-            }
-            var columnrenderer = function (value) {
-                return '<div style="text-align: center; margin-top: 5px; font-weight: bold;">' + value + '</div>';
-            }
 
             // initialize jqxGrid
             $("#jqxgrid").jqxGrid(
@@ -225,9 +248,25 @@
                     return dataadapter.records;
                 },
                 columns: [
-                      { text: "<?php echo lang('key') ?>", editable: false, datafield: 'DM_MA', width: "20%", cellsalign: 'center', renderer: columnrenderer, cellsrenderer: cellsrenderer },
-                      { text: "<?php echo lang('name') ?>", datafield: 'DM_TEN', width: "37%" },
-                      { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'button', width: "20%", renderer: columnrenderer, cellsrenderer: function () {
+                    {
+                        text: 'Ship City', datafield: 'nuoc', width: 150, showeverpresentrow: false, columntype: 'combobox',
+                        createeditor: function (row, column, editor) {
+                            // assign a new data source to the combobox.
+                            var list = ['Stuttgart', 'Rio de Janeiro', 'Strasbourg'];
+                            editor.jqxComboBox({ autoDropDownHeight: true, source: list, promptText: "Please Choose:" });
+                        },
+                        initeditor: function (row, cellvalue, editor, celltext, cellwidth, cellheight) {
+                            editor.jqxComboBox({ selectedIndex: 1 });
+                        },
+                        // update the editor's value before saving it.
+                        cellvaluechanging: function (row, column, columntype, oldvalue, newvalue) {
+                            // return the old value, if the new value is empty.
+                            if (newvalue == "") return oldvalue;
+                        }
+                    },
+                      { text: "<?php echo lang('key') ?>", editable: false, datafield: 'T_MA', width: "20%", cellsalign: 'center' },
+                      { text: "<?php echo lang('name') ?>", datafield: 'T_TEN', width: "37%" },
+                      { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'button', width: "20%", cellsrenderer: function () {
                                 return "<?php echo lang('edit') ?>";
                               }, buttonclick: function (row) {
                                  // open the popup window when the user clicks a button.
@@ -236,8 +275,8 @@
                                  $("#popupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) + 60 } });
                                  // get the clicked row's data and initialize the input fields.
                                  var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', editrow);
-                                 $("#DM_MA").val(dataRecord.DM_MA);
-                                 $("#DM_TEN").val(dataRecord.DM_TEN);
+                                 $("#T_MA").val(dataRecord.T_MA);
+                                 $("#T_TEN").val(dataRecord.T_TEN);
                                  // show the popup window.
                                  $("#popupWindow").jqxWindow('open');
                              }
@@ -248,7 +287,7 @@
                                 //editrow = row;
                                 var offset = $("#jqxgrid").offset();
                                 var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-                                var id = dataRecord.DM_MA;
+                                var id = dataRecord.T_MA;
                                 console.log(id);
                                 var commit = $("#jqxgrid").jqxGrid('deleterow', id);
                              }
@@ -261,17 +300,15 @@
                 width: 250, resizable: false,  isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01           
             });
             $("#popupWindow").on('open', function () {
-                $("#DM_MA").jqxInput('selectAll');
+                $("#T_MA").jqxInput('selectAll');
             });
          
             $("#Cancel").jqxButton({ theme: theme });
             $("#Save").jqxButton({ theme: theme });
-            $("#DM_MA").jqxInput({ theme: theme });
-            $("#DM_TEN").jqxInput({ theme: theme });
             // update the edited row when the user clicks the 'Save' button.
             $("#Save").click(function () {
                 if (editrow >= 0) {
-                    var row = { DM_MA: $("#DM_MA").val(), DM_TEN: $("#DM_TEN").val()
+                    var row = { T_MA: $("#T_MA").val(), T_TEN: $("#T_TEN").val()
                     };
                     var rowID = $('#jqxgrid').jqxGrid('getrowid', editrow);
                     $('#jqxgrid').jqxGrid('updaterow', rowID, row);
@@ -291,31 +328,29 @@
         }
 
     </script>
-    <style type="text/css">
-    .tieude{
-        font-weight: bold;
-    }
-    .td{
-        font-weight: bold;
-        text-align: center;
-    }
-    </style>
 </head>
 <body class='default'>
+    <div id="notiSuccess" >
+        <div id="result">Thông báo thành công!</div>
+    </div>
+    <div id="notiError" >
+        <div id="error">Thông báo lỗi!</div>
+    </div>
+
     <div id="jqxgrid">
     </div>
 
     <div id="popupWindow">
-        <div class="tieude"><?php echo lang("edit") ?></div>
+        <div>Sửa</div>
         <div style="overflow: hidden;">
             <table>
                 <tr>
-                    <td class="tieude" align="right"><?php echo lang("key") ?>: </td>
-                    <td align="left"><input id="DM_MA" readonly="readonly" /></td>
+                    <td align="right">Mã tỉnh:</td>
+                    <td align="left"><input id="T_MA" readonly="readonly" /></td>
                 </tr>
                 <tr>
-                    <td class="tieude" align="right"><?php echo lang("name") ?>: </td>
-                    <td align="left"><input id="DM_TEN" /></td>
+                    <td align="right">Tên tỉnh:</td>
+                    <td align="left"><input id="T_TEN" /></td>
                 </tr>
                 <tr>
                     <td align="right"></td>
@@ -324,5 +359,8 @@
             </table>
         </div>
    </div>
+
+   <!-- <a href='<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english'>English</a> - 
+   <a href='<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese'>Vietnamese</a> -->
 </body>
 </html>

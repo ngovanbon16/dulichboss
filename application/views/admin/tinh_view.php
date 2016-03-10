@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title id='Description'>This example shows how to enable the paging feature of the Grid.</title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
@@ -30,57 +31,59 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnumberinput.js"></script>
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
-
-    </script><link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.metro.css" media="screen">
     
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
 
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets\jqwidgets\demos\jqxgrid\localization.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/demos/jqxgrid/localization.js"></script>
 
     <script type="text/javascript">
+        function sua(row)
+        {
+            editrow = row;
+            var offset = $("#jqxgrid").offset();
+            $("#popupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) + 60 } });
+            // get the clicked row's data and initialize the input fields.
+            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', editrow);
+            $("#T_MA").val(dataRecord.T_MA);
+            $("#T_TEN").val(dataRecord.T_TEN);
+            // show the popup window.
+            $("#popupWindow").jqxWindow('open');
+        }
+        function xoa(id)
+        {
+            var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+        }
+        function chitiet(id)
+        {
+            thongbao("", "<?php echo lang('feature_is_being_updated') ?>", "info");
+            //setTimeout("location.href = '<?php echo base_url(); ?>index.php/tinh/detail/"+id+"';",0);
+        }
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
-            var theme = 'bootstrap';
 
-            var notificationWidth = 300;
+            $("#Save").jqxButton({ template: "success" });
+            $("#Cancel").jqxButton({ template: "danger" });
 
-            $("#notiSuccess").jqxNotification({
-                width: notificationWidth, position: "bottom-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "success"
-            });
-
-            $("#notiError").jqxNotification({
-                width: notificationWidth, position: "bottom-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "error"
-            });
-
-            function openSuccess(str)
-            {
-                $("#result").html(str);
-                $("#notiSuccess").jqxNotification("open");
-                //$("#notiSuccess").jqxNotification("open");
-            }
-
-            function openError(str)
-            {
-                $("#error").html(str);
-                $("#notiError").jqxNotification("open");
-                //$("#notiError").jqxNotification("open");
-            }
-
-            // prepare the data
             var data = {};
+            var url = "<?php echo base_url(); ?>index.php/tinh/data0";
+            // prepare the data
             var source =
             {
                 datatype: "json",
                 datafields: [
-                     { name: 'T_MA', type: 'int' },
-                     { name: 'T_TEN', type: 'string' }
+                    { name: 'T_MA', type: 'number' },
+                    { name: 'T_TEN', type: 'string' }
                 ],
+                //root: "entry",
+                //record: "content",
                 id: 'T_MA',
-                url: '<?php echo base_url(); ?>index.php/tinh/data0',
+                url: url,
+                pager: function (pagenum, pagesize, oldpagenum) {
+                    // callback called when a page or page size is changed.
+                },
                 filter: function () {
                     // update the grid and send a request to the server.
                     $("#jqxgrid").jqxGrid('updatebounddata');
@@ -99,7 +102,7 @@
                     var reg = /^\d+$/;
                     if(!reg.test(rowID))
                     {
-                        openError("<?php echo lang('code_must_be_a_positive_integer') ?>");
+                        thongbao("", "<?php echo lang('code_must_be_a_positive_integer') ?>", "danger");
                         return;
                     }
                     
@@ -118,17 +121,17 @@
                                 var error = data.msg["error"];
                                 if(error  == "tt")
                                 {
-                                    openError("<?php echo lang('name_not_be_repeated') ?>");
+                                    thongbao("", "<?php echo lang('name_not_be_repeated') ?>", "danger");
                                 }
                                 if(error == "tm")
                                 {
-                                    openError(data.data["T_MA"]+" - <?php echo lang('code_already_exists') ?>");
+                                    thongbao("", data.data["T_MA"]+" - <?php echo lang('code_already_exists') ?>", "danger");
                                 }
                             }
                             else
                             {
                                 commit(true);
-                                openSuccess("<?php echo lang('inserted_successfully') ?>");
+                                thongbao("", "<?php echo lang('inserted_successfully') ?>", "success");
                             }
                         }
                     }, 'json');
@@ -148,12 +151,12 @@
                             if(data)
                             {
                                 commit(true);
-                                openSuccess("<?php echo lang('updated_successfully') ?>");
+                                thongbao("", "<?php echo lang('updated_successfully') ?>", "success");
                             }
                             else
                             {
                                 commit(false);
-                                openError("<?php echo lang('name_not_be_repeated') ?>");
+                                thongbao("", "<?php echo lang('name_not_be_repeated') ?>", "danger");
                             }
                         },
                         error: function () {
@@ -163,74 +166,79 @@
                     });
                 },
                 deleterow: function (rowid, commit) {
-                        var dta, url, test;
-                        url = "<?php echo base_url(); ?>index.php/tinh/delete";
-                        dta = {
-                            "ma" : rowid
-                        };
-                        console.log(dta);
-                        $.post(url, dta, function(data, status){
+                    var dta, url, test;
+                    url = "<?php echo base_url(); ?>index.php/tinh/delete";
+                    dta = {
+                        "ma" : rowid
+                    };
+                    console.log(dta);
+                    $.post(url, dta, function(data, status){
 
-                            console.log(status);
-                            console.log(data);
-                            //console.log(data);
-                            if(status == "success")
-                            {   
-                                //alert(data.status);
-                                if(data.status == "error")
-                                {
-                                    openError("<?php echo lang('code_does_not_exist') ?>");
-                                }
-                                else
-                                {
-                                    commit(true);
-                                    openSuccess("<?php echo lang('deleted_successfully') ?>");
-                                }
+                        console.log(status);
+                        console.log(data);
+                        //console.log(data);
+                        if(status == "success")
+                        {   
+                            if(data.status == "error")
+                            {
+                                thongbao("", "<?php echo lang('code_does_not_exist') ?>", "danger");
                             }
-                        }, 'json');  
-                    },
-            };
-            var dataadapter = new $.jqx.dataAdapter(source);
+                            else
+                            {
+                                commit(true);
+                                thongbao("", "<?php echo lang('deleted_successfully') ?>", "success");
+                            }
+                        }
+                    }, 'json');  
+                    //commit(true);
+                },
 
-            // initialize jqxGrid
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            var imagerenderer = function (row, datafield, value) {
+                return '<center><img height="25" width="25" src="<?php echo base_url(); ?>uploads/user/' + value + '"/></center>';
+            }
+
             $("#jqxgrid").jqxGrid(
             {
                 width: "100%",
-                selectionmode: 'multiplerowsextended', // multiplerowsextended - singlecell
-                selectionmode: 'checkbox', // tao checkbox de xoa nhieu dong
-                source: dataadapter,
-                theme: theme,
-                editable: true, // cho truc tiep tren bang hay khong
-                autoheight: true,
-                columnsresize: true, // them
+                source: dataAdapter,
+                selectionmode: 'multiplerowsextended',
+                sortable: true, // tap sap xep
                 pageable: true, // phan trang
-                //pagermode: 'simple', // kieu phan trang
-                virtualmode: true, // phan them cho tuong tac sever
+                /*pagermode: 'simple', // kieu phan trang*/
+                autoheight: true,
+                columnsresize: true,
                 showfilterrow: true, // hien thi tim kiem
                 filterable: true, // hien thi du lieu
-                sortable: true, // tap sap xep
-
+                selectionmode: 'checkbox',
+                virtualmode: true, // phan them cho tuong tac sever
+                editable: true, // cho truc tiep tren bang hay khong
                 showeverpresentrow: true,
                 everpresentrowposition: "top",
 
                 localization: getLocalization("<?php echo lang('lang') ?>"), // tai ngon ngu
 
                 showtoolbar: true,
+
                 rendertoolbar: function (toolbar) {
                     var me = this;
-                    var container = $("<div style='margin: 1px 1px 1px 1px;'></div>");
+                    var container = $("<div style='margin: 3px;'></div>");
                     toolbar.append(container);
-                    /*container.append('<input id="addrowbutton" type="button" value="Thêm" />');*/
-                    container.append(' <img id="deleterowbutton" style="margin-left: 2px;" src="<?php echo base_url(); ?>assets/images/delete1.png" width="20" height="20"> ');
-                    /*$("#addrowbutton").jqxButton();*/
+                    // container.append('<button id="addrowbutton"> <i class="fa fa-plus-circle fa-fw"></i> <?php echo lang("add") ?> </button>');
+                    container.append('<button style="margin-left: 3px; " id="deleterowbutton"> <i class="fa fa-times fa-fw"></i> <?php echo lang("delete") ?></button> ');
+                    // $("#addrowbutton").jqxButton();
+                    // $("#addrowbutton").jqxTooltip({ content: "<?php echo lang('add') ?>"});
                     $("#deleterowbutton").jqxButton();
                     $("#deleterowbutton").jqxTooltip({ content: "<?php echo lang('delete') ?>"});
                     // create new row.
-                   /* $("#addrowbutton").on('click', function () {
-                        setTimeout("location.href = '<?php echo site_url('aediadiem'); ?>';",0);
-                    });*/
+                    // $("#addrowbutton").on('click', function () {
+                    //     setTimeout("location.href = '<?php echo site_url('registration'); ?>';",0);
+                    // });
                     // delete row.
                     $("#deleterowbutton").on('click', function () {
+                       
                         var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
                         for (var i = 0; i < rowscount; i++) {
                             var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
@@ -241,40 +249,43 @@
                         };
                     });
                 },
-                
                 rendergridrows: function () {
-                    return dataadapter.records;
+                    return dataAdapter.records;
                 },
+
                 columns: [
-                      { text: "<?php echo lang('key') ?>", editable: false, datafield: 'T_MA', width: "20%", cellsalign: 'center' },
-                      { text: "<?php echo lang('name') ?>", datafield: 'T_TEN', width: "37%" },
-                      { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'button', width: "20%", cellsrenderer: function () {
-                                return "<?php echo lang('edit') ?>";
-                              }, buttonclick: function (row) {
-                                 // open the popup window when the user clicks a button.
-                                 editrow = row;
-                                 var offset = $("#jqxgrid").offset();
-                                 $("#popupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) + 60 } });
-                                 // get the clicked row's data and initialize the input fields.
-                                 var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', editrow);
-                                 $("#T_MA").val(dataRecord.T_MA);
-                                 $("#T_TEN").val(dataRecord.T_TEN);
-                                 // show the popup window.
-                                 $("#popupWindow").jqxWindow('open');
-                             }
-                        },
-                      { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'button', width: "20%", cellsrenderer: function () {
-                                return "<?php echo lang('delete') ?>";
-                              }, buttonclick: function (row) {
-                                //editrow = row;
-                                var offset = $("#jqxgrid").offset();
-                                var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-                                var id = dataRecord.T_MA;
-                                console.log(id);
-                                var commit = $("#jqxgrid").jqxGrid('deleterow', id);
-                             }
-                        },
-                  ]
+                    {
+                      text: "<?php echo lang('key') ?>", columntype: 'textbox', datafield: 'T_MA', width: "30%", cellsalign: 'center', align: "center",
+                      validateEverPresentRowWidgetValue: function (datafield, value, rowValues) {
+                          if (isNaN(value)) {
+                              return { message: "<?php echo lang('code_must_be_a_positive_integer') ?>", result: false };
+                          }
+                          return true;
+                        }
+                    },
+                    {
+                      text: "<?php echo lang('name') ?>", columntype: 'textbox', datafield: 'T_TEN', width: "56%", cellsalign: 'left', align: "left",
+                      validateEverPresentRowWidgetValue: function (datafield, value, rowValues) {
+                          if (!value) {
+                              return { message: "<?php echo lang('please_input').' '.lang('name') ?>", result: false };
+                          }
+                          return true;
+                        }
+                    },
+                    { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
+                            return "<button class='icon' onclick='sua(\""+row+"\")'><i class='fa fa-pencil fa-fw'></i></button>";
+                        }
+                    },
+                    { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
+                            var offset = $("#jqxgrid").offset();
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.T_MA;
+                            return "<button class='icon' onclick='xoa(\""+id+"\")'><i class='fa fa-times fa-fw'></i></button>";
+                        }
+                    }
+                ],
             });
 
             // initialize the popup window and buttons.
@@ -285,8 +296,10 @@
                 $("#T_MA").jqxInput('selectAll');
             });
          
-            $("#Cancel").jqxButton({ theme: theme });
-            $("#Save").jqxButton({ theme: theme });
+            $("#Cancel").jqxButton({ });
+            $("#Save").jqxButton({ });
+            $("#T_MA").jqxInput({ });
+            $("#T_TEN").jqxInput({ });
             // update the edited row when the user clicks the 'Save' button.
             $("#Save").click(function () {
                 if (editrow >= 0) {
@@ -297,52 +310,41 @@
                     $("#popupWindow").jqxWindow('hide');
                 }
             });
-
+            
         });
-
-        function sleep(milliseconds) {
-            var start = new Date().getTime();
-            for (var i = 0; i < 1e7; i++) {
-                if ((new Date().getTime() - start) > milliseconds){
-                    break;
-                }
-            }
-        }
-
     </script>
+    <style type="text/css">
+        .icon{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body class='default'>
-    <div id="notiSuccess" >
-        <div id="result">Thông báo thành công!</div>
-    </div>
-    <div id="notiError" >
-        <div id="error">Thông báo lỗi!</div>
-    </div>
-
-    <div id="jqxgrid">
+    <div id='jqxWidget' style="font-size: 13px; font-family: Verdana;">
+        <div id="jqxgrid">
+        </div>
     </div>
 
     <div id="popupWindow">
-        <div>Sửa</div>
+        <div><?php echo lang('edit') ?></div>
         <div style="overflow: hidden;">
             <table>
                 <tr>
-                    <td align="right">Mã tỉnh:</td>
+                    <td width="50" align="center">  <?php echo lang('key') ?></td>
                     <td align="left"><input id="T_MA" readonly="readonly" /></td>
                 </tr>
                 <tr>
-                    <td align="right">Tên tỉnh:</td>
+                    <td align="center"> <?php echo lang('name') ?></td>
                     <td align="left"><input id="T_TEN" /></td>
                 </tr>
                 <tr>
                     <td align="right"></td>
-                    <td style="padding-top: 10px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="Lưu" /><input id="Cancel" type="button" value="Hủy" /></td>
+                    <td style="padding-top: 10px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="<?php echo lang('save') ?>" /><input id="Cancel" type="button" value="<?php echo lang('cancel') ?>" /></td>
                 </tr>
             </table>
         </div>
    </div>
 
-   <!-- <a href='<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english'>English</a> - 
-   <a href='<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese'>Vietnamese</a> -->
 </body>
 </html>

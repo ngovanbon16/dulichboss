@@ -32,42 +32,29 @@
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
     
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcalendar.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
 
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets\jqwidgets\demos\jqxgrid\localization.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/demos/jqxgrid/localization.js"></script>
 
     <script type="text/javascript">
-            function openSuccess(str)
-            {
-                $("#result").html(str);
-                $("#notiSuccess").jqxNotification("open");
-            }
-
-            function openError(str)
-            {
-                $("#error").html(str);
-                $("#notiError").jqxNotification("open");
-            }
-
+        function sua(id)
+        {
+            setTimeout("location.href = '<?php echo base_url(); ?>index.php/nguoidung/edit/"+id+"';",0);
+        }
+        function xoa(id)
+        {
+            var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+        }
+        function chitiet(id)
+        {
+            thongbao("", "<?php echo lang('feature_is_being_updated') ?>", "info");
+            //setTimeout("location.href = '<?php echo base_url(); ?>index.php/nguoidung/detail/"+id+"';",0);
+        }
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
-
-            var notificationWidth = 300;
-
-            $("#notiSuccess").jqxNotification({
-                width: notificationWidth, position: "bottom-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "success"
-            });
-
-            $("#notiError").jqxNotification({
-                width: notificationWidth, position: "bottom-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "error"
-            });
-
 
             var data = {};
             var url = "<?php echo base_url(); ?>index.php/nguoidung/data0";
@@ -76,6 +63,7 @@
             {
                 datatype: "json",
                 datafields: [
+                    { name: 'ND_HINH', type: 'string' },
                     { name: 'ND_MA', type: 'number' },
                     { name: 'ND_HO', type: 'string' },
                     { name: 'ND_TEN', type: 'string' },
@@ -119,12 +107,12 @@
                         {   
                             if(data.status == "error")
                             {
-                                openError(data.msg['ma']);
+                                thongbao("", data.msg['ma'], "danger");
                             }
                             else
                             {
                                 commit(true);
-                                openSuccess("<?php echo lang('deleted_successfully') ?>");
+                                thongbao("", "<?php echo lang('deleted_successfully') ?>", "success");
                             }
                         }
                     }, 'json');  
@@ -133,6 +121,10 @@
 
             };
             var dataAdapter = new $.jqx.dataAdapter(source);
+
+            var imagerenderer = function (row, datafield, value) {
+                return '<center><img height="25" width="25" src="<?php echo base_url(); ?>uploads/user/' + value + '"/></center>';
+            }
 
             $("#jqxgrid").jqxGrid(
             {
@@ -159,10 +151,10 @@
 
                 rendertoolbar: function (toolbar) {
                     var me = this;
-                    var container = $("<div style='margin: 1px 1px 1px 1px;'></div>");
+                    var container = $("<div style='margin: 3px;'></div>");
                     toolbar.append(container);
-                    container.append('<button id="addrowbutton"> <img src="<?php echo site_url("assets/images/add1.png") ?>" style="width: 20px; height: 20px;" /> </button>');
-                    container.append('<button style="margin-left: 2px; " id="deleterowbutton"> <img src="<?php echo site_url("assets/images/delete1.png") ?>" style="width: 20px; height: 20px;" /> </button> ');
+                    container.append('<button id="addrowbutton"> <i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('add') ?> </button>');
+                    container.append('<button style="margin-left: 3px; " id="deleterowbutton"> <i class="fa fa-times fa-fw"></i> <?php echo lang('delete') ?></button> ');
                     $("#addrowbutton").jqxButton();
                     $("#addrowbutton").jqxTooltip({ content: "<?php echo lang('add') ?>"});
                     $("#deleterowbutton").jqxButton();
@@ -189,68 +181,67 @@
                 },
 
                 columns: [
-                    { text: "<?php echo lang('key') ?>", dataField: 'ND_MA', width: "5%", cellsalign: 'center' },
+                    { text: "<?php echo lang('photo') ?>", datafield: 'ND_HINH', width: "5%", sortable: false, filterable: false, cellsrenderer: imagerenderer, cellsalign: 'center', align: "center", },
+                    { text: "<?php echo lang('key') ?>", dataField: 'ND_MA', width: "5%", cellsalign: 'center', align: "center", },
                     { text: "<?php echo lang('lastname') ?>", dataField: 'ND_HO', width: "10%" },
                     /*{ text: 'Mã người dùng', dataField: 'ND_MA', width: "10%" },*/
-                    { text: "<?php echo lang('firstname') ?>", dataField: 'ND_TEN', width: "13%" },
+                    { text: "<?php echo lang('firstname') ?>", dataField: 'ND_TEN', width: "14%" },
                     { text: "<?php echo lang('email') ?>", dataField: 'ND_DIACHIMAIL', width: "20%" },
-                    { text: "<?php echo lang('activate') ?>", dataField: 'ND_KICHHOAT', width: "5%", columntype: 'checkbox', filtertype: 'bool' },
-                    { text: "<?php echo lang('update') ?>", dataField: 'ND_NGAYCAPNHAT', width: "10%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right' },
-                    { text: "<?php echo lang('create') ?>", dataField: 'ND_NGAYTAO', width: "10%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right' },
-                    { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'button', width: "8%", cellsrenderer: function () {
-                            return "<?php echo lang('edit') ?>";
-                            /*<img src='<?php echo base_url(); ?>assets/images/edit.png'>*/
-                          }, buttonclick: function (row) {
-                            // open the popup window when the user clicks a button.
-                            //editrow = row;
+                    { text: "<?php echo lang('activate') ?>", dataField: 'ND_KICHHOAT', width: "6%", columntype: 'checkbox', filtertype: 'bool', align: 'center' },
+                    { text: "<?php echo lang('updates_day') ?>", dataField: 'ND_NGAYCAPNHAT', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
+                    { text: "<?php echo lang('creates_date') ?>", dataField: 'ND_NGAYTAO', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
+                    { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.ND_MA;
-                            console.log(id);
-                            setTimeout("location.href = '<?php echo base_url(); ?>index.php/nguoidung/edit/"+id+"';",0);
+                            return "<button class='icon' onclick='sua(\""+id+"\")'><i class='fa fa-pencil fa-fw'></i></button>";
                         }
                     },
-                    { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'button', width: "8%", cellsrenderer: function () {
-                            return "<?php echo lang('delete') ?>";
-                          }, buttonclick: function (row) {
-                            //editrow = row;
+                    { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.ND_MA;
-                            console.log(id);
-                            var commit = $("#jqxgrid").jqxGrid('deleterow', id);
-                         }
-                    },
-                    { text: "<?php echo lang('detail') ?>", datafield: 'detail', columntype: 'button', width: "8%", cellsrenderer: function () {
-                            return "<?php echo lang('detail') ?>";
-                          }, buttonclick: function (row) {
-                            // open the popup window when the user clicks a button.
-                            var offset = $("#jqxgrid").offset();
-                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-                            var id = dataRecord.ND_MA;
-                            console.log(id);
-                            openError("<?php echo lang('feature_is_being_updated') ?>");
-                            /*setTimeout("location.href = '<?php echo base_url(); ?>index.php/aenguoidung/detail/"+id+"';",0);*/
+                            return "<button class='icon' onclick='xoa(\""+id+"\")'><i class='fa fa-times fa-fw'></i></button>";
                         }
                     },
-                  
+                    { text: "<?php echo lang('detail') ?>", datafield: 'detail', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
+                            var offset = $("#jqxgrid").offset();
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.ND_MA;
+                            return "<button class='icon' onclick='chitiet(\""+id+"\")'><i class='fa fa-info-circle fa-fw'></i></button>";
+                        }
+                    }
                 ],
             });
             
         });
     </script>
+    <style type="text/css">
+        .icon{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body class='default'>
-    <div id="notiSuccess">
-        <div id="result"><?php echo lang('notification') ?></div>
-    </div>
-    <div id="notiError">
-        <div id="error"><?php echo lang('notification') ?></div>
-    </div>
-
     <div id='jqxWidget' style="font-size: 13px; font-family: Verdana;">
         <div id="jqxgrid">
         </div>
     </div>
+
+    <!-- <a href='javascript:void(0)' onclick='gotoLink(\"". $ajax_like_link ."\")' .......>link</a>
+    <script>
+    function gotoLink(url) {
+        window.location = url;
+    }
+    </script>
+
+    <a href="<?php echo base_url(); ?>assets/images/font.rar" download>
+      <img border="0" src="<?php echo base_url(); ?>assets/images/logo.jpg" alt="W3Schools" width="104" height="142">
+    </a> -->
+
 </body>
 </html>

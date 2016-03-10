@@ -32,6 +32,14 @@ class Home extends CI_Controller
 		$this->load->model("mhuyen");
 		$this->_data["huyen"] = $this->mhuyen->getList();
 
+		$T_MA = "";
+		if(isset($this->session->userdata['T_MA']))
+		{
+			$T_MA = $this->session->userdata['T_MA'];
+		}
+
+		$this->_data['huyentt'] = $this->mhuyen->getid($T_MA);
+
        	$this->_data['title'] = 'Trang chủ';
        	$this->load->view('user/main.php', $this->_data);
 	}

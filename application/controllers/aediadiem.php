@@ -424,6 +424,72 @@ class Aediadiem extends CI_Controller
        	$this->load->view("user/main.php", $this->_data);
 	}
 
+	public function detailuser1($id) // id là mã cua địa điểm - ham dung cho user
+	{
+       	$info = $this->mdiadiem->getID($id);
+       	$madanhmuc = $info['DM_MA'];
+       	$matinh = $info['T_MA'];
+       	$mahuyen = $info['H_MA'];
+       	$maxa = $info['X_MA'];
+
+       	$this->load->model("mdanhmuc");
+       	$xa = $this->mdanhmuc->getID($madanhmuc);
+       	$this->_data['tendanhmuc'] = $xa["DM_TEN"];
+
+       	$this->load->model("mtinh");
+       	$tinh = $this->mtinh->getID($matinh);
+       	$this->_data['tentinh'] = $tinh["T_TEN"];
+
+       	$this->load->model("mhuyen");
+       	$huyen = $this->mhuyen->getten($matinh, $mahuyen);
+       	$this->_data['tenhuyen'] = $huyen["H_TEN"];
+
+       	$this->load->model("mxa");
+       	$xa = $this->mxa->getten($matinh, $mahuyen, $maxa);
+       	$this->_data['tenxa'] = $xa["X_TEN"];
+
+       	
+        $this->_data['map'] = $this->mapuser($id, $info["DD_VITRI"]);
+        $this->_data['info'] = $this->mdiadiem->getuser($id);
+        $this->load->model("mhinhanh");
+        $this->_data['info1'] = $this->mhinhanh->getloc($id); // load hinh anh theo ma dia diem
+
+        $this->load->model("mnguoidungdiadiem");
+        $mand = $this->session->userdata('id');
+        $this->_data['danhgia'] = $this->mnguoidungdiadiem->getchitiet($mand, $id);
+
+        $this->_data['active'] = "khuvuc"; // co the bi  thay doi
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+
+		$this->load->model("mbinhluan"); // them binh luan
+       	$this->_data['binhluan'] = $this->mbinhluan->getdd($id);
+
+       	$this->load->model("manhbinhluan"); // them anh binh luan
+       	$this->_data['anhbinhluan'] = $this->manhbinhluan->getList();
+
+       	$this->_data['counthinhanh'] = $this->mhinhanh->counthinhanh($id); // dem so luong binh luan
+
+       	$this->_data['countbinhluan'] = $this->mbinhluan->countbinhluan($id); // dem so luong binh luan
+
+       	$this->_data['countcheckin'] = $this->mnguoidungdiadiem->countcheckin($id); // dem so luong check in
+       	$this->_data['countyeuthich'] = $this->mnguoidungdiadiem->countyeuthich($id); // dem so luong yeu thich
+       	$this->_data['countmuonden'] = $this->mnguoidungdiadiem->countmuonden($id); // dem so luong muon den
+
+       	$diem = $this->mbinhluan->diemtrungbinh($id, "BL_CHATLUONG");
+       	$this->_data['diemchatluong'] = round($diem['BL_CHATLUONG'], 1);
+
+       	$diem = $this->mbinhluan->diemtrungbinh($id, "BL_PHUCVU");
+       	$this->_data['diemphucvu'] = round($diem['BL_PHUCVU'], 1); 
+
+       	$diem = $this->mbinhluan->diemtrungbinh($id, "BL_KHONGGIAN");
+       	$this->_data['diemkhonggian'] = round($diem['BL_KHONGGIAN'], 1); 
+
+        $this->_data['subview'] = "user/chitietdiadiem_view1";
+        $this->_data['title'] = "Địa điểm";
+       	$this->load->view("user/main.php", $this->_data);
+	}
+
 	public function update()
 	{
 		$DD_MA = $_POST["DD_MA"];

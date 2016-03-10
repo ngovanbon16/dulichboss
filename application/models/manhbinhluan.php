@@ -82,7 +82,7 @@ class Manhbinhluan extends CI_Model {
 
     public function deleteabl($id) // dung cho xoa theo tung anh ma anh binh luan
     {
-        $this->db->where('ABL_MA', $id);
+        $this->db->where('ABL_TEN', $id);
         return $this->db->delete($this->_table);
     }   
 

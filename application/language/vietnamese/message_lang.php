@@ -68,4 +68,12 @@ $lang['view'] = "Xem";
 $lang['filter'] = "Lọc";
 $lang['are_you_sure'] = "Bạn có chắc không?";
 $lang['agree'] = "Đồng ý";
+$lang['photo_approved'] = "Ảnh đã được phê duyệt.";
+$lang['cancelled_accept_photos'] = "Hủy bỏ chấp nhận hình ảnh.";
+$lang['updates_successfully_avatar'] = "Cập nhật ảnh đại diện thành công.";
+$lang['select'] = "Chọn";
+$lang['check_all'] = "Chọn tất cả";
+$lang['updates_day'] = "Ngày cập nhật";
+$lang['creates_date'] = "Ngày tạo";
+$lang['please_input'] = "Vui lòng nhập";
 ?>

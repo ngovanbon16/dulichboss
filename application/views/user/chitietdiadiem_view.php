@@ -14,6 +14,51 @@
 	<script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-modal.js"></script>
     <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-modalmanager.js"></script>*/ -->
 
+    <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-notify.js"></script>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script type="text/javascript">
+            function thongbao(title, message, type)
+            {
+                if(title == "")
+                {
+                    title = "<?php echo lang('notification') ?>";
+                }
+                $.notify(
+                    {
+                        icon: 'glyphicon glyphicon-star',
+                        title: title+":",
+                        message: message,
+                        url: "https://google.com",
+                        target: "_blank"
+                    },
+                    {
+                        type: type, //warning danger
+                        allow_dismiss: true,
+                        delay: 3000,
+                        timer: 1000,
+                        offset: {
+                            x: 10,
+                            y: 10
+                        },
+                        z_index: 1090,
+                        //icon_type: 'image',
+                        newest_on_top: true,
+                        animate: {
+                            enter: 'animated fadeInRight',
+                            exit: 'animated fadeOutRight'
+                        }
+                    }
+                );
+            }
+        </script>
+
 <style type="text/css">
 .noidungthongtin {
 	padding: 5px;
@@ -205,7 +250,44 @@
                //alert(idbinhluan);
                document.getElementById("idbinhluan").value = idbinhluan;
                var path = "<?php echo base_url(); ?>index.php/upload/upload/" + idbinhluan;
-               $('#jqxFileUpload').jqxFileUpload({ width: 558, uploadUrl: path, fileInputName: 'fileToUpload' });
+
+               $('#jqxFileUpload').jqxFileUpload({ localization: { browseButton: '<?php echo lang("select") ?>', uploadButton: 'Tải lên tất cả', cancelButton: 'Hủy tất cả', uploadFileTooltip: 'Tải lên', cancelFileTooltip: 'Hủy tải' } });
+
+               $('#jqxFileUpload').jqxFileUpload({ multipleFilesUpload: true });
+
+               $('#jqxFileUpload').jqxFileUpload({ width: 558, uploadUrl: path, fileInputName: 'fileToUpload'});
+
+              $('#eventsPanel').jqxPanel({ width: "100%", height: 150 });
+              $('#jqxFileUpload').on('select', function (event) {
+                  var args = event.args;
+                  var fileName = args.file;
+                  var fileSize = args.size;
+                  var fileindex = args.owner._fileRows["length"] - 1;
+                  $('#eventsPanel').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
+                      fileName + ';<br />' + 'size: ' + fileSize + '<br />');
+
+                  if(fileSize > 2500000)
+                  {
+                    $('#jqxFileUpload').jqxFileUpload('cancelFile', fileindex);
+                    thongbao("", "Lỗi! File quá lớn!", "danger");
+                  }
+              });
+              $('#jqxFileUpload').on('remove', function (event) {
+                  var fileName = event.args.file;
+                  $('#eventsPanel').jqxPanel('append', '<strong>' + event.type + ':</strong> ' + fileName + '<br /> <hr /> ');
+              });
+              $('#jqxFileUpload').on('uploadStart', function (event) {
+                  var fileName = event.args.file;
+                  $('#eventsPanel').jqxPanel('append', '<strong>' + event.type + ':</strong> ' + fileName + '<br />');
+              });
+              $('#jqxFileUpload').on('uploadEnd', function (event) {
+                  var args = event.args;
+                  var fileName = args.file;
+                  var serverResponce = args.response;
+                  $('#eventsPanel').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
+                      fileName + ';<br />' + 'server response: ' + serverResponce + '<br />');
+                  thongbao("", "Upload thanh cong", "success");
+              });
 							//setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $info['DD_MA']; ?>';",1500);
 							//alert("Thêm thành công");
 						}
@@ -937,7 +1019,9 @@
         </table>
         <input type="text" id="idbinhluan" style="border-width: 0px; display: none;" readonly="readonly" />
         <div id="jqxFileUpload">
-    	</div>
+    	  </div>
+        <div id="eventsPanel">
+        </div>
 
       </div>
       <div class="modal-footer">

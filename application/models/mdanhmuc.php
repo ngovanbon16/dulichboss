@@ -22,6 +22,20 @@ class Mdanhmuc extends CI_Model {
         }
     }
 
+    public function getList2($query) // dung cho trang quan ly
+    {
+        $string = "SELECT * FROM ".$this->_table." ".$query;
+        $query = $this->db->query($string);          
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
     function getId($ma) 
     {
         $this ->db->select('*');
@@ -37,6 +51,10 @@ class Mdanhmuc extends CI_Model {
         {
             return $query->row_array(); //row_array() moi co the lay du lieu truc tiep duoc
         }
+    }
+
+    public function countAll(){
+        return $this->db->count_all($this->_table); 
     }
 
     public function insert($data_insert){

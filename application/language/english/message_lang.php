@@ -68,6 +68,15 @@ $lang['view'] = "View";
 $lang['filter'] = "Filter";
 $lang['are_you_sure'] = "Are you sure?";
 $lang['agree'] = "Agree";
+$lang['photo_approved'] = "Photo approved";
+$lang['cancelled_accept_photos'] = "Cancelled accept photos";
+$lang['updates_successfully_avatar'] = "Updates successfully avatar";
+$lang['select'] = "Select";
+$lang['check_all'] = "Check all";
+$lang['updates_day'] = "Updates day";
+$lang['creates_date'] = "Creates date";
+$lang['please_input'] = "Please input";
+$lang[''] = "";
 $lang[''] = "";
 $lang[''] = "";
 

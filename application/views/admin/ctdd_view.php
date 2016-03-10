@@ -20,6 +20,19 @@
 			$(".btnbin").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_delete") ?></i>', position: 'mouse', name: 'movieTooltip'});
 			$(".btncheck").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_accept_photos") ?></i>', position: 'mouse', name: 'movieTooltip'});
 			$(".btnavatar").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_change_avatar") ?></i>', position: 'mouse', name: 'movieTooltip'});
+
+			$("#checkAll").change(function () {
+			    $(".binhluanchk").prop('checked', $(this).prop("checked"));
+			});
+
+			$("#checkAllha").change(function () {
+			    $(".hinhanhchk").prop('checked', $(this).prop("checked"));
+			});
+
+			$("#checkAllabl").change(function () {
+			    $(".anhbinhluanchk").prop('checked', $(this).prop("checked"));
+			});
+
 		});
 
 		function duyetall(bien)
@@ -70,6 +83,14 @@
 		        console.log(data);
 		        document.getElementById(id).src = "<?php echo base_url(); ?>assets/images/"+hinh;
 				document.getElementById("check"+id).value = tg;
+				if(tg == '1')
+				{
+					thongbao("", "<?php echo lang('photo_approved') ?>", "success");
+				}
+				else
+				{
+					thongbao("", "<?php echo lang('cancelled_accept_photos') ?>", "danger");
+				}
 
 	        }, 'json');
 		}
@@ -90,6 +111,7 @@
 		        console.log(data);
 
 		        document.getElementById('avatar'+id).src = "<?php echo base_url(); ?>assets/images/avatar.png";
+		        thongbao("", "<?php echo lang('updates_successfully_avatar') ?>", "success");
 
 		        for (var i = 0; i < data.data.length; i++) {
 		        	var ma = data.data[i]['HA_MA'];
@@ -103,13 +125,9 @@
 	        }, 'json');
 		}
 
-		function xoa(ten)
+		function xoahinhanhmain(ten)
 		{
-			if(!confirm("<?php echo lang('are_you_sure') ?>"))
-			{
-				return;
-			}
-          	var url, dta;
+			var url, dta;
             url = "<?php echo base_url(); ?>index.php/diadiemhinh/xoa";
             dta = {
             	"DD_MA" : '<?php echo $info['DD_MA'] ?>',
@@ -125,9 +143,35 @@
               count = document.getElementById('count').innerHTML;
               document.getElementById('count').innerHTML = eval(count + " - 1");
               document.getElementById('total').innerHTML = data.data.length;
+              thongbao("", "<?php echo lang('deleted_successfully') ?>", "success");
 
             }, 'json');
 		}
+
+		function xoa(ten)
+		{
+			if(!confirm("<?php echo lang('are_you_sure') ?>"))
+			{
+				return;
+			}
+      		xoahinhanhmain(ten);
+		}
+
+		function xoahinhanhchk()
+        {
+        	if(!confirm("<?php echo lang('are_you_sure') ?>"))
+			{
+				return;
+			}
+        	var chk = document.getElementsByName("hinhanhchk");
+        	var chuoi = "";
+        	for (var i = 0; i < chk.length; i++) {
+        		if(chk[i].checked)
+        		{
+        			xoahinhanhmain(chk[i].value);
+        		}
+        	}
+        }
 
 		function kieu(bien)
 		{
@@ -153,6 +197,24 @@
 			$(".span").css( "height", height);
 			$(".div img").css( "width", wtool);
 			$(".div img").css( "height", htool);
+		}
+
+		function xembinhluan(bien)
+		{
+			var width = "200";
+			var height = "140";
+			if(bien == '2')
+			{
+				var width = "100%";
+				var height = "60";
+			}
+			if(bien == '3')
+			{
+				var width = "48%";
+				var height = "120";
+			}
+			$(".divbinhluan").css( "width", width);
+			$(".divbinhluan").css( "height", height);
 		}
 
 		function loc(bien)
@@ -186,16 +248,11 @@
 	        }, 'json');
 		}
 
-		function xoahinhbinhluan(ma, ten)
+		function xoahinhbinhluanmain(ten)
 		{
-			if(!confirm("<?php echo lang('are_you_sure') ?>"))
-			{
-				return;
-			}
 			var url, dta;
             url = "<?php echo base_url(); ?>index.php/binhluan/deleteanhbinhluan";
             dta = {
-            	"ma" : ma,
             	"ten" : ten
             };
 
@@ -203,10 +260,36 @@
 
 	            console.log(status);
 	            console.log(data);
-	            document.getElementById(ma).style.display = "none";
+	            document.getElementById(ten).style.display = "none";
+	            thongbao("", "<?php echo lang('deleted_successfully') ?>", "success");
 
             }, 'json');
 		}
+
+		function xoahinhbinhluan(ten)
+		{
+			if(!confirm("<?php echo lang('are_you_sure') ?>"))
+			{
+				return;
+			}
+			xoahinhbinhluanmain(ten);
+		}
+
+		function xoaanhbinhluanchk()
+        {
+        	if(!confirm("<?php echo lang('are_you_sure') ?>"))
+			{
+				return;
+			}
+        	var chk = document.getElementsByName("anhbinhluanchk");
+        	var chuoi = "";
+        	for (var i = 0; i < chk.length; i++) {
+        		if(chk[i].checked)
+        		{
+        			xoahinhbinhluanmain(chk[i].value);
+        		}
+        	}
+        }
 
 		function hinhbinhluan(id)
 		{
@@ -226,7 +309,7 @@
                 	for (var i = 0; i < data.data.length; i++) {
                 		var ma = data.data[i]['ABL_MA'];
                 		var ten = data.data[i]['ABL_TEN'];
-                		chuoi += "<span id='"+ma+"' class='span'> <i style='font-size: 20px; color: #f00; position: absolute; margin: 3px; cursor: pointer;' class='fa fa-times' onclick=\"xoahinhbinhluan('"+ma+"','"+ten+"');\" ></i> <img src='<?php echo base_url(); ?>uploads/binhluan/" + ten + "' width='100%' height='100%'> </span>";
+                		chuoi += "<span id='"+ten+"' class='span'> <i style='font-size: 20px; color: #f00; position: absolute; margin: 3px; cursor: pointer;' class='fa fa-times' onclick=\"xoahinhbinhluan('"+ten+"');\" ></i> <img src='<?php echo base_url(); ?>uploads/binhluan/" + ten + "' width='100%' height='100%'> <label style='float: right; position: relative;' class=\"checkbox-inline\" ><input name=\"anhbinhluanchk\" class=\"anhbinhluanchk\" style=\"width: 20px; height: 20px; margin-top: -15px;\" type=\"checkbox\" value=\""+ten+"\"></label> </span>";
                 	}
                 	
                 	document.getElementById('hinhbinhluan').innerHTML = chuoi;
@@ -235,14 +318,9 @@
             }, 'json');
 		}
 
-		function xoabinhluan(id)
-        {
-        	if(!confirm("<?php echo lang('are_you_sure') ?>"))
-			{
-				return;
-			}
-
-            var dta, url;
+		function xoabinhluanmain(id)
+		{
+			var dta, url;
             url = "<?php echo base_url(); ?>index.php/binhluan/delete";
             dta = {
             	"ma" : id
@@ -258,15 +336,43 @@
                     {
                         //alert("Mã không tồn tại!");
                         //openError(data.msg['ma']);
+                        thongbao("", data.msg['ma'], "danger");
                     }
                     else
                     {
                         //openSuccess("Xóa thành công");
                         document.getElementById(id).style.display = "none";
+                        thongbao("", "<?php echo lang('deleted_successfully') ?>", "success");
                         //alert("Xóa thành công!");
                     }
                 }
             }, 'json');  
+		}
+
+		function xoabinhluan(id)
+        {
+        	if(!confirm("<?php echo lang('are_you_sure') ?>"))
+			{
+				return;
+			}
+
+            xoabinhluanmain(id);
+        }
+
+        function xoabinhluanchk()
+        {
+        	if(!confirm("<?php echo lang('are_you_sure') ?>"))
+			{
+				return;
+			}
+        	var chk = document.getElementsByName("binhluanchk");
+        	var chuoi = "";
+        	for (var i = 0; i < chk.length; i++) {
+        		if(chk[i].checked)
+        		{
+        			xoabinhluanmain(chk[i].value);
+        		}
+        	}
         }
 	</script>
 
@@ -297,7 +403,7 @@
 		margin: 5px; 
 		float: left; 
 		width: 48%; 
-		height: 150px; 
+		height: 120px; 
 		border: solid 1px #000; 
 		overflow: auto;
 		border-radius: 2px;
@@ -474,6 +580,17 @@
             </table>
 		</div>
 	</div>
+
+	<div style="margin: 10px 0px 0px 15px;">
+		<label><?php echo lang('view') ?>: </label>
+		<button class="tool" onclick="xembinhluan('1')"><i class="fa fa-th"></i></button>
+		<button class="tool" onclick="xembinhluan('2')"><i class="fa fa-th-list"></i></button>
+		<button class="tool" onclick="xembinhluan('3')"><i class="fa fa-th-large"></i></button>
+		<i class="fa fa-angle-double-right"></i> <label> <?php echo lang('delete') ?>: </label>
+		<button class="tool" onclick="xoabinhluanchk()"><i class="fa fa-trash-o"></i></button>
+		<label><input type="checkbox" id="checkAll"/> <?php echo lang('check_all') ?></label>
+	</div>
+	
 	<div style="padding: 10px; width: 100%; height: 500px; overflow: auto;">
 		<?php 
           	foreach ($binhluan as $iteam) {
@@ -491,14 +608,18 @@
 
 	    ?>
 	    		<div class="divbinhluan" id="<?php echo $mabinhluan ?>">
+	    			<div style="float: right; position: relative; font-size: 18px; font-weight: bolder;">
+	    				<button class="tool" data-toggle="modal" data-target="#modalbinhluan" onclick="hinhbinhluan('<?php echo $mabinhluan ?>')"><i class="fa fa-photo fa-fw"></i></button>
+                  		<button class="tool" onclick="xoabinhluan('<?php echo $mabinhluan ?>')"><i class="fa fa-trash-o fa-fw"></i></button>
+                  		<label class="checkbox-inline" ><input name="binhluanchk" class="binhluanchk" style="width: 20px; height: 20px; margin-top: -15px;" type="checkbox" value="<?php echo $mabinhluan ?>"></label>
+	    			</div>
+	    			
 	    			<img style="border-radius: 50px;" src="<?php echo base_url(); ?>uploads/user/<?php echo $hinhnd ?>" width="30" height="30">
 
-                  	<b style="font-size: 16px; text-transform: capitalize;"> <?php echo $hond." ".$tennd ?> </b> - <?php echo $ngaydang ?> <b>Đã bình luận</b> 
-                  	<button class="tool" data-toggle='modal' data-target='#modalbinhluan' onclick="hinhbinhluan('<?php echo $mabinhluan ?>')"><i class="fa fa-photo fa-fw"></i></button>
-                  	<button class="tool" onclick="xoabinhluan('<?php echo $mabinhluan ?>')"><i class="fa fa-trash-o fa-fw"></i></button>
+                  	<b style="font-size: 16px; text-transform: capitalize;"> <?php echo $hond." ".$tennd ?> </b> - <?php echo $ngaydang ?> <b><?php echo lang("comment") ?></b> 
                   	<br/>
 	    			<b style="font-size: 18px; text-transform: uppercase;"><i class="fa fa-comments-o fa-fw"></i> <?php echo $tieude ?></b>
-	    			<p><?php echo $noidung ?></p>
+	    			<p style="width: 100%; height: 40px; overflow: auto;"><i style="margin: 0px 5px 0px 2px;" class="fa fa-bullhorn fa-fw"></i> <?php echo $noidung ?></p>
 	    		</div>
 	    <?php
 	      	}
@@ -520,6 +641,10 @@
 			        <i class="fa fa-angle-double-right"></i> <?php echo lang('agree') ?>:
 			        <button class="tool" onclick="duyetall('1')"><i class="fa fa-check"></i></button>
 			        <button class="tool" onclick="duyetall('0')"><i class="fa fa-times"></i></button>
+
+			        <i class="fa fa-angle-double-right"></i> <label> <?php echo lang('delete') ?>: </label>
+					<button class="tool" onclick="xoahinhanhchk()"><i class="fa fa-trash-o"></i></button>
+					<label><input type="checkbox" id="checkAllha"/> <?php echo lang('check_all') ?></label>
 
 			        <i class="fa fa-angle-double-right"></i> <?php echo lang('filter') ?>:
 			        <button class="tool" onclick="loc('0')"><i class="fa fa-square-o"></i></button>
@@ -575,6 +700,8 @@
                     			<img id="avatar<?php echo $hama ?>" class="btnavatar" src="<?php echo base_url(); ?>assets/images/<?php echo $avatar ?>" onclick="daidien('<?php echo $hama ?>')" />
 
                     			<img class="btnbin" src="<?php echo base_url(); ?>assets/images/bin.png" onclick="xoa('<?php echo $haten ?>')" />
+
+                    			<label class="checkbox-inline" ><input name="hinhanhchk" class="hinhanhchk" style="width: 20px; height: 20px; margin-top: -15px;" type="checkbox" value="<?php echo $haten ?>"></label>
                     		</div>
                     		
                     	</span>
@@ -601,9 +728,13 @@
 		        <button class="tool" onclick="kieu('1')"><i class="fa fa-th"></i></button>
 		        <button class="tool" onclick="kieu('2')"><i class="fa fa-th-list"></i></button>
 		        <button class="tool" onclick="kieu('3')"><i class="fa fa-th-large"></i></button>
+
+		        <i class="fa fa-angle-double-right"></i> <label> <?php echo lang('delete') ?>: </label>
+				<button class="tool" onclick="xoaanhbinhluanchk()"><i class="fa fa-trash-o"></i></button>
+				<label><input type="checkbox" id="checkAllabl"/> <?php echo lang('check_all') ?></label>
 		      </div>
 		      <div id="hinhbinhluan" class="modal-body">
-		      	chao
+		      	...
 		      </div>
 		      <!-- <div class="modal-footer">
 		      	<button type="button" id="btngui" class="btn btn-outline btn-success">Gửi</button>

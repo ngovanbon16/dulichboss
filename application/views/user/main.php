@@ -184,14 +184,13 @@
 
 <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-            <div class="row">
+            <div class="row" >
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
-                        <h3>Công ty</h3>
+                        <h4>Cài đặt</h4>
                         <ul>
-                            <li><a href="#">Giới thiệu</a></li>
-                            <li><a href="#">Blogs</a></li>
-                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="#">Tỉnh thành</a> Cần thơ</li> 
+                            <li><a href="#">Ngôn ngữ</a> Tiếng việt</li> 
                         </ul>
                     </div>    
                 </div><!--/.col-md-3-->

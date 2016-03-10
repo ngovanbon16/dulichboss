@@ -39,12 +39,50 @@
 
         <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-confirmation.js"></script>
 
+        <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-notify.js"></script>
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+
+        <script type="text/javascript">
+            function thongbao(title, message, type)
+            {
+                if(title == "")
+                {
+                    title = "<?php echo lang('notification') ?>";
+                }
+                $.notify(
+                    {
+                        icon: 'glyphicon glyphicon-star',
+                        title: title+":",
+                        message: message,
+                        url: "https://google.com",
+                        target: "_blank"
+                    },
+                    {
+                        type: type, //warning danger
+                        allow_dismiss: true,
+                        delay: 3000,
+                        timer: 1000,
+                        offset: {
+                            x: 10,
+                            y: 10
+                        },
+                        z_index: 1090,
+                        //icon_type: 'image',
+                        newest_on_top: true,
+                        animate: {
+                            enter: 'animated fadeInRight',
+                            exit: 'animated fadeOutRight'
+                        }
+                    }
+                );
+            }
+        </script>
     </head>
     <body>
 
@@ -167,13 +205,13 @@
                                     if(lang('lang') == 'vi') 
                                     {
                                     ?>
-                                        <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english"><i class="fa fa-language fa-fw"> English</i></a> 
+                                         <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english"><i class="fa fa-language fa-fw"> English</i></a> 
                                     <?php
                                     }
                                     else
                                     {
                                     ?>
-                                        <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese"><i class="fa fa-language fa-fw"> Vietnamese</i></a> 
+                                         <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese"><i class="fa fa-language fa-fw"> Tiếng Việt</i></a> 
                                     <?php
                                     } 
                                 ?>
