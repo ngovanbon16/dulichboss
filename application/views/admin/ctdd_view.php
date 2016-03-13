@@ -15,8 +15,23 @@
     <script src="<?php echo base_url(); ?>assets/user/js/main.js"></script>
     <script src="<?php echo base_url(); ?>assets/user/js/wow.min.js"></script>
 
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxbuttons.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
+
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$.jqx.theme = "bootstrap";
+			$(".browse").jqxButton({ template: "success" });
+			$(".cancel").jqxButton({ template: "danger" });
+			$(".tool").jqxButton({ template: "" });
+			$(".tool1").jqxButton({ template: "inverse" });
+			$(".tool2").jqxButton({ template: "info" });
+			$(".tool3").jqxButton({ template: "primary" });
+			$(".delete").jqxButton({ template: "danger" });
+			$(".btnhinhanh").jqxButton({ template: "" });
+
 			$(".btnbin").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_delete") ?></i>', position: 'mouse', name: 'movieTooltip'});
 			$(".btncheck").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_accept_photos") ?></i>', position: 'mouse', name: 'movieTooltip'});
 			$(".btnavatar").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_change_avatar") ?></i>', position: 'mouse', name: 'movieTooltip'});
@@ -195,8 +210,8 @@
 			}
 			$(".span").css( "width", width);
 			$(".span").css( "height", height);
-			$(".div img").css( "width", wtool);
-			$(".div img").css( "height", htool);
+			//$(".div img").css( "width", wtool);
+			//$(".div img").css( "height", htool);
 		}
 
 		function xembinhluan(bien)
@@ -394,8 +409,8 @@
 		background-color: #fff;
 	}
 	.div img{
-		width: 30px;
-		height: 30px;
+		width: 20px;
+		height: 20px;
 		cursor: pointer;
 	}
 	.divbinhluan{
@@ -407,19 +422,6 @@
 		border: solid 1px #000; 
 		overflow: auto;
 		border-radius: 2px;
-		box-shadow: 0 0 2px rgba(0,0,0,4);
-		-moz-box-shadow: 0 0 2px rgba(0,0,0,4);
-		-webkit-box-shadow: 0 0 2px rgba(0,0,0,4);
-		-o-box-shadow: 0 0 2px rgba(0,0,0,4);
-	}
-	.tool{
-		background-color: #eee;
-		border-radius: 2px;
-		border: none;
-		margin: 2px 2px -10px 2px;
-		font-size: 18px;
-		width: 45px;
-		height: 28px;
 		box-shadow: 0 0 2px rgba(0,0,0,4);
 		-moz-box-shadow: 0 0 2px rgba(0,0,0,4);
 		-webkit-box-shadow: 0 0 2px rgba(0,0,0,4);
@@ -441,7 +443,7 @@
 	<div>
 		 <h3><?php echo $info['DD_TEN'] ?></h3>
 	</div>
-	<div style="border-radius: 2px; padding: 15px; width: 100%; height: 280px; border: solid 1px #888;">
+	<div style="border-radius: 2px; padding: 15px; width: 100%; height: 280px;">
 		<div style="float: left; width: 28%; height: 250px;">
 			<?php 
 	            $madd = $info['DD_MA'];
@@ -574,7 +576,7 @@
               <tr>
                 <td class="cot1"><i class="fa fa-photo fa-fw"></i> Hình ảnh </td>
                 <td class="cot2">
-                	<button class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo lang('photo') ?></button>
+                	<button class="btnhinhanh" data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo lang('photo') ?></button>
                 </td>
               </tr>
             </table>
@@ -633,23 +635,18 @@
 		    	<div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 			        <h4 class="modal-title"><?php echo lang('photo').': '.$info['DD_TEN'] ?></h4>
-			        <?php echo lang('view') ?>:
+			        <?php //echo lang('view') ?>
 			        <button class="tool" onclick="kieu('1')"><i class="fa fa-th"></i></button>
 			        <button class="tool" onclick="kieu('2')"><i class="fa fa-th-list"></i></button>
 			        <button class="tool" onclick="kieu('3')"><i class="fa fa-th-large"></i></button>
 
-			        <i class="fa fa-angle-double-right"></i> <?php echo lang('agree') ?>:
-			        <button class="tool" onclick="duyetall('1')"><i class="fa fa-check"></i></button>
-			        <button class="tool" onclick="duyetall('0')"><i class="fa fa-times"></i></button>
-
-			        <i class="fa fa-angle-double-right"></i> <label> <?php echo lang('delete') ?>: </label>
-					<button class="tool" onclick="xoahinhanhchk()"><i class="fa fa-trash-o"></i></button>
-					<label><input type="checkbox" id="checkAllha"/> <?php echo lang('check_all') ?></label>
-
-			        <i class="fa fa-angle-double-right"></i> <?php echo lang('filter') ?>:
-			        <button class="tool" onclick="loc('0')"><i class="fa fa-square-o"></i></button>
-			        <button class="tool" onclick="loc('1')"><i class="fa fa-check-square-o"></i></button>
-			        <button class="tool" onclick="loc('2')"><i class="fa fa-qrcode"></i></button>
+			        <i class="fa fa-angle-double-right"></i>
+			        <button class="browse" onclick="duyetall('1')"><?php echo lang("browse_all") ?></button>
+			        <button class="cancel" onclick="duyetall('0')"><?php echo lang("cancel_all") ?></button>
+			        <i class="fa fa-angle-double-right"></i>
+			        <button class="tool1" onclick="loc('0')"><?php echo lang("show_not_browse") ?></button>
+			        <button class="tool2" onclick="loc('1')"><?php echo lang("show_browse") ?></button>
+			        <button class="tool3" onclick="loc('2')"><?php echo lang("show_all") ?></button>
 			        <b id="count"><?php echo count($info1); ?></b>
 			        <i class="fa fa-send-o"></i>
 			        <b id="total"><?php echo count($info1); ?></b>
@@ -701,7 +698,7 @@
 
                     			<img class="btnbin" src="<?php echo base_url(); ?>assets/images/bin.png" onclick="xoa('<?php echo $haten ?>')" />
 
-                    			<label class="checkbox-inline" ><input name="hinhanhchk" class="hinhanhchk" style="width: 20px; height: 20px; margin-top: -15px;" type="checkbox" value="<?php echo $haten ?>"></label>
+                    			<label class="checkbox-inline" ><input name="hinhanhchk" class="hinhanhchk" style="width: 20px; height: 20px; margin-top: -10px;" type="checkbox" value="<?php echo $haten ?>"></label>
                     		</div>
                     		
                     	</span>
@@ -709,6 +706,11 @@
                     	}
                     ?>
 			    </div>
+			    <div class="modal-footer">
+			    	<label><input style="font-weight: bold; width: 20px; height: 20px; float: left; margin-top: 0px;" type="checkbox" id="checkAllha"/> <?php echo lang('check_all') ?></label>
+		          	<button class="delete" onclick="xoahinhanhchk()"><i class="fa fa-trash-o"></i></button>
+					
+		        </div>
 		    </div>
 		  </div>
 		</div>

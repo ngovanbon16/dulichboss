@@ -231,6 +231,40 @@ class Mdiadiem extends CI_Model {
         {
             return false;
         }
+    }
+
+    function diadiembinhluan($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('binhluan', 'binhluan.DD_MA = diadiem.DD_MA');
+        $this->db->where("diadiem.DD_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function diadiemnddd($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('nguoidung_diadiem', 'nguoidung_diadiem.DD_MA = diadiem.DD_MA');
+        $this->db->where("diadiem.DD_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }       
 
     public function getloc($T_MA, $H_MA, $X_MA, $DM_MA) // view map cho user nguoi dung xem va loc

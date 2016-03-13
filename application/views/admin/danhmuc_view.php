@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title id='Description'>This example shows how to enable the paging feature of the Grid.</title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
@@ -30,29 +31,80 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnumberinput.js"></script>
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
-
-    </script><link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.metro.css" media="screen">
+    
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/demos/jqxgrid/localization.js"></script>
 
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxfileupload.js"></script>
+
     <script type="text/javascript">
+        function sua(row)
+        {
+            editrow = row;
+            var offset = $("#jqxgrid").offset();
+            $("#popupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) + 60 } });
+            // get the clicked row's data and initialize the input fields.
+            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', editrow);
+            $("#DM_MA").val(dataRecord.DM_MA);
+            $("#DM_TEN").val(dataRecord.DM_TEN);
+            // show the popup window.
+            $("#popupWindow").jqxWindow('open');
+        }
+        function xoa(id)
+        {
+            $("#jqxgrid").hide();
+            mscConfirm({
+                title: "<?php echo lang('notification') ?>",
+
+                subtitle: "<?php echo lang('are_you_sure') ?>",  // default: ''
+
+                okText: "<?php echo lang('i_agree') ?>",    // default: OK
+
+                cancelText: "<?php echo lang('i_dont') ?>", // default: Cancel
+
+                onOk: function() {
+                    var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                    $("#jqxgrid").show();
+                },
+
+                onCancel: function() {
+                    $("#jqxgrid").show();
+                }
+            });
+        }
+        function chitiet(id)
+        {
+            thongbao("", "<?php echo lang('feature_is_being_updated') ?>", "info");
+            //setTimeout("location.href = '<?php echo base_url(); ?>index.php/danhmuc/detail/"+id+"';",0);
+        }
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
-            var theme = 'bootstrap';
+
+            $("#Save").jqxButton({ template: "success" });
+            $("#Cancel").jqxButton({ template: "danger" });
 
             var data = {};
+            var url = "<?php echo base_url(); ?>index.php/danhmuc/data0";
+            // prepare the data
             var source =
             {
                 datatype: "json",
                 datafields: [
-                     { name: 'DM_MA', type: 'int' },
-                     { name: 'DM_TEN', type: 'string' },
-                     { name: 'DM_HINH', type: 'string' }
+                    { name: 'DM_MA', type: 'int' },
+                    { name: 'DM_TEN', type: 'string' },
+                    { name: 'DM_HINH', type: 'string' }
                 ],
+                //root: "entry",
+                //record: "content",
                 id: 'DM_MA',
-                url: '<?php echo base_url(); ?>index.php/danhmuc/data0',
+                url: url,
+                pager: function (pagenum, pagesize, oldpagenum) {
+                    // callback called when a page or page size is changed.
+                },
                 filter: function () {
                     // update the grid and send a request to the server.
                     $("#jqxgrid").jqxGrid('updatebounddata');
@@ -71,7 +123,7 @@
                     var reg = /^\d+$/;
                     if(!reg.test(rowID))
                     {
-                        openError("<?php echo lang('code_must_be_a_positive_integer') ?>");
+                        thongbao("", "<?php echo lang('code_must_be_a_positive_integer') ?>", "danger");
                         return;
                     }
                     
@@ -81,26 +133,17 @@
                     $.post(url, rowData, function(data, status){
                         console.log(status);
                         console.log(data);
-                        /*console.log(data.data);*/
                         if(status == "success")
                         {
                             if(data.status == "error")
                             {
                                 commit(false);
-                                var error = data.msg["error"];
-                                if(error  == "tt")
-                                {
-                                    openError("<?php echo lang('name_not_be_repeated') ?>");
-                                }
-                                if(error == "tm")
-                                {
-                                    openError(data.data["DM_MA"]+" - <?php echo lang('code_already_exists') ?>");
-                                }
+                                thongbao("", data.msg["error"], "danger");
                             }
                             else
                             {
                                 commit(true);
-                                openSuccess("<?php echo lang('inserted_successfully') ?>");
+                                thongbao("", "<?php echo lang('inserted_successfully') ?>", "success");
                             }
                         }
                     }, 'json');
@@ -120,12 +163,12 @@
                             if(data)
                             {
                                 commit(true);
-                                openSuccess("<?php echo lang('updated_successfully') ?>");
+                                thongbao("", "<?php echo lang('updated_successfully') ?>", "success");
                             }
                             else
                             {
                                 commit(false);
-                                openError("<?php echo lang('name_not_be_repeated') ?>");
+                                thongbao("", "<?php echo lang('name_not_be_repeated') ?>", "danger");
                             }
                         },
                         error: function () {
@@ -135,139 +178,211 @@
                     });
                 },
                 deleterow: function (rowid, commit) {
-                        var dta, url, test;
-                        url = "<?php echo base_url(); ?>index.php/danhmuc/delete";
-                        dta = {
-                            "ma" : rowid
-                        };
-                        console.log(dta);
-                        $.post(url, dta, function(data, status){
+                    var dta, url, test;
+                    url = "<?php echo base_url(); ?>index.php/danhmuc/delete";
+                    dta = {
+                        "ma" : rowid
+                    };
+                    console.log(dta);
+                    $.post(url, dta, function(data, status){
 
-                            console.log(status);
-                            console.log(data);
-                            //console.log(data);
-                            if(status == "success")
-                            {   
-                                //alert(data.status);
-                                if(data.status == "error")
-                                {
-                                    openError("<?php echo lang('code_does_not_exist') ?>");
-                                }
-                                else
-                                {
-                                    commit(true);
-                                    openSuccess("<?php echo lang('deleted_successfully') ?>");
-                                }
+                        console.log(status);
+                        console.log(data);
+                        if(status == "success")
+                        {   
+                            if(data.status == "error")
+                            {
+                                commit(false);
+                                thongbao("", data.msg["error"], "danger");
                             }
-                        }, 'json');  
-                    },
+                            else
+                            {
+                                commit(true);
+                                thongbao("", "<?php echo lang('deleted_successfully') ?>", "success");
+                            }
+                        }
+                    }, 'json');  
+                    //commit(true);
+                },
+
             };
-            var dataadapter = new $.jqx.dataAdapter(source);
+            var dataAdapter = new $.jqx.dataAdapter(source);
 
-            var cellsrenderer = function (row, column, value) {
-                return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
-            }
-            var columnrenderer = function (value) {
-                return '<div style="text-align: center; margin-top: 5px; font-weight: bold;">' + value + '</div>';
+            var imagerenderer = function (row, datafield, value) {
+                return '<center><img class="DM_HINH" onclick="sua('+row+')" height="25" width="25" src="<?php echo base_url(); ?>uploads/danhmuc/' + value + '"/></center>';
             }
 
-            // initialize jqxGrid
             $("#jqxgrid").jqxGrid(
             {
                 width: "100%",
-                selectionmode: 'multiplerowsextended', // multiplerowsextended - singlecell
-                selectionmode: 'checkbox', // tao checkbox de xoa nhieu dong
-                source: dataadapter,
-                theme: theme,
-                editable: true, // cho truc tiep tren bang hay khong
-                autoheight: true,
-                columnsresize: true, // them
+                source: dataAdapter,
+                selectionmode: 'multiplerowsextended',
+                sortable: true, // tap sap xep
                 pageable: true, // phan trang
-                //pagermode: 'simple', // kieu phan trang
-                virtualmode: true, // phan them cho tuong tac sever
+                /*pagermode: 'simple', // kieu phan trang*/
+                autoheight: true,
+                columnsresize: true,
                 showfilterrow: true, // hien thi tim kiem
                 filterable: true, // hien thi du lieu
-                sortable: true, // tap sap xep
-
+                selectionmode: 'checkbox',
+                virtualmode: true, // phan them cho tuong tac sever
+                editable: true, // cho truc tiep tren bang hay khong
                 showeverpresentrow: true,
                 everpresentrowposition: "top",
 
                 localization: getLocalization("<?php echo lang('lang') ?>"), // tai ngon ngu
 
                 showtoolbar: true,
+
                 rendertoolbar: function (toolbar) {
                     var me = this;
-                    var container = $("<div style='margin: 1px 1px 1px 1px;'></div>");
+                    var container = $("<div style='margin: 3px;'></div>");
                     toolbar.append(container);
-                    /*container.append('<input id="addrowbutton" type="button" value="Thêm" />');*/
-                    container.append(' <img id="deleterowbutton" style="margin-left: 2px;" src="<?php echo base_url(); ?>assets/images/delete1.png" width="20" height="20"> ');
-                    /*$("#addrowbutton").jqxButton();*/
+                    // container.append('<button id="addrowbutton"> <i class="fa fa-plus-circle fa-fw"></i> <?php echo lang("add") ?> </button>');
+                    container.append('<button style="margin-left: 3px; " id="deleterowbutton"> <i class="fa fa-times fa-fw"></i> <?php echo lang("delete") ?></button> ');
+                    // $("#addrowbutton").jqxButton();
+                    // $("#addrowbutton").jqxTooltip({ content: "<?php echo lang('add') ?>"});
                     $("#deleterowbutton").jqxButton();
                     $("#deleterowbutton").jqxTooltip({ content: "<?php echo lang('delete') ?>"});
                     // create new row.
-                   /* $("#addrowbutton").on('click', function () {
-                        setTimeout("location.href = '<?php echo site_url('aediadiem'); ?>';",0);
-                    });*/
+                    // $("#addrowbutton").on('click', function () {
+                    //     setTimeout("location.href = '<?php echo site_url('registration'); ?>';",0);
+                    // });
                     // delete row.
                     $("#deleterowbutton").on('click', function () {
-                        var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
-                        for (var i = 0; i < rowscount; i++) {
-                            var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
-                            if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                                var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
-                                var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                        $("#jqxgrid").hide();
+                        mscConfirm({
+                            title: "<?php echo lang('notification') ?>",
+
+                            subtitle: "<?php echo lang('are_you_sure') ?>",  // default: ''
+
+                            okText: "<?php echo lang('i_agree') ?>",    // default: OK
+
+                            cancelText: "<?php echo lang('i_dont') ?>", // default: Cancel
+
+                            onOk: function() {
+                                var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
+                                for (var i = 0; i < rowscount; i++) {
+                                    var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+                                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                                        var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
+                                        var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                                    }
+                                };
+                                $("#jqxgrid").show();
+                            },
+
+                            onCancel: function() {
+                                $("#jqxgrid").show();
                             }
-                        };
+                        });
+                        
                     });
                 },
-                
                 rendergridrows: function () {
-                    return dataadapter.records;
+                    return dataAdapter.records;
                 },
+
                 columns: [
-                      { text: "<?php echo lang('key') ?>", editable: false, datafield: 'DM_MA', width: "20%", cellsalign: 'center', renderer: columnrenderer, cellsrenderer: cellsrenderer },
-                      { text: "<?php echo lang('name') ?>", datafield: 'DM_TEN', width: "37%" },
-                      { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'button', width: "20%", renderer: columnrenderer, cellsrenderer: function () {
-                                return "<?php echo lang('edit') ?>";
-                              }, buttonclick: function (row) {
-                                 // open the popup window when the user clicks a button.
-                                 editrow = row;
-                                 var offset = $("#jqxgrid").offset();
-                                 $("#popupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) + 60 } });
-                                 // get the clicked row's data and initialize the input fields.
-                                 var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', editrow);
-                                 $("#DM_MA").val(dataRecord.DM_MA);
-                                 $("#DM_TEN").val(dataRecord.DM_TEN);
-                                 // show the popup window.
-                                 $("#popupWindow").jqxWindow('open');
-                             }
-                        },
-                      { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'button', width: "20%", cellsrenderer: function () {
-                                return "<?php echo lang('delete') ?>";
-                              }, buttonclick: function (row) {
-                                //editrow = row;
-                                var offset = $("#jqxgrid").offset();
-                                var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-                                var id = dataRecord.DM_MA;
-                                console.log(id);
-                                var commit = $("#jqxgrid").jqxGrid('deleterow', id);
-                             }
-                        },
-                  ]
+                    { 
+                        text: "<?php echo lang('photo') ?>", datafield: 'DM_HINH', width: "10%", sortable: false, filterable: false, cellsrenderer: imagerenderer, cellsalign: 'center', align: "center", editable: false
+                    },
+                    {
+                      text: "<?php echo lang('key') ?>", columntype: 'textbox', datafield: 'DM_MA', width: "26%", cellsalign: 'center', align: "center", editable: false, 
+                      validateEverPresentRowWidgetValue: function (datafield, value, rowValues) {
+                            var reg = /^\d+$/;
+                            if(!reg.test(value) && value != "")
+                            {
+                                return { message: "<?php echo lang('code_must_be_a_positive_integer') ?>", result: false };
+                            }
+                            return true;
+                        }
+                    },
+                    {
+                      text: "<?php echo lang('name') ?>", columntype: 'textbox', datafield: 'DM_TEN', width: "50%", cellsalign: 'left', align: "left",
+                      validateEverPresentRowWidgetValue: function (datafield, value, rowValues) {
+                          if (!value) {
+                              return { message: "<?php echo lang('please_input').' '.lang('name') ?>", result: false };
+                          }
+                          return true;
+                        }
+                    },
+                    { text: "<?php lang('edit') ?>", datafield: 'addButtonColumn', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
+                            return "<button class='icon' onclick='sua(\""+row+"\")'><i class='fa fa-pencil fa-fw'></i></button>";
+                        }
+                    },
+                    { text: "<?php lang('delete') ?>", datafield: 'resetButtonColumn', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
+                            var offset = $("#jqxgrid").offset();
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.DM_MA;
+                            return "<button class='icon' onclick='xoa(\""+id+"\")'><i class='fa fa-times fa-fw'></i></button>";
+                        }
+                    }
+                ],
             });
 
             // initialize the popup window and buttons.
             $("#popupWindow").jqxWindow({
-                width: 250, resizable: false,  isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01           
+                width: 300, height: 300, resizable: false,  isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01           
             });
             $("#popupWindow").on('open', function () {
                 $("#DM_MA").jqxInput('selectAll');
+                var id = document.getElementById("DM_MA").value;
+                var path = "<?php echo base_url(); ?>index.php/danhmuc/upload/"+id;
+                $('#jqxFileUpload').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_all') ?>", cancelButton: "<?php echo lang('cancel_all') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
+
+                $('#jqxFileUpload').jqxFileUpload({ multipleFilesUpload: false });
+
+                $('#jqxFileUpload').jqxFileUpload({ width: "100%", height: "120", uploadUrl: path, fileInputName: 'fileToUpload'});
+
+                $('#eventsPanel').jqxPanel({ width: "100%", height: 50 });
+                $('#jqxFileUpload').on('select', function (event) {
+                    var args = event.args;
+                    var fileName = args.file;
+                    var fileSize = args.size;
+                    var fileindex = args.owner._fileRows["length"] - 1;
+                    $('#eventsPanel').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
+                      fileName + ';<br />' + 'size: ' + fileSize + '<br />');
+
+                    if(fileSize > 2500000)
+                    {
+                        $('#jqxFileUpload').jqxFileUpload('cancelFile', fileindex);
+                        thongbao("", "<?php echo lang('sorry_your_file_is_too_large') ?>", "danger");
+                    }
+                });
+                $('#jqxFileUpload').on('remove', function (event) {
+                    var fileName = event.args.file;
+                    $('#eventsPanel').jqxPanel('append', '<strong>' + event.type + ':</strong> ' + fileName + '<br /> <hr /> ');
+                 });
+                $('#jqxFileUpload').on('uploadStart', function (event) {
+                    var fileName = event.args.file;
+                    $('#eventsPanel').jqxPanel('append', '<strong>' + event.type + ':</strong> ' + fileName + '<br />');
+                 });
+                $('#jqxFileUpload').on('uploadEnd', function (event) {
+                    var args = event.args;
+                    var fileName = args.file;
+                    var serverResponce = args.response;
+                    $('#eventsPanel').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
+                      fileName + ';<br />' + 'server response: ' + serverResponce + '<br />');
+                    if(serverResponce.indexOf("!") != "-1")
+                    {
+                        thongbao("", serverResponce, "success");
+                    }
+                    else
+                    {
+                        thongbao("", serverResponce, "danger");
+                    }
+                    
+                });
+
             });
          
-            $("#Cancel").jqxButton({ theme: theme });
-            $("#Save").jqxButton({ theme: theme });
-            $("#DM_MA").jqxInput({ theme: theme });
-            $("#DM_TEN").jqxInput({ theme: theme });
+            $("#Cancel").jqxButton({ });
+            $("#Save").jqxButton({ });
+            $("#DM_MA").jqxInput({ });
+            $("#DM_TEN").jqxInput({ });
             // update the edited row when the user clicks the 'Save' button.
             $("#Save").click(function () {
                 if (editrow >= 0) {
@@ -278,48 +393,48 @@
                     $("#popupWindow").jqxWindow('hide');
                 }
             });
-
         });
-
-        function sleep(milliseconds) {
-            var start = new Date().getTime();
-            for (var i = 0; i < 1e7; i++) {
-                if ((new Date().getTime() - start) > milliseconds){
-                    break;
-                }
-            }
-        }
-
     </script>
     <style type="text/css">
-    .tieude{
-        font-weight: bold;
-    }
-    .td{
-        font-weight: bold;
-        text-align: center;
-    }
+        .icon{
+            width: 100%;
+            height: 100%;
+        }
+        .DM_HINH{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class='default'>
-    <div id="jqxgrid">
+    <div id='jqxWidget' style="font-size: 13px; font-family: Verdana;">
+        <div id="jqxgrid">
+        </div>
     </div>
 
     <div id="popupWindow">
-        <div class="tieude"><?php echo lang("edit") ?></div>
+        <div><?php echo lang('edit') ?></div>
         <div style="overflow: hidden;">
-            <table>
+            <table width="100%">
                 <tr>
-                    <td class="tieude" align="right"><?php echo lang("key") ?>: </td>
+                    <td width="50" align="center">  <?php echo lang('key') ?></td>
                     <td align="left"><input id="DM_MA" readonly="readonly" /></td>
                 </tr>
                 <tr>
-                    <td class="tieude" align="right"><?php echo lang("name") ?>: </td>
+                    <td align="center"> <?php echo lang('name') ?></td>
                     <td align="left"><input id="DM_TEN" /></td>
                 </tr>
                 <tr>
+                    <td>
+                        <?php echo lang('photo') ?>
+                    </td>
+                    <td>
+                        <div id="jqxFileUpload"></div>
+                        <div id="eventsPanel"></div>
+                    </td>
+                </tr>
+                <tr>
                     <td align="right"></td>
-                    <td style="padding-top: 10px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="Lưu" /><input id="Cancel" type="button" value="Hủy" /></td>
+                    <td style="padding-top: 10px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="<?php echo lang('save') ?>" /><input id="Cancel" type="button" value="<?php echo lang('cancel') ?>" /></td>
                 </tr>
             </table>
         </div>

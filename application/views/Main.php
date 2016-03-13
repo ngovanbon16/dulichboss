@@ -38,9 +38,10 @@
         <script src="<?php echo base_url(); ?>assets/bootstrap/js/raphael.min.js"></script>
 
         <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-confirmation.js"></script>
-
         <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-notify.js"></script>
 
+        <link href="<?php echo base_url(); ?>assets/confirm/css/msc-style.css" rel="stylesheet">
+        <script src="<?php echo base_url(); ?>assets/confirm/js/msc-script.js"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -274,9 +275,9 @@
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/danhmuc"> <?php echo lang('category') ?></a>
                                     </li>
-                                    <li>
+                                   <!--  <li>
                                         <a href="<?php echo base_url(); ?>index.php/danhmuchinh"><?php echo lang('picture') ?></a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>

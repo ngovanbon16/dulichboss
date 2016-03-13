@@ -46,12 +46,34 @@
         }
         function xoa(id)
         {
-            var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+            $("#jqxgrid").hide();
+            mscConfirm({
+                title: "<?php echo lang('notification') ?>",
+
+                subtitle: "<?php echo lang('are_you_sure') ?>",  // default: ''
+
+                okText: "<?php echo lang('i_agree') ?>",    // default: OK
+
+                cancelText: "<?php echo lang('i_dont') ?>", // default: Cancel
+
+                onOk: function() {
+                    var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                    $("#jqxgrid").show();
+                },
+
+                onCancel: function() {
+                    $("#jqxgrid").show();
+                }
+            });
         }
         function chitiet(id)
         {
             thongbao("", "<?php echo lang('feature_is_being_updated') ?>", "info");
             //setTimeout("location.href = '<?php echo base_url(); ?>index.php/nguoidung/detail/"+id+"';",0);
+        }
+        function kichhoat(id, row)
+        {
+            var commit = $("#jqxgrid").jqxGrid('updaterow', id, $("#jqxgrid").jqxGrid('getrowdata', row));
         }
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
@@ -68,7 +90,7 @@
                     { name: 'ND_HO', type: 'string' },
                     { name: 'ND_TEN', type: 'string' },
                     { name: 'ND_DIACHIMAIL', type: 'string' },
-                    { name: 'ND_KICHHOAT', type: 'bool' },
+                    { name: 'ND_KICHHOAT', type: 'string' },
                     { name: 'ND_NGAYCAPNHAT', type: 'date' },
                     { name: 'ND_NGAYTAO', type: 'date' }
                 ],
@@ -91,6 +113,48 @@
                 beforeprocessing: function (data) {
                     source.totalrecords = data[0].TotalRows;
                 },
+                updaterow: function (rowid, rowdata, commit) {
+                    var kichhoat = "";
+                    if(rowdata.ND_KICHHOAT == '1')
+                    {
+                        kichhoat = '-1';
+                    }
+                    if(rowdata.ND_KICHHOAT == '-1')
+                    {
+                        kichhoat = '1';
+                    }
+                    if(rowdata.ND_KICHHOAT == '0')
+                    {
+                        thongbao("", "<?php echo lang('not_activated') ?>", "danger");
+                        return;
+                    }
+                    var data = "update=true&ND_KICHHOAT=" + kichhoat;
+                    data = data + "&ND_MA=" + rowdata.ND_MA;
+                    console.log(data);
+                    $.ajax({
+                        dataType: 'json',
+                        url: '<?php echo base_url(); ?>index.php/nguoidung/data0',
+                        data: data,
+                        success: function (data, status, xhr) {
+                            // update command is executed.
+                            console.log(data);
+                            if(data)
+                            {
+                                $("#jqxgrid").jqxGrid('updatebounddata');
+                                thongbao("", "<?php echo lang('updated_successfully') ?>", "success");
+                            }
+                            else
+                            {
+                                commit(false);
+                                thongbao("", "<?php echo lang('name_not_be_repeated') ?>", "danger");
+                            }
+                        },
+                        error: function () {
+                            console.log("Lỗi không xác định!");
+                            commit(false);
+                        }
+                    });
+                },
                 deleterow: function (rowid, commit) {
                     var dta, url, test;
                     url = "<?php echo base_url(); ?>index.php/nguoidung/delete";
@@ -107,7 +171,7 @@
                         {   
                             if(data.status == "error")
                             {
-                                thongbao("", data.msg['ma'], "danger");
+                                thongbao("", data.msg['error'], "danger");
                             }
                             else
                             {
@@ -165,15 +229,32 @@
                     });
                     // delete row.
                     $("#deleterowbutton").on('click', function () {
-                       
-                        var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
-                        for (var i = 0; i < rowscount; i++) {
-                            var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
-                            if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                                var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
-                                var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                        $("#jqxgrid").hide();
+                        mscConfirm({
+                            title: "<?php echo lang('notification') ?>",
+
+                            subtitle: "<?php echo lang('are_you_sure') ?>",  // default: ''
+
+                            okText: "<?php echo lang('i_agree') ?>",    // default: OK
+
+                            cancelText: "<?php echo lang('i_dont') ?>", // default: Cancel
+
+                            onOk: function() {
+                                var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
+                                for (var i = 0; i < rowscount; i++) {
+                                    var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+                                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                                        var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
+                                        var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                                    }
+                                };
+                                $("#jqxgrid").show();
+                            },
+
+                            onCancel: function() {
+                                $("#jqxgrid").show();
                             }
-                        };
+                        });
                     });
                 },
                 rendergridrows: function () {
@@ -183,11 +264,28 @@
                 columns: [
                     { text: "<?php echo lang('photo') ?>", datafield: 'ND_HINH', width: "5%", sortable: false, filterable: false, cellsrenderer: imagerenderer, cellsalign: 'center', align: "center", },
                     { text: "<?php echo lang('key') ?>", dataField: 'ND_MA', width: "5%", cellsalign: 'center', align: "center", },
-                    { text: "<?php echo lang('lastname') ?>", dataField: 'ND_HO', width: "10%" },
+                    { text: "<?php echo lang('lastname') ?>", dataField: 'ND_HO', width: "7.5%" },
                     /*{ text: 'Mã người dùng', dataField: 'ND_MA', width: "10%" },*/
-                    { text: "<?php echo lang('firstname') ?>", dataField: 'ND_TEN', width: "14%" },
-                    { text: "<?php echo lang('email') ?>", dataField: 'ND_DIACHIMAIL', width: "20%" },
-                    { text: "<?php echo lang('activate') ?>", dataField: 'ND_KICHHOAT', width: "6%", columntype: 'checkbox', filtertype: 'bool', align: 'center' },
+                    { text: "<?php echo lang('firstname') ?>", dataField: 'ND_TEN', width: "10%" },
+                    { text: "<?php echo lang('email') ?>", dataField: 'ND_DIACHIMAIL', width: "19%" },
+                    { text: "<?php echo lang('activate') ?>", dataField: 'ND_KICHHOAT', width: "10%", columntype: 'textbox', filtertype: 'textbox', align: 'center',
+                        cellsrenderer: function (row, column, value) {
+                            var tt = "";
+                            if(value == "0")
+                            {
+                                tt = "<div class='trangthai0'><?php echo lang('not_activated') ?></div>";
+                            }
+                            if(value == "1")
+                            {
+                                tt = "<div class='trangthai1'><?php echo lang('activated') ?></div>";
+                            }
+                            if(value == "-1")
+                            {
+                                tt = "<div class='trangthai2'><?php echo lang('blocked') ?></div>";
+                            }
+                            return tt;
+                        }
+                    },
                     { text: "<?php echo lang('updates_day') ?>", dataField: 'ND_NGAYCAPNHAT', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
                     { text: "<?php echo lang('creates_date') ?>", dataField: 'ND_NGAYTAO', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
                     { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
@@ -213,6 +311,15 @@
                             var id = dataRecord.ND_MA;
                             return "<button class='icon' onclick='chitiet(\""+id+"\")'><i class='fa fa-info-circle fa-fw'></i></button>";
                         }
+                    },
+                    { text: "<?php echo lang('blocked') ?>", datafield: 'blocked', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
+                            var offset = $("#jqxgrid").offset();
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.ND_MA;
+                            var kichhoat = dataRecord.ND_KICHHOAT;
+                            return "<button class='icon' onclick='kichhoat(\""+id+"\",\""+row+"\")'><i class='fa fa-lock fa-fw'></i></button>";
+                        }
                     }
                 ],
             });
@@ -223,6 +330,48 @@
         .icon{
             width: 100%;
             height: 100%;
+        }
+        .trangthai0{
+            text-align: center;
+            background-color: #F93;
+            color: #FFF;
+            border-radius: 5px;
+            margin: 2px;
+            padding: 3px;
+            font-weight: bold;
+            border-radius: 2px;
+            box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+            -moz-box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+            -webkit-box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+            -o-box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+        }
+        .trangthai1{
+            text-align: center;
+            background-color: #3C6;
+            color: #FFF;
+            border-radius: 5px;
+            margin: 2px;
+            padding: 3px;
+            font-weight: bold;
+            border-radius: 2px;
+            box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+            -moz-box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+            -webkit-box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+            -o-box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+        }
+        .trangthai2{
+            text-align: center;
+            background-color: #F33;
+            color: #FFF;
+            border-radius: 5px;
+            margin: 2px;
+            padding: 3px;
+            font-weight: bold;
+            border-radius: 2px;
+            box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+            -moz-box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+            -webkit-box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
+            -o-box-shadow: 0 -2px 2px -2px rgba(0,0,0,4);
         }
     </style>
 </head>

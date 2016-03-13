@@ -69,7 +69,7 @@ class Mdanhmuc extends CI_Model {
 
     public function update($id, $data_update){
         $this->db->where("DM_MA", $id);
-        $this->db->update($this->_table, $data_update);
+        return $this->db->update($this->_table, $data_update);
     }
 
     function testMa($ma) 

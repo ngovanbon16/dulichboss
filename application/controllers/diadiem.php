@@ -18,32 +18,21 @@ class Diadiem extends CI_Controller
        	$this->load->view('main.php', $this->_data);
 	}
 
-	public function add()
+	public function update()
 	{
-		$ma = $_POST["ND_MA"];
-		$kichhoat = $_POST['ND_KICHHOAT'];
-
+		$ma = $_POST["DD_MA"];
+		$kichhoat = $_POST['DD_DUYET'];
+		$status = "error";
 		$msg = array();
 
-		date_default_timezone_set('Asia/Ho_Chi_Minh');  
-        $date = date('Y-m-d H:i:s');
-
 		$data = array(
-            "ND_MA" => $ma,
-       		"ND_KICHHOAT" => $kichhoat,
-       		"ND_NGAYCAPNHAT" => $date
+            "DD_MA" => $ma,
+       		"DD_DUYET" => $kichhoat
         );
-
-		$status = "error";
 
         if($this->mdiadiem->testMa($ma))
 		{
 			$this->mdiadiem->update($ma, $data);
-			$status = "success";
-		}
-		else
-		{
-			//$this->mdiadiem->insert($data);
 			$status = "success";
 		}
 			
@@ -236,26 +225,40 @@ class Diadiem extends CI_Controller
 	{
 		$ma = $_POST["ma"];
 		$msg = array();
+		$status = "error";
+		$error = "";
 
 		if(!($this->mdiadiem->testMa($ma)))
 		{
-			$msg["ma"] = lang('code_does_not_exist');
+			$error = lang('code_does_not_exist');
 		}
 
 		if($this->mdiadiem->diadiemhinhanh($ma))
 		{
-			$msg["ma"] = lang('errors_associated_foreign_key');
+			$error .= lang('have_data_relating_to_the_table')." \"HINHANH\". <br/>";
 		}
 
-		$status = "error";
-		$data = "";
-		if(count($msg) == 0)
+		if($this->mdiadiem->diadiembinhluan($ma))
+		{
+			$error .= lang('have_data_relating_to_the_table')." \"BINHLUAN\". <br/>";
+		}
+
+		if($this->mdiadiem->diadiemnddd($ma))
+		{
+			$error .= lang('have_data_relating_to_the_table')." \"NGUOIDUNGDIADIEM\". <br/>";
+		}
+
+		if($error == "")
 		{
             $this->mdiadiem->delete($ma);
             $status = "success";
 		}
+		else
+		{
+			$msg["error"] = $error;
+		}
 
-		$response = array('status' => $status,'msg' => $msg,'dta' => $data);
+		$response = array('status' => $status,'msg' => $msg);
 		$jsonString = json_encode($response);
 		echo $jsonString;
 	}

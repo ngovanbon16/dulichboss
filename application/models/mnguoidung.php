@@ -86,7 +86,7 @@ class Mnguoidung extends CI_Model {
 
     public function update($id, $data_update){
         $this->db->where("ND_MA", $id);
-        $this->db->update($this->_table, $data_update);
+        return $this->db->update($this->_table, $data_update);
     }
 
     public function updatexacnhan($email, $data_update){
@@ -168,6 +168,57 @@ class Mnguoidung extends CI_Model {
         $this->db->select('*');
         $this->db->from($this->_table);
         $this->db->join('diadiem', 'nguoidung.ND_MA = diadiem.ND_MA');
+        $this->db->where("nguoidung.ND_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function nguoidungbinhluan($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('binhluan', 'nguoidung.ND_MA = binhluan.ND_MA');
+        $this->db->where("nguoidung.ND_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }    
+
+    function nguoidungnddd($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('nguoidung_diadiem', 'nguoidung.ND_MA = nguoidung_diadiem.ND_MA');
+        $this->db->where("nguoidung.ND_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    } 
+
+    function nguoidunghinhanh($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('hinhanh', 'nguoidung.ND_MA = hinhanh.ND_MA');
         $this->db->where("nguoidung.ND_MA", $id);
         $query = $this->db->get();           
         if($query->num_rows() > 0)

@@ -15,7 +15,6 @@ class Nguoidung extends CI_Controller
 	{
 		$this->_data['subview'] = 'admin/nguoidung_view';
        	$this->_data['title'] = lang('user');
-       	//$this->_data['info'] = $this->mnguoidung->getList();
        	$this->load->view('main.php', $this->_data);
 	}
 
@@ -65,21 +64,14 @@ class Nguoidung extends CI_Controller
 	{
 		if (isset($_GET['update'])) // code update
 		{
-			/*$ma = $_GET['T_MA'];
-			$ten = $_GET['T_TEN'];
-			$result = "0";
-			if(!$this->mtinh->testTen($ten))
-			{
-				$data = array(
-	               "T_MA" => $ma,
-	               "T_TEN" => $ten
-	            );
-	            if($this->mtinh->update($ma, $data))
-	            {
-	            	$result = "1";
-	            }
-			}
-			echo $result;*/
+			$ma = $_GET["ND_MA"];
+			$kichhoat = $_GET['ND_KICHHOAT'];
+
+			$data = array(
+	            "ND_MA" => $ma,
+	       		"ND_KICHHOAT" => $kichhoat
+	        );
+	        echo $this->mnguoidung->update($ma, $data);
 		}
 		else
 		{
@@ -411,26 +403,46 @@ class Nguoidung extends CI_Controller
 	{
 		$ma = $_POST["ma"];
 		$msg = array();
+		$status = "error";
+		$error = "";
 
 		if(!($this->mnguoidung->testMa($ma)))
 		{
-			$msg["ma"] = lang('code_does_not_exist');
+			$error = lang('code_does_not_exist');
 		}
 
 		if($this->mnguoidung->nguoidungdiadiem($ma))
 		{
-			$msg["ma"] = lang('errors_associated_foreign_key');
+			$error .= lang('have_data_relating_to_the_table')." \"DIADIEM\". <br/>";
 		}
 
-		$status = "error";
-		$data = "";
+		if($this->mnguoidung->nguoidungbinhluan($ma))
+		{
+			$error .= lang('have_data_relating_to_the_table')." \"BINHLUAN\". <br/>";;
+		}
+
+		if($this->mnguoidung->nguoidungnddd($ma))
+		{
+			$error .= lang('have_data_relating_to_the_table')." \"NGUOIDUNGDIADIEM\". <br/>";;
+		}
+
+		if($this->mnguoidung->nguoidunghinhanh($ma))
+		{
+			$error .= lang('have_data_relating_to_the_table')." \"HINHANH\". <br/>";;
+		}
+
+		if($error != "")
+		{
+			$msg["error"] = $error;
+		}
+
 		if(count($msg) == 0)
 		{
             $this->mnguoidung->delete($ma);
             $status = "success";
 		}
 
-		$response = array('status' => $status,'msg' => $msg,'dta' => $data);
+		$response = array('status' => $status,'msg' => $msg);
 		$jsonString = json_encode($response);
 		echo $jsonString;
 	}

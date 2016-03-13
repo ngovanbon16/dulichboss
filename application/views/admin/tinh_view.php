@@ -54,7 +54,25 @@
         }
         function xoa(id)
         {
-            var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+            $("#jqxgrid").hide();
+            mscConfirm({
+                title: "<?php echo lang('notification') ?>",
+
+                subtitle: "<?php echo lang('are_you_sure') ?>",  // default: ''
+
+                okText: "<?php echo lang('i_agree') ?>",    // default: OK
+
+                cancelText: "<?php echo lang('i_dont') ?>", // default: Cancel
+
+                onOk: function() {
+                    var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                    $("#jqxgrid").show();
+                },
+
+                onCancel: function() {
+                    $("#jqxgrid").show();
+                }
+            });
         }
         function chitiet(id)
         {
@@ -98,13 +116,6 @@
                 },
                 addRow: function (rowID, rowData, position, commit) {
                     url = "<?php echo base_url(); ?>index.php/tinh/add";
-
-                    var reg = /^\d+$/;
-                    if(!reg.test(rowID))
-                    {
-                        thongbao("", "<?php echo lang('code_must_be_a_positive_integer') ?>", "danger");
-                        return;
-                    }
                     
                     rowData.T_MA = rowID; 
                     console.log(rowData);
@@ -119,14 +130,7 @@
                             {
                                 commit(false);
                                 var error = data.msg["error"];
-                                if(error  == "tt")
-                                {
-                                    thongbao("", "<?php echo lang('name_not_be_repeated') ?>", "danger");
-                                }
-                                if(error == "tm")
-                                {
-                                    thongbao("", data.data["T_MA"]+" - <?php echo lang('code_already_exists') ?>", "danger");
-                                }
+                                thongbao("", error, "danger");
                             }
                             else
                             {
@@ -181,7 +185,7 @@
                         {   
                             if(data.status == "error")
                             {
-                                thongbao("", "<?php echo lang('code_does_not_exist') ?>", "danger");
+                                thongbao("", data.msg["error"], "danger");
                             }
                             else
                             {
@@ -195,10 +199,6 @@
 
             };
             var dataAdapter = new $.jqx.dataAdapter(source);
-
-            var imagerenderer = function (row, datafield, value) {
-                return '<center><img height="25" width="25" src="<?php echo base_url(); ?>uploads/user/' + value + '"/></center>';
-            }
 
             $("#jqxgrid").jqxGrid(
             {
@@ -238,15 +238,32 @@
                     // });
                     // delete row.
                     $("#deleterowbutton").on('click', function () {
-                       
-                        var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
-                        for (var i = 0; i < rowscount; i++) {
-                            var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
-                            if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                                var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
-                                var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                        $("#jqxgrid").hide();
+                        mscConfirm({
+                            title: "<?php echo lang('notification') ?>",
+
+                            subtitle: "<?php echo lang('are_you_sure') ?>",  // default: ''
+
+                            okText: "<?php echo lang('i_agree') ?>",    // default: OK
+
+                            cancelText: "<?php echo lang('i_dont') ?>", // default: Cancel
+
+                            onOk: function() {
+                                var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
+                                for (var i = 0; i < rowscount; i++) {
+                                    var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+                                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                                        var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
+                                        var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                                    }
+                                };
+                                $("#jqxgrid").show();
+                            },
+
+                            onCancel: function() {
+                                $("#jqxgrid").show();
                             }
-                        };
+                        });
                     });
                 },
                 rendergridrows: function () {
@@ -255,12 +272,14 @@
 
                 columns: [
                     {
-                      text: "<?php echo lang('key') ?>", columntype: 'textbox', datafield: 'T_MA', width: "30%", cellsalign: 'center', align: "center",
+                      text: "<?php echo lang('key') ?>", columntype: 'textbox', datafield: 'T_MA', width: "30%", cellsalign: 'center', align: "center", editable: false,
                       validateEverPresentRowWidgetValue: function (datafield, value, rowValues) {
-                          if (isNaN(value)) {
-                              return { message: "<?php echo lang('code_must_be_a_positive_integer') ?>", result: false };
-                          }
-                          return true;
+                            var reg = /^\d+$/;
+                            if(!reg.test(value) && value != "")
+                            {
+                                return { message: "<?php echo lang('code_must_be_a_positive_integer') ?>", result: false };
+                            }
+                            return true;
                         }
                     },
                     {
@@ -272,12 +291,12 @@
                           return true;
                         }
                     },
-                    { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                    { text: "<?php lang('edit') ?>", datafield: 'addButtonColumn', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             return "<button class='icon' onclick='sua(\""+row+"\")'><i class='fa fa-pencil fa-fw'></i></button>";
                         }
                     },
-                    { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                    { text: "<?php lang('delete') ?>", datafield: 'resetButtonColumn', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);

@@ -23,38 +23,35 @@ class Tinh extends CI_Controller
 	{
 		$ma = $_POST["T_MA"];
 		$ten = $_POST['T_TEN'];
-
 		$msg = array();
+		$error = "";
+		$status = "error";
 
 		$data = array(
             "T_MA" => $ma,
-       		"T_TEN" => $ten,
+       		"T_TEN" => $ten
         );
-
-		$status = "error";
 
         if($this->mtinh->testTen($ten))
         {
-        	$msg["error"] = "tt";
+        	$error .= lang("name_not_be_repeated")."<br/>";
         }
-        else
+
+    	if($this->mtinh->testMa($ma))
+    	{
+        	$error .= lang("code_already_exists");
+        }
+
+        if($error != "")
         {
-        	if($this->mtinh->testMa($ma))
-        	{
-	        	$msg["error"] = "tm";
-	        }
-	        else
-	        {
-	        	if($this->mtinh->insert($data))
-	        	{
-	        		$status = "success";
-	        	}
-	        	else
-	        	{
-	        		$msg["error"] = "kd";
-	        	}	
-	        }
+        	$msg["error"] = $error;
         }
+        
+        if(count($msg) == 0)
+    	{
+    		$this->mtinh->insert($data);
+    		$status = "success";
+    	}	
 
         $response = array('status' => $status,'msg' => $msg,'data' => $data);
 		$jsonString = json_encode($response);
@@ -73,9 +70,9 @@ class Tinh extends CI_Controller
 	{
 		if (isset($_GET['update'])) // code update
 		{
+			$result = "0";
 			$ma = $_GET['T_MA'];
 			$ten = $_GET['T_TEN'];
-			$result = "0";
 			if(!$this->mtinh->testTen($ten))
 			{
 				$data = array(
@@ -245,28 +242,31 @@ class Tinh extends CI_Controller
 	{
 		$ma = $_POST["ma"];
 		$msg = array();
+		$status = "error";
+		$error = "";
 
 		if(!($this->mtinh->testMa($ma)))
 		{
-			$msg["ma"] = "Mã không tồn tại";
+			$error = lang('code_does_not_exist');
 		}
 
 		if($this->mtinh->testhuyen($ma))
         {
-           	$msg["ma"] = "Lỗi khóa ngoại";
+           	$error .= lang('have_data_relating_to_the_table')." \"HUYEN\".";
         }
 
-		$status = "error";
-		$data = "";
-		if(count($msg) == 0)
+        if($error != "")
 		{
-			$status = "success";
-            //$this->mtinh->delete($ma);
-            $this->mtinh->delete($ma);
-            $msg["ma"] = "Thành công";
+			$msg["error"] = $error;
 		}
 
-		$response = array('status' => $status,'msg' => $msg,'dta' => $data);
+		if(count($msg) == 0)
+		{
+			$this->mtinh->delete($ma);
+			$status = "success";
+		}
+
+		$response = array('status' => $status,'msg' => $msg);
 		$jsonString = json_encode($response);
 		echo $jsonString;
 	}

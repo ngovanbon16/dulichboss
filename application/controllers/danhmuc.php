@@ -24,6 +24,10 @@ class Danhmuc extends CI_Controller
 		$ma = $_POST["DM_MA"];
 		$ten = $_POST['DM_TEN'];
 		$hinh = $_POST['DM_HINH'];
+		$msg = array();
+		$status = "error";
+		$error = "";
+
 		if($hinh == "")
 		{
 			$hinh = "0.png";
@@ -37,31 +41,26 @@ class Danhmuc extends CI_Controller
        		"DM_HINH" => $hinh
         );
 
-		$status = "error";
-
 		$mdata = $this->mdanhmuc->getid($ma);
 		$mten = $mdata['DM_TEN'];
 
-		if($mten == $ten)
-		{
-			return;
-		}
-
         if($this->mdanhmuc->testTen($ten))
         {
-        	$msg["DM_TEN"] = lang('name_not_be_repeated');
+        	$error = lang("name_not_be_repeated")."<br/>";
+        }
+
+        if($this->mdanhmuc->testMa($ma))
+		{
+			$error .= lang("code_already_exists");
+		}
+        
+        if($error != "")
+        {
+        	$msg["error"] = $error;
         }
         else
         {
-        	if($this->mdanhmuc->testMa($ma))
-			{
-				$this->mdanhmuc->update($ma, $data);
-			}
-			else
-			{
-				$this->mdanhmuc->insert($data);
-				$msg["insert"] = "insert";
-			}
+        	$this->mdanhmuc->insert($data);
 			$status = "success";
         }
 
@@ -85,16 +84,15 @@ class Danhmuc extends CI_Controller
 			$ma = $_GET['DM_MA'];
 			$ten = $_GET['DM_TEN'];
 			$result = "0";
-			if(!$this->mdanhmuc->testTen($ten))
+
+			$data = array(
+               "DM_MA" => $ma,
+               "DM_TEN" => $ten
+            );
+
+			if($this->mdanhmuc->update($ma, $data))
 			{
-				$data = array(
-	               "DM_MA" => $ma,
-	               "DM_TEN" => $ten
-	            );
-	            if($this->mdanhmuc->update($ma, $data))
-	            {
-	            	$result = "1";
-	            }
+				$result = "1";
 			}
 			echo $result;
 		}
@@ -238,38 +236,110 @@ class Danhmuc extends CI_Controller
 	{
 		$ma = $_POST["ma"];
 		$msg = array();
+		$status = "error";
+		$error = "";
 
 		if(!($this->mdanhmuc->testMa($ma)))
 		{
-			$msg["ma"] = lang('code_does_not_exist');
+			$error = lang('code_does_not_exist');
 		}
 
 		if($this->mdanhmuc->danhmucdiadiem($ma))
 		{
-			$msg["ma"] = lang('errors_associated_foreign_key');
+			$error = lang('have_data_relating_to_the_table')." \"DIADIEM\".";
 		}
 
-		$status = "error";
-		$data = "";
+		if($error != "")
+		{
+			$msg["error"] = $error;
+		}
+
 		if(count($msg) == 0)
 		{
 			$query = $this->mdanhmuc->getId($ma);
 			$ten = $query['DM_HINH'];
-			//$status = print_r($query);
 			if($ten != "0.png")
 			{
 	            $file_path = "uploads/danhmuc/".$ten;
 	            if (file_exists($file_path)) 
 	            {
-	                   unlink("uploads/danhmuc/".$ten);
+	                unlink("uploads/danhmuc/".$ten);
 	            } 
         	}
             $this->mdanhmuc->delete($ma);
             $status = "success";
 		}
 
-		$response = array('status' => $status,'msg' => $msg,'dta' => $data);
+		$response = array('status' => $status,'msg' => $msg);
 		$jsonString = json_encode($response);
 		echo $jsonString;
 	}
+
+	public function upload($id)
+    {
+        $target_dir = "./uploads/danhmuc/";
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        // Check if image file is a actual image or fake image
+        if(isset($_POST["submit"])) {
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            if($check !== false) {
+                echo lang('file_is_an_image')." - " . $check["mime"] . ".";
+                $uploadOk = 1;
+            } else {
+                echo lang('file_is_not_an_image');
+                $uploadOk = 0;
+            }
+        }
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            echo lang('sorry_file_already_exists');
+            $uploadOk = 0;
+        }
+        // Check file size
+        if ($_FILES["fileToUpload"]["size"] > 2500000) {
+            echo lang('sorry_your_file_is_too_large');
+            $uploadOk = 0;
+        }
+        // Allow certain file formats
+        if(strtolower($imageFileType) != "jpg" && strtolower($imageFileType) != "png" && strtolower($imageFileType) != "jpeg"
+        && strtolower($imageFileType) != "gif" ) {
+            echo lang('sorry_only_JPG_JPEG_PNG_GIF_files_are_allowed');
+            $uploadOk = 0;
+        }
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            echo lang('sorry_your_file_was_not_uploaded');
+        // if everything is ok, try to upload file
+        } else {
+            $name = $id.".".$imageFileType;
+            $names = $target_dir.$name;
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $names)) {
+
+                $this->load->library("image_lib");
+                $config['image_library'] = 'gd2';
+                $config['source_image'] = './uploads/danhmuc/'.$name;
+                $config['create_thumb'] = FALSE;
+                $config['maintain_ratio'] = TRUE;
+                $config['width']     = 38;
+                $config['height']   = 38;
+                $this->image_lib->initialize($config);
+                $this->image_lib->resize();
+                $this->image_lib->clear();
+                unset($config);
+
+                $this->load->model("mdanhmuc");
+                $data = array(
+                    "DM_MA" => $id,
+                    "DM_HINH" => $name
+                );
+                
+                if($this->mdanhmuc->update($id, $data))
+                {	
+                	echo lang('the_file')." ". basename( $_FILES["fileToUpload"]["name"])." ".lang('has_been_uploaded')."!";
+                }
+            }
+        }
+    }
 }
