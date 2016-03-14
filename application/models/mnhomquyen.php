@@ -22,6 +22,20 @@ class Mnhomquyen extends CI_Model {
         }
     }
 
+    public function getList2($query) // dung cho trang quan ly
+    {
+        $string = "SELECT * FROM ".$this->_table." ".$query;
+        $query = $this->db->query($string);          
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
     public function getid($id){
         $this->db->select('*');
         $this->db->where('NQ_MA',$id);
@@ -37,6 +51,10 @@ class Mnhomquyen extends CI_Model {
         }
      }
 
+    public function countAll(){
+        return $this->db->count_all($this->_table); 
+    }
+
     public function insert($data_insert){
         $this->db->insert($this->_table,$data_insert);
     }
@@ -49,7 +67,7 @@ class Mnhomquyen extends CI_Model {
 
     public function update($id, $data_update){
         $this->db->where("NQ_MA", $id);
-        $this->db->update($this->_table, $data_update);
+        return $this->db->update($this->_table, $data_update);
     }
 
     function testMa($ma) 
@@ -77,6 +95,23 @@ class Mnhomquyen extends CI_Model {
         $this -> db -> limit(1);
         $query = $this -> db -> get();           
         if($query -> num_rows() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function nhomquyennguoidung($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('nguoidung', 'nhomquyen.NQ_MA = nguoidung.NQ_MA');
+        $this->db->where("nhomquyen.NQ_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
         {
             return true;
         }

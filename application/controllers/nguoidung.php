@@ -225,13 +225,14 @@ class Nguoidung extends CI_Controller
 		echo $jsonString;
 	}*/
 
-	public function edit()
+	public function edit($id)
 	{
 		//$this->_data['subview'] = 'admin/suand_view';
        	//$this->_data['title'] = 'Người dùng';
-       	$this->_data['info'] = $this->mnguoidung->getID($this->session->userdata("id"));
+       		
        	//$this->load->view('main.php', $this->_data);
-       	$info = $this->mnguoidung->getID($this->session->userdata("id"));
+       		$this->_data['info'] = $this->mnguoidung->getID($id);
+       		$info = $this->mnguoidung->getID($id);
 
        		$this->_data['indexnhomquyen'] = "-1";
        		$this->_data['indextinh'] = "-1";

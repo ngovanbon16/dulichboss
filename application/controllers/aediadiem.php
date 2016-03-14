@@ -117,7 +117,7 @@ class Aediadiem extends CI_Controller
 	            }
 
 				$hinh = "<img src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
-				$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: -20px 0px -20px 0px; padding: 0px; width: 180px;'><a href='".base_url()."index.php/aediadiem/detailuser/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a></div><br/><div style='width: 180px; text-transform: capitalize; color: #FFF; background-color: #39F; padding: 5px; font-weight: bold;'>".$item['DD_DIACHI']."</div>";
+				$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: -20px 0px -20px 0px; padding: 0px; width: 180px;'><a href='".base_url()."index.php/aediadiem/detailuser1/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a></div><br/><div style='width: 180px; text-transform: capitalize; color: #FFF; background-color: #39F; padding: 5px; font-weight: bold;'>".$item['DD_DIACHI']."</div>";
 				$marker['infowindow_content'] = $hinh.$noidung;
 				$marker['id'] = $madd;
 				//$marker['onclick'] = 'alert("You just clicked me!!")';

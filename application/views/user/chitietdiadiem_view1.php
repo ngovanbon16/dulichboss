@@ -34,10 +34,7 @@
 <body>
 
     <section id="blog" class="container">
-        <div class="center">
-            <h2><?php echo $info['DD_TEN']; ?></h2>
-            <p class="lead"><?php echo $info['DD_GIOITHIEU']; ?></p>
-        </div>
+        
 
         <?php 
           $madd = $info['DD_MA'];
@@ -60,6 +57,10 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="blog-item">
+                        <div class="center" style="margin-bottom: 0px; padding: 0px;">
+                            <h2><?php echo $info['DD_TEN']; ?></h2>
+                            <p class="lead"><?php echo $info['DD_GIOITHIEU']; ?></p>
+                        </div>
                         <img class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="" />
                             <div class="row">  
                                 <div class="col-xs-12 col-sm-2 text-center">
@@ -143,7 +144,7 @@
                             </div>
                         </div><!--/.blog-item-->
                         
-                        <div class="media reply_section">
+                        <div style="margin: 0px;" class="media reply_section">
                             <div class="pull-left post_reply text-center">
                                 <a href="#"><img src="<?php echo base_url(); ?>uploads/user/<?php echo $info['ND_HINH']; ?>" class="img-circle" alt="" /></a>
                                 <ul>
@@ -185,12 +186,12 @@
                                 <a href="#"><img src="<?php echo base_url(); ?>uploads/user/<?php echo $hinhnguoidang; ?>" class="img-circle" alt="" /></a>
                             </div>
                             <div class="media-body post_reply_comments">
-                                <h3><?php echo $honguoidang." ".$tennguoidang ?></h3>
-                                <h4><?php echo $ngaydang ?></h4>
-                                <h2><?php echo $tieude ?></h2>
+                                <b style="text-transform: capitalize; font-size: 16px;"><?php echo $honguoidang." ".$tennguoidang ?></b> - 
+                                <b style="font-style: italic;"><?php echo $ngaydang ?></b><br/>
+                                <b style="font-weight: bold; font-size: 20px; text-transform: capitalize;"><?php echo $tieude ?></b>
                                 <p>
                                     <?php echo $noidung ?>
-                                <br/><br/>
+                                <br/>
                                     <?php
                                          foreach ($anhbinhluan as $key) {
                                             if($key['BL_MA'] == $mabinhluan)

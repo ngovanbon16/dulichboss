@@ -41,32 +41,34 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/demos/jqxgrid/localization.js"></script>
 
     <script type="text/javascript">
-            function openSuccess(str)
-            {
-                $("#result").html(str);
-                $("#notiSuccess").jqxNotification("open");
-            }
+        function xoa(id)
+        {
+            $("#jqxgrid").hide();
+            mscConfirm({
+                title: "<?php echo lang('notification') ?>",
 
-            function openError(str)
-            {
-                $("#error").html(str);
-                $("#notiError").jqxNotification("open");
-            }
+                subtitle: "<?php echo lang('are_you_sure') ?>",  // default: ''
 
+                okText: "<?php echo lang('i_agree') ?>",    // default: OK
+
+                cancelText: "<?php echo lang('i_dont') ?>", // default: Cancel
+
+                onOk: function() {
+                    var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                    $("#jqxgrid").show();
+                },
+
+                onCancel: function() {
+                    $("#jqxgrid").show();
+                }
+            });
+        }
+        function chitiet(id)
+        {
+            thongbao("", "<?php echo lang('feature_is_being_updated') ?>", "info");
+        }
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
-
-            var notificationWidth = 300;
-
-            $("#notiSuccess").jqxNotification({
-                width: notificationWidth, position: "bottom-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "success"
-            });
-
-            $("#notiError").jqxNotification({
-                width: notificationWidth, position: "bottom-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "error"
-            });
 
             var url = "<?php echo base_url(); ?>index.php/binhluan/data0";
             // prepare the data
@@ -145,24 +147,19 @@
 
                         console.log(status);
                         console.log(data);
-                        //console.log(data);
                         if(status == "success")
                         {   
-                            //alert(data.status);
                             if(data.status == "error")
                             {
-                                //alert("Mã không tồn tại!");
-                                openError(data.msg['ma']);
+                                thongbao("", data.msg['ma'], "danger");
                             }
                             else
                             {
                                 commit(true);
-                                openSuccess("<?php echo lang('deleted_successfully') ?>");
-                                //alert("Xóa thành công!");
+                                thongbao("", "<?php echo lang('deleted_successfully') ?>", "success");
                             }
                         }
                     }, 'json');  
-                    //commit(true);
                 },
 
             };
@@ -192,29 +189,46 @@
 
                 rendertoolbar: function (toolbar) {
                     var me = this;
-                    var container = $("<div style='margin: 1px 1px 1px 1px;'></div>");
+                    var container = $("<div style='margin: 3px;'></div>");
                     toolbar.append(container);
-                    container.append('<button id="addrowbutton"> <img src="<?php echo site_url("assets/images/add1.png") ?>" style="width: 20px; height: 20px;" /> </button>');
-                    container.append('<button style="margin-left: 2px; " id="deleterowbutton"> <img src="<?php echo site_url("assets/images/delete1.png") ?>" style="width: 20px; height: 20px;" /> </button> ');
-                    $("#addrowbutton").jqxButton();
-                    $("#addrowbutton").jqxTooltip({ content: "<?php echo lang('add') ?>"});
+                   // container.append('<button id="addrowbutton"> <i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('add') ?> </button>');
+                    container.append('<button style="margin-left: 3px; " id="deleterowbutton"> <i class="fa fa-times fa-fw"></i> <?php echo lang('delete') ?></button> ');
+                    // $("#addrowbutton").jqxButton();
+                    // $("#addrowbutton").jqxTooltip({ content: "<?php echo lang('add') ?>"});
                     $("#deleterowbutton").jqxButton();
                     $("#deleterowbutton").jqxTooltip({ content: "<?php echo lang('delete') ?>"});
                     // create new row.
-                    $("#addrowbutton").on('click', function () {
-                        //setTimeout("location.href = '<?php echo site_url('aebinhluan'); ?>';",0);
-                        openError("<?php echo lang('feature_is_being_updated') ?>");
-                    });
+                    // $("#addrowbutton").on('click', function () {
+                    //     //setTimeout("location.href = '<?php echo site_url('aebinhluan'); ?>';",0);
+                    // });
                     // delete row.
                     $("#deleterowbutton").on('click', function () {
-                        var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
-                        for (var i = 0; i < rowscount; i++) {
-                            var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
-                            if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                                var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
-                                var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                        $("#jqxgrid").hide();
+                        mscConfirm({
+                            title: "<?php echo lang('notification') ?>",
+
+                            subtitle: "<?php echo lang('are_you_sure') ?>",  // default: ''
+
+                            okText: "<?php echo lang('i_agree') ?>",    // default: OK
+
+                            cancelText: "<?php echo lang('i_dont') ?>", // default: Cancel
+
+                            onOk: function() {
+                                var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
+                                for (var i = 0; i < rowscount; i++) {
+                                    var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+                                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                                        var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
+                                        var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                                    }
+                                };
+                                $("#jqxgrid").show();
+                            },
+
+                            onCancel: function() {
+                                $("#jqxgrid").show();
                             }
-                        };
+                        });
                     });
                 },
 
@@ -226,44 +240,23 @@
                     { text: "<?php echo lang('key') ?>", dataField: 'BL_MA', width: "5%", cellsalign: 'center' },
                     { text: "<?php echo lang('name') ?>", dataField: 'DD_TEN', width: "15%" },
                     { text: "<?php echo lang('email') ?>", dataField: 'ND_DIACHIMAIL', width: "15%", /*filtertype: 'checkedlist'*/ },
-                    { text: "<?php echo lang('title') ?>", dataField: 'BL_TIEUDE', width: "15%" },
-                    { text: "<?php echo lang('content') ?>", dataField: 'BL_NOIDUNG', width: "15%" },
+                    { text: "<?php echo lang('title') ?>", dataField: 'BL_TIEUDE', width: "19.8%" },
+                    { text: "<?php echo lang('content') ?>", dataField: 'BL_NOIDUNG', width: "20%" },
                     { text: "<?php echo lang('create') ?>", dataField: 'BL_NGAYDANG', width: "15%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right' },
-                    { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'button', width: "10%", cellsrenderer: function () {
-                            return "<?php echo lang('edit') ?>";
-                            /*<img src='<?php echo base_url(); ?>assets/images/edit.png'>*/
-                          }, buttonclick: function (row) {
-                            // open the popup window when the user clicks a button.
-                            //editrow = row;
+                    { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.BL_MA;
-                            console.log(id);
-                            openError("<?php echo lang('feature_is_being_updated') ?>");
-                            /*setTimeout("location.href = '<?php echo base_url(); ?>index.php/aebinhluan/edit/"+id+"';",0);*/
+                            return "<button class='icon' onclick='xoa(\""+id+"\")'><i class='fa fa-times fa-fw'></i></button>";
                         }
                     },
-                    { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'button', width: "10%", cellsrenderer: function () {
-                            return "<?php echo lang('delete') ?>";
-                          }, buttonclick: function (row) {
-                            //editrow = row;
+                    { text: "<?php echo lang('detail') ?>", datafield: 'detail', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.BL_MA;
-                            console.log(id);
-                            var commit = $("#jqxgrid").jqxGrid('deleterow', id);
-                         }
-                    },
-                    { text: "<?php echo lang('detail') ?>", datafield: 'detail', columntype: 'button', width: "10%", cellsrenderer: function () {
-                            return "<?php echo lang('detail') ?>";
-                          }, buttonclick: function (row) {
-                            // open the popup window when the user clicks a button.
-                            var offset = $("#jqxgrid").offset();
-                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-                            var id = dataRecord.BL_MA;
-                            console.log(id);
-                            openError("<?php echo lang('feature_is_being_updated') ?>");
-                            /*setTimeout("location.href = '<?php echo base_url(); ?>index.php/aebinhluan/detail/"+id+"';",0);*/
+                            return "<button class='icon' onclick='chitiet(\""+id+"\")'><i class='fa fa-photo fa-fw'></i></button>";
                         }
                     },
                   
@@ -271,18 +264,15 @@
             });     
 
         });
-
-    
     </script>
+    <style type="text/css">
+        .icon{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body class='default'>
-    <div id="notiSuccess">
-        <div id="result">Thông báo thành công!</div>
-    </div>
-    <div id="notiError">
-        <div id="error">Thông báo lỗi!</div>
-    </div>
-    
     <div id='jqxWidget' style="font-size: 13px; font-family: Verdana;">
         <div id="jqxgrid">
         </div>

@@ -194,7 +194,7 @@
                             <?php echo $this->session->userdata("email"); ?> <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="<?php echo base_url(); ?>index.php/nguoidung/edit"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
+                            <li><a href="<?php echo base_url(); ?>index.php/nguoidung/edit/<?php echo $this->session->userdata('id'); ?>"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
                             </li>
                             <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-camera fa-fw"></i> <?php echo lang('photo') ?></a>
                             </li>

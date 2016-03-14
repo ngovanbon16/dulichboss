@@ -154,7 +154,7 @@ class Map extends CI_Controller {
             }
 
 			$hinh = "<img src='".base_url()."uploads/diadiem/".$anhdaidien."' width='150' hgiht='150'>";
-			$noidung = "<a href='".base_url()."index.php/aediadiem/detail/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a><br/>".$item['DD_DIACHI'];
+			$noidung = "<a href='".base_url()."index.php/aediadiem/detailadmin/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a><br/>".$item['DD_DIACHI'];
 			$marker['infowindow_content'] = $hinh.$noidung;
 			$marker['id'] = $madd;
 			//$marker['onclick'] = 'alert("You just clicked me!!")';

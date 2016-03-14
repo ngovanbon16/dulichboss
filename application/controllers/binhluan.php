@@ -246,9 +246,8 @@ class Binhluan extends CI_Controller
 	{
 		$ma = $_POST["ma"];
 		$msg = array();
-
 		$status = "error";
-		$data = "";
+		
 		if(count($msg) == 0)
 		{
 			$this->load->model("manhbinhluan");
@@ -270,7 +269,7 @@ class Binhluan extends CI_Controller
 			}
 		}
 
-		$response = array('status' => $status,'msg' => $msg,'dta' => $data);
+		$response = array('status' => $status,'msg' => $msg);
 		$jsonString = json_encode($response);
 		echo $jsonString;
 	}
