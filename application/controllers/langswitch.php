@@ -8,7 +8,7 @@ class LangSwitch extends CI_Controller
     function switchLanguage($language = "") {
         $language = ($language != "") ? $language : "english";
         $this->session->set_userdata('lang', $language);
-        echo "thanh cong";
+        echo "Thành Công";
         redirect(base_url()."index.php/home");
     }
 }

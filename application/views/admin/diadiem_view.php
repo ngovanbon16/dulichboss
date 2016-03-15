@@ -253,11 +253,11 @@
                 },
 
                 columns: [
-                    { text: "<?php echo lang('key') ?>", dataField: 'DD_MA', width: "5%", cellsalign: 'center' },
+                    { text: "<?php echo lang('key') ?>", dataField: 'DD_MA', width: "5%", cellsalign: 'center', align: "center", },
                     { text: "<?php echo lang('category') ?>", dataField: 'DM_TEN', width: "17%", /*filtertype: 'checkedlist'*/ },
                     /*{ text: 'Mã người dùng', dataField: 'ND_MA', width: "10%" },*/
                     { text: "<?php echo lang('name') ?>", dataField: 'DD_TEN', width: "22.5%" },
-                    { text: "<?php echo lang('activate') ?>", dataField: 'DD_DUYET', width: "12%", columntype: 'textbox', filtertype: 'textbox',
+                    { text: "<?php echo lang('activate') ?>", dataField: 'DD_DUYET', width: "12%", columntype: 'textbox', filtertype: 'textbox', align: "center",
                         cellsrenderer: function (row, column, value) {
                             var tt = "";
                             if(value == "0")
@@ -271,8 +271,8 @@
                             return tt;
                         }
                     },
-                    { text: "<?php echo lang('update') ?>", dataField: 'DD_NGAYCAPNHAT', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right' },
-                    { text: "<?php echo lang('create') ?>", dataField: 'DD_NGAYDANG', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right' },
+                    { text: "<?php echo lang('updates_day') ?>", dataField: 'DD_NGAYCAPNHAT', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: "right" },
+                    { text: "<?php echo lang('creates_date') ?>", dataField: 'DD_NGAYDANG', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: "right" },
                     { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();

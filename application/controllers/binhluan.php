@@ -13,6 +13,11 @@ class Binhluan extends CI_Controller
 
 	public function index()
 	{
+		if(isset($this->session->userdata['DD_MA']))
+		{
+			$this->session->unset_userdata("DD_MA");
+		}
+
 		$this->_data['subview'] = 'admin/binhluan_view';
        	$this->_data['title'] = lang('comment');
        	$this->load->view('main.php', $this->_data);
@@ -46,6 +51,12 @@ class Binhluan extends CI_Controller
 			$where = "";
 			$sort = "";
 			$total_rows = $this->mbinhluan->countAll();
+
+			$iddd = "";
+			if(isset($this->session->userdata['DD_MA']))
+			{
+				$iddd = $this->session->userdata['DD_MA'];
+			}
 			
 			$query = $where." LIMIT $start, $total_rows";
 			$table = $this->mbinhluan->getList2($query);
@@ -82,7 +93,14 @@ class Binhluan extends CI_Controller
 				
 				if ($filterscount > 0)
 				{
-					$where = " WHERE (";
+					if($iddd == "")
+					{
+						$where = " WHERE (";
+					}
+					else
+					{
+						$where = "WHERE (binhluan.DD_MA='".$iddd."') AND (";
+					}
 					$tmpdatafield = "";
 					$tmpfilteroperator = "";
 					for ($i=0; $i < $filterscount; $i++)
@@ -161,7 +179,24 @@ class Binhluan extends CI_Controller
 					/*$query = "SELECT * FROM tinh ".$where." LIMIT $start, $total_rows";
 					$table = $this->mtinh->getList2($query);*/			
 				}
+				else
+				{
+					if($iddd != "")
+					{
+						$where = "WHERE binhluan.DD_MA='".$iddd."' ";
+					}
+				}
 			}
+			else
+			{
+				if($iddd != "")
+				{
+					$where = "WHERE binhluan.DD_MA='".$iddd."' ";
+				}
+			}
+
+			$query2 = $where." "; // them ngay 15/3
+			$total_rows = $this->mbinhluan->countAll2($query2); 
 
 			$query = $where." ".$sort." LIMIT $start, $total_rows";
 			$table = $this->mbinhluan->getList2($query);

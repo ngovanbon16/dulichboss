@@ -9,7 +9,7 @@ class LanguageLoader
         if ($site_lang) {
             $ci->lang->load('message',$ci->session->userdata('lang'));
         } else {
-            $ci->lang->load('message','english');
+            $ci->lang->load('message','vietnamese'); // mac dinh ngon ngu
         }
     }
 }

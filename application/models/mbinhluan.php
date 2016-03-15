@@ -54,6 +54,13 @@ class Mbinhluan extends CI_Model {
         }
     }
 
+    public function countAll2($query) // them ngay 15/3
+    {
+        $string = "SELECT * FROM ".$this->_table." JOIN nguoidung ON nguoidung.ND_MA = binhluan.ND_MA JOIN diadiem ON diadiem.DD_MA = binhluan.DD_MA ".$query;
+        $query = $this->db->query($string);          
+        return $query->num_rows();
+    }
+
     public function countAll(){ // dung cho load du lieu tung phan
         return $this->db->count_all($this->_table); 
     }

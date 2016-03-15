@@ -163,7 +163,7 @@
             }, 'json');
 		}
 
-		function xoa(ten)
+		function xoahinhanh(ten)
 		{
 			if(!confirm("<?php echo lang('are_you_sure') ?>"))
 			{
@@ -576,25 +576,25 @@
               <tr>
                 <td class="cot1"><i class="fa fa-photo fa-fw"></i> Hình ảnh </td>
                 <td class="cot2">
-                	<button class="btnhinhanh" data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo lang('photo') ?></button>
+                	<button class="btnhinhanh" data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo lang('view') ?></button>
                 </td>
               </tr>
             </table>
 		</div>
 	</div>
-
-	<div style="margin: 10px 0px 0px 15px;">
-		<label><?php echo lang('view') ?>: </label>
-		<button class="tool" onclick="xembinhluan('1')"><i class="fa fa-th"></i></button>
+	<hr/>
+	<div style="margin: 0px 0px 0px 15px;">
+		<b style="font-weight: bold; font-size: 20px;"><?php echo lang('comment') ?> </b>
+		<!-- <button class="tool" onclick="xembinhluan('1')"><i class="fa fa-th"></i></button>
 		<button class="tool" onclick="xembinhluan('2')"><i class="fa fa-th-list"></i></button>
 		<button class="tool" onclick="xembinhluan('3')"><i class="fa fa-th-large"></i></button>
 		<i class="fa fa-angle-double-right"></i> <label> <?php echo lang('delete') ?>: </label>
 		<button class="tool" onclick="xoabinhluanchk()"><i class="fa fa-trash-o"></i></button>
-		<label><input type="checkbox" id="checkAll"/> <?php echo lang('check_all') ?></label>
+		<label><input type="checkbox" id="checkAll"/> <?php echo lang('check_all') ?></label> -->
 	</div>
 	
 	<div style="padding: 10px; width: 100%; height: 500px; overflow: auto;">
-		<?php 
+		<!-- <?php 
           	foreach ($binhluan as $iteam) {
 	            $mabinhluan = $iteam['BL_MA'];
 	            $tieude = $iteam['BL_TIEUDE'];
@@ -625,7 +625,8 @@
 	    		</div>
 	    <?php
 	      	}
-        ?>
+        ?> -->
+        <?php $this->load->view('admin/binhluan_view') ?>
 	</div>
 	<div> <!-- modal hinh anh -->
 		<!-- Large modal -->
@@ -696,7 +697,7 @@
 
                     			<img id="avatar<?php echo $hama ?>" class="btnavatar" src="<?php echo base_url(); ?>assets/images/<?php echo $avatar ?>" onclick="daidien('<?php echo $hama ?>')" />
 
-                    			<img class="btnbin" src="<?php echo base_url(); ?>assets/images/bin.png" onclick="xoa('<?php echo $haten ?>')" />
+                    			<img class="btnbin" src="<?php echo base_url(); ?>assets/images/bin.png" onclick="xoahinhanh('<?php echo $haten ?>')" />
 
                     			<label class="checkbox-inline" ><input name="hinhanhchk" class="hinhanhchk" style="width: 20px; height: 20px; margin-top: -10px;" type="checkbox" value="<?php echo $haten ?>"></label>
                     		</div>

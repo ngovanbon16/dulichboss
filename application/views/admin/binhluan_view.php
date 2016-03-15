@@ -63,12 +63,106 @@
                 }
             });
         }
-        function chitiet(id)
+        function chitiet(id, tendiadiem)
         {
-            thongbao("", "<?php echo lang('feature_is_being_updated') ?>", "info");
+            var dta, url;
+            url = "<?php echo base_url(); ?>index.php/binhluan/anhbinhluan";
+            dta = {
+                "ma" : id
+            };
+            console.log(dta);
+            $.post(url, dta, function(data, status){
+
+                console.log(status);
+                console.log(data);
+                if(status == "success")
+                {
+                    var chuoi = "";
+                    for (var i = 0; i < data.data.length; i++) {
+                        var ma = data.data[i]['ABL_MA'];
+                        var ten = data.data[i]['ABL_TEN'];
+                        chuoi += "<span id='"+ten+"' class='span'> <i style='font-size: 20px; color: #D00; position: absolute; margin: 3px; cursor: pointer;' class='fa fa-times' onclick=\"xoahinhbinhluan('"+ten+"');\" ></i> <img src='<?php echo base_url(); ?>uploads/binhluan/" + ten + "' width='100%' height='100%'> <label style='float: right; position: relative;' class=\"checkbox-inline\" ><input name=\"anhbinhluanchk\" class=\"anhbinhluanchk\" style=\"width: 20px; height: 20px; margin-top: -15px;\" type=\"checkbox\" value=\""+ten+"\"></label> </span>";
+                    }
+                    
+                    document.getElementById('hinhbinhluan').innerHTML = chuoi;
+                    document.getElementById('tendiadiem').innerHTML = tendiadiem;
+                }
+
+            }, 'json');
+        }
+        function kieu(bien)
+        {
+            var width = "120";
+            var height = "130";
+            var wtool = "20";
+            var htool = "20";
+            if(bien == '2')
+            {
+                var width = "220";
+                var height = "200";
+                var wtool = "30";
+                var htool = "30";
+            }
+            if(bien == '3')
+            {
+                var width = "350";
+                var height = "250";
+                var wtool = "40";
+                var htool = "40";
+            }
+            $(".span").css( "width", width);
+            $(".span").css( "height", height);
+        }
+        function xoahinhbinhluanmain(ten)
+        {
+            var url, dta;
+            url = "<?php echo base_url(); ?>index.php/binhluan/deleteanhbinhluan";
+            dta = {
+                "ten" : ten
+            };
+
+            $.post(url, dta, function(data, status){
+
+                console.log(status);
+                console.log(data);
+                document.getElementById(ten).style.display = "none";
+                thongbao("", "<?php echo lang('deleted_successfully') ?>", "success");
+
+            }, 'json');
+        }
+
+        function xoahinhbinhluan(ten)
+        {
+            if(!confirm("<?php echo lang('are_you_sure') ?>"))
+            {
+                return;
+            }
+            xoahinhbinhluanmain(ten);
+        }
+
+        function xoaanhbinhluanchk()
+        {
+            if(!confirm("<?php echo lang('are_you_sure') ?>"))
+            {
+                return;
+            }
+            var chk = document.getElementsByName("anhbinhluanchk");
+            var chuoi = "";
+            for (var i = 0; i < chk.length; i++) {
+                if(chk[i].checked)
+                {
+                    xoahinhbinhluanmain(chk[i].value);
+                }
+            }
         }
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
+
+            $("#checkAllabl").change(function () {
+                $(".anhbinhluanchk").prop('checked', $(this).prop("checked"));
+            });
+
+            $(".tool").jqxButton({ template: "" });
 
             var url = "<?php echo base_url(); ?>index.php/binhluan/data0";
             // prepare the data
@@ -237,12 +331,12 @@
                 },
 
                 columns: [
-                    { text: "<?php echo lang('key') ?>", dataField: 'BL_MA', width: "5%", cellsalign: 'center' },
+                    { text: "<?php echo lang('key') ?>", dataField: 'BL_MA', width: "5%", cellsalign: 'center', align: "center", },
                     { text: "<?php echo lang('name') ?>", dataField: 'DD_TEN', width: "15%" },
                     { text: "<?php echo lang('email') ?>", dataField: 'ND_DIACHIMAIL', width: "15%", /*filtertype: 'checkedlist'*/ },
                     { text: "<?php echo lang('title') ?>", dataField: 'BL_TIEUDE', width: "19.8%" },
                     { text: "<?php echo lang('content') ?>", dataField: 'BL_NOIDUNG', width: "20%" },
-                    { text: "<?php echo lang('create') ?>", dataField: 'BL_NGAYDANG', width: "15%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right' },
+                    { text: "<?php echo lang('creates_date') ?>", dataField: 'BL_NGAYDANG', width: "15%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: "right", },
                     { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
@@ -256,7 +350,8 @@
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.BL_MA;
-                            return "<button class='icon' onclick='chitiet(\""+id+"\")'><i class='fa fa-photo fa-fw'></i></button>";
+                            var ten = dataRecord.DD_TEN;
+                            return "<button data-toggle=\"modal\" data-target=\"#modalbinhluan\" class='icon' onclick='chitiet(\""+id+"\",\""+ten+"\")'><i class='fa fa-photo fa-fw'></i></button>";
                         }
                     },
                   
@@ -270,6 +365,19 @@
             width: 100%;
             height: 100%;
         }
+        .span{
+            position: relative;
+            float: left; 
+            margin: 5px; 
+            width: 220px; 
+            height: 180px; 
+            border: solid 1px #888;
+            border-radius: 2px;
+            box-shadow: 0 0 3px rgba(0,0,0,4);
+            -moz-box-shadow: 0 0 3px rgba(0,0,0,4);
+            -webkit-box-shadow: 0 0 3px rgba(0,0,0,4);
+            -o-box-shadow: 0 0 3px rgba(0,0,0,4);
+        }
     </style>
 </head>
 <body class='default'>
@@ -277,5 +385,36 @@
         <div id="jqxgrid">
         </div>
     </div>
+
+    <div> <!-- modal binh luan -->
+        <!-- Modal -->
+        <div id="modalbinhluan" class="modal fade" role="dialog" tabindex="-1">
+          <div class="modal-dialog" style="width: 90%; ">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="height: 550px;">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <button class="tool" onclick="kieu('1')"><i class="fa fa-th"></i></button>
+                    <button class="tool" onclick="kieu('2')"><i class="fa fa-th-list"></i></button>
+                    <button class="tool" onclick="kieu('3')"><i class="fa fa-th-large"></i></button>
+                    <i class="fa fa-comments-o fa-fw"></i> <b style="text-transform: capitalize;" id="tendiadiem"><?php echo lang('comment') ?></b> 
+                </h4>
+              </div>
+              <div style="width: 100%; height: 430px; overflow: auto;" id="hinhbinhluan" class="modal-body">
+                ...
+              </div>
+                <div class="modal-footer">
+                    <label><input style="font-weight: bold; width: 20px; height: 20px; float: left; margin-top: 0px;" type="checkbox" id="checkAllabl"/> <?php echo lang('check_all') ?></label>
+                    <button class="tool" onclick="xoaanhbinhluanchk()"><i class="fa fa-trash-o"></i></button>
+                    
+                </div>
+            </div>
+
+          </div>
+        </div>
+    </div> <!-- dong modal binh luan -->
+
 </body>
 </html>

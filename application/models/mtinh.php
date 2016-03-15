@@ -69,6 +69,15 @@ class Mtinh extends CI_Model {
         }
     }
 
+    public function getma($ten)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where("T_TEN", $ten);
+        $query = $this ->db->get();           
+        return $query->row_array();
+    }
+
     public function countAll(){
         return $this->db->count_all($this->_table); 
     }
@@ -88,12 +97,46 @@ class Mtinh extends CI_Model {
         return $this->db->update($this->_table, $data_update);
     }
 
-    function testhuyen($id)
+    function tinhhuyen($id)
     {
         $this->db->select('*');
         $this->db->from($this->_table);
         $this->db->join('huyen', 'huyen.T_MA = tinh.T_MA');
-        $this->db->where("huyen.T_MA", $id);
+        $this->db->where("tinh.T_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function tinhdiadiem($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('diadiem', 'diadiem.T_MA = tinh.T_MA');
+        $this->db->where("tinh.T_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function tinhnguoidung($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('nguoidung', 'nguoidung.T_MA = tinh.T_MA');
+        $this->db->where("tinh.T_MA", $id);
         $query = $this->db->get();           
         if($query->num_rows() > 0)
         {

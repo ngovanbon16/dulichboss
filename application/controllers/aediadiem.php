@@ -342,11 +342,16 @@ class Aediadiem extends CI_Controller
        	$xa = $this->mxa->getten($matinh, $mahuyen, $maxa);
        	$this->_data['tenxa'] = $xa["X_TEN"];
 
-       	$this->load->model("mbinhluan"); // them binh luan
+       	/*$this->load->model("mbinhluan"); // them binh luan
        	$this->_data['binhluan'] = $this->mbinhluan->getdd($id);
 
        	$this->load->model("manhbinhluan"); // them anh binh luan
-       	$this->_data['anhbinhluan'] = $this->manhbinhluan->getList();
+       	$this->_data['anhbinhluan'] = $this->manhbinhluan->getList();*/
+
+       	$data = array( 
+			'DD_MA' => $id 
+		);
+		$this->session->set_userdata($data);
        	
         $this->_data['map'] = $this->map($info["DD_VITRI"]);
         $this->_data['info'] = $this->mdiadiem->getID($id);

@@ -98,4 +98,5 @@ $lang['browse_all'] = "Duyệt tất cả";
 $lang['show_browse'] = "Hiển thị đã duyệt";
 $lang['show_not_browse'] = "Hiển thị chưa duyệt";
 $lang['show_all'] = "Hiển thị tất cả";
+$lang['please_refresh_the_page_before_you_update_or_delete_data'] = "Xin vui lòng, làm mới trang trước khi bạn cập nhật hoặc xóa dữ liệu.";
 ?>

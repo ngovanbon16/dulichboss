@@ -250,9 +250,19 @@ class Tinh extends CI_Controller
 			$error = lang('code_does_not_exist');
 		}
 
-		if($this->mtinh->testhuyen($ma))
+		if($this->mtinh->tinhhuyen($ma))
         {
            	$error .= lang('have_data_relating_to_the_table')." \"HUYEN\".";
+        }
+
+        if($this->mtinh->tinhdiadiem($ma))
+        {
+           	$error .= lang('have_data_relating_to_the_table')." \"DIADIEM\".";
+        }
+
+        if($this->mtinh->tinhnguoidung($ma))
+        {
+           	$error .= lang('have_data_relating_to_the_table')." \"NGUOIDUNG\".";
         }
 
         if($error != "")

@@ -22,6 +22,20 @@ class Mhuyen extends CI_Model {
         }
     }
 
+    public function getList2($query) // dung cho trang quan ly
+    {
+        $string = "SELECT * FROM ".$this->_table." JOIN tinh ON huyen.T_MA = tinh.T_MA ".$query;
+        $query = $this->db->query($string);          
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
     public function getid($id) // lay cac huyen theo ma tinh
     {
         $this->db->select('*');
@@ -38,6 +52,16 @@ class Mhuyen extends CI_Model {
             return $query->result_array();
         }
      }
+
+    public function getma($matinh, $tenhuyen)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where("T_MA", $matinh);
+        $this->db->where("H_TEN", $tenhuyen);
+        $query = $this ->db->get();           
+        return $query->row_array();
+    }
 
     public function getten($matinh, $id)// lay ten cua huyen
     {
@@ -56,24 +80,101 @@ class Mhuyen extends CI_Model {
         }
     }
 
+    public function countAll2($query) // them ngay 15/3
+    {
+        $string = "SELECT * FROM ".$this->_table." JOIN tinh ON huyen.T_MA = tinh.T_MA ".$query;
+        $query = $this->db->query($string);          
+        return $query->num_rows();
+    }
+
+    public function countAll(){
+        return $this->db->count_all($this->_table); 
+    }
+
     public function insert($data_insert){
         $this->db->insert($this->_table,$data_insert);
     }
 
-    public function delete($matinh, $id)
+    public function delete($id)
     {
-        $this->db->where('T_MA', $matinh);
         $this->db->where('H_MA', $id);
         return $this->db->delete($this->_table);
     }
 
-    public function update($matinh, $id, $data_update){
-        $this->db->where("T_MA", $matinh);
+    public function update($id, $data_update){
         $this->db->where("H_MA", $id);
-        $this->db->update($this->_table, $data_update);
+        return $this->db->update($this->_table, $data_update);
     }
 
-    function testMa($matinh, $ma) 
+    function testMa($ma) 
+    {
+        $this -> db -> select('T_MA, H_MA, H_TEN');
+        $this -> db -> from($this->_table);
+        $this -> db -> where('H_MA', $ma);
+        $this -> db -> limit(1);
+        $query = $this -> db -> get();           
+        if($query -> num_rows() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    } 
+
+    function huyenxa($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('xa', 'huyen.H_MA = xa.H_MA');
+        $this->db->where("huyen.H_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function huyendiadiem($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('diadiem', 'huyen.H_MA = diadiem.H_MA');
+        $this->db->where("huyen.H_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function huyennguoidung($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('nguoidung', 'huyen.H_MA = nguoidung.H_MA');
+        $this->db->where("huyen.H_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /*function testMa($matinh, $ma) 
     {
         $this -> db -> select('T_MA, H_MA, H_TEN');
         $this -> db -> from($this->_table);
@@ -107,6 +208,6 @@ class Mhuyen extends CI_Model {
         {
             return false;
         }
-    }              
+    } */             
 }            
 ?>
