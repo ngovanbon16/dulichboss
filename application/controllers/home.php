@@ -10,8 +10,28 @@ class Home extends CI_Controller
 		parent::__construct();
 	}
 
+	public function auto() // chay ngam xoa cac tai khoan het han kich hoat
+	{
+		$this->load->model("mnguoidung"); 
+		$info = $this->mnguoidung->getnotactived();
+		$today = date('Y-m-d');
+        foreach ($info as $iteam) {
+            $date = date("Y-m-d", strtotime($iteam["ND_NGAYTAO"]));
+            $days = (strtotime(date("Y-m-d")) - strtotime($date)) / (60 * 60 * 24);
+            if($days > 3)
+            {   
+                $this->mnguoidung->delete($iteam['ND_MA']);
+            }
+        }
+	}
+
 	public function index()
 	{
+		$this->auto();
+
+		$this->load->model("mdiadiem");
+		$this->_data['newplace'] = $this->mdiadiem->countnewplace();
+
 		$this->_data['subview'] = 'home';
        	$this->_data['title'] = lang('home');
        	$this->load->view('main.php', $this->_data);

@@ -16,7 +16,8 @@ class Registration extends CI_Controller
 		/*$this->_data['subview'] = 'registration_view';
        	$this->_data['title'] = 'Đăng ký';
        	$this->load->view('main.php', $this->_data);*/
-       	 $this->load->view("registration_view");
+        $this->_data['title'] = lang('register_account');
+       	$this->load->view("registration_view", $this->_data);
 	}
 
 	public function registration()
@@ -30,7 +31,9 @@ class Registration extends CI_Controller
 		$gioitinh = $_POST["gioitinh"];
 		$msg = array();
 
-		if($gioitinh == "Nam")
+    $gender = lang('male');
+
+		if($gioitinh == $gender)
 		{
 			$gioitinh = "1";
 		}
@@ -41,12 +44,12 @@ class Registration extends CI_Controller
 
 		if(($this->mregistration->testEmail($email)))
 		{
-			$msg["email"] = "Email đã tồn tại!";
+			$msg["email"] = lang('email_already_exists');
 		}
 
     if(!($this->xacnhanemail($email)))
     {
-      $msg['email'] = 'Đăng ký không thành công! Không gửi được mail! Vui lòng kiểm tra lại địa chỉ email!';
+      $msg['email'] = lang('registration_failed').'! '.lang('undeliverable_email').'! '.lang('please_verify_your_email_address').'!';
     }
 
 		$status = "error";
@@ -76,7 +79,7 @@ class Registration extends CI_Controller
       );
           $this->mregistration->insert($data_insert);
           $status = "success";
-          $msg["email"] = 'Email Đã được gửi! Vui lòng đăng nhập email để xác nhận!';
+          $msg["email"] = lang('email_was_sent').'! '.lang('please_login_email_to_activate_your_account').'!';
           /*$query = $this->mregistration->getid($email);
           $id = $query['ND_MA'];
           $msg['email'] = $this->xacnhanemail($id, $email);*/

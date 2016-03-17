@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title id="Description">This demo illustrates the default functionality of the jqxPasswordInput widget.</title>
+    <title id="Description"><?php echo $title ?></title>
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/logo.ico" type="image/x-icon" />
+    
     <link type="text/css" rel="Stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" />
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
@@ -57,51 +59,65 @@
             $("#firstName").jqxInput({  width: '300px', height: '25px' });
             $("#lastName").jqxInput({  width: '300px', height: '25px'});
             $("#userName").jqxInput({  width: '300px', height: '25px' });
-            $("#userName").jqxTooltip({ content: 'Email phải có dạng: <b><i>ex@gmail.com</i></b>', position: 'mouse', name: 'movieTooltip'});
+            $("#userName").jqxTooltip({ content: '<?php echo lang('example') ?>: <b><i>ex@gmail.com</i></b>', position: 'mouse', name: 'movieTooltip'});
             // Create jqxPasswordInput.
             $("#password").jqxPasswordInput({  width: '300px', height: '25px', showStrength: true, showStrengthPosition: "right" });
             $("#passwordConfirm").jqxPasswordInput({  width: '300px', height: '25px' });
             // Create jqxDateTimeInpput.
             $("#birthday").jqxDateTimeInput({ formatString: 'yyyy-MM-dd',  width: '300px', height: '25px' });
+
+            if("<?php echo lang('lang'); ?>" == "en")
+            {
+                $.getScript('<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/globalization/globalize.culture.en-US.js', function () {
+                                $("#birthday").jqxDateTimeInput({ culture: 'en-US' });
+                            });
+            }
+            else
+            {
+                $.getScript('<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/globalization/globalize.culture.vi-VI.js', function () {
+                                $("#birthday").jqxDateTimeInput({ culture: 'vi-VI' });
+                            });
+            }
+
             // Create jqxDropDownList.
-            var genders = ["Nam", "Nữ"];
-            $("#gender").jqxDropDownList({  source: genders, selectedIndex: -1, width: '300px', height: '25px', promptText: "Tôi là...", dropDownHeight: "50px" });
+            var genders = ["<?php echo lang('male') ?>", "<?php echo lang('female') ?>"];
+            $("#gender").jqxDropDownList({  source: genders, selectedIndex: -1, width: '300px', height: '25px', promptText: "<?php echo lang('i_am') ?>...", dropDownHeight: "50px" });
             // Create jqxButton.
             $("#submit").jqxButton({ theme: theme, height: "28px", width: "110px" });
             // Create jqxValidator.
             $("#form").jqxValidator({
                 rules: [
                         {
-                            input: "#firstName", message: "Họ không được rỗng!", action: 'keyup, blur', rule: function (input, commit) {
+                            input: "#firstName", message: "<?php echo lang('please').' '.lang('input').' '.lang('lastname') ?>!", action: 'keyup, blur', rule: function (input, commit) {
                                 return input.val() != "" && input.val() != "First";
                             }
                         },
                         {
-                            input: "#lastName", message: "Tên không được rỗng!", action: 'keyup, blur', rule: function (input, commit) {
+                            input: "#lastName", message: "<?php echo lang('please').' '.lang('input').' '.lang('firstname') ?>!", action: 'keyup, blur', rule: function (input, commit) {
                                 return input.val() != "" && input.val() != "Last";
                             }
                         },
-                        { input: "#userName", message: "Địa chỉ Email không được rỗng!", action: 'keyup, blur', rule: 'required' },
-                        { input: "#userName", message: "Email không đúng định dạng!", action: 'keyup, blur', rule: function (input, commit) {
+                        { input: "#userName", message: "<?php echo lang('please').' '.lang('input').' '.lang('email') ?>!", action: 'keyup, blur', rule: 'required' },
+                        { input: "#userName", message: "<?php echo lang('email').' '.lang('is').' '.lang('not').' '.lang('correct') ?>!", action: 'keyup, blur', rule: function (input, commit) {
                                 var mau = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
                                 return mau.test(input.val());
                             }
                         },
-                        { input: "#password", message: "Password không được rỗng!", action: 'keyup, blur', rule: 'required' },
-                        { input: "#password", message: "Password phải dài hơn 6 ký tự!", action: 'keyup, blur', rule: function (input, commit) {
+                        { input: "#password", message: "<?php echo lang('please').' '.lang('input').' '.lang('password') ?>!", action: 'keyup, blur', rule: 'required' },
+                        { input: "#password", message: "<?php echo lang('password').' '.lang('must').' '.lang('have').' 6 - 12 '.lang('characters'); ?>!", action: 'keyup, blur', rule: function (input, commit) {
                                 return input.val().length > 5;
                             }
                         },
-                        { input: "#passwordConfirm", message: "Password không được rỗng!", action: 'keyup, blur', rule: 'required' },
+                        { input: "#passwordConfirm", message: "<?php echo lang('please').' '.lang('input').' '.lang('password') ?>!", action: 'keyup, blur', rule: 'required' },
                         {
-                            input: "#passwordConfirm", message: "Passwords không khớp!", action: 'keyup, blur', rule: function (input, commit) {
+                            input: "#passwordConfirm", message: "<?php echo lang('confirm_new_password_does_not_match') ?>!", action: 'keyup, blur', rule: function (input, commit) {
                                 var firstPassword = $("#password").jqxPasswordInput('val');
                                 var secondPassword = $("#passwordConfirm").jqxPasswordInput('val');
                                 return firstPassword == secondPassword;
                             }
                         },
                         {
-                            input: "#gender", message: "Giới tính không được rỗng!", action: 'blur', rule: function (input, commit) {
+                            input: "#gender", message: "<?php echo lang('please').' '.lang('input').' '.lang('gender') ?>!", action: 'blur', rule: function (input, commit) {
                                 var index = $("#gender").jqxDropDownList('getSelectedIndex');
                                 return index != -1;
                             }
@@ -112,12 +128,11 @@
             $("#submit").click(function () {
                 $('#form').jqxValidator('validate');
             });
-            $("#jqxLoader").jqxLoader({ width: 100, height: 60, imagePosition: 'top' });
+            $("#jqxLoader").jqxLoader({ isModal: true, text: "<?php echo lang('loading') ?>...", width: 100, height: 60, imagePosition: 'top' });
             // Update the jqxExpander's content if the validation is successful.
             $('#form').on('validationSuccess', function (event) {
                 //$("#createAccount").jqxExpander('setContent', '<span style="margin: 10px;">Account created.</span>');
                 $('#jqxLoader').jqxLoader('open');
-                $("#submit").hide();
                 var url, dta;
                 url="<?php echo base_url(); ?>index.php/registration/registration?t=" + Math.random();
                 dta = {
@@ -146,10 +161,9 @@
                             //alert("Đăng ký thành công! \n" + data.msg["email"]);
                             openSuccess(data.msg["email"]);
                             //setTimeout("location.href = '<?php echo site_url('login'); ?>';",500);
-                            setTimeout("location.href = 'https://mail.google.com/';",3000);
+                            setTimeout("location.href = 'https://mail.google.com/';",5000);
                         }
                     }
-                    $("#submit").show();
                     $('#jqxLoader').jqxLoader('close');
                 }, 'json');
 
@@ -201,11 +215,15 @@
             
         }
         .div1{
+            margin-left: 19px;
+            width: 150px;
             float: left;
+            text-align: left;
         }
         .div2{
-            float: left;
-            padding-left: 120px;
+            width: 145px;
+            float: right;
+            text-align: right;
         }
         #submit{
             background-color: #FFF;
@@ -219,6 +237,9 @@
             background-color: #09F;
             font-weight: bold;
         }
+        body{
+            background-color: #F8F8FF;
+        }
     </style>
 </head>
 <body>
@@ -231,10 +252,10 @@
     <center>
     <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
         <div id="tieude">
-            <div class="div1">Tạo tài khoản</div>
+            <div class="div1"><?php echo lang('register_account') ?></div>
             <div class="div2">
-                <a href="<?php echo base_url(); ?>index.php/home">Trang chủ</a> |  
-                <a href="<?php echo base_url(); ?>index.php/login">Đăng nhập</a>
+                <a href="<?php echo base_url(); ?>index.php/home"><?php echo lang('home') ?></a> |  
+                <a href="<?php echo base_url(); ?>index.php/login"><?php echo lang('login') ?></a>
             </div>
         </div>
         <div style="font-family: Verdana; font-size: 13px;">
@@ -246,52 +267,52 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Họ<b class="batbuoc"> * </b>
+                        <td colspan="2"><?php echo lang('lastname') ?><b class="batbuoc"> * </b>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input id="firstName" placeholder="Nhập họ..." />
+                            <input id="firstName" placeholder="<?php echo lang('input').' '.lang('lastname') ?>..." />
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Tên<b class="batbuoc"> * </b>
+                        <td colspan="2"><?php echo lang('firstname') ?><b class="batbuoc"> * </b>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input id="lastName" placeholder="Nhập tên..." />
+                            <input id="lastName" placeholder="<?php echo lang('input').' '.lang('firstname') ?>..." />
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Địa chỉa mail<b class="batbuoc"> * </b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input type="email" id="userName" placeholder="Nhập Email..." />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">Mật khẩu<b class="batbuoc"> * </b>
+                        <td colspan="2"><?php echo lang('email') ?><b class="batbuoc"> * </b>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input id="password" type="password" placeholder="Nhập mật khẩu..." />
+                            <input type="email" id="userName" placeholder="<?php echo lang('input').' '.lang('email') ?>..." />
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Xác nhận<b class="batbuoc"> * </b>
+                        <td colspan="2"><?php echo lang('password') ?><b class="batbuoc"> * </b>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input id="passwordConfirm" type="password" placeholder="Nhập lại mật khẩu..." />
+                            <input id="password" type="password" placeholder="<?php echo lang('input').' '.lang('password') ?>..." />
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Ngày sinh<b class="batbuoc"> * </b>
+                        <td colspan="2"><?php echo lang('enter').' '.lang('password') ?><b class="batbuoc"> * </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input id="passwordConfirm" type="password" placeholder="<?php echo lang('input').' '.lang('password') ?>..." />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><?php echo lang('birthday') ?><b class="batbuoc"> * </b>
                         </td>
                     </tr>
                     <tr>
@@ -301,7 +322,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Giới tính<b class="batbuoc"> * </b>
+                        <td colspan="2"><?php echo lang('gender') ?><b class="batbuoc"> * </b>
                         </td>
                     </tr>
                     <tr>
@@ -312,7 +333,7 @@
                     </tr>
                     <tr>
                         <td align="center" colspan="2">
-                            <input id="submit" type="button" value="Đăng ký" />
+                            <input id="submit" type="button" value="<?php echo lang('register') ?>" />
                         </td>
                     </tr>
                 </table>

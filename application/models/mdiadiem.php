@@ -77,6 +77,15 @@ class Mdiadiem extends CI_Model {
         return $this->db->count_all($this->_table); 
     }
 
+    public function countnewplace()
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where("DD_DUYET", "0");
+        $query = $this -> db -> get();           
+        return $query->num_rows();
+    }
+
     public function getID($id)
     {
         $this->db->select('*');

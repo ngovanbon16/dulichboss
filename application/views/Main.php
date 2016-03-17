@@ -92,7 +92,7 @@
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/home"> <?php echo lang('admin') ?> </a>
+                    <a class="navbar-brand" href="<?php echo base_url(); ?>admin"> <?php echo lang('admin') ?> </a>
                 </div>
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -103,20 +103,32 @@
                 </button>
 
                 <ul class="nav navbar-nav navbar-left navbar-top-links">
-                    <li><a href="#"><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a></li>
+                    <li><a href="<?php echo base_url(); ?>home/trangchu"><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a></li>
                 </ul>
 
                 <ul class="nav navbar-right navbar-top-links">
                     <li class="dropdown navbar-inverse">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <?php
+                            $color = "";
+                            $new = "0";
+                            if(isset($newplace))
+                            {
+                                if($newplace > 0)
+                                {
+                                    $new = $newplace;
+                                    $color = "#F00";
+                                }
+                            }
+                        ?>
+                        <a style="color: <?php echo $color ?>;" class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>
-                                <a href="#">
+                                <a style="color: <?php echo $color ?>;" href="<?php echo base_url(); ?>nguoidung">
                                     <div>
-                                        <i class="fa fa-comment fa-fw"></i> New Comment
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
+                                        <i class="fa fa-comment fa-fw"></i> <?php echo lang('new_place') ?>
+                                        <span class="pull-right text-muted small"><?php echo $new ?></span>
                                     </div>
                                 </a>
                             </li>

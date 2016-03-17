@@ -18,7 +18,7 @@ class Mnguoidung extends CI_Model {
         }
         else
         {
-            return false;
+            return $query->result_array();
         }
     }
 
@@ -37,6 +37,23 @@ class Mnguoidung extends CI_Model {
         else
         {
             return false;
+        }
+    }
+
+    public function getnotactived()
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where("ND_KICHHOAT", "0");
+        $this->db->order_by("ND_NGAYTAO", "desc");
+        $query = $this -> db -> get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
         }
     }
 

@@ -132,6 +132,7 @@ class Aediadiem extends CI_Controller
 	public function index()
 	{
 		$data['map'] = $this->map("");
+		$data['title'] = lang('add_new_place');
 		$this->load->view('admin/themdiadiem_view', $data);
 	}
 
@@ -168,7 +169,7 @@ class Aediadiem extends CI_Controller
 
 		if(($this->mdiadiem->testTen($DD_TEN)))
 		{
-			$msg["error"] = "Tên địa điểm đã tồn tại!";
+			$msg["error"] = lang('place_name_already_exists');
 		}
 
 		$status = "error";
@@ -278,6 +279,7 @@ class Aediadiem extends CI_Controller
 
         $this->_data['map'] = $this->map($info["DD_VITRI"]);
         $this->_data['info'] = $this->mdiadiem->getID($id);
+        $this->_data["title"] = lang('edit_place_information');
        	$this->load->view("admin/suadiadiem_view", $this->_data);
 	}
 

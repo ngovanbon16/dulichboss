@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title id="Description">This demo illustrates the default functionality of the jqxPasswordInput widget.</title>
+    <title id="Description"><?php echo $title ?></title>
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/logo.ico" type="image/x-icon" />
+    
     <link type="text/css" rel="Stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" />
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
@@ -31,12 +33,12 @@
 
             $("#notiSuccess").jqxNotification({
                 width: notificationWidth, position: "top-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "success"
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "success"
             });
 
             $("#notiError").jqxNotification({
                 width: notificationWidth, position: "top-right", opacity: 0.9,
-                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 1000, template: "error"
+                autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "error"
             });
 
             function openSuccess(str)
@@ -57,7 +59,7 @@
             // Create jqxInput.
             $("#ND_MA").jqxInput({  width: '300px', height: '25px' });
             /*$("#NQ_MA").jqxInput({  width: '300px', height: '25px' });*/
-            $("#CB_MA").jqxInput({  width: '300px', height: '25px' });
+            //$("#CB_MA").jqxInput({  width: '300px', height: '25px' });
 
             $("#ND_HO").jqxInput({  width: '300px', height: '25px' });
             $("#ND_TEN").jqxInput({  width: '300px', height: '25px'});
@@ -68,9 +70,23 @@
             $("#passwordConfirm").jqxPasswordInput({  width: '300px', height: '25px' });
             // Create jqxDateTimeInpput.
             $("#ND_NGAYSINH").jqxDateTimeInput({ formatString: 'yyyy-MM-dd',  width: '300px', height: '25px' });
+
+            if("<?php echo lang('lang'); ?>" == "en")
+            {
+                $.getScript('<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/globalization/globalize.culture.en-US.js', function () {
+                                $("#ND_NGAYSINH").jqxDateTimeInput({ culture: 'en-US' });
+                            });
+            }
+            else
+            {
+                $.getScript('<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/globalization/globalize.culture.vi-VI.js', function () {
+                                $("#ND_NGAYSINH").jqxDateTimeInput({ culture: 'vi-VI' });
+                            });
+            }
+
             // Create jqxDropDownList.
-            var genders = ["Nữ", "Nam"];
-            $("#ND_GIOITINH").jqxDropDownList({  source: genders, selectedIndex: <?php echo $info['ND_GIOITINH'] ?>, width: '300px', height: '25px', promptText: "Tôi là...", dropDownHeight: "50px" });
+            var genders = ["<?php echo lang('female') ?>", "<?php echo lang('male') ?>"];
+            $("#ND_GIOITINH").jqxDropDownList({  source: genders, selectedIndex: <?php echo $info['ND_GIOITINH'] ?>, width: '300px', height: '25px', promptText: "<?php echo lang('i_am') ?>...", dropDownHeight: "50px" });
             
             $("#ND_DIACHI").jqxInput({  width: '300px', height: '25px' });
             $("#ND_SDT").jqxInput({  width: '300px', height: '25px' });
@@ -84,27 +100,38 @@
             $("#form").jqxValidator({
                 rules: [
                         {
-                            input: "#ND_HO", message: "Họ không được rỗng!", action: 'keyup, blur', rule: function (input, commit) {
+                            input: "#ND_HO", message: "<?php echo lang('please_input').' '.lang('lastname') ?>!", action: 'keyup, blur', rule: function (input, commit) {
                                 return input.val() != "" && input.val() != "First";
                             }
                         },
                         {
-                            input: "#ND_TEN", message: "Tên không được rỗng!", action: 'keyup, blur', rule: function (input, commit) {
+                            input: "#ND_TEN", message: "<?php echo lang('please_input').' '.lang('firstname') ?>!", action: 'keyup, blur', rule: function (input, commit) {
                                 return input.val() != "" && input.val() != "Last";
                             }
                         },
-                        { input: "#ND_DIACHIMAIL", message: "Địa chỉ Email không được rỗng!", action: 'keyup, blur', rule: 'required' },
-                        { input: "#ND_MATKHAU", message: "Password không được rỗng!", action: 'keyup, blur' },
-                        { input: "#passwordConfirm", message: "Password không được rỗng!", action: 'keyup, blur' },
+                        { input: "#ND_DIACHIMAIL", message: "<?php echo lang('please_input').' '.lang('email') ?>!", action: 'keyup, blur', rule: 'required' },
+                        { input: "#ND_MATKHAU", message: "<?php echo lang('password').' '.lang('must').' '.lang('have').' 6 - 12 '.lang('characters'); ?>!", action: 'keyup, blur',
+                            rule: function (input, commit) {
+                                if(input.val() != "")
+                                {
+                                    return input.val().length > 5;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+                        },
+                        { input: "#passwordConfirm", message: "<?php echo lang('please_input').' '.lang('password') ?>!", action: 'keyup, blur' },
                         {
-                            input: "#passwordConfirm", message: "Passwords không khớp!", action: 'keyup, blur', rule: function (input, commit) {
+                            input: "#passwordConfirm", message: "<?php echo lang('confirm_new_password_does_not_match') ?>!", action: 'keyup, blur', rule: function (input, commit) {
                                 var firstPassword = $("#ND_MATKHAU").jqxPasswordInput('val');
                                 var secondPassword = $("#passwordConfirm").jqxPasswordInput('val');
                                 return firstPassword == secondPassword;
                             }
                         },
                         {
-                            input: "#ND_GIOITINH", message: "Giới tính không được rỗng!", action: 'blur', rule: function (input, commit) {
+                            input: "#ND_GIOITINH", message: "<?php echo lang('please_input').' '.lang('gender') ?>!", action: 'blur', rule: function (input, commit) {
                                 var index = $("#ND_GIOITINH").jqxDropDownList('getSelectedIndex');
                                 return index != -1;
                             }
@@ -124,7 +151,7 @@
                 dta = {
                     "ND_MA" : $("#ND_MA").val(),
                     "NQ_MA" : $("#NQ_MA").val(),
-                    "CB_MA" : $("#CB_MA").val(),
+                    //"CB_MA" : $("#CB_MA").val(),
                     "ND_HO" : $("#ND_HO").val(),
                     "ND_TEN" : $("#ND_TEN").val(),
                     "ND_DIACHIMAIL" : $("#ND_DIACHIMAIL").val(),
@@ -151,13 +178,12 @@
                     {  
                         if(data.status == "error")
                         {
-                            alert(data.msg["matkhau"]);
+                            openError(data.msg["matkhau"]);
                         }
                         else
                         {
-                            //alert("Sửa thành công");
-                            openSuccess("Sửa thành công!");
-                            setTimeout("location.href = '<?php echo site_url('home'); ?>';",1000);
+                            openSuccess("<?php echo lang('updated_successfully'); ?> "+data.password+"");
+                            setTimeout("location.href = '<?php echo site_url('nguoidung'); ?>';",2000);
                         }
                     }
                 }, 'json');
@@ -184,7 +210,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#NQ_MA").jqxDropDownList({ selectedIndex: <?php echo $indexnhomquyen; ?>, source: dataAdapter, placeHolder: "Chọn nhóm quyền:", displayMember: "NQ_TEN", valueMember: "NQ_MA", width: 300, height: 25});
+                $("#NQ_MA").jqxDropDownList({ selectedIndex: <?php echo $indexnhomquyen; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('authority') ?>:", displayMember: "NQ_TEN", valueMember: "NQ_MA", width: 300, height: 25});
 
                 var url = "<?php echo base_url(); ?>index.php/tinh/data";
                 // prepare the data
@@ -200,7 +226,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#T_MA").jqxDropDownList({ selectedIndex: <?php echo $indextinh; ?>, source: dataAdapter, placeHolder: "Tên tỉnh:", displayMember: "T_TEN", valueMember: "T_MA", width: 300, height: 25});
+                $("#T_MA").jqxDropDownList({ selectedIndex: <?php echo $indextinh; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('provincial') ?>:", displayMember: "T_TEN", valueMember: "T_MA", width: 300, height: 25});
 
                 $("#T_MA").on('select', function (event) {
                     if (event.args) {
@@ -210,9 +236,6 @@
                             valueelement.text("Mã tỉnh: " + item.value);
                             var labelelement = $("<div></div>");
                             labelelement.text("Tên tỉnh: " + item.label);
-                            $("#selectionlog").children().remove();
-                            $("#selectionlog").append(labelelement);
-                            $("#selectionlog").append(valueelement);
                             matinh = item.value;
                         }
                     }
@@ -233,7 +256,7 @@
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#H_MA").jqxDropDownList({ selectedIndex: <?php echo $indexhuyen; ?>, source: dataAdapter, placeHolder: "Tên huyện:", displayMember: "H_TEN", valueMember: "H_MA", width: 300, height: 25});
+                    $("#H_MA").jqxDropDownList({ selectedIndex: <?php echo $indexhuyen; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>:", displayMember: "H_TEN", valueMember: "H_MA", width: 300, height: 25});
 
 
                     var url = "<?php echo base_url(); ?>index.php/xa/data/" + $("#T_MA").val() + "/" + $("#H_MA").val();
@@ -251,23 +274,7 @@
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "Tên Xã:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
-
-/*                    $("#H_MA").on('select', function (event) {
-                        if (event.args) {
-                            var item = event.args.item;
-                            if (item) {
-                                var valueelement = $("<div></div>");
-                                valueelement.text("Mã huyện: " + item.value);
-                                var labelelement = $("<div></div>");
-                                labelelement.text("Tên huyện: " + item.label);
-                                $("#selectionlog1").children().remove();
-                                $("#selectionlog1").append(labelelement);
-                                $("#selectionlog1").append(valueelement);
-                                //mahuyen = item.value;
-                            }
-                        }
-                    });*/
+                    $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
                 });
 
                 var url = "<?php echo base_url(); ?>index.php/huyen/data/" + <?php echo $info["T_MA"]; ?>;
@@ -284,7 +291,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#H_MA").jqxDropDownList({ selectedIndex: <?php echo $indexhuyen; ?>, source: dataAdapter, placeHolder: "Tên huyện:", displayMember: "H_TEN", valueMember: "H_MA", width: 300, height: 25});
+                $("#H_MA").jqxDropDownList({ selectedIndex: <?php echo $indexhuyen; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>:", displayMember: "H_TEN", valueMember: "H_MA", width: 300, height: 25});
 
                 $("#H_MA").on('select', function (event) {
                     if (event.args) {
@@ -294,9 +301,6 @@
                             valueelement.text("Mã huyện: " + item.value);
                             var labelelement = $("<div></div>");
                             labelelement.text("Tên huyện: " + item.label);
-                            $("#selectionlog1").children().remove();
-                            $("#selectionlog1").append(labelelement);
-                            $("#selectionlog1").append(valueelement);
                             matinh = $("#T_MA").val();
                             mahuyen = item.value;
                         }
@@ -319,22 +323,7 @@
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "Tên Xã:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
-
-/*                    $("#X_MA").on('select', function (event) {
-                        if (event.args) {
-                            var item = event.args.item;
-                            if (item) {
-                                var valueelement = $("<div></div>");
-                                valueelement.text("Mã xã: " + item.value);
-                                var labelelement = $("<div></div>");
-                                labelelement.text("Tên xã: " + item.label);
-                                $("#selectionlog2").children().remove();
-                                $("#selectionlog2").append(labelelement);
-                                $("#selectionlog2").append(valueelement);
-                            }
-                        }
-                    });*/
+                    $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
                 });
 
                 var url = "<?php echo base_url(); ?>index.php/xa/data/" + <?php echo $info["T_MA"]; ?> + "/" + <?php echo $info["H_MA"]; ?>;
@@ -351,22 +340,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "Tên Xã:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
-
-                $("#X_MA").on('select', function (event) {
-                    if (event.args) {
-                        var item = event.args.item;
-                        if (item) {
-                            var valueelement = $("<div></div>");
-                            valueelement.text("Mã xã: " + item.value);
-                            var labelelement = $("<div></div>");
-                            labelelement.text("Tên xã: " + item.label);
-                            $("#selectionlog2").children().remove();
-                            $("#selectionlog2").append(labelelement);
-                            $("#selectionlog2").append(valueelement);
-                        }
-                    }
-                });
+                $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
             });
     </script>
 
@@ -374,25 +348,22 @@
         .tieude{
             color: #111;
             text-transform: capitalize;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             background-color: #09F;
             margin-top: 5px;
             margin-bottom: 5px;
             padding: 5px;
-            text-shadow: 5px 5px 10px #FFF;
-            border-radius: 5px;
-            box-shadow: 1px 1px 3px #09F;
-            opacity: 0.7;
-            transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
-            -o-transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
-            -ms-transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
-            -moz-transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
-            -webkit-transition: width 2s, height 2s, box-shadow 2s, opacity 2s;
-        }
-        .tieude:hover{
-            box-shadow: 5px 5px 10px #09F;
-            opacity: 1;
+            border-radius: 2px;
+
+            background: -webkit-linear-gradient(left, rgba(135,206,250,255), rgba(255,0,0,0)); /* For Safari 5.1 to 6.0 */
+            background: -o-linear-gradient(right, rgba(135,206,250,255), rgba(255,0,0,0)); /* For Opera 11.1 to 12.0 */
+            background: -moz-linear-gradient(right, rgba(135,206,250,255), rgba(255,0,0,0)); /* For Firefox 3.6 to 15 */
+            background: linear-gradient(to right, rgba(135,206,250,255), rgba(255,0,0,0)); /* Standard syntax (must be last) */
+            box-shadow: 0 -4px 4px -4px rgba(30,144,255,255);
+            -moz-box-shadow: 0 -4px 4px -4px rgba(30,144,255,255);
+            -webkit-box-shadow: 0 -4px 4px -4px rgba(30,144,255,255);
+            -o-box-shadow: 0 -4px 4px -4px rgba(30,144,255,255);
         }
         .batbuoc{
             color: #F00;
@@ -406,11 +377,15 @@
             
         }
         .div1{
+            margin-left: 22px;
+            width: 180px;
             float: left;
+            text-align: left;
         }
         .div2{
-            float: left;
-            padding-left: 150px;
+            width: 258px;
+            float: right;
+            text-align: right;
         }
         #submit{
             background-color: #FFF;
@@ -423,6 +398,9 @@
         #submit:hover{
             background-color: #09F;
             font-weight: bold;
+        }
+        body{
+            background-color: #F8F8FF;
         }
     </style>
 
@@ -437,10 +415,10 @@
     <center>
     <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
         <div>
-            <div class="div1">Chỉnh sửa thông tin người dùng</div>
+            <div class="div1"><?php echo lang('edit').' '.lang('profile') ?></div>
             <div class="div2">
-                <a href="<?php echo base_url(); ?>index.php/home">Trang chủ</a> |  
-                <a href="<?php echo base_url(); ?>index.php/login">Đăng nhập</a>
+                <a href="<?php echo base_url(); ?>index.php/home"><?php echo lang('home') ?></a> |  
+                <a href="<?php echo base_url(); ?>index.php/login"><?php echo lang('login') ?></a>
             </div>
         </div>
         <div style="font-family: Verdana; font-size: 13px;">
@@ -449,12 +427,12 @@
                 <table>
                     <tr>
                         <td colspan="2">
-                            <div class="tieude">Thông tin cơ bản</div>
+                            <div class="tieude"><?php echo lang('basic_information') ?></div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Mã:
+                            <?php echo lang('key') ?>:
                         </td>
                         <td>
                             <input id="ND_MA" value="<?php echo $info['ND_MA'] ?>" readonly="readonly" />
@@ -462,82 +440,82 @@
                     </tr>
                     <tr>
                         <td>
-                            Nhóm quyền:
+                            <?php echo lang('authority') ?>:
                         </td>
                         <td>
                             <div id="NQ_MA"></div>
                             <!-- <input id="NQ_MA" value="<?php echo $info['NQ_MA'] ?>" /> -->
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>
                             Cấp bậc:
                         </td>
                         <td>
                             <input id="CB_MA" value="<?php echo $info['CB_MA'] ?>" readonly="readonly" />
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td>
-                            Họ:<b class="batbuoc"> * </b>
+                            <?php echo lang('lastname') ?>:<b class="batbuoc"> * </b>
                         </td>
                         <td>
-                            <input id="ND_HO" value="<?php echo $info['ND_HO'] ?>" placeholder="Nhập họ..." />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Tên:<b class="batbuoc"> * </b>
-                        </td>
-                        <td>
-                            <input id="ND_TEN" value="<?php echo $info['ND_TEN'] ?>" placeholder="Nhập tên..." />
+                            <input id="ND_HO" value="<?php echo $info['ND_HO'] ?>" placeholder="<?php echo lang('input').' '.lang('lastname') ?>..." />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Địa chỉa mail:<b class="batbuoc"> * </b>
+                            <?php echo lang('firstname') ?>:<b class="batbuoc"> * </b>
+                        </td>
+                        <td>
+                            <input id="ND_TEN" value="<?php echo $info['ND_TEN'] ?>" placeholder="<?php echo lang('input').' '.lang('firstname') ?>..." />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php echo lang('email') ?>:<b class="batbuoc"> * </b>
                         </td>
                          <td>
-                            <input type="email" id="ND_DIACHIMAIL" value="<?php echo $info['ND_DIACHIMAIL'] ?>" readonly="readonly" placeholder="Nhập Email..." />
+                            <input type="email" id="ND_DIACHIMAIL" value="<?php echo $info['ND_DIACHIMAIL'] ?>" readonly="readonly" placeholder="<?php echo lang('input').' '.lang('email') ?>..." />
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <div class="tieude">Đổi mật khẩu</div>
+                            <div class="tieude"><?php echo lang('change').' '.lang('password') ?></div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Mật khẩu cũ:<b class="batbuoc"> * </b>
+                            <?php echo lang('password').' '.lang('current') ?>:<b class="batbuoc"> * </b>
                         </td>
                          <td>
-                            <input id="passwordold" type="password" title="Nếu muốn đổi mật khẩu vui lòng nhập mật khẩu cũ!" placeholder="Nhập mật khẩu cũ..." />
+                            <input id="passwordold" type="password" title="" placeholder="<?php echo lang('input').' '.lang('password').' '.lang('current') ?>..." />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Mật khẩu:
+                            <?php echo lang('password').' '.lang('new')  ?>:
                         </td>
                          <td>
-                            <input id="ND_MATKHAU" type="password" placeholder="Nhập mật khẩu mới..." />
+                            <input id="ND_MATKHAU" type="password" placeholder="<?php echo lang('input').' '.lang('password').' '.lang('new') ?>..." />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Xác nhận:
+                            <?php echo lang('enter').' '.lang('password').' '.lang('new') ?>:
                         </td>
                         <td>
-                            <input id="passwordConfirm" type="password" placeholder="Xác nhận mật khẩu..." />
+                            <input id="passwordConfirm" type="password" placeholder="<?php echo lang('input').' '.lang('password').' '.lang('new') ?>..." />
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <div class="tieude">Thông tin thêm</div>
+                            <div class="tieude"><?php echo lang('contact_information') ?></div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Ngày sinh:
+                            <?php echo lang('birthday') ?>:
                         </td>
                         <td>
                             <div id="ND_NGAYSINH" value="<?php echo $info['ND_NGAYSINH'] ?>" ></div>
@@ -545,7 +523,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Giới tính:
+                            <?php echo lang('gender') ?>:
                         </td>
                         <td>
                             <div id="ND_GIOITINH"></div>
@@ -553,8 +531,9 @@
                     </tr>
                     <tr>
                         <td>
-                            Tỉnh: <?php echo $info["T_MA"]; 
-                                echo $indextinh;
+                            <?php echo lang('provincial') ?>: <?php 
+                                // echo $info["T_MA"]; 
+                                // echo $indextinh;
                             ?>
                         </td>
                         <td>
@@ -564,8 +543,9 @@
                     </tr>
                     <tr>
                         <td>
-                            Huyện: <?php echo $info["H_MA"]; 
-                                echo $indexhuyen;
+                            <?php echo lang('district') ?>: <?php 
+                                // echo $info["H_MA"]; 
+                                // echo $indexhuyen;
                             ?>
                         </td>
                         <td>
@@ -575,8 +555,9 @@
                     </tr>
                     <tr>
                         <td>
-                            Xã: <?php echo $info["X_MA"]; 
-                                echo $indexxa;
+                            <?php echo lang('town') ?>: <?php 
+                                // echo $info["X_MA"]; 
+                                // echo $indexxa;
                             ?>
                         </td>
                         <td>
@@ -586,18 +567,18 @@
                     </tr>
                     <tr>
                         <td>
-                            Địa chỉ:
+                            <?php echo lang('street_address') ?>:
                         </td>
                         <td>
-                            <input id="ND_DIACHI" value="<?php echo $info['ND_DIACHI'] ?>" placeholder="Nhập nơi ở hiện tại..." />
+                            <input id="ND_DIACHI" value="<?php echo $info['ND_DIACHI'] ?>" placeholder="<?php echo lang('input').' '.lang('street_address') ?>..." />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Số điện thoại:
+                            <?php echo lang('phone') ?>:
                         </td>
                         <td>
-                            <input id="ND_SDT" value="<?php echo $info['ND_SDT'] ?>" placeholder="Nhập số điện thoại..." />
+                            <input id="ND_SDT" value="<?php echo $info['ND_SDT'] ?>" placeholder="<?php echo lang('input').' '.lang('phone') ?>..." />
                         </td>
                     </tr>
                     <tr>
@@ -605,20 +586,20 @@
                             Facebook:
                         </td>
                         <td>
-                            <input id="ND_FACE" value="<?php echo $info['ND_FACE'] ?>" placeholder="Nhập địa chỉ Facebook..." />
+                            <input id="ND_FACE" value="<?php echo $info['ND_FACE'] ?>" placeholder="<?php echo lang('input').' '.'Facebook' ?>..." />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Giới thiệu:
+                            <?php echo lang('about_me') ?>:
                         </td>
                         <td>
-                            <input id="ND_GIOITHIEU" value="<?php echo $info['ND_GIOITHIEU'] ?>" placeholder="Giới thiệu đôi nét về mình..." />
+                            <input id="ND_GIOITHIEU" value="<?php echo $info['ND_GIOITHIEU'] ?>" placeholder="<?php echo lang('input').' '.lang('about_me') ?>..." />
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            Điểm:
+                            <?php echo lang('scores') ?>:
                         </td>
                         <td>
                             <input id="ND_DIEM" value="<?php echo $info['ND_DIEM'] ?>" readonly="readonly" />
@@ -626,7 +607,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Thưởng:
+                            <?php echo lang('reward') ?>:
                         </td>
                          <td>
                             <input id="ND_THUONG" value="<?php echo $info['ND_THUONG'] ?>" readonly="readonly" />
@@ -634,7 +615,7 @@
                     </tr>
                     <tr>
                         <td align="center" colspan="2"><br/>
-                            <input id="submit" type="button" value="Lưu thông tin" />
+                            <input id="submit" type="button" value="<?php echo lang('save') ?>" />
                         </td>
                     </tr>
                 </table>

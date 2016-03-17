@@ -299,14 +299,17 @@ class Nguoidung extends CI_Controller
 	            }
         	}
 
+        $this->_data['title'] = lang("edit").' '.lang('profile');
        	$this->load->view("admin/suand_view", $this->_data);
 	}
 
 	public function update()
 	{
+		$password = "";
+
 		$ND_MA = $_POST["ND_MA"];
 		$NQ_MA = $_POST["NQ_MA"];
-		$CB_MA = $_POST["CB_MA"];
+		//$CB_MA = $_POST["CB_MA"];
 		$ND_HO = $_POST["ND_HO"];
 		$ND_TEN = $_POST["ND_TEN"];
 		$ND_DIACHIMAIL = $_POST["ND_DIACHIMAIL"];
@@ -325,7 +328,8 @@ class Nguoidung extends CI_Controller
 		$ND_THUONG = $_POST["ND_THUONG"];
 		$msg = array();
 
-		if($ND_GIOITINH == "Nam")
+		$gender = lang('male');
+		if($ND_GIOITINH == $gender)
 		{
 			$ND_GIOITINH = "1";
 		}
@@ -334,17 +338,22 @@ class Nguoidung extends CI_Controller
 			$ND_GIOITINH = "0";
 		}
 
+		if($passwordold != "")
+		{
+			$password = lang('password_has_not_been_changed');
+		}
+
 		if($ND_MATKHAU != "")
 		{
 			if($passwordold == "")
 			{
-				$msg["matkhau"] = "Vui lòng nhập mật khẩu cũ trước!";
+				$msg["matkhau"] = lang('please_input').' '.lang('password').' '.lang('new');
 			}
 			else
 			{
 				if(!($this->mnguoidung->testpassword($ND_MA, $passwordold)))
 				{
-					$msg["matkhau"] = "Mật khẩu không cũ không đúng!";
+					$msg["matkhau"] = lang('password').' '.lang('current').' '.lang('is').' '.lang('invalid');
 				}
 				else
 				{
@@ -352,6 +361,7 @@ class Nguoidung extends CI_Controller
 		               "ND_MATKHAU" => md5($ND_MATKHAU),
 		            );
 		            $this->mnguoidung->update($ND_MA, $data);
+		            $password = lang('password_has_been_changed');
 				}
 			}
 		}
@@ -370,7 +380,7 @@ class Nguoidung extends CI_Controller
 
             $data = array(
                "NQ_MA" => $NQ_MA,
-               "CB_MA" => $CB_MA,
+               //"CB_MA" => $CB_MA,
                "ND_HO" => $ND_HO,
                "ND_TEN" => $ND_TEN,
                "ND_DIACHIMAIL" => $ND_DIACHIMAIL,
@@ -395,7 +405,7 @@ class Nguoidung extends CI_Controller
             $status = "success";
 		}
 
-		$response = array('status' => $status,'msg' => $msg, 'data' => $data);
+		$response = array('status' => $status,'msg' => $msg, 'data' => $data, 'password' => $password);
 		$jsonString = json_encode($response);
 		echo $jsonString;
 	}
