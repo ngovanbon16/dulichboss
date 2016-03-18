@@ -463,25 +463,31 @@ class Nguoidung extends CI_Controller
 		$data = array(
 		    "ND_KICHHOAT" => "1"
 		);
-		//$this->mnguoidung->updatexacnhan($id, $data);
 		$test = $this->mnguoidung->updatexacnhan($email, $data);
+
+		$query = $this->mnguoidung->getList();
+		$namemail = "";
+		foreach ($query as $item) {
+			if(md5($item['ND_DIACHIMAIL']) == $email)
+			{
+				$namemail = $item['ND_DIACHIMAIL'];
+			}
+		}
+
 		if($test == 0)
 		{
-			echo "<center><h2>Tài khoản không tồn tại hoặc đã bị xóa!</h2>
-			<a href='".base_url()."index.php/registration'>Nhấn vào đây để đăng ký thành viên</a>
-			</center>";
+			$this->_data['info'] = "Email ".$namemail." của bạn không tồn tại hoặc đã bị xóa! <br/> Your email does not exist or has been deleted.";
+			$this->load->view('sys/email', $this->_data);
 		}
 		if($test == 1)
 		{
-			echo "<center><h2>Xác nhận email thành công!</h2>
-			<a href='".base_url()."index.php/login'>Nhấn vào đây để đăng nhập</a>
-			</center>";
+			$this->_data['info'] = "Email ".$namemail." của bạn đã được kích hoạt thành công! <br/> Your email has been successfully activated.";
+			$this->load->view('sys/email', $this->_data);
 		}
 		if($test == 2)
 		{
-			echo "<center><h2>Tài khoản đã xác nhận!</h2>
-			<a href='".base_url()."index.php/login'>Nhấn vào đây để đăng nhập</a>
-			</center>";
+			$this->_data['info'] = "Email ".$namemail." của bạn đã kích hoạt! <br/> Your email has been activated.";
+			$this->load->view('sys/email', $this->_data);
 		}
 		
 

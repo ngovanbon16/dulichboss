@@ -108,43 +108,47 @@ class Registration extends CI_Controller
         $this->load->library('email', $config);
         $this->email->set_newline("\r\n");
 
-        $this->email->from('ngovanbon99@gmail.com', 'Trường Huy');
+        $this->email->from('ngovanbon99@gmail.com', 'Mekong Tourism');
         $this->email->to($email);
 
-        $this->email->subject('Email được gửi từ admin của website dulich.com.vn');
+        $this->email->subject('Email kích hoạt tài khoản - Account activation');
 
-        $message = "
-        <head>
-          <style type='text/css'>
-            b{
-              text-align: center;
-              font-family: georgia;
-              color: #727272;
-            }
-            a{
-              text-align: center;
-              font-family: georgia;
-              color: #727272;
-              border-bottom: 1px solid #EEE;
-              padding: 5px;
-              font-size: x-large;
-              margin-top: 50px;
-            }
-          </style>
-        </head>
-        <body>
-        <b>Chào người dùng mới
-          <br/>
-          Đây là Email được gửi trang quản trị của Website du lịch!
-          <br/>
-          Để xác nhận người dùng mới vui lòng nhấn vào đường link bên dưới!
-          <br/>
-        </b> 
-        <br/>
-        <a href='".base_url()."index.php/nguoidung/xacnhanemail/".md5($email)."'>dulichdongbangsongcuulong.com.vn</a>
-        </body>
-        ";
-        $this->email->message($message);
+        $note = '
+          <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="">
+            <meta name="author" content="">
+            <style type="text/css">
+              h3{
+                font-style: italic;
+                font-weight: bolder;
+                text-align: center;
+                font-size: 18px;
+              }
+              h4{
+                text-align: center;
+              }
+            </style>
+          </head>
+          <body>
+            <div style="margin: auto; width: 50%;" class="panel panel-success">
+                <a href="'.base_url().'home/trangchu">Trang chủ</a>
+                <h3>
+                  Chào mừng bạn đã đến với Website Du lịch Cửu Long! <br/>
+                  <p style="font-size: 15px; margin: 5px;" >Welcome to Website Mekong Tourism!</p>
+                </h3>
+
+                <h4> Vui lòng bấm vào đường dẫn sau để kích hoạt tài khoản <br>
+                  <a href="'.base_url().'index.php/nguoidung/xacnhanemail/'.md5($email).'">http://smartmekong.vn/dulich</a>
+                </h4>
+              </div>
+            </div>
+          </body>
+        ';
+
+        $this->email->message($note);
         if ($this->email->send()) {
             return true;
         } 

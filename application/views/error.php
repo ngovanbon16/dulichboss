@@ -83,7 +83,7 @@
 
         <div>
             <?php
-                /*$today = date('Y-m-d');
+                $today = date('Y-m-d');
                 echo "Today is ". $today." <br/>"; 
                 foreach ($info as $iteam) {
                     $date = date("Y-m-d", strtotime($iteam["ND_NGAYTAO"]));
@@ -94,7 +94,7 @@
                         echo " - hết hạn kích hoạt";
                     }
                     echo "<br>";
-                }*/
+                }
             ?>
         </div>
 

@@ -43,7 +43,7 @@ class Home extends CI_Controller
 		$this->_data['active'] = "trangchu";
 		$this->load->model("mdiadiem");
 		$this->load->model("mhinhanh");
-		$this->_data['info'] = $this->mdiadiem->getList1(8, 0);
+		$this->_data['info'] = $this->mdiadiem->getList1(13, 0);
 		$this->_data['info1'] = $this->mhinhanh->getList();
 
 		$this->load->model("mtinh");

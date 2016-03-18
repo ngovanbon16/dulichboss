@@ -263,7 +263,7 @@
                         if($duyet == "1")
                         {
                             $count++;
-                            $hinh = "";
+                            $hinh = "diadiem.jpg";
                             foreach ($info1 as $key) {
                                 if($ma == $key['DD_MA'])
                                 {
@@ -276,26 +276,22 @@
 
                     ?>
 
-                    <div class="col-md-3 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                        <div style="float: left; height: 200px;">
-                    
-                            <table>
+                    <div class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <table>
                                 <tr>
-                                    <td>
+                                    <td width="150">
                                         <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" rel="prettyPhoto">
-                                            <img class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
+                                            <img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>    
                                     <td>
-                                        <b style="text-transform: uppercase; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b>
-                                        <p style="font-size: 11px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
+                                        <b style="text-transform: capitalize; font-size: 12px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b>
+                                        <p style="font-size: 12px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
                                     </td>
                                 </tr>
                             </table>
-                            
-                        </div>
                     </div><!--/.col-md-4-->
 
                     <?php

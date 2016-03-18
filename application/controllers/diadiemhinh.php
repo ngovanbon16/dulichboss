@@ -21,9 +21,89 @@ class Diadiemhinh extends CI_Controller
        	$this->load->view('main.php', $this->_data);
 	}
 
+	public function uploadimg($id)
+	{
+		$target_dir = "./uploads/diadiem/";
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        // Check if image file is a actual image or fake image
+        if(isset($_POST["submit"])) {
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            if($check !== false) {
+                echo lang('file_is_an_image')." - " . $check["mime"] . ".";
+                $uploadOk = 1;
+            } else {
+                echo lang('file_is_not_an_image');
+                $uploadOk = 0;
+            }
+        }
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            echo lang('sorry_file_already_exists');
+            $uploadOk = 0;
+        }
+        // Check file size
+        if ($_FILES["fileToUpload"]["size"] > 2500000) {
+            echo lang('sorry_your_file_is_too_large');
+            $uploadOk = 0;
+        }
+        // Allow certain file formats
+        if(strtolower($imageFileType) != "jpg" && strtolower($imageFileType) != "png" && strtolower($imageFileType) != "jpeg"
+        && strtolower($imageFileType) != "gif" ) {
+            echo lang('sorry_only_JPG_JPEG_PNG_GIF_files_are_allowed');
+            $uploadOk = 0;
+        }
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            echo lang('sorry_your_file_was_not_uploaded');
+        // if everything is ok, try to upload file
+        } else {
+            $name = $id.".".$imageFileType;
+            $names = $target_dir.$name;
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $names)) {
+
+                date_default_timezone_set('Asia/Ho_Chi_Minh');  
+                $date = date('Y-m-d H:i:s');
+                $namenew = $name;
+                $data_update = array(
+                   "ND_HINH" => $namenew,
+                   "ND_NGAYCAPNHAT" => $date,
+                );
+                $this->load->model('mnguoidung');
+                $this->mnguoidung->update($id, $data_update);
+
+                $array = array(
+                    'avata' => $namenew, 
+                );
+
+                $ten = $this->session->userdata('avata');
+                $file_path = "uploads/diadiem/".$ten;
+                if (file_exists($file_path) && $ten != $namenew) 
+                {
+                    unlink("uploads/diadiem/".$ten);
+                } 
+
+                $this->load->library("image_lib");
+                $config['image_library'] = 'gd2';
+                $config['source_image'] = './uploads/diadiem/'.$name;
+                $config['create_thumb'] = FALSE;
+                $config['maintain_ratio'] = TRUE;
+                $config['width']     = 200;
+                $config['height']   = 200;
+                $this->image_lib->initialize($config);
+                $this->image_lib->resize();
+                $this->image_lib->clear();
+                unset($config);
+
+                echo lang('the_file')." ". basename( $_FILES["fileToUpload"]["name"])." ".lang('has_been_uploaded')."!";
+            }
+        }
+	}
+
 	protected $_data;
 
-	  function upload()
+	public  function upload()
 	  {
 	    $this->_data['errors'] = "";
 	      if($this->input->post('submit'))
@@ -129,7 +209,7 @@ class Diadiemhinh extends CI_Controller
        	$this->load->view('main.php', $this->_data);  
 	  }
 
-	  function uploads()
+	public function uploads()
   {
     $this->_data['errors'] = "";
       if($this->input->post('submit'))
@@ -234,7 +314,7 @@ class Diadiemhinh extends CI_Controller
        	redirect(base_url() . "index.php/diadiemhinh");
   }
 
-  function uploadsuser($ma)
+  public function uploadsuser($ma)
   {
     $this->_data['errors'] = "";
       if($this->input->post('submit'))
