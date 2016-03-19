@@ -23,6 +23,18 @@ class Diadiemhinh extends CI_Controller
 
 	public function uploadimg($id)
 	{
+		$idnd = "";
+
+		if(isset($this->session->userdata['id']))
+		{
+			$idnd = $this->session->userdata['id'];
+		}
+		else
+		{
+			echo lang('please').' '.lang('login');
+			return;
+		}
+
 		$target_dir = "./uploads/diadiem/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         $uploadOk = 1;
@@ -59,11 +71,32 @@ class Diadiemhinh extends CI_Controller
             echo lang('sorry_your_file_was_not_uploaded');
         // if everything is ok, try to upload file
         } else {
-            $name = $id.".".$imageFileType;
+        	$namespam = $id.".".$imageFileType;
+        	for ($i=0; $i < 100; $i++) { 
+        		$tentam = $id.$i.".".$imageFileType;
+        		if(!$this->mhinhanh->testten($tentam))
+        		{
+        			$namespam = $tentam;
+        			break;
+        		}
+        	}
+            $name = $namespam;
             $names = $target_dir.$name;
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $names)) {
 
-                date_default_timezone_set('Asia/Ho_Chi_Minh');  
+            	date_default_timezone_set('Asia/Ho_Chi_Minh');  
+                $date = date('Y-m-d H:i:s');
+            	$data = array(
+	                "DD_MA" => $id,
+	                "ND_MA" => $idnd,
+	                "HA_TEN" => $name,
+	                "HA_DUYET" => "0",
+	                "HA_DAIDIEN" => "0",
+	                "HA_NGAYDANG" => $date,
+	            );
+	            $this->mhinhanh->insert($data);
+
+                /*date_default_timezone_set('Asia/Ho_Chi_Minh');  
                 $date = date('Y-m-d H:i:s');
                 $namenew = $name;
                 $data_update = array(
@@ -82,17 +115,30 @@ class Diadiemhinh extends CI_Controller
                 if (file_exists($file_path) && $ten != $namenew) 
                 {
                     unlink("uploads/diadiem/".$ten);
-                } 
+                } */
 
                 $this->load->library("image_lib");
                 $config['image_library'] = 'gd2';
                 $config['source_image'] = './uploads/diadiem/'.$name;
                 $config['create_thumb'] = FALSE;
                 $config['maintain_ratio'] = TRUE;
-                $config['width']     = 200;
-                $config['height']   = 200;
+                $config['width']     = 900;
+                $config['height']   = 800;
                 $this->image_lib->initialize($config);
                 $this->image_lib->resize();
+                $this->image_lib->clear();
+                unset($config);
+
+                $config['source_image'] = './uploads/diadiem/'.$name;
+                $config['create_thumb'] = FALSE;
+                $config['wm_type'] = 'overlay';
+                $config['wm_overlay_path'] = './assets/images/logo.png';
+                $config['wm_vrt_alignment'] = 'bottom';
+                $config['wm_hor_alignment'] = 'right';
+                $config['wm_padding'] = '-20';
+                $config['wm_opacity'] = '50';
+                $this->image_lib->initialize($config);
+                $this->image_lib->watermark();
                 $this->image_lib->clear();
                 unset($config);
 

@@ -3,7 +3,7 @@
 <head>
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
+    
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/demos.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxslider.js"></script>
@@ -433,7 +433,98 @@
                 }
             });
 
+            $("#xemhinhanh").click(function(){
+                //var iddd = "<?php echo $info['DD_MA']; ?>";
+                    var ol = "";
+                    var div = "";
+                <?php
+                    $i = -1; 
+                    foreach ($info1 as $item) {
+                      $i++;
+                      if($i == '0')
+                    {
+                      ?>
+                        ol += '<li data-target="#my-pics" data-slide-to="0" class="active"></li>';
+                        div += '<div class="item active"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $item["HA_TEN"]; ?>" alt="" width="100%" ></div>';
+                      <?php
+                    }
+                      else{
+                    ?>
+                        ol += '<li data-target="#my-pics" data-slide-to="'+'<?php echo $i ?>'+'"></li>';
+                        div += '<div class="item"><img src="<?php echo base_url(); ?>uploads/diadiem/'+'<?php echo $item["HA_TEN"] ?>'+'" alt="" width="100%" style="height: 500px;"></div>';
+                    <?php
+                      }
+                    }
+                ?>
+                if("<?php echo $i; ?>" == '0')
+                {
+                    document.getElementById("next").style.display = "none";
+                    document.getElementById("previous").style.display = "none";
+                }
+                else
+                {
+                    document.getElementById("next").style.display = "block";
+                    document.getElementById("previous").style.display = "block";
+                }
+                document.getElementById("ol").innerHTML = ol;
+                document.getElementById("div").innerHTML = div;
+            });
+
         });
+        
+        function xemanhbinhluan(idbinhluan)
+        {
+            var url, dta;
+            url="<?php echo base_url(); ?>index.php/binhluan/anhbinhluan?t=" + Math.random();
+            dta = {
+              "ma" : idbinhluan,
+            };
+            console.log(dta);
+            $.post(url, dta, function(data, status){
+
+              console.log(status);
+              console.log(data);
+              if(status == "success")
+              { 
+                if(data.status == "error")
+                {
+
+                }
+                else
+                {
+                    var ol = "";
+                    var div = "";
+                    for (var i = 0; i < data.data.length; i++) {
+                      var tenanh = data.data[i]["ABL_TEN"];
+                      if(i == '0')
+                      {
+                        ol += '<li data-target="#my-pics" data-slide-to="0" class="active"></li>';
+                        div += '<div class="item active"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/binhluan/'+tenanh+'" alt="" width="100%" ></div>';
+                      }
+                      else
+                      {
+                        ol += '<li data-target="#my-pics" data-slide-to="'+i+'"></li>';
+                        div += '<div class="item"><img src="<?php echo base_url(); ?>uploads/binhluan/'+tenanh+'" alt="" width="100%" style="height: 500px;"></div>';
+                      }
+                      //console.log(data.data[i]["ABL_TEN"]);
+                    }
+                    if(i == '1')
+                    {
+                        document.getElementById("next").style.display = "none";
+                        document.getElementById("previous").style.display = "none";
+                    }
+                    else
+                    {
+                        document.getElementById("next").style.display = "block";
+                        document.getElementById("previous").style.display = "block";
+                    }
+                    document.getElementById("ol").innerHTML = ol;
+                    document.getElementById("div").innerHTML = div;
+                }
+              }
+            }, 'json');
+        }
+
     </script>
 
 <style type="text/css">
@@ -506,7 +597,9 @@
                             <h2><?php echo $info['DD_TEN']; ?></h2>
                             <p class="lead"><?php echo $info['DD_GIOITHIEU']; ?></p>
                         </div>
-                        <img class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="" />
+                        <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" rel="prettyPhoto">
+                          <img class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="Anh dai dien" />
+                        </a>
                             <div style="margin-top: -30px;" class="row">  
                                 <div class="col-xs-12 col-sm-2 text-center">
                                     <div class="entry-meta">
@@ -630,7 +723,7 @@
                                 <b style="text-transform: capitalize; font-size: 16px;"><?php echo $honguoidang." ".$tennguoidang ?></b> - 
                                 <b style="font-style: italic;"><?php echo $ngaydang ?></b><br/>
                                 <b style="font-weight: bold; font-size: 20px; text-transform: capitalize;"><?php echo $tieude ?></b>
-                                <p>
+                                <p style="cursor: pointer;" data-toggle='modal' data-target='#Modalimg' onclick="xemanhbinhluan('<?php echo $mabinhluan; ?>')">
                                     <?php echo $noidung ?>
                                 <br/>
                                     <?php
@@ -646,7 +739,7 @@
                                     ?>
                                 </p>
 
-                                <a href="#name">Bình luận</a>
+                                <a style="z-index: 10;" href="#name">Bình luận</a>
                             </div>
                         </div>
 
@@ -818,9 +911,15 @@
 
                     <div style="margin-top: -30px;" class="widget blog_gallery">
                         <h3>Hình ảnh</h3>
-                        <ul class="sidebar-gallery">
+                        <ul id="xemhinhanh" style="cursor: pointer;" class="sidebar-gallery" data-toggle='modal' data-target='#Modalimg'>
                             <?php
+                                $j = 0;
                                 foreach ($info1 as $key) {
+                                  $j++;
+                                  if($j > 9)
+                                  {
+                                    break;
+                                  }
                                   $hinh = $key['HA_TEN'];
                                   $duyet = $key['HA_DUYET'];
                                   if($duyet == "1")
@@ -876,22 +975,125 @@
             <h4 class="modal-title" id="myModalLabel"><i class="fa fa-picture-o fa-fw"></i> Đăng ảnh</h4>
         </div>
         <div class="modal-body">
-          <!-- <form method="post" action="<?php echo base_url(); ?>diadiemhinh/uploadsuser/<?php echo $info['DD_MA'] ?>" enctype="multipart/form-data">
-            <input type="text" id="ma" name="ma" value="<?php echo $info['DD_MA'] ?>" style="display: none;" readonly />
-            <label>Ảnh kèm theo:</label>
-            <input type="file"  id="image_list" name="image_list[]" multiple max-size="100000">
-            <br />
-            <input type="submit" class="button" value="Tải lên" name='submit' id="submit" />
-          </form> -->
+
           <div id="jqxFileUpload1">
           </div>
           <div id="eventsPanel1">
           </div>
 
         </div>
-        <!-- <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-        </div> -->
+      </div> <!-- /.modal-content --> 
+    </div><!-- /.modal-dialog --> 
+    </div><!-- /.modal -->
+
+    <!-- Modal upload anh -->
+    <div class="modal fade" id="Modalimg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 80%;">
+      <div class="modal-content" style="height: 100%;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-picture-o fa-fw"></i> Xem ảnh</h4>
+        </div>
+        <div class="modal-body">
+        
+          <div class="container-fluid">
+          
+          <!-- Carousel container -->
+          <div id="my-pics" class="carousel slide" data-ride="carousel">
+
+          <!-- Indicators -->
+          <ol id="ol" class="carousel-indicators">
+          <li data-target="#my-pics" data-slide-to="0" class="active"></li>
+          </ol>
+
+          <!-- Content -->
+          <div id="div" class="carousel-inner" role="listbox">
+
+          <!-- Slide 1 -->
+          <div class="item active">
+          <img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" alt="" width='100%' >
+          </div>
+
+          </div>
+
+          <!-- Previous/Next controls -->
+          <a id="previous" class="left carousel-control" href="#my-pics" role="button" data-slide="prev">
+          <span class="icon-prev" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+          </a>
+          <a id="next" class="right carousel-control" href="#my-pics" role="button" data-slide="next">
+          <span class="icon-next" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+          </a>
+
+          </div>
+
+          <!-- Center the image -->
+          <style scoped>
+          .item img{
+              margin: 0 auto;
+          }
+          </style>
+
+          </div>
+
+        </div>
+      </div> <!-- /.modal-content --> 
+    </div><!-- /.modal-dialog --> 
+    </div><!-- /.modal -->
+
+    <!-- Modal anh binh luan -->
+    <div class="modal fade" id="Modalcomment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 80%;">
+      <div class="modal-content" style="height: 100%;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-picture-o fa-fw"></i> Xem ảnh</h4>
+        </div>
+        <div class="modal-body">
+        
+          <div class="container-fluid">
+          
+          <!-- Carousel container -->
+          <div id="pic" class="carousel slide" data-ride="carousel">
+
+          <!-- Indicators -->
+          <ol id="olbl" class="carousel-indicators">
+          <li data-target="#my-pics" data-slide-to="0" class="active"></li>
+          </ol>
+
+          <!-- Content -->
+          <div id="divbl" class="carousel-inner" role="listbox">
+
+          <!-- Slide 1 -->
+          <div class="item active">
+          <img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" alt="" width='100%' >
+          </div>
+
+          </div>
+
+          <!-- Previous/Next controls -->
+          <a class="left carousel-control" href="#pic" role="button" data-slide="prev">
+          <span class="icon-prev" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#pic" role="button" data-slide="next">
+          <span class="icon-next" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+          </a>
+
+          </div>
+
+          <!-- Center the image -->
+          <style scoped>
+          .item img{
+              margin: 0 auto;
+          }
+          </style>
+
+          </div>
+
+        </div>
       </div> <!-- /.modal-content --> 
     </div><!-- /.modal-dialog --> 
     </div><!-- /.modal -->

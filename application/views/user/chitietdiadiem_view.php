@@ -995,7 +995,7 @@
 				            <div id='BL_CHATLUONG'></div>
 				        </div> 
 				        <div id="events" style="border-width: 0px;"></div>    
-				    </div>
+				      </div>
 
 				    <div>Phục vụ</div>
         			<div id='jqxWidget1'>
@@ -1018,12 +1018,12 @@
         	</tr>
         </table>
         <input type="text" id="idbinhluan" style="border-width: 0px; display: none;" readonly="readonly" />
-        <div id="jqxFileUpload">
-    	  </div>
-        <div id="eventsPanel">
-        </div>
+          <div id="jqxFileUpload">
+      	  </div>
+          <div id="eventsPanel">
+          </div>
 
-      </div>
+        </div>
       <div class="modal-footer">
       	<button type="button" id="btngui" class="btn btn-outline btn-success">Gửi</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
