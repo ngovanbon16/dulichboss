@@ -217,6 +217,15 @@ class Binhluan extends CI_Controller
 		echo $jsonString;
 	}
 
+	public function dataid() // chi tiet cua bih luan
+	{
+		$ma = $_POST["ma"];
+		$data = $this->mbinhluan->getidchitiet($ma);
+
+		$jsonString = json_encode($data);
+		echo $jsonString;
+	}	
+
 	public function anhbinhluan()
 	{
 		$ma = $_POST["ma"];

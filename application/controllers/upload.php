@@ -30,32 +30,32 @@ class Upload extends CI_Controller
         if(isset($_POST["submit"])) {
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
             if($check !== false) {
-                echo "<?php echo lang('file_is_an_image') ?> - " . $check["mime"] . ".";
+                echo lang('file_is_an_image')." - " . $check["mime"] . ".";
                 $uploadOk = 1;
             } else {
-                echo "<?php echo lang('file_is_not_an_image') ?>";
+                echo lang('file_is_not_an_image');
                 $uploadOk = 0;
             }
         }
         // Check if file already exists
         if (file_exists($target_file)) {
-            echo "<?php echo lang('sorry_file_already_exists') ?>";
+            echo lang('sorry_file_already_exists');
             $uploadOk = 0;
         }
         // Check file size
         if ($_FILES["fileToUpload"]["size"] > 2500000) {
-            echo "<?php echo lang('sorry_your_file_is_too_large') ?>";
+            echo lang('sorry_your_file_is_too_large');
             $uploadOk = 0;
         }
         // Allow certain file formats
         if(strtolower($imageFileType) != "jpg" && strtolower($imageFileType) != "png" && strtolower($imageFileType) != "jpeg"
         && strtolower($imageFileType) != "gif" ) {
-            echo "<?php echo lang('sorry_only_JPG_JPEG_PNG_GIF_files_are_allowed') ?>";
+            echo lang('sorry_only_JPG_JPEG_PNG_GIF_files_are_allowed');
             $uploadOk = 0;
         }
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
-            echo "<?php echo lang('sorry_your_file_was_not_uploaded') ?>";
+            echo lang('sorry_your_file_was_not_uploaded');
         // if everything is ok, try to upload file
         } else {
 
@@ -75,7 +75,7 @@ class Upload extends CI_Controller
             $name = $id.".".$imageFileType;
             $names = $target_dir.$name;
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $names)) {
-                echo "<?php echo lang('the_file') ?> ". basename( $_FILES["fileToUpload"]["name"]). " <?php echo lang('has_been_uploaded') ?>";
+                echo lang('the_file').' '. basename( $_FILES["fileToUpload"]["name"]).' '.lang('has_been_uploaded')."!";
 
                         $this->load->library("image_lib");
                         $config['image_library'] = 'gd2';

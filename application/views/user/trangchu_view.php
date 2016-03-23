@@ -118,23 +118,26 @@
                 <li data-target="#main-slider" data-slide-to="0" class="active"></li>
                 <li data-target="#main-slider" data-slide-to="1"></li>
                 <li data-target="#main-slider" data-slide-to="2"></li>
+                <li data-target="#main-slider" data-slide-to="3"></li>
             </ol>
             <div class="carousel-inner">
 
-                <div class="item active" style="background-image: url(<?php echo base_url(); ?>assets/images/halongbay.jpg)">
+                <div class="item active" style="background-image: url(<?php echo base_url(); ?>assets/images/dongthapmuoi.jpg)">
                     <div class="container">
                         <div class="row slide-margin">
                             <div class="col-sm-6">
                                 <div class="carousel-content">
-                                    <h1 class="animation animated-item-1">Hạ Long Bay một trong những kỳ quan của thế giới</h1>
-                                    <h2 class="animation animated-item-2">Một trong những địa điểm du lịch không thể nào bỏ qua khi đến với Việt Nam</h2>
-                                    <a class="btn-slide animation animated-item-3" href="#">Thông tin</a>
+                                    <h1 class="animation animated-item-1">Đồng Tháp Mười</h1>
+                                    <h2 class="animation animated-item-2">Là một biểu tượng của đồng bằng Sông Cửu Long châu thổ.</h2>
+                                    <a class="btn-slide animation animated-item-3" href="#"><?php echo lang('information') ?></a>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 hidden-xs animation animated-item-4">
                                 <div class="slider-img">
-                                    <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
+                                    <a href="#name">
+                                        <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
+                                    </a>
                                 </div>
                             </div>
 
@@ -142,20 +145,22 @@
                     </div>
                 </div><!--/.item-->
 
-                <div class="item" style="background-image: url(<?php echo base_url(); ?>assets/images/dongphongnha.jpg)">
+                <div class="item" style="background-image: url(<?php echo base_url(); ?>assets/images/chuavanlinh.jpg)">
                     <div class="container">
                         <div class="row slide-margin">
                             <div class="col-sm-6">
                                 <div class="carousel-content">
-                                    <h1 class="animation animated-item-1">Động Phong Nha lung linh huyền ảo</h1>
-                                    <h2 class="animation animated-item-2">Được Unesco công nhận là một trong những kỳ quan thế giới</h2>
-                                    <a class="btn-slide animation animated-item-3" href="#">Thông tin</a>
+                                    <h1 class="animation animated-item-1">Chùa Vạn Linh trên núi Thiên Cẩm Sơn</h1>
+                                    <h2 class="animation animated-item-2">Một trong những địa điểm du lịch tâm linh không thể bỏ qua.</h2>
+                                    <a class="btn-slide animation animated-item-3" href="#"><?php echo lang('information') ?></a>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 hidden-xs animation animated-item-4">
                                 <div class="slider-img">
-                                    <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
+                                    <a href="#name">
+                                        <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
+                                    </a>
                                 </div>
                             </div>
 
@@ -163,19 +168,44 @@
                     </div>
                 </div><!--/.item-->
 
-                <div class="item" style="background-image: url(<?php echo base_url(); ?>assets/images/phocohoian.jpg)">
+                <div class="item" style="background-image: url(<?php echo base_url(); ?>assets/images/caucantho.jpg)">
                     <div class="container">
                         <div class="row slide-margin">
                             <div class="col-sm-6">
                                 <div class="carousel-content">
-                                    <h1 class="animation animated-item-1">Phố Cổ Hội An êm đềm và lãng mạn</h1>
-                                    <h2 class="animation animated-item-2">Với vẽ đẹp ngàn năm cổ kính</h2>
-                                    <a class="btn-slide animation animated-item-3" href="#">Thông tin</a>
+                                    <h1 class="animation animated-item-1">Cầu Cần Thơ</h1>
+                                    <h2 class="animation animated-item-2">Được mệnh danh là cây cầu dài nhất Đông Nam Á.</h2>
+                                    <a class="btn-slide animation animated-item-3" href="#"><?php echo lang('information') ?></a>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 hidden-xs animation animated-item-4">
+                                <div class="slider-img">
+                                    <a href="#name">
+                                        <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!--/.item-->
+
+                <div class="item" style="background-image: url(<?php echo base_url(); ?>assets/images/chocairang.jpg)">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-6">
+                                <div class="carousel-content">
+                                    <h1 class="animation animated-item-1">Chợ Nổi Cái Răng</h1>
+                                    <h2 class="animation animated-item-2">Một nơi hấp dẫn đối với những du khách sành về ăn uống.</h2>
+                                    <a class="btn-slide animation animated-item-3" href="#"><?php echo lang('information') ?></a>
                                 </div>
                             </div>
                             <div class="col-sm-6 hidden-xs animation animated-item-4">
                                 <div class="slider-img">
-                                    <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
+                                    <a href="#name">
+                                        <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -191,44 +221,14 @@
         </a>
     </section><!--/#main-slider-->
 
-    <section id="feature" >
-        <div class="container">
-           <div class="center wow fadeInDown">
-                <h2>Các huyện trong tỉnh</h2>
-                <p class="lead">Các huyện trong tỉnh</p>
-            </div>
-
-            <div class="row">
-                <div class="features">
-
-                    <?php 
-                        foreach ($huyentt as $iteam) {
-                            $ma = $iteam['H_MA'];
-                            $ten = $iteam['H_TEN'];
-                    ?>
-
-                    <div class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                        <div style="float: left; height: 150px;">
-                            <b style="font-size: 16px; text-transform: capitalize;"><?php echo $ten; ?></b>
-                            <img id="imghuyen" src="<?php echo base_url(); ?>assets/images/thiencamson.jpg" alt="" width="100%" height="100">
-                            
-                        </div>
-                    </div><!--/.col-md-4-->
-
-                    <?php
-                        }
-                    ?>
-
-                </div><!--/.services-->
-            </div><!--/.row-->    
-        </div><!--/.container-->
-    </section><!--/#feature-->
+    
 
     <section id="recent-works">
         <div class="container">
             <div class="center wow fadeInDown">
-                <h2>Một số địa điểm nổi bậc</h2>
-                <p class="lead">Một số địa điểm nổi bậc</p>
+                <a name="name"></a>
+                <h2><?php echo lang('some_prominent_locations') ?></h2>
+                <!-- <p class="lead">Một số địa điểm nổi bậc</p> -->
             </div>
 
             <div class="row">
@@ -263,7 +263,7 @@
                         if($duyet == "1")
                         {
                             $count++;
-                            $hinh = "diadiem.jpg";
+                            $hinh = "anhdaidien.jpg";
                             foreach ($info1 as $key) {
                                 if($ma == $key['DD_MA'])
                                 {
@@ -304,9 +304,9 @@
             <div class="row">
                  <center>
                     <div class="grad1">
-                        Tổng số các địa điểm <input id="count" style="width: 40px; height: 40px; border-radius: 50%; text-align: center; border: ; font-weight: bolder; background-color: #4F4F4F; font-size: 15px; color: #fff;" value="<?php echo $count ?>" readonly="readonly" />
+                        <?php echo lang('total') ?>: <input id="count" style="width: 40px; height: 40px; border-radius: 50%; text-align: center; border: ; font-weight: bolder; background-color: #4F4F4F; font-size: 15px; color: #fff;" value="<?php echo $count ?>" readonly="readonly" />
                     </div>
-                    <div style="cursor: pointer;" class="grad1" id="btnthem"><i class="fa  fa-eye fa-fw"></i> Xem thêm</div>
+                    <!-- <div style="cursor: pointer;" class="grad1" id="btnthem"><i class="fa  fa-eye fa-fw"></i> Xem thêm</div> -->
 
                     <!-- <div style="width: 100px; height: 5px; font-size: 10px;" class="progress-wrap">
                         <h3>Graphic Design</h3>

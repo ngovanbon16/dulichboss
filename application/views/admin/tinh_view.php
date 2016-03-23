@@ -317,8 +317,8 @@
          
             $("#Cancel").jqxButton({ });
             $("#Save").jqxButton({ });
-            $("#T_MA").jqxInput({ });
-            $("#T_TEN").jqxInput({ });
+            $("#T_MA").jqxInput({ height: "20" });
+            $("#T_TEN").jqxInput({ height: "20" });
             // update the edited row when the user clicks the 'Save' button.
             $("#Save").click(function () {
                 if (editrow >= 0) {
@@ -346,20 +346,20 @@
     </div>
 
     <div id="popupWindow">
-        <div><?php echo lang('edit') ?></div>
+        <div style="font-weight: bolder;"><?php echo lang('edit') ?></div>
         <div style="overflow: hidden;">
             <table>
                 <tr>
-                    <td width="50" align="center">  <?php echo lang('key') ?></td>
+                    <td style="width: 50px; text-align: right; padding: 5px; font-weight: bolder;">  <?php echo lang('key') ?></td>
                     <td align="left"><input id="T_MA" readonly="readonly" /></td>
                 </tr>
                 <tr>
-                    <td align="center"> <?php echo lang('name') ?></td>
+                    <td style="width: 50px; text-align: right; padding-right: 5px; font-weight: bolder;"> <?php echo lang('name') ?></td>
                     <td align="left"><input id="T_TEN" /></td>
                 </tr>
                 <tr>
                     <td align="right"></td>
-                    <td style="padding-top: 10px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="<?php echo lang('save') ?>" /><input id="Cancel" type="button" value="<?php echo lang('cancel') ?>" /></td>
+                    <td style="padding-top: 5px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="<?php echo lang('save') ?>" /><input id="Cancel" type="button" value="<?php echo lang('cancel') ?>" /></td>
                 </tr>
             </table>
         </div>

@@ -285,7 +285,7 @@
 
                 columns: [
                     { 
-                        text: "<?php echo lang('photo') ?>", datafield: 'DM_HINH', width: "10%", sortable: false, filterable: false, cellsrenderer: imagerenderer, cellsalign: 'center', align: "center", editable: false
+                        text: "<?php echo lang('icon') ?>", datafield: 'DM_HINH', width: "10%", sortable: false, filterable: false, cellsrenderer: imagerenderer, cellsalign: 'center', align: "center", editable: false
                     },
                     {
                       text: "<?php echo lang('key') ?>", columntype: 'textbox', datafield: 'DM_MA', width: "26%", cellsalign: 'center', align: "center", editable: false, 
@@ -325,19 +325,19 @@
 
             // initialize the popup window and buttons.
             $("#popupWindow").jqxWindow({
-                width: 300, height: 300, resizable: false,  isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01           
+                width: 330, height: 300, resizable: false,  isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01           
             });
             $("#popupWindow").on('open', function () {
                 $("#DM_MA").jqxInput('selectAll');
                 var id = document.getElementById("DM_MA").value;
                 var path = "<?php echo base_url(); ?>index.php/danhmuc/upload/"+id;
-                $('#jqxFileUpload').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_all') ?>", cancelButton: "<?php echo lang('cancel_all') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
+                $('#jqxFileUpload').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_file') ?>", cancelButton: "<?php echo lang('cancel') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
 
                 $('#jqxFileUpload').jqxFileUpload({ multipleFilesUpload: false });
 
-                $('#jqxFileUpload').jqxFileUpload({ width: "100%", height: "120", uploadUrl: path, fileInputName: 'fileToUpload'});
+                $('#jqxFileUpload').jqxFileUpload({ width: "90%", height: "120", uploadUrl: path, fileInputName: 'fileToUpload'});
 
-                $('#eventsPanel').jqxPanel({ width: "100%", height: 50 });
+                $('#eventsPanel').jqxPanel({ width: "90%", height: 50 });
                 $('#jqxFileUpload').on('select', function (event) {
                     var args = event.args;
                     var fileName = args.file;
@@ -381,8 +381,8 @@
          
             $("#Cancel").jqxButton({ });
             $("#Save").jqxButton({ });
-            $("#DM_MA").jqxInput({ });
-            $("#DM_TEN").jqxInput({ });
+            $("#DM_MA").jqxInput({ height: "20" });
+            $("#DM_TEN").jqxInput({ height: "20" });
             // update the edited row when the user clicks the 'Save' button.
             $("#Save").click(function () {
                 if (editrow >= 0) {
@@ -412,29 +412,29 @@
     </div>
 
     <div id="popupWindow">
-        <div><?php echo lang('edit') ?></div>
+        <div style="font-weight: bolder;"><?php echo lang('edit') ?></div>
         <div style="overflow: hidden;">
             <table width="100%">
                 <tr>
-                    <td width="50" align="center">  <?php echo lang('key') ?></td>
-                    <td align="left"><input id="DM_MA" readonly="readonly" /></td>
+                    <td style="width: 50px; text-align: right; font-weight: bolder;">  <?php echo lang('key') ?></td>
+                    <td style="padding: 0px 0px 5px 5px;" align="left"><input id="DM_MA" readonly="readonly" /></td>
                 </tr>
                 <tr>
-                    <td align="center"> <?php echo lang('name') ?></td>
-                    <td align="left"><input id="DM_TEN" /></td>
+                    <td style="width: 50px; text-align: right; font-weight: bolder;"> <?php echo lang('name') ?></td>
+                    <td style="padding: 0px 0px 5px 5px;" align="left"><input id="DM_TEN" /></td>
                 </tr>
                 <tr>
-                    <td>
-                        <?php echo lang('photo') ?>
+                    <td style="width: 50px; text-align: right; font-weight: bolder;">
+                        <?php echo lang('icon') ?>
                     </td>
-                    <td>
+                    <td style="padding: 0px 0px 5px 5px;">
                         <div id="jqxFileUpload"></div>
                         <div id="eventsPanel"></div>
                     </td>
                 </tr>
                 <tr>
                     <td align="right"></td>
-                    <td style="padding-top: 10px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="<?php echo lang('save') ?>" /><input id="Cancel" type="button" value="<?php echo lang('cancel') ?>" /></td>
+                    <td style="padding-top: 5px; padding-right: 23px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="<?php echo lang('save') ?>" /><input id="Cancel" type="button" value="<?php echo lang('cancel') ?>" /></td>
                 </tr>
             </table>
         </div>

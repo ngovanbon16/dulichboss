@@ -73,23 +73,23 @@
                                 <?php echo $this->session->userdata("email"); ?> <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a href="<?php echo base_url(); ?>index.php/nguoidung/edit"><i class="fa fa-user fa-fw"></i> Thông tin người dùng</a>
+                                <li><a href="<?php echo base_url(); ?>index.php/nguoidung/edit"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-camera"></i> Đổi Avatar</a>
+                                <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-camera"></i> <?php echo lang('change').' '.lang('avatar') ?></a>
                                 </li>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-gear fa-fw"></i> Cài đặt</a>
+                                <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-gear fa-fw"></i> <?php echo lang('setting') ?></a>
                                 </li>
                                 <li class="divider"></li>
 
                                 <?php if($this->session->userdata("id") != ""){ ?>
-                                <li data-toggle="modal" data-target="#modaldangnhap"><a href=""><i class="fa fa-mail-forward"></i> Đổi tài khoản</a>
-                                <li><a href="<?php echo base_url(); ?>index.php/login/logout/trangchu"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                                <li data-toggle="modal" data-target="#modaldangnhap"><a href=""><i class="fa fa-mail-forward"></i> <?php echo lang('login') ?></a>
+                                <li><a href="<?php echo base_url(); ?>index.php/login/logout/trangchu"><i class="fa fa-sign-out fa-fw"></i> <?php echo lang('logout') ?></a>
                                 <?php }else{ ?>
-                                <li data-toggle="modal" data-target="#modaldangnhap" style="cursor: pointer;"><a><!-- <a href="<?php echo base_url(); ?>index.php/login"> --><i class="fa fa-sign-in"></i> Đăng nhập</a>
+                                <li data-toggle="modal" data-target="#modaldangnhap" style="cursor: pointer;"><a><!-- <a href="<?php echo base_url(); ?>index.php/login"> --><i class="fa fa-sign-in"></i> <?php echo lang('login') ?></a>
                                 </li>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/registration"><i class="fa fa-pencil-square-o"></i> Đăng ký</a>
+                                <li><a href="<?php echo base_url(); ?>index.php/registration"><i class="fa fa-pencil-square-o"></i> <?php echo lang('register') ?></a>
                                 </li>
                                 <?php } ?>
                             </ul>    
@@ -108,7 +108,7 @@
                             </ul>
                             <div class="search">
                                 <form role="form">
-                                    <input type="text" class="search-form" autocomplete="off" placeholder="Search">
+                                    <input type="text" class="search-form" autocomplete="off" placeholder="<?php echo lang('search'); ?>">
                                     <i class="fa fa-search"></i>
                                     <!-- <a href="<?php echo base_url(); ?>index.php/login">
                                         <button type="button" class="btn btn-outline btn-danger" data-toggle="modal" data-target="#modaldangnhap"><i class="fa fa-sign-in"></i> Đăng nhập</button>
@@ -135,9 +135,9 @@
                 
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
-                        <li class="<?php if($active == 'trangchu') echo 'active'; ?>"><a href="<?php echo site_url('home/trangchu') ?>"><i class="fa fa-home fa-fw"></i> Trang chủ</a></li>
+                        <li class="<?php if($active == 'trangchu') echo 'active'; ?>"><a href="<?php echo site_url('home/trangchu') ?>"><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a></li>
                         <!-- <li><a href="services.html"><i class="fa fa-heart fa-fw"></i> Yêu thích</a></li> -->
-                        <li class="<?php if($active == 'map') echo 'active'; ?>"><a href="<?php echo site_url('home/map') ?>"><i class="fa fa-location-arrow fa-fw"></i> Bản đồ</a></li>
+                        <li class="<?php if($active == 'map') echo 'active'; ?>"><a href="<?php echo site_url('home/map') ?>"><i class="fa fa-location-arrow fa-fw"></i> <?php echo lang('map') ?></a></li>
                         <li  class="<?php if($active == 'khuvuc') echo 'active'; ?>" >
                             <a href="#" class="<?php if($active == 'khuvuc') echo 'active'; ?>" data-toggle="dropdown"><i class="fa fa-qrcode fa-fw"></i> 
                                 <?php
@@ -155,7 +155,7 @@
                                     }
                                     else
                                     {
-                                        echo "Chọn tỉnh";
+                                        echo lang('select').'...';
                                     }
                                 ?> 
                             <i class="fa fa-angle-down"></i></a>
@@ -171,8 +171,8 @@
                                 ?>
                             </ul>
                         </li>
-                        <li class="<?php if($active == 'gioithieu') echo 'active'; ?>"><a href="<?php echo site_url('home/gioithieu'); ?>"><i class="fa fa-info-circle fa-fw"></i> Giới thiệu</a></li> 
-                        <li class="<?php if($active == 'lienhe') echo 'active'; ?>"><a href="<?php echo site_url('home/lienhe'); ?>"><i class="fa fa-linkedin-square fa-fw"></i> Liên hệ</a></li>                
+                        <li class="<?php if($active == 'gioithieu') echo 'active'; ?>"><a href="<?php echo site_url('home/gioithieu'); ?>"><i class="fa fa-info-circle fa-fw"></i> <?php echo lang('introduce') ?></a></li> 
+                        <li class="<?php if($active == 'lienhe') echo 'active'; ?>"><a href="<?php echo site_url('home/lienhe'); ?>"><i class="fa fa-linkedin-square fa-fw"></i> <?php echo lang('contact') ?></a></li>                
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -236,13 +236,13 @@
             <div class="row">
                 <div class="col-sm-6">
                     <i class="fa fa-phone-square"></i>  +84982770090 
-                    &copy; 2016 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">dulichkhapnoi.com.vn</a>. Cùng nhau đi đến khắp mọi miền.
+                    &copy; 2016 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">smartmekong.vn/dulich</a>. Du lich khap noi <i class="fa fa-plane fa-fw"></i>
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="<?php echo site_url('home/trangchu') ?>">Trang chủ</a></li>
-                        <li><a href="<?php echo site_url('home/gioithieu') ?>">Giới thiệu</a></li>
-                        <li><a href="<?php echo site_url('home/lienhe') ?>">Liên hệ</a> </li>
+                        <li><a href="<?php echo site_url('home/trangchu') ?>"><?php echo lang('home'); ?></a></li>
+                        <li><a href="<?php echo site_url('home/gioithieu') ?>"><?php echo lang('introduce'); ?></a></li>
+                        <li><a href="<?php echo site_url('home/lienhe') ?>"><?php echo lang('contact'); ?></a> </li>
                     </ul>
                 </div>
             </div>
@@ -267,6 +267,11 @@
     }
     .txterror{
         color: #F00;
+        font-style: italic;
+        position: absolute;
+    }
+    .textsuccess{
+        color: blue;
         font-style: italic;
         position: absolute;
     }
@@ -301,16 +306,7 @@
                     //alert(data.status);
                     if(data.status == "error")
                     {
-                        if(data.msg["kichhoat"] == "error")
-                        {
-                            document.getElementById("info").style.color = "#F00";
-                            $("#info").addClass("bg01").text("Tài khoản chưa được kích hoạt!");
-                        }
-                        else
-                        {
-                            $("#info").addClass("bg01").text("");
-                        }
-                        
+                        $("#info").addClass("txterror").text(data.msg["error"]);
                         $.each(data.msg, function(i, val)
                         {
                             var ele = "#login [name='" + i + "']";
@@ -321,9 +317,7 @@
                     }
                     else
                     {
-                        document.getElementById("info").style.color = "#00F";
-                        document.getElementById("info").style.fontSize = "18px";
-                        $("#info").addClass("bg02").text("Đăng nhập thành công");
+                        $("#info").addClass("textsuccess").text("<?php echo lang('logged_in_successfully') ?>");
                         $("#login").remove();
                         setTimeout("location.href = '<?php echo site_url('home/trangchu'); ?>';",1000);
                     }
@@ -350,8 +344,8 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-            <h3 id='lbldangnhap' class="panel-title">Đăng nhập</h3>
-            <a id="lbldangky" href="<?php echo base_url(); ?>index.php/registration">Đăng Ký</a>
+            <h3 id='lbldangnhap' class="panel-title"><?php echo lang('login') ?></h3>
+            <a id="lbldangky" href="<?php echo base_url(); ?>index.php/registration"><?php echo lang('register') ?></a>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <!-- <h4 class="modal-title"><i class="fa fa-camera fa-fw"></i> Đăng nhập</h4> -->
       </div>
@@ -361,12 +355,12 @@
         </center> 
         <form name="login" id="login" method="post" role="form">
             <div style="margin-bottom: 20px;" class="form-group">
-                <input class="form-control" placeholder="E-mail" name="email" id="email" type="text" autofocus>
+                <input class="form-control" placeholder="<?php echo lang('input').' '.lang('email') ?>" name="email" id="email" type="text" autofocus>
             </div>
             <div style="margin-bottom: 20px;" class="form-group">
-                <input class="form-control" placeholder="Password" name="password" id="password" type="password" value="">
+                <input class="form-control" placeholder="<?php echo lang('input').' '.lang('password') ?>" name="password" id="password" type="password" value="">
             </div>
-            <button type="button" id="button" class="btn btn-outline btn-success btn-lg btn-block">Đăng nhập</button>
+            <button type="button" id="button" class="btn btn-outline btn-success btn-lg btn-block"><?php echo lang('login') ?></button>
         </form>
       </div> <!-- dong body -->
     </div><!-- dong Modal content -->

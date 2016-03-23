@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Đăng nhập</title>
+        <title><?php echo lang('login'); ?></title>
 
         <link href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>assets/bootstrap/css/metisMenu.min.css" rel="stylesheet">
@@ -46,7 +46,7 @@
                             //alert(data.status);
                             if(data.status == "error")
                             {
-                                $("#info").addClass("bg01").text("Có lỗi xảy ra! " + data.msg["kichhoat"]);
+                                $("#info").addClass("txterror").text(data.msg["error"]);
                                 $.each(data.msg, function(i, val)
                                 {
                                     var ele = "#login [name='" + i + "']";
@@ -57,7 +57,7 @@
                             }
                             else
                             {
-                                $("#info").addClass("bg02").text("Đăng nhập thành công");
+                                $("#info").addClass("textsuccess").text("<?php echo lang('logged_in_successfully') ?>");
                                 $("#login").remove();
                                 setTimeout("location.href = '<?php echo site_url('home'); ?>';",1000);
                             }
@@ -99,20 +99,20 @@
                 <div class="col-md-4 col-md-offset-4">
                     <div class="login-panel panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Đăng nhập</h3>
-                            <a href="<?php echo base_url(); ?>index.php/registration">Đăng Ký</a>
+                            <h3 class="panel-title"><?php echo lang('login') ?></h3>
+                            <a href="<?php echo base_url(); ?>index.php/registration"><?php echo lang('register') ?></a>
                         </div>
                         <div class="panel-body">
-                            <div id="info" class="form-group">Thông báo</div>
+                            <div id="info" class="form-group"><?php echo lang('notification') ?></div>
                             <form name="login" id="login" method="post" role="form">
                                 <fieldset>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="E-mail" name="email" id="email" type="text" autofocus>
+                                        <input class="form-control" placeholder="<?php echo lang('input').' '.lang('email') ?>" name="email" id="email" type="text" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Password" name="password" id="password" type="password" value="">
+                                        <input class="form-control" placeholder="<?php echo lang('input').' '.lang('password') ?>" name="password" id="password" type="password" value="">
                                     </div>
-                                    <button type="button" id="button" class="btn btn-outline btn-success btn-lg btn-block">Đăng nhập</button>
+                                    <button type="button" id="button" class="btn btn-outline btn-success btn-lg btn-block"><?php echo lang('login') ?></button>
                                 </fieldset>
                             </form>
                         </div>

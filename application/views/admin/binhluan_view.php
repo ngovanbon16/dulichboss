@@ -63,7 +63,7 @@
                 }
             });
         }
-        function chitiet(id, tendiadiem)
+        function hinhanh(id, tendiadiem)
         {
             var dta, url;
             url = "<?php echo base_url(); ?>index.php/binhluan/anhbinhluan";
@@ -90,6 +90,94 @@
 
             }, 'json');
         }
+        function chitiet(id, tendiadiem)
+        {
+            var dta, url;
+            url = "<?php echo base_url(); ?>index.php/binhluan/dataid";
+            dta = {
+                "ma" : id
+            };
+            console.log(dta);
+            $.post(url, dta, function(data, status){
+
+                console.log(status);
+                console.log(data);
+                if(status == "success")
+                {
+                    var chuoi = "<div>Tên bình luận</div>";
+                    document.getElementById('dd_ten').innerHTML = data.DD_TEN;
+                    document.getElementById('nd_ten').innerHTML = '<img style="border-radius: 50px; border: solid 2px #F8F8FF;" src="<?php echo base_url(); ?>uploads/user/'+data.ND_HINH+'" width="50" height="50"><b style="font-size: 16px; text-transform: capitalize;"> '+data.ND_HO+' '+data.ND_TEN+' (<i>'+data.ND_DIACHIMAIL+'</i>) </b> - '+data.BL_NGAYDANG+' <b><?php echo lang("comment") ?></b> ';
+                    document.getElementById('chatluong').innerHTML = data.BL_CHATLUONG;
+                    document.getElementById('phucvu').innerHTML = data.BL_PHUCVU;
+                    document.getElementById('khonggian').innerHTML = data.BL_KHONGGIAN;
+
+                    mau('chatluong', data.BL_CHATLUONG);
+                    mau('phucvu', data.BL_PHUCVU);
+                    mau('khonggian', data.BL_KHONGGIAN);
+                    var trungbinh = eval("("+data.BL_CHATLUONG+"+"+data.BL_PHUCVU+"+"+data.BL_KHONGGIAN+")/3");
+                    trungbinh = parseFloat(trungbinh).toFixed(1);
+                    document.getElementById('trungbinh').innerHTML = trungbinh;
+                    mau('trungbinh', trungbinh);
+
+                    //document.getElementById('trungbinh').innerHTML = trungbinh;
+                    danhgia('danhgiatb', trungbinh);
+                    mau('danhgiatb', trungbinh);
+
+                    document.getElementById('bl_tieude').innerHTML = data.BL_TIEUDE;
+                    document.getElementById('bl_noidung').innerHTML = data.BL_NOIDUNG;
+                }
+
+            }, 'json');
+        }
+
+        function mau(id, diem)
+        {
+            if(diem < 2 && diem >= 0)
+            {
+                document.getElementById(id).style.color = "#F00";
+            }
+            if(diem >= 2 && diem < 4)
+            {
+                document.getElementById(id).style.color = "#F90";
+            }
+            if(diem >= 4 && diem < 6)
+            {
+                document.getElementById(id).style.color = "#0CF";
+            }
+            if(diem >= 6 && diem < 8)
+            {
+                document.getElementById(id).style.color = "#03F";
+            }
+            if(diem >= 8 && diem <= 10)
+            {
+                document.getElementById(id).style.color = "#0D0";
+            }
+        }
+
+        function danhgia(id, diem)
+        {
+            if(diem < 2 && diem >= 0)
+            {
+                document.getElementById(id).innerHTML = "<?php echo lang('bad') ?>";
+            }
+            if(diem >= 2 && diem < 4)
+            {
+                document.getElementById(id).innerHTML = "<?php echo lang('medium') ?>";
+            }
+            if(diem >= 4 && diem < 6)
+            {
+                document.getElementById(id).innerHTML = "<?php echo lang('rather') ?>";
+            }
+            if(diem >= 6 && diem < 8)
+            {
+                document.getElementById(id).innerHTML = "<?php echo lang('good') ?>";
+            }
+            if(diem >= 8 && diem <= 10)
+            {
+                document.getElementById(id).innerHTML = "<?php echo lang('great') ?>";
+            }
+        }
+
         function kieu(bien)
         {
             var width = "120";
@@ -345,13 +433,22 @@
                             return "<button class='icon' onclick='xoa(\""+id+"\")'><i class='fa fa-times fa-fw'></i></button>";
                         }
                     },
+                    { text: "<?php echo lang('photos') ?>", datafield: 'photos', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
+                            var offset = $("#jqxgrid").offset();
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.BL_MA;
+                            var ten = dataRecord.DD_TEN;
+                            return "<button data-toggle=\"modal\" data-target=\"#modalbinhluan\" class='icon' onclick='hinhanh(\""+id+"\",\""+ten+"\")'><i class='fa fa-photo fa-fw'></i></button>";
+                        }
+                    },
                     { text: "<?php echo lang('detail') ?>", datafield: 'detail', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.BL_MA;
                             var ten = dataRecord.DD_TEN;
-                            return "<button data-toggle=\"modal\" data-target=\"#modalbinhluan\" class='icon' onclick='chitiet(\""+id+"\",\""+ten+"\")'><i class='fa fa-photo fa-fw'></i></button>";
+                            return "<button data-toggle=\"modal\" data-target=\"#modalchitiet\" class='icon' onclick='chitiet(\""+id+"\",\""+ten+"\")'><i class='fa fa-search fa-fw'></i></button>";
                         }
                     },
                   
@@ -377,6 +474,30 @@
             -moz-box-shadow: 0 0 3px rgba(0,0,0,4);
             -webkit-box-shadow: 0 0 3px rgba(0,0,0,4);
             -o-box-shadow: 0 0 3px rgba(0,0,0,4);
+        }
+        .danhgia{
+            text-align: center;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 3px;
+            border: solid 1px #F8F8FF;
+            box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -moz-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -webkit-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -o-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+        }
+        .diemdg{
+            width: 100px;
+            height: 100px;
+            padding: 5px;
+            margin-right: 10px;
+            border-radius: 50%;
+            border: solid 1px #F8F8FF;
+            font-weight: bolder;
+            box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -moz-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -webkit-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+            -o-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
         }
     </style>
 </head>
@@ -410,6 +531,44 @@
                     <button class="tool" onclick="xoaanhbinhluanchk()"><i class="fa fa-trash-o"></i></button>
                     
                 </div>
+            </div>
+
+          </div>
+        </div>
+    </div> <!-- dong modal binh luan -->
+
+    <div> <!-- modal binh luan -->
+        <!-- Modal -->
+        <div id="modalchitiet" class="modal fade" role="dialog" tabindex="-1">
+          <div class="modal-dialog" style="width: 60%; ">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="height: 400px;">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <i class="fa fa-comments-o fa-fw"></i> <b style="text-transform: capitalize;" id="dd_ten"><?php echo lang('comment') ?></b> 
+                </h4>
+              </div>
+              <div style="width: 100%; overflow: auto;" class="modal-body">
+                  <div id="nd_ten"></div>
+                  <div class="danhgia">
+                        <b><?php echo lang('quality') ?>: </b>
+                        <span class="diemdg" id="chatluong"></span>
+                        <b><?php echo lang('service') ?>: </b>
+                        <span class="diemdg" id="phucvu"></span>
+                        <b><?php echo lang('space') ?>: </b>
+                        <span class="diemdg" id="khonggian"></span>
+                        <b><?php echo lang('average') ?>: </b>
+                        <span class="diemdg" id="trungbinh"></span>
+                        <span id="danhgiatb"></span>
+                  </div>
+                  <div style="margin: 5px 0px 5px 0px; font-weight: bolder; font-size: 20px; text-transform: capitalize; font-style: italic;" id="bl_tieude"></div>
+                  <div style="font-size: 16px;" id="bl_noidung"></div>
+              </div>
+                <!-- <div class="modal-footer">
+                        
+                </div> -->
             </div>
 
           </div>

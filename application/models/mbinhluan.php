@@ -87,6 +87,24 @@ class Mbinhluan extends CI_Model {
         }
     }
 
+    public function getidchitiet($id) // dung chi tiet binh luan
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join("nguoidung", "nguoidung.ND_MA=binhluan.ND_MA");
+        $this->db->join("diadiem", "diadiem.DD_MA=binhluan.DD_MA");
+        $this->db->where("BL_MA", $id);
+        $query = $this ->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return $query->row_array();
+        }
+    }
+
     public function getdd($id) // su dung quan ly chi tiet dia diem get theo ma dd
     {
         $this->db->select('*');

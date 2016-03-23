@@ -24,30 +24,48 @@ class Login extends CI_Controller
 		$email = $_POST["email"];
 		$password = $_POST["password"];
 		$msg = array();
+		$error = "";
 
 		if(empty($email))
 		{
-			$msg["email"] = "Họ tên người dùng không được rỗng";
+			$msg["email"] = lang('please').' '.lang('input').' '.lang('email');
+			$error = lang('error');
 		} else if(!($this->mlogin->testEmail($email)))
 		{
-			$msg["email"] = "Email không tồn tại";
+			$msg["email"] = lang('email').' '.lang('is').' '.lang('invalid');
+			$error = lang('error');
 		}
 		else
 		{
-			if(!($this->mlogin->kichhoat($email)))
+			if($this->mlogin->khoa($email))
 			{
-				$msg["kichhoat"] = "error";
+				$error  = lang('your_account_has_been_locked');
 			}
 			else
 			{
-				if(empty($password))
+				if(!$this->mlogin->kichhoat($email))
 				{
-					$msg["password"] = "Mật khẩu không được rỗng";
-				} else if(!($this->mlogin->testpassword($email, $password)))
+					$error = lang('your_account_not_activated');
+					//$error = lang('error');
+				}
+				else
 				{
-					$msg["password"] = "Mật khẩu không đúng";
+					if(empty($password))
+					{
+						$msg["password"] = lang('please').' '.lang('input').' '.lang('password');
+						$error = lang('error');
+					} else if(!($this->mlogin->testpassword($email, $password)))
+					{
+						$msg["password"] = lang('password').' '.lang('is').' '.lang('invalid');
+						$error = lang('error');
+					}
 				}
 			}
+		}
+
+		if($error != "")
+		{
+			$msg['error'] = $error;
 		}
 
 		$status = "error";
