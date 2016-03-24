@@ -60,6 +60,19 @@ class Nguoidung extends CI_Controller
 		echo $jsonString;
 	}
 
+	public function dataid()
+	{	
+		$id = "0";
+		if(isset($this->session->userdata['id']))
+		{
+			$id = $this->session->userdata['id'];
+		}
+		$data = $this->mnguoidung->getID($id);
+
+		$jsonString = json_encode($data);
+		echo $jsonString;
+	}
+
 	public function data0()
 	{
 		if (isset($_GET['update'])) // code update

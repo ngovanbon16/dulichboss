@@ -1,7 +1,7 @@
 <section id="contact-info">
         <div class="center">                
-            <h2>Làm thế nào để liên hệ?</h2>
-            <p class="lead">Mọi lúc mọi nơi có thể gọi cho chúng tôi qua số điện thoại bên dưới!</p>
+            <h2><?php echo lang('how_to_contact_us') ?></h2>
+            <p class="lead"><?php echo lang('can_contact_us_anytime_and_anywhere_with_the_information_below') ?></p>
         </div>
         <div class="gmap-area">
             <div class="container">
@@ -16,22 +16,40 @@
                         <ul class="row">
                             <li class="col-sm-6">
                                 <address>
-                                    <h5>Công ty chính</h5>
-                                    <p>Đường 3 tháng 2 <br>
-                                    Ninh Kiều - TP.Cần Thơ</p>
-                                    <p>Điện thoại: 0710-898-898 <br>
-                                    Địa chỉ Email: dulich@gmail.com</p>
-                                </address>
-                            </li>
 
+                                    <?php 
+                                        if(lang('lang') == "vi")
+                                        {
+                                            $dh = "Trường Đại học Cần Thơ";
+                                            $khoa = "Khoa Công nghệ Thông tin & Truyền thông";
+                                            $duong = "Đường 3/2";
+                                            $phuong = "Xuân Khánh";
+                                            $huyen = "Ninh Kiều";
+                                            $tinh = "Cần Thơ";
+                                        }
+                                        else
+                                        {
+                                            $dh = "Can Tho University";
+                                            $khoa = "College of Information & Communication Technology";
+                                            $duong = "3/2 Street";
+                                            $phuong = "Xuan Khanh";
+                                            $huyen = "Ninh Kieu";
+                                            $tinh = "Can Tho";
+                                        }
+                                    ?>
 
-                            <li class="col-sm-6">
-                                <address>
-                                    <h5>Công ty phụ</h5>
-                                    <p>Đường 3 tháng 2 <br>
-                                    Ninh Kiều - TP.Cần Thơ</p>
-                                    <p>Điện thoại: 0710-898-898 <br>
-                                    Địa chỉ Email: dulich@gmail.com</p>
+                                    <h2><?php echo $dh; ?></h2>
+                                    <p>
+                                        <b style="font-style: italic;"><?php echo $khoa; ?></b> <br/>
+
+                                        <b><?php echo lang('address') ?>:</b> <?php echo $duong; ?> <br/>
+                                        <b><?php echo lang('town') ?>:</b> <?php echo $phuong; ?> <br/>
+                                        <b><?php echo lang('district') ?>:</b> <?php echo $huyen; ?> <br/> 
+                                        <b><?php echo lang('provincial') ?>:</b> <?php echo $tinh; ?> <br/> 
+                                        <b><?php echo lang('phone') ?>:</b> 84 710 3831301 <br/> 
+                                        <b>Fax:</b> 84 710 3830841 <br/> 
+                                        <b>Email:</b> smartmekong@gmail.com
+                                    </p>
                                 </address>
                             </li>
                         </ul>

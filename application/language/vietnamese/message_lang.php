@@ -187,7 +187,14 @@ $lang['views'] = "Lượt xem";
 $lang['photos'] = "Hình ảnh";
 $lang['likes'] = "Thích";
 $lang['comment_successfully_posted'] = "Bình luận được đăng thành công.";
-$lang['some_prominent_locations'] = "Một số địa điểm nổi bậc";
+$lang['some_prominent_locations'] = "Một số địa điểm nổi bật";
 $lang['total'] = "Tống số";
 $lang['icon'] = "Biểu tượng";
+$lang['discover'] = "Khám phá";
+$lang['license'] = "Giấy phép";
+$lang['newsletter'] = "Bản tin";
+$lang['term_of_use'] = "Quy định";
+$lang['how_to_contact_us'] = "Làm thế nào để liên hệ với chúng tôi?";
+$lang['can_contact_us_anytime_and_anywhere_with_the_information_below'] = "
+Có thể liên hệ với chúng tôi bất cứ lúc nào và bất cứ nơi đâu với các thông tin dưới đây.";
 ?>

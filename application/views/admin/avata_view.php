@@ -16,7 +16,7 @@
 
             var id = "<?php echo $this->session->userdata('id'); ?>";
             var path = "<?php echo base_url(); ?>index.php/avata/upload/"+id;
-            $('#jqxFileUpload').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_all') ?>", cancelButton: "<?php echo lang('cancel_all') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
+            $('#jqxFileUpload').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_file') ?>", cancelButton: "<?php echo lang('cancel') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
 
             $('#jqxFileUpload').jqxFileUpload({ multipleFilesUpload: false });
 

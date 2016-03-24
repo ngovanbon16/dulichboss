@@ -31,6 +31,43 @@
     <script src="<?php echo base_url(); ?>assets/user/js/main.js"></script>
     <script src="<?php echo base_url(); ?>assets/user/js/wow.min.js"></script>
 
+    <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-notify.js"></script>
+    <script type="text/javascript">
+        function thongbao(title, message, type)
+        {
+            if(title == "")
+            {
+                title = "<?php echo lang('notification') ?>";
+            }
+            $.notify(
+                {
+                    icon: 'glyphicon glyphicon-star',
+                    title: title+":",
+                    message: message,
+                    url: "https://google.com",
+                    target: "_blank"
+                },
+                {
+                    type: type, //warning danger
+                    allow_dismiss: true,
+                    delay: 3000,
+                    timer: 1000,
+                    offset: {
+                        x: 10,
+                        y: 10
+                    },
+                    z_index: 1090,
+                    //icon_type: 'image',
+                    newest_on_top: true,
+                    animate: {
+                        enter: 'animated fadeInRight',
+                        exit: 'animated fadeOutRight'
+                    }
+                }
+            );
+        }
+    </script>
+
 </head><!--/head-->
 <body class="homepage">
 
@@ -73,23 +110,27 @@
                                 <?php echo $this->session->userdata("email"); ?> <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a href="<?php echo base_url(); ?>index.php/nguoidung/edit"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
+                                <?php 
+                                    if($this->session->userdata("id") != "")
+                                    {
+                                ?>
+                                <li><a href="<?php echo base_url(); ?>index.php/user/account"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-camera"></i> <?php echo lang('change').' '.lang('avatar') ?></a>
+                                <li><a href="<?php echo base_url(); ?>index.php/user/addnewplace"><i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('add_new_place'); ?></a>
                                 </li>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-gear fa-fw"></i> <?php echo lang('setting') ?></a>
+                                <li><a href="<?php echo base_url(); ?>index.php/user/account"><i class="fa fa-gear fa-fw"></i> <?php echo lang('setting') ?></a>
                                 </li>
                                 <li class="divider"></li>
 
-                                <?php if($this->session->userdata("id") != ""){ ?>
-                                <li data-toggle="modal" data-target="#modaldangnhap"><a href=""><i class="fa fa-mail-forward"></i> <?php echo lang('login') ?></a>
+                                <?php } if($this->session->userdata("id") != ""){ ?>
+                                <li data-toggle="modal" data-target="#modaldangnhap"><a href=""><i class="fa fa-mail-forward fa-fw"></i> <?php echo lang('login') ?></a>
                                 <li><a href="<?php echo base_url(); ?>index.php/login/logout/trangchu"><i class="fa fa-sign-out fa-fw"></i> <?php echo lang('logout') ?></a>
                                 <?php }else{ ?>
-                                <li data-toggle="modal" data-target="#modaldangnhap" style="cursor: pointer;"><a><!-- <a href="<?php echo base_url(); ?>index.php/login"> --><i class="fa fa-sign-in"></i> <?php echo lang('login') ?></a>
+                                <li data-toggle="modal" data-target="#modaldangnhap" style="cursor: pointer;"><a><!-- <a href="<?php echo base_url(); ?>index.php/login"> --><i class="fa fa-sign-in fa-fw"></i> <?php echo lang('login') ?></a>
                                 </li>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/registration"><i class="fa fa-pencil-square-o"></i> <?php echo lang('register') ?></a>
+                                <li><a href="<?php echo base_url(); ?>index.php/registration"><i class="fa fa-pencil-square-o fa-fw"></i> <?php echo lang('register') ?></a>
                                 </li>
                                 <?php } ?>
                             </ul>    
@@ -134,14 +175,26 @@
                 </div>
                 
                 <div class="collapse navbar-collapse navbar-right">
+                    <?php 
+                        $trangchu = "";
+                        $map = "";
+                        $khuvuc = "";
+                        $gioithieu = "";
+                        $lienhe = "";
+
+                        if(isset($active))
+                        {
+                            $trangchu = "active";
+                        }
+                    ?>
                     <ul class="nav navbar-nav">
-                        <li class="<?php if($active == 'trangchu') echo 'active'; ?>"><a href="<?php echo site_url('home/trangchu') ?>"><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a></li>
+                        <li class="<?php echo $trangchu; ?>"><a href="<?php echo site_url('home/trangchu') ?>"><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a></li>
                         <!-- <li><a href="services.html"><i class="fa fa-heart fa-fw"></i> Yêu thích</a></li> -->
-                        <li class="<?php if($active == 'map') echo 'active'; ?>"><a href="<?php echo site_url('home/map') ?>"><i class="fa fa-location-arrow fa-fw"></i> <?php echo lang('map') ?></a></li>
-                        <li  class="<?php if($active == 'khuvuc') echo 'active'; ?>" >
-                            <a href="#" class="<?php if($active == 'khuvuc') echo 'active'; ?>" data-toggle="dropdown"><i class="fa fa-qrcode fa-fw"></i> 
+                        <li class="<?php echo $map; ?>"><a href="<?php echo site_url('home/map') ?>"><i class="fa fa-location-arrow fa-fw"></i> <?php echo lang('map') ?></a></li>
+                        <li  class="<?php echo $khuvuc; ?>" >
+                            <a href="#" class="<?php echo $khuvuc; ?>" data-toggle="dropdown"><i class="fa fa-qrcode fa-fw"></i> 
                                 <?php
-                                    if(isset($this->session->userdata['T_MA']))
+                                    if(isset($this->session->userdata['T_MA']) && isset($tinh))
                                     {
                                         $matinh = $this->session->userdata['T_MA'];
                                         foreach ($tinh as $iteam) {
@@ -161,6 +214,7 @@
                             <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
                                 <?php
+                                    if(isset($tinh))
                                     foreach ($tinh as $iteam) {
                                         $ma = $iteam['T_MA'];
                                         $ten = $iteam['T_TEN'];
@@ -171,8 +225,8 @@
                                 ?>
                             </ul>
                         </li>
-                        <li class="<?php if($active == 'gioithieu') echo 'active'; ?>"><a href="<?php echo site_url('home/gioithieu'); ?>"><i class="fa fa-info-circle fa-fw"></i> <?php echo lang('introduce') ?></a></li> 
-                        <li class="<?php if($active == 'lienhe') echo 'active'; ?>"><a href="<?php echo site_url('home/lienhe'); ?>"><i class="fa fa-linkedin-square fa-fw"></i> <?php echo lang('contact') ?></a></li>                
+                        <li class="<?php echo $gioithieu; ?>"><a href="<?php echo site_url('home/gioithieu'); ?>"><i class="fa fa-info-circle fa-fw"></i> <?php echo lang('introduce') ?></a></li> 
+                        <li class="<?php echo $lienhe; ?>"><a href="<?php echo site_url('home/lienhe'); ?>"><i class="fa fa-linkedin-square fa-fw"></i> <?php echo lang('contact') ?></a></li>                
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -182,51 +236,69 @@
 
 <?php $this->load->view($subview); ?>
 
-<section id="bottom">
+<section style="padding: 20px;" id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
             <div class="row" >
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
-                        <h4>Cài đặt</h4>
+                        <h3><?php echo lang('setting') ?></h3>
                         <ul>
-                            <li><a href="#">Tỉnh thành</a> Cần thơ</li> 
-                            <li><a href="#">Ngôn ngữ</a> Tiếng việt</li> 
+                            <!-- <li><a href="#">Tỉnh thành</a> Cần thơ</li> --> 
+                            <li><a href="#"><?php echo lang('language') ?></a>:
+                                <b style="font-size: 20px; font-style: italic;">
+                                <?php
+                                    if(lang('lang') == 'vi') 
+                                    {
+                                    ?>
+                                         <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english"><i class="fa fa-language fa-fw"> English</i></a> 
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                    ?>
+                                         <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese"><i class="fa fa-language fa-fw"> TiếngViệt</i></a> 
+                                    <?php
+                                    } 
+                                ?>
+                                </b>
+                            </li> 
                         </ul>
                     </div>    
                 </div><!--/.col-md-3-->
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
-                        <h3>Hỗ trợ</h3>
+                        <h3><?php echo lang('discover') ?></h3>
                         <ul>
-                            <li><a href="#">Email</a></li>
-                            <li><a href="#">Phone</a></li>
-                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#"><?php echo lang('newsletter') ?></a></li>
+                            <li><a href="#">Mobile Web</a></li>
+                            <li><a href="#"><?php echo lang('term_of_use') ?></a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
-                        <h3>Khám phá</h3>
-                        <ul>
-                            <li><a href="#">Bản tin</a></li>
-                            <li><a href="#">Ứng dụng</a></li>
-                            <li><a href="#">Quy định</a></li>
-                        </ul>
-                    </div>    
-                </div><!--/.col-md-3-->
-
-                <div class="col-md-3 col-sm-6">
-                    <div class="widget">
-                        <h3>Giấy phép</h3>
+                        <h3><?php echo lang('license') ?></h3>
                         <ul>
                             <li><a href="#">ICP 85/GP-ICP-STTTT</a></li>
                             <li><a href="#">MXH 152/GXN-TTDT</a></li>
                             <li><a href="#">SGD TMĐT 111</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="widget">
+                        <h3><?php echo lang('contact') ?></h3>
+                        <ul>
+                            <li><a href="#">Email</a>: smartmekong@gmail.com</li>
+                            <li><a href="#"><?php echo lang('phone') ?></a>: 84 710 3831301</li>
+                            <li><a href="#">Facebook</a>: www.facebook.com/smartmekong</li>
+                        </ul>
+                    </div>    
+                </div>
+
             </div>
         </div>
     </section><!--/#bottom-->

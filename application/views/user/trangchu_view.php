@@ -70,10 +70,7 @@
             height: 50px;
             border-radius: 3px;
             margin-top: 5px;
-            background: -webkit-linear-gradient(left, rgba(105,105,105,105), rgba(255,0,0,0)); /* For Safari 5.1 to 6.0 */
-            background: -o-linear-gradient(right, rgba(105,105,105,105), rgba(255,0,0,0)); /* For Opera 11.1 to 12.0 */
-            background: -moz-linear-gradient(right, rgba(105,105,105,105), rgba(255,0,0,0)); /* For Firefox 3.6 to 15 */
-            background: linear-gradient(to right, rgba(105,105,105,105), rgba(255,0,0,0)); /* Standard syntax (must be last) */
+            
             -webkit-box-shadow:0 -4px 4px -4px #000;
             box-shadow: 0 -4px 4px -4px #000;
             /*hoặc*/
