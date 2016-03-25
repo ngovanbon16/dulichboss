@@ -32,6 +32,8 @@
 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
 
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
+
 	<?php echo $map['js']; ?>
     <script type="text/javascript">
 		var centreGot = false;
@@ -55,8 +57,9 @@
 
     <script type="text/javascript">
      $(document).ready(function () {
-     			$("#xoa").jqxButton({ theme: 'success', width: '100', height: '27'});
-     			$("#loc").jqxButton({ theme: 'success', width: '100', height: '27'});
+                $.jqx.theme = "bootstrap";
+     			$("#xoa").jqxButton({ width: '100', height: '27'});
+     			$("#loc").jqxButton({ width: '100', height: '27'});
                 var url = "<?php echo base_url(); ?>index.php/danhmuc/data";
                 // prepare the data
                 var source =
@@ -71,11 +74,11 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#DM_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "Chọn loại:", displayMember: "DM_TEN", valueMember: "DM_MA", width: 250, height: 25, dropDownHeight: "150px" });
+                $("#DM_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('category') ?>...", displayMember: "DM_TEN", valueMember: "DM_MA", width: "100%", height: 25, dropDownHeight: "150px" });
 
                 var source = [];
-                $("#H_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '250px', height: '25px', promptText: "Chọn huyện...", dropDownHeight: "150px" });
-                $("#X_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '250px', height: '25px', promptText: "Chọn xã...", dropDownHeight: "150px" });
+                $("#H_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '100%', height: '25px', promptText: "<?php echo lang('select').' '.lang('district') ?>...", dropDownHeight: "150px" });
+                $("#X_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '100%', height: '25px', promptText: "<?php echo lang('select').' '.lang('town') ?>...", dropDownHeight: "150px" });
 
                 var url = "<?php echo base_url(); ?>index.php/tinh/data";
                 // prepare the data
@@ -91,7 +94,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#T_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "Chọn tỉnh:", displayMember: "T_TEN", valueMember: "T_MA", width: 250, height: 25, dropDownHeight: "150px" });
+                $("#T_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('provincial') ?>...", displayMember: "T_TEN", valueMember: "T_MA", width: "100%", height: 25, dropDownHeight: "150px" });
 
                 $("#T_MA").on('select', function (event) {
                     var matinh = $("#T_MA").val();
@@ -110,7 +113,7 @@
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#H_MA").jqxDropDownList({ selectedIndex: '-1', source: dataAdapter, placeHolder: "Chọn huyện:", displayMember: "H_TEN", valueMember: "H_MA", width: 250, height: 25, dropDownHeight: "150px" });
+                    $("#H_MA").jqxDropDownList({ selectedIndex: '-1', source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>...", displayMember: "H_TEN", valueMember: "H_MA", width: "100%", height: 25, dropDownHeight: "150px" });
                 });
 
                 $("#H_MA").on('select', function (event) {
@@ -130,7 +133,7 @@
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#X_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "Chọn Xã:", displayMember: "X_TEN", valueMember: "X_MA", width: 250, height: 25, dropDownHeight: "150px" });
+                    $("#X_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>...", displayMember: "X_TEN", valueMember: "X_MA", width: "100%", height: 25, dropDownHeight: "150px" });
                 });
 
             //alert("<?php echo $this->session->userdata('DM_MA') ?>");
@@ -271,20 +274,20 @@
 <body>
 	<table width="100%">
 		<tr>
-			<td>
+			<td width="20%">
 				<div id="T_MA" style="float: left;"></div>
 			</td>
-			<td>
+			<td width="20%">
 		    	<div id="H_MA" style="float: left;"></div>
 		    </td>
-		    <td>
+		    <td width="20%">
 		    	<div id="X_MA" style="float: left;"></div>
 		    </td>
-		    <td>
+		    <td width="20%">
 		    	<div id="DM_MA" style="float: left;"></div>
 			</td>
-			<td>
-				<button id="loc">Lọc</button>
+			<td width="20%">
+				<button id="loc"><?php echo lang('filter') ?></button>
 			</td>
 		</tr>
 		<tr>
@@ -301,7 +304,7 @@
 				<?php echo $tendanhmuc ?>
 			</td>
 			<td>
-				<button id="xoa">Xóa</button>
+				<button id="xoa"><?php echo lang('delete') ?></button>
 			</td>
 		</tr>
 	</table>

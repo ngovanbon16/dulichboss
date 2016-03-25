@@ -679,15 +679,15 @@
                             <h2 style="margin-bottom: 0px;"><?php echo $info['DD_TEN']; ?></h2>
                             <p class="lead">
                               <?php
-                                if($info['DD_GIOITHIEU'] != "") 
-                                  echo $info['DD_GIOITHIEU'];
-                                else
+                                /*if($info['DD_MOTA'] != "") 
+                                  echo $info['DD_MOTA'];
+                                else*/
                                   echo '<i class="fa fa-spinner fa-fw"></i><i class="fa fa-certificate fa-fw"></i><i class="fa fa-spinner fa-fw"></i>'; 
                               ?>
                             </p>
                         </div>
                         <!-- <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" rel="prettyPhoto"> -->
-                          <img onclick="xemhinhanh()" data-toggle='modal' data-target='#Modalimg' class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="<?php echo lang('avatar') ?>" />
+                          <img style="cursor: pointer;" onclick="xemhinhanh()" data-toggle='modal' data-target='#Modalimg' class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="<?php echo lang('avatar') ?>" />
                         <!-- </a> -->
                             <div style="margin-top: -30px;" class="row">  
                                 <div class="col-xs-12 col-sm-2 text-center">

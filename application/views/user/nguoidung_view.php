@@ -10,6 +10,8 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxpanel.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
+
+    <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-notify.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
         	$.jqx.theme = "bootstrap";

@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title><?php echo $title; ?></title>
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/logo.ico" type="image/x-icon" />
 	
 	<!-- core CSS -->
     <link href="<?php echo base_url(); ?>assets/user/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +19,7 @@
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->       
-    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/user/images/ico/favicon.ico">
+
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url(); ?>assets/user/images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url(); ?>assets/user/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url(); ?>assets/user/images/ico/apple-touch-icon-72-precomposed.png">
@@ -32,6 +33,16 @@
     <script src="<?php echo base_url(); ?>assets/user/js/wow.min.js"></script>
 
     <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-notify.js"></script>
+
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/demos.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcombobox.js"></script>
+
     <script type="text/javascript">
         function thongbao(title, message, type)
         {
@@ -149,8 +160,49 @@
                             </ul>
                             <div class="search">
                                 <form role="form">
-                                    <input type="text" class="search-form" autocomplete="off" placeholder="<?php echo lang('search'); ?>">
-                                    <i class="fa fa-search"></i>
+                                    <a href="<?php echo base_url(); ?>index.php/user/searchplace"> <input type="text" class="search-form" autocomplete="off" placeholder="<?php echo lang('search'); ?>">
+                                    <i class="fa fa-search"></i> </a>
+
+                                    <!-- <div style="z-index: 2000000;" id='content'>
+                                        <script type="text/javascript">
+                                            $(document).ready(function () {               
+                                                var url = "<?php echo base_url(); ?>index.php/diadiem/datafound";
+                                                // prepare the data
+                                                var source =
+                                                {
+                                                    datatype: "json",
+                                                    datafields: [
+                                                        { name: 'DD_TEN' },
+                                                        { name: 'DD_MA' }
+                                                    ],
+                                                    url: url,
+                                                    async: false
+                                                };
+                                                var dataAdapter = new $.jqx.dataAdapter(source);
+                                                // Create a jqxComboBox
+                                                $("#jqxWidget").jqxComboBox({ selectedIndex: -1, source: dataAdapter, displayMember: "DD_TEN", valueMember: "DD_MA", width: 200, height: 25});
+                                                // trigger the select event.
+                                                $("#jqxWidget").on('select', function (event) {
+                                                    if (event.args) {
+                                                        var item = event.args.item;
+                                                        if (item) {
+                                                            var valueelement = $("<div></div>");
+                                                            valueelement.text("Value: " + item.value);
+                                                            var labelelement = $("<div></div>");
+                                                            labelelement.text("Label: " + item.label);
+                                                            $("#selectionlog").children().remove();
+                                                            $("#selectionlog").append(labelelement);
+                                                            $("#selectionlog").append(valueelement);
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                        <div id='jqxWidget'>
+                                        </div>
+                                        <div style="font-size: 12px; font-family: Verdana;" id="selectionlog"></div>
+                                    </div> -->
+
                                     <!-- <a href="<?php echo base_url(); ?>index.php/login">
                                         <button type="button" class="btn btn-outline btn-danger" data-toggle="modal" data-target="#modaldangnhap"><i class="fa fa-sign-in"></i> Đăng nhập</button>
                                     </a> -->

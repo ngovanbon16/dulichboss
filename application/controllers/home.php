@@ -263,7 +263,7 @@ class Home extends CI_Controller
             }
 
 			$hinh = "<img src='".base_url()."uploads/diadiem/".$anhdaidien."' width='150' hgiht='150'>";
-			$noidung = "<a target='_blank' href='".base_url()."index.php/aediadiem/detailuser/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a><br/>".$item['DD_DIACHI'];
+			$noidung = "<a target='_blank' href='".base_url()."index.php/aediadiem/detailuser1/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a><br/>".$item['DD_DIACHI'];
 			$marker['infowindow_content'] = $hinh.$noidung;
 			$marker['id'] = $madd;
 			//$marker['onclick'] = 'alert("You just clicked me!!")';

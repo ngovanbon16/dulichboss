@@ -73,6 +73,19 @@ class Mdiadiem extends CI_Model {
         }
     }
 
+    public function gettimkiem($query) // dung cho trang quan ly
+    {
+        $query = $this->db->query($query);          
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
     public function countAll(){ // dung cho load du lieu tung phan
         return $this->db->count_all($this->_table); 
     }

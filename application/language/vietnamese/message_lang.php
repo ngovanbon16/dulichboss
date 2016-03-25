@@ -197,4 +197,7 @@ $lang['term_of_use'] = "Quy định";
 $lang['how_to_contact_us'] = "Làm thế nào để liên hệ với chúng tôi?";
 $lang['can_contact_us_anytime_and_anywhere_with_the_information_below'] = "
 Có thể liên hệ với chúng tôi bất cứ lúc nào và bất cứ nơi đâu với các thông tin dưới đây.";
+$lang['search_with_keyword'] = "Tìm kiếm với từ khóa";
+$lang['keyword'] = "Từ khóa";
+$lang['result'] = "Kết quả";
 ?>
