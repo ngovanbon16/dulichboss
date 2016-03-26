@@ -28,7 +28,7 @@ class User extends CI_Controller
 			$keyword = $this->db->escape_like_str($keyword);	// Lọc các ký tự đặc biệt
 
 			// Câu query lấy dữ liệu
-			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA WHERE DD_TEN LIKE '%$keyword%' OR DD_MOTA LIKE '%$keyword%' OR T_TEN LIKE '%$keyword%' OR H_TEN LIKE '%$keyword%' OR DM_TEN LIKE '%$keyword%' ORDER BY DD_TEN ASC LIMIT 0, 10";
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA WHERE DD_TEN LIKE '%$keyword%' OR DD_MOTA LIKE '%$keyword%' OR T_TEN LIKE '%$keyword%' OR H_TEN LIKE '%$keyword%' OR DM_TEN LIKE '%$keyword%' ORDER BY DD_TEN ASC LIMIT 0, 20";
 
 			// Kết nối Database, thực hiện câu truy vấn
 			$result = $this->mdiadiem->gettimkiem($query);
@@ -38,7 +38,7 @@ class User extends CI_Controller
 			if(count($result) > 0)
 			{
 				foreach ($result as $row) {
-					echo '<p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #FFF;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a><br><i class="mota">'.$row['DD_MOTA'] .'</i></p>'   ;
+					echo '<p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #FFF;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p>'   ;
 				}
 			}
 			else 

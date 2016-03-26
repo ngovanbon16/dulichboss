@@ -43,7 +43,7 @@ class Home extends CI_Controller
 		$this->_data['active'] = "trangchu";
 		$this->load->model("mdiadiem");
 		$this->load->model("mhinhanh");
-		$this->_data['info'] = $this->mdiadiem->getList1(13, 0);
+		$this->_data['info'] = $this->mdiadiem->getList1(18, 0);
 		$this->_data['info1'] = $this->mhinhanh->getList();
 
 		$this->load->model("mtinh");
@@ -59,6 +59,11 @@ class Home extends CI_Controller
 		}
 
 		$this->_data['huyentt'] = $this->mhuyen->getid($T_MA);
+
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1'  ORDER BY diadiem.DD_LUOTXEM DESC LIMIT 0, 6";
+
+		// Kết nối Database, thực hiện câu truy vấn
+		$this->_data['luotxem'] = $this->mdiadiem->gettimkiem($query);
 
        	$this->_data['title'] = 'Trang chủ';
        	$this->load->view('user/main.php', $this->_data);
@@ -109,6 +114,31 @@ class Home extends CI_Controller
        	$this->_data['title'] = 'Liên hệ';
        	$this->load->view('user/main.php', $this->_data);
 	}
+
+	public function theodanhmuc()
+	{
+		$this->_data['subview'] = 'user/danhmuc_view';
+		$this->_data['active'] = "danhmuc";
+
+		$this->load->model("mdanhmuc");
+		$this->_data['danhmuc'] = $this->mdanhmuc->getList();
+
+       	$this->_data['title'] = 'Danh mục';
+       	$this->load->view('user/main.php', $this->_data);
+	}
+
+	public function getdanhmuc()
+	{
+		$this->load->model("mdiadiem");
+		$DM_MA = $_POST['ma'];
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE danhmuc.DM_MA = '$DM_MA' AND hinhanh.HA_DAIDIEN = '1'  ORDER BY diadiem.DD_TEN ASC";
+
+		// Kết nối Database, thực hiện câu truy vấn
+		$result = $this->mdiadiem->gettimkiem($query);		
+
+		$jsonString = json_encode($result);
+		echo $jsonString;
+	}	
 
 	public function khuvuc($matinh)
 	{

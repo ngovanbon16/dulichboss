@@ -19,6 +19,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxbuttons.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxfileupload.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -26,9 +27,9 @@
 			$(".browse").jqxButton({ template: "success" });
 			$(".cancel").jqxButton({ template: "danger" });
 			$(".tool").jqxButton({ template: "" });
-			$(".tool1").jqxButton({ template: "inverse" });
+			$(".tool1").jqxButton({ template: "info" });
 			$(".tool2").jqxButton({ template: "info" });
-			$(".tool3").jqxButton({ template: "primary" });
+			$(".tool3").jqxButton({ template: "info" });
 			$(".delete").jqxButton({ template: "danger" });
 			$(".btnhinhanh").jqxButton({ template: "" });
 
@@ -245,20 +246,52 @@
 		        console.log(status);
 		        console.log(data);
 		        var count = 0;
+		        var chuoi = "";
 		        for (var i = 0; i < data.data.length; i++) {
+		        	var hama = data.data[i]['HA_MA'];
 		        	var haten = data.data[i]['HA_TEN'];
 		        	var haduyet = data.data[i]['HA_DUYET'];
+		        	var hadaidien = data.data[i]['HA_DAIDIEN'];
+		        	var duyet = "";
+		        	var avatar = "";
+		        	if(haduyet == '1')
+                	{
+                		duyet = "check.png";
+                	}
+                	else
+                	{
+                		duyet = "uncheck.png";
+                	}
+
+                	if(hadaidien == '1')
+                	{
+                		avatar = "avatar.png";
+                	}
+                	else
+                	{
+                		avatar = "unavatar.png";
+                	}
+
 		        	if(haduyet == bien || bien == '2')
 		        	{
+		        		chuoi += '<span class="span" id="'+haten+'"><a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/'+haten+'" rel="prettyPhoto"><img class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/'+haten+'" width="100%" height="80%" /></a><div class="div"><img id="'+hama+'" class="btncheck" src="<?php echo base_url(); ?>assets/images/'+duyet+'" onclick="duyet('+hama+')" /><input style="display: none;" id="check'+hama+'" type="text" value="'+haduyet+'" /><img id="avatar'+hama+'" class="btnavatar" src="<?php echo base_url(); ?>assets/images/'+avatar+'" onclick="daidien('+hama+')" /><img class="btnbin" src="<?php echo base_url(); ?>assets/images/bin.png" onclick="xoahinhanh(\''+haten+'\')" /><label class="checkbox-inline" ><input name="hinhanhchk" class="hinhanhchk" style="width: 20px; height: 20px; margin-top: -10px;" type="checkbox" value="'+haten+'"></label></div></span>';
+
 		        		count++;
-		        		document.getElementById(haten).style.display = "block";
+		        		//document.getElementById(haten).style.display = "block";
 		        	}
 		        	else
 		        	{
-		        		document.getElementById(haten).style.display = "none";
+		        		//document.getElementById(haten).style.display = "none";
 		        	}
-		        } 
+		        }
+
+		        var total =  document.getElementById('total').innerHTML;
+		        if(total < count)
+		        {
+		        	document.getElementById('total').innerHTML = count;
+		        }
 		        document.getElementById('count').innerHTML = count;
+		        document.getElementById('hinhdiadiem').innerHTML = chuoi;
 
 	        }, 'json');
 		}
@@ -388,6 +421,57 @@
         			xoabinhluanmain(chk[i].value);
         		}
         	}
+        }
+
+        function uploadimg()
+        {
+        	//dang anh cho dia diem
+            var path = "<?php echo base_url(); ?>index.php/diadiemhinh/uploadimg/" + "<?php echo $info['DD_MA']; ?>";
+
+            $('#jqxFileUpload1').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_all') ?>", cancelButton: "<?php echo lang('cancel_all') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
+
+            $('#jqxFileUpload1').jqxFileUpload({ multipleFilesUpload: true });
+
+            $('#jqxFileUpload1').jqxFileUpload({ width: "100%", uploadUrl: path, fileInputName: 'fileToUpload'});
+
+            $('#eventsPanel1').jqxPanel({ width: "100%", height: 100 });
+            $('#jqxFileUpload1').on('select', function (event) {
+                var args = event.args;
+                var fileName = args.file;
+                var fileSize = args.size;
+                var fileindex = args.owner._fileRows["length"] - 1;
+                $('#eventsPanel1').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
+                    fileName + ';<br />' + 'size: ' + fileSize + '<br />');
+
+                if(fileSize > 2500000)
+                {
+                  $('#jqxFileUpload1').jqxFileUpload('cancelFile', fileindex);
+                  thongbao("", "<?php echo lang('sorry_your_file_is_too_large') ?>", "danger");
+                }
+            });
+            $('#jqxFileUpload1').on('remove', function (event) {
+                var fileName = event.args.file;
+                $('#eventsPanel1').jqxPanel('append', '<strong>' + event.type + ':</strong> ' + fileName + '<br /> <hr /> ');
+            });
+            $('#jqxFileUpload1').on('uploadStart', function (event) {
+                var fileName = event.args.file;
+                $('#eventsPanel1').jqxPanel('append', '<strong>' + event.type + ':</strong> ' + fileName + '<br />');
+            });
+            $('#jqxFileUpload1').on('uploadEnd', function (event) {
+                var args = event.args;
+                var fileName = args.file;
+                var serverResponce = args.response;
+                $('#eventsPanel1').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
+                    fileName + ';<br />' + 'server response: ' + serverResponce + '<br />');
+                if(serverResponce.indexOf("!") != "-1")
+                {
+                    thongbao("", serverResponce, "success");
+                }
+                else
+                {
+                    thongbao("", serverResponce, "danger");
+                }
+            });
         }
 	</script>
 
@@ -651,9 +735,11 @@
 			        <b id="count"><?php echo count($info1); ?></b>
 			        <i class="fa fa-send-o"></i>
 			        <b id="total"><?php echo count($info1); ?></b>
+			        <i class="fa fa-angle-double-right"></i>
+			        <button class="btnhinhanh" data-toggle="modal" data-target="#modalthemanh" onclick="uploadimg()"><?php echo lang('upload_photos') ?></button>
 
 			    </div>
-		    	<div class="modal-body" style="width: 100%; height: 450px; overflow: auto;">
+		    	<div id='hinhdiadiem' class="modal-body" style="width: 100%; height: 450px; overflow: auto;">
 			        <?php
 	                    $count = 0; 
 	                    if($info1 != "") 
@@ -743,6 +829,29 @@
 		      	<button type="button" id="btngui" class="btn btn-outline btn-success">Gửi</button>
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
 		      </div> -->
+		    </div>
+
+		  </div>
+		</div>
+	</div> <!-- dong modal binh luan -->
+
+	<div> <!-- modal them anh dia diem -->
+		<!-- Modal -->
+		<div id="modalthemanh" class="modal fade" role="dialog" tabindex="-1">
+		  <div class="modal-dialog" style="width: 50%; ">
+
+		    <!-- Modal content-->
+		    <div class="modal-content" style="height: 400px;">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title"><i class="fa fa-comments-o fa-fw"></i> <?php echo $info['DD_TEN']; ?></h4>
+		      </div>
+		      <div style="overflow: auto; height: 300px;" class="modal-body">
+		      	  <div id="jqxFileUpload1">
+		          </div>
+		          <div id="eventsPanel1">
+		          </div>
+		      </div>
 		    </div>
 
 		  </div>

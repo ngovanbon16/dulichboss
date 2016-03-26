@@ -233,10 +233,22 @@
                         $khuvuc = "";
                         $gioithieu = "";
                         $lienhe = "";
+                        $danhmuc = "";
 
                         if(isset($active))
                         {
-                            $trangchu = "active";
+                            if($active == "trangchu")
+                                $trangchu = "active";
+                            if($active == "map")
+                                $map = "active";
+                            if($active == "khuvuc")
+                                $khuvuc = "active";
+                            if($active == "gioithieu")
+                                $gioithieu = "active";
+                            if($active == "lienhe")
+                                $lienhe = "active";
+                            if($active == "danhmuc")
+                                $danhmuc = "active";
                         }
                     ?>
                     <ul class="nav navbar-nav">
@@ -244,7 +256,7 @@
                         <!-- <li><a href="services.html"><i class="fa fa-heart fa-fw"></i> Yêu thích</a></li> -->
                         <li class="<?php echo $map; ?>"><a href="<?php echo site_url('home/map') ?>"><i class="fa fa-location-arrow fa-fw"></i> <?php echo lang('map') ?></a></li>
                         <li  class="<?php echo $khuvuc; ?>" >
-                            <a href="#" class="<?php echo $khuvuc; ?>" data-toggle="dropdown"><i class="fa fa-qrcode fa-fw"></i> 
+                            <a href="#" class="<?php echo $khuvuc; ?>" data-toggle="dropdown"><i class="fa fa-th fa-fw"></i> 
                                 <?php
                                     if(isset($this->session->userdata['T_MA']) && isset($tinh))
                                     {
@@ -277,6 +289,7 @@
                                 ?>
                             </ul>
                         </li>
+                        <li class="<?php echo $danhmuc; ?>"><a href="<?php echo site_url('home/theodanhmuc'); ?>"><i class="fa fa-th-large fa-fw"></i> <?php echo lang('category') ?></a></li> 
                         <li class="<?php echo $gioithieu; ?>"><a href="<?php echo site_url('home/gioithieu'); ?>"><i class="fa fa-info-circle fa-fw"></i> <?php echo lang('introduce') ?></a></li> 
                         <li class="<?php echo $lienhe; ?>"><a href="<?php echo site_url('home/lienhe'); ?>"><i class="fa fa-linkedin-square fa-fw"></i> <?php echo lang('contact') ?></a></li>                
                     </ul>

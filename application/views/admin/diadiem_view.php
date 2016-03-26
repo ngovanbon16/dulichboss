@@ -35,10 +35,9 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnotification.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcalendar.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
-
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
-
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/demos/jqxgrid/localization.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxfileupload.js"></script>
 
     <script type="text/javascript">
 
@@ -75,6 +74,57 @@
         function kichhoat(id, row)
         {
             var commit = $("#jqxgrid").jqxGrid('updaterow', id, $("#jqxgrid").jqxGrid('getrowdata', row));
+        }
+        function taianh(id, ten)
+        {
+            //dang anh cho dia diem
+            var path = "<?php echo base_url(); ?>index.php/diadiemhinh/uploadimg/" + id;
+
+            $('#jqxFileUpload1').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_all') ?>", cancelButton: "<?php echo lang('cancel_all') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
+
+            $('#jqxFileUpload1').jqxFileUpload({ multipleFilesUpload: true });
+
+            $('#jqxFileUpload1').jqxFileUpload({ width: "100%", uploadUrl: path, fileInputName: 'fileToUpload'});
+
+            $('#eventsPanel1').jqxPanel({ width: "100%", height: 100 });
+            $('#jqxFileUpload1').on('select', function (event) {
+                var args = event.args;
+                var fileName = args.file;
+                var fileSize = args.size;
+                var fileindex = args.owner._fileRows["length"] - 1;
+                $('#eventsPanel1').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
+                    fileName + ';<br />' + 'size: ' + fileSize + '<br />');
+
+                if(fileSize > 2500000)
+                {
+                  $('#jqxFileUpload1').jqxFileUpload('cancelFile', fileindex);
+                  thongbao("", "<?php echo lang('sorry_your_file_is_too_large') ?>", "danger");
+                }
+            });
+            $('#jqxFileUpload1').on('remove', function (event) {
+                var fileName = event.args.file;
+                $('#eventsPanel1').jqxPanel('append', '<strong>' + event.type + ':</strong> ' + fileName + '<br /> <hr /> ');
+            });
+            $('#jqxFileUpload1').on('uploadStart', function (event) {
+                var fileName = event.args.file;
+                $('#eventsPanel1').jqxPanel('append', '<strong>' + event.type + ':</strong> ' + fileName + '<br />');
+            });
+            $('#jqxFileUpload1').on('uploadEnd', function (event) {
+                var args = event.args;
+                var fileName = args.file;
+                var serverResponce = args.response;
+                $('#eventsPanel1').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
+                    fileName + ';<br />' + 'server response: ' + serverResponce + '<br />');
+                if(serverResponce.indexOf("!") != "-1")
+                {
+                    thongbao("", serverResponce, "success");
+                }
+                else
+                {
+                    thongbao("", serverResponce, "danger");
+                }
+            });
+            document.getElementById("tendiadiem").innerHTML = ten;
         }
 
         $(document).ready(function () {
@@ -254,10 +304,10 @@
 
                 columns: [
                     { text: "<?php echo lang('key') ?>", dataField: 'DD_MA', width: "5%", cellsalign: 'center', align: "center", },
-                    { text: "<?php echo lang('category') ?>", dataField: 'DM_TEN', width: "17%", /*filtertype: 'checkedlist'*/ },
+                    { text: "<?php echo lang('category') ?>", dataField: 'DM_TEN', width: "15%", /*filtertype: 'checkedlist'*/ },
                     /*{ text: 'Mã người dùng', dataField: 'ND_MA', width: "10%" },*/
-                    { text: "<?php echo lang('name') ?>", dataField: 'DD_TEN', width: "22.5%" },
-                    { text: "<?php echo lang('activate') ?>", dataField: 'DD_DUYET', width: "12%", columntype: 'textbox', filtertype: 'textbox', align: "center",
+                    { text: "<?php echo lang('name') ?>", dataField: 'DD_TEN', width: "22%" },
+                    { text: "<?php echo lang('activate') ?>", dataField: 'DD_DUYET', width: "11%", columntype: 'textbox', filtertype: 'textbox', align: "center",
                         cellsrenderer: function (row, column, value) {
                             var tt = "";
                             if(value == "0")
@@ -295,6 +345,15 @@
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.DD_MA;
                             return "<button class='icon' onclick='chitiet(\""+id+"\")'><i class='fa fa-info-circle fa-fw'></i></button>";
+                        }
+                    },
+                    { text: "<?php echo lang('upload_photos') ?>", datafield: 'img', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
+                            var offset = $("#jqxgrid").offset();
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.DD_MA;
+                            var ten = dataRecord.DD_TEN;
+                            return "<button class='icon' data-toggle=\"modal\" data-target=\"#modalthemanh\" onclick='taianh(\""+id+"\",\""+ten+"\")'><i class='fa fa-upload fa-fw'></i></button>";
                         }
                     },
                     { text: "<?php echo lang('activated') ?>", datafield: 'blocked', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
@@ -352,5 +411,29 @@
         <div id="jqxgrid">
         </div>
     </div>
+
+    <div> <!-- modal them anh dia diem -->
+        <!-- Modal -->
+        <div id="modalthemanh" class="modal fade" role="dialog" tabindex="-1">
+          <div class="modal-dialog" style="width: 50%; ">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="height: 400px;">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-upload fa-fw"></i> <b id="tendiadiem"></b></h4>
+              </div>
+              <div style="overflow: auto; height: 300px;" class="modal-body">
+                  <div id="jqxFileUpload1">
+                  </div>
+                  <div id="eventsPanel1">
+                  </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </div> <!-- dong modal binh luan -->
+
 </body>
 </html>

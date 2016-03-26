@@ -218,14 +218,56 @@
         </a>
     </section><!--/#main-slider-->
 
-    
+    <section id="feature" >
+        <div class="container">
+           <div class="center wow fadeInDown">
+                <h2>Được xem nhiều nhất</h2>
+                <p class="lead">Các địa điểm được nhiều người quan tâm nhất <br> Số lượt xem cao nhất</p>
+            </div>
+
+            <div style="margin-top: -50px;" class="row">
+                <div class="features">
+                    <?php 
+                        foreach ($luotxem as $row) {
+                            $hinh = $row['HA_TEN'];
+                            $madiadiem = $row['DD_MA'];
+                            $tendiadiem = $row['DD_TEN'];
+                            $tinhten = $row['T_TEN'];
+                            $huyenten = $row['H_TEN'];
+                    ?>
+                    <div style="height: 160px; " class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+
+                        <div id="collapseOne1" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                  <div class="media accordion-inner">
+                                        <div class="pull-left">
+                                            <img style="width: 150px; height: 130px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $madiadiem; ?>">
+                                                <?php echo $tendiadiem; ?>
+                                            </a>
+                                             <p style="font-style: italic; font-size: 13px;"><?php echo $huyenten; ?> >> <?php echo $tinhten; ?></p>
+                                        </div>
+                                  </div>
+                              </div>
+                            </div>
+
+                    </div><!--/.col-md-4-->
+                    <?php 
+                        }
+                    ?>
+                </div><!--/.services-->
+            </div><!--/.row-->    
+        </div><!--/.container-->
+    </section><!--/#feature-->
 
     <section id="recent-works">
         <div class="container">
             <div class="center wow fadeInDown">
                 <a name="name"></a>
                 <h2><?php echo lang('some_prominent_locations') ?></h2>
-                <!-- <p class="lead">Một số địa điểm nổi bậc</p> -->
+                <p class="lead">Gồm các địa điểm mới và vừa mới được cập nhật thông tin</p>
             </div>
 
             <div class="row">
@@ -273,19 +315,20 @@
 
                     ?>
 
-                    <div class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms">
-                        <table>
+                    <div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <table style="height: 180px; width: 150px;" border="0">
                                 <tr>
-                                    <td width="150">
-                                        <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" rel="prettyPhoto">
+                                    <td height="100" width="150">
+                                        <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>">
                                             <img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>    
-                                    <td>
-                                        <b style="text-transform: capitalize; font-size: 12px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b>
-                                        <p style="font-size: 12px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
+                                    <td valign="top">
+                                        <div style="max-height: 40px; overflow: hidden;">
+                                        <b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b> </div>
+                                        <p style="font-size: 13px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
                                     </td>
                                 </tr>
                             </table>

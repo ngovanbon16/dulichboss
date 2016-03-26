@@ -440,6 +440,25 @@
                 }
             });
 
+            var bool = true;
+            $("#btngioithieu").click(function(){
+                $('#gioithieu').toggle(1000,function(){
+                    if(bool)
+                    {
+                      document.getElementById("btngioithieu").className = 'fa fa-minus-circle fa-fw';
+                      bool = false;
+                    }
+                    else
+                    {
+                      document.getElementById("btngioithieu").className = 'fa fa-plus-circle fa-fw';
+                      bool = true;
+                    }
+                    
+                    $(this).css('overflow','inherit');
+                    $(this).css('height','auto');
+                    $(this).css('text-align','justify');
+                });
+            });
         });
 
         function xemhinhanh()
@@ -645,6 +664,17 @@
       border-width: 0px;
       display: none;
     }
+    .gioithieu0{
+       width: 100%; 
+       height: 45px; 
+       overflow: hidden;
+       text-align: justify;
+       display: none;
+    }
+    .gioithieu1{
+       height: auto; 
+       overflow: inherit;
+    }
 </style>
 
 </head><!--/head-->
@@ -699,8 +729,10 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-10 blog-content">
-                                    <p><b><?php echo lang('introduce') ?>:</b> 
-                                      <i>
+                                    <p>
+                                      <i style="cursor: pointer;" id="btngioithieu" class="fa fa-plus-circle fa-fw"></i>
+                                      <b><?php echo lang('introduce') ?>:</b> <?php echo lang('click_the_plus_icon_to_view_the_contents_of_introducing'); ?> 
+                                      <p id="gioithieu" class="gioithieu0">
                                         <?php 
                                           $gioithieu = $info["DD_GIOITHIEU"];
                                           if($gioithieu == "")
@@ -709,7 +741,8 @@
                                           }
                                           echo $gioithieu;
                                         ?>
-                                      </i></b></p>
+                                      </p>
+                                    </p>
                                     <p>
                                         <i class="fa fa-road fa-fw"></i> <b> <?php echo lang('address') ?> </b>
                                         <?php echo $info['DD_DIACHI']; ?> 

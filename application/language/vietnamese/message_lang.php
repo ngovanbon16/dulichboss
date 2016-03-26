@@ -175,9 +175,9 @@ $lang['space'] = "Không gian";
 $lang['submit'] = "Gửi";
 $lang['average'] = "Trung bình";
 $lang['upload_photos'] = "Tải ảnh";
-$lang['check_in'] = "Đã đến";
+$lang['check_in'] = "Đã đến tham quan";
 $lang['love'] = "Yêu thích";
-$lang['custom'] = "Muốn đến";
+$lang['custom'] = "Muốn đến tham quan";
 $lang['bad'] = "Kém";
 $lang['medium'] = "Trung bình";
 $lang['rather'] = "Khá";
@@ -200,4 +200,5 @@ Có thể liên hệ với chúng tôi bất cứ lúc nào và bất cứ nơi 
 $lang['search_with_keyword'] = "Tìm kiếm với từ khóa";
 $lang['keyword'] = "Từ khóa";
 $lang['result'] = "Kết quả";
+$lang['click_the_plus_icon_to_view_the_contents_of_introducing'] = "Nhấp vào biểu tượng dấu cộng để xem nội dung giới thiệu.";
 ?>
