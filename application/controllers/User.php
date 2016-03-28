@@ -58,105 +58,116 @@ class User extends CI_Controller
 		if(isset($this->session->userdata['id']))
 		{
 			$id = $this->session->userdata['id'];
-		}
 		
-		$data = $this->_data['info'] = $this->mnguoidung->getID($id);
+			$data = $this->_data['info'] = $this->mnguoidung->getID($id);
 
-		$matinh = $data["T_MA"];
-		$mahuyen = $data["H_MA"];
-		$maxa = $data["X_MA"];
+			$matinh = $data["T_MA"];
+			$mahuyen = $data["H_MA"];
+			$maxa = $data["X_MA"];
 
-		$this->load->model('mtinh');
-		$this->load->model('mhuyen');
-		$this->load->model('mxa');
+			$this->load->model('mtinh');
+			$this->load->model('mhuyen');
+			$this->load->model('mxa');
 
-		$tinh = $this->mtinh->getID($matinh);//lay ten tinh
-       	$this->_data['tentinh'] = $tinh["T_TEN"];
+			$tinh = $this->mtinh->getID($matinh);//lay ten tinh
+	       	$this->_data['tentinh'] = $tinh["T_TEN"];
 
-		$huyen = $this->mhuyen->getten($matinh, $mahuyen);//lay ten huyen
-       	$this->_data['tenhuyen'] = $huyen["H_TEN"];
+			$huyen = $this->mhuyen->getten($matinh, $mahuyen);//lay ten huyen
+	       	$this->_data['tenhuyen'] = $huyen["H_TEN"];
 
-       	$xa = $this->mxa->getten($matinh, $mahuyen, $maxa);//lay ten xa
-       	$this->_data['tenxa'] = $xa["X_TEN"];
+	       	$xa = $this->mxa->getten($matinh, $mahuyen, $maxa);//lay ten xa
+	       	$this->_data['tenxa'] = $xa["X_TEN"];
 
-		$this->_data['title'] = lang('account');
-        $this->_data['subview'] = 'user/nguoidung_view';
-        $this->load->view('user/main.php', $this->_data);
+			$this->_data['title'] = lang('account');
+	        $this->_data['subview'] = 'user/nguoidung_view';
+	        $this->load->view('user/main.php', $this->_data);
+    	}
+    	else
+    	{
+    		redirect("./");
+    	}
 	}
 
 	public function edit($id)
 	{
-		$this->_data['info'] = $this->mnguoidung->getID($id);
-   		$info = $this->mnguoidung->getID($id);
+		if(isset($this->session->userdata['id']))
+		{
+			$this->_data['info'] = $this->mnguoidung->getID($id);
+	   		$info = $this->mnguoidung->getID($id);
 
-   		$this->_data['indexnhomquyen'] = "-1";
-   		$this->_data['indextinh'] = "-1";
-   		$this->_data['indexhuyen'] = "-1";
-   		$this->_data['indexxa'] = "-1";
+	   		$this->_data['indexnhomquyen'] = "-1";
+	   		$this->_data['indextinh'] = "-1";
+	   		$this->_data['indexhuyen'] = "-1";
+	   		$this->_data['indexxa'] = "-1";
 
-   		$this->load->model("mnhomquyen");
-   		$query = $this->mnhomquyen->getList();
-        $manhomquyen = $info["NQ_MA"]; 
-        $i = -1;
-        if($query != false)
-        {
-            foreach ($query as $item) {
-            	$i++;
-            	if($manhomquyen == $item["NQ_MA"])
-           		{
-                	$this->_data['indexnhomquyen'] = $i;
-                }
-            }
-    	}
+	   		$this->load->model("mnhomquyen");
+	   		$query = $this->mnhomquyen->getList();
+	        $manhomquyen = $info["NQ_MA"]; 
+	        $i = -1;
+	        if($query != false)
+	        {
+	            foreach ($query as $item) {
+	            	$i++;
+	            	if($manhomquyen == $item["NQ_MA"])
+	           		{
+	                	$this->_data['indexnhomquyen'] = $i;
+	                }
+	            }
+	    	}
 
-   		$this->load->model("mtinh");
-   		$query = $this->mtinh->getList();
-        $matinh = $info["T_MA"]; 
-        $i = -1;
-        if($query != false)
-        {
-            foreach ($query as $item) {
-            	$i++;
-            	if($matinh == $item["T_MA"])
-           		{
-                	$this->_data['indextinh'] = $i;
-                }
-            }
-    	}
+	   		$this->load->model("mtinh");
+	   		$query = $this->mtinh->getList();
+	        $matinh = $info["T_MA"]; 
+	        $i = -1;
+	        if($query != false)
+	        {
+	            foreach ($query as $item) {
+	            	$i++;
+	            	if($matinh == $item["T_MA"])
+	           		{
+	                	$this->_data['indextinh'] = $i;
+	                }
+	            }
+	    	}
 
-        $this->load->model("mhuyen");
-   		$query = $this->mhuyen->getid($matinh);
-        $mahuyen = $info["H_MA"]; 
-        $i = -1;
-        if($query != false)
-        {
-            foreach ($query as $item) {
-            	$i++;
-            	if($mahuyen == $item["H_MA"])
-           		{
-                	$this->_data['indexhuyen'] = $i;
-                }
-            }
-    	}
+	        $this->load->model("mhuyen");
+	   		$query = $this->mhuyen->getid($matinh);
+	        $mahuyen = $info["H_MA"]; 
+	        $i = -1;
+	        if($query != false)
+	        {
+	            foreach ($query as $item) {
+	            	$i++;
+	            	if($mahuyen == $item["H_MA"])
+	           		{
+	                	$this->_data['indexhuyen'] = $i;
+	                }
+	            }
+	    	}
 
-        $this->load->model("mxa");
-   		$query = $this->mxa->getid($matinh , $mahuyen);
-        $mahuyen = $info["X_MA"]; 
-        $i = -1;
-        if($query != false)
-        {
-            foreach ($query as $item) {
-            	$i++;
-            	if($mahuyen == $item["X_MA"])
-           		{
-                	$this->_data['indexxa'] = $i;
-                }
-            }
-    	}
+	        $this->load->model("mxa");
+	   		$query = $this->mxa->getid($matinh , $mahuyen);
+	        $mahuyen = $info["X_MA"]; 
+	        $i = -1;
+	        if($query != false)
+	        {
+	            foreach ($query as $item) {
+	            	$i++;
+	            	if($mahuyen == $item["X_MA"])
+	           		{
+	                	$this->_data['indexxa'] = $i;
+	                }
+	            }
+	    	}
 
-        $this->_data['title'] = lang("edit").' '.lang('profile');
-        $this->_data['subview'] = 'user/suand_view';
-        $this->load->view('user/main.php', $this->_data);
+	        $this->_data['title'] = lang("edit").' '.lang('profile');
+	        $this->_data['subview'] = 'user/suand_view';
+	        $this->load->view('user/main.php', $this->_data);
+	    }
+	    else
+	    {
+	    	redirect("./");
+	    }
 	}
 
 	public function update()
@@ -308,11 +319,53 @@ class User extends CI_Controller
 
 	public function addnewplace()
 	{
-		$this->_data['map'] = $this->map("");
-		$this->_data['title'] = lang('add_new_place');
-        $this->_data['subview'] = 'user/themdiadiem_view';
-        $this->load->view('user/main.php', $this->_data);
+		if(isset($this->session->userdata['id']))
+		{
+			$this->_data['map'] = $this->map("");
+			$this->_data['title'] = lang('add_new_place');
+	        $this->_data['subview'] = 'user/themdiadiem_view';
+	        $this->load->view('user/main.php', $this->_data);
+	    }
+	    else
+	    {
+	    	redirect('./');
+	    }
 	}
+
+	public function poster($id)
+	{
+		$this->load->model("mdiadiem");
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_MA = '$id' ";
+
+		// Kết nối Database, thực hiện câu truy vấn
+		$result = $this->mdiadiem->getdata($query);
+
+		$this->_data['map'] = $this->mapuser($id, $result["DD_VITRI"]);
+
+		$this->_data['data'] = $result;
+		$this->_data['title'] = lang('poster');
+        $this->_data['subview'] = 'user/poster_view';
+        //$this->load->view('user/main.php', $this->_data);
+        $this->load->view('user/poster_view', $this->_data);
+	}
+
+	function mapuser($id, $local)
+	{
+		$this->load->library('googlemaps');
+
+		$config = array();
+		$config['center'] = $local;
+		$config['zoom'] = '5';
+
+		$this->googlemaps->initialize($config);
+
+		$marker = array();
+		$marker['position'] = $local;
+		$this->googlemaps->add_marker($marker);
+		
+		return $this->googlemaps->create_map();
+	}
+
 }
 
 ?>

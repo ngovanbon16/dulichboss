@@ -201,4 +201,5 @@ $lang['search_with_keyword'] = "Tìm kiếm với từ khóa";
 $lang['keyword'] = "Từ khóa";
 $lang['result'] = "Kết quả";
 $lang['click_the_plus_icon_to_view_the_contents_of_introducing'] = "Nhấp vào biểu tượng dấu cộng để xem nội dung giới thiệu.";
+$lang['poster'] = "Áp phích";
 ?>

@@ -221,6 +221,7 @@
     <section id="feature" >
         <div class="container">
            <div class="center wow fadeInDown">
+                <a name="name"></a>
                 <h2>Được xem nhiều nhất</h2>
                 <p class="lead">Các địa điểm được nhiều người quan tâm nhất <br> Số lượt xem cao nhất</p>
             </div>
@@ -265,7 +266,6 @@
     <section id="recent-works">
         <div class="container">
             <div class="center wow fadeInDown">
-                <a name="name"></a>
                 <h2><?php echo lang('some_prominent_locations') ?></h2>
                 <p class="lead">Gồm các địa điểm mới và vừa mới được cập nhật thông tin</p>
             </div>

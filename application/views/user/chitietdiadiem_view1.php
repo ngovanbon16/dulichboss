@@ -105,7 +105,7 @@
                 { 
                   ?>
                     //setTimeout("location.href = '<?php echo base_url(); ?>index.php/login';",0);
-                    thongbao("", "Vui lòng đăng nhập để bình luận bài viết", "danger");
+                    thongbao("", "<?php echo lang('please').' '.lang('login'); ?>", "danger");
                   <?php
                 }
                 else
@@ -653,6 +653,15 @@
         -webkit-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
         -o-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
     }
+    .imggoiy{
+        width: 100px;
+        height: 50px;
+        border-radius: 2px;
+        box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+        -moz-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+        -webkit-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+        -o-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+    }
     .li{
       cursor: pointer;
     }
@@ -677,13 +686,77 @@
     }
 </style>
 
+<style type="text/css">
+
+.scrollpanel{
+  width:200px;
+  height:600px;
+  overflow:hidden;
+}
+
+.scrollpanel img{
+  display:block;
+  width:200px;
+  height:200px;
+  border-top:1px solid black;
+}
+
+.scrollpanel img:first-child{
+  border-top:none;
+}
+
+.scrollcontent {
+  position:relative;
+  animation:Scrolling 15s linear infinite;
+  -o-animation:Scrolling 15s linear infinite;
+  -ms-animation:Scrolling 15s linear infinite;
+  -moz-animation:Scrolling 15s linear infinite;
+  -webkit-animation:Scrolling 15s linear infinite;
+    
+}
+
+.scrollcontent:hover{
+  animation-play-state:paused;
+  -o-animation-play-state:paused;
+  -ms-animation-play-state:paused;
+  -moz-animation-play-state:paused;
+  -webkit-animation-play-state:paused;  
+}
+
+@keyframes Scrolling {from{top:0px;} to{top:-605px;}}
+@-o-keyframes Scrolling {from{top:0px;} to{top:-605px;}}
+@-ms-keyframes Scrolling {from{top:0px;} to{top:-605px;}}
+@-moz-keyframes Scrolling {from{top:0px;} to{top:-605px;}}
+@-webkit-keyframes Scrolling {from{top:0px;} to{top:-605px;}}
+
+</style>
+
 </head><!--/head-->
 
 <body onload="onload();">
 
-    <section id="blog" class="container">
-        
+    <section style="margin-top: -50px;" id="blog" class="container">
+        <div style="margin-bottom: 20px; margin-top: 0px;">
+        <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="5">
 
+          <?php
+            foreach ($yeuthich as $row) {
+                $hinh1 = $row['HA_TEN'];
+                $ma1 = $row['DD_MA'];
+                $ten1 = $row['DD_TEN'];
+            ?>
+              <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma1; ?>">
+              <span style="margin-right: 20px;">
+                <span style="font-size: 13; width: 100px; overflow: hidden;"><?php echo $ten1; ?></span>
+               <img class="imggoiy" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>" /> 
+               </span>
+               </a>
+            <?php      
+            } 
+          ?>
+
+        </marquee>
+        </div>
         <?php 
           $madd = $info['DD_MA'];
           $anhdaidien = "anhdaidien.jpg";
@@ -830,11 +903,21 @@
                                 </ul>
                             </div>
                             <div class="media-body post_reply_content">
-                                <h3 style="text-transform: capitalize;"><?php echo $info["ND_HO"]." ".$info["ND_TEN"] ?></h3>
+                                <h3 style="text-transform: capitalize;"><?php echo $info["ND_HO"]." ".$info["ND_TEN"] ?> - <i><?php echo $info['DD_NGAYDANG']; ?></i></h3>
                                 <p class="lead">
-                                    <?php echo $info["DD_MOTA"] ?>
+                                    <?php 
+                                        echo $info["DD_MOTA"]; 
+                                        if($info["ND_FACE"] == "")
+                                        {
+                                          $face = lang('information_is_being_updated');
+                                        }
+                                        else
+                                        {
+                                          $face = $info["ND_FACE"];
+                                        }
+                                    ?>
                                 </p>
-                                <p><strong>Facebook:</strong> <a target="_blank" href="<?php echo $info["ND_FACE"] ?>"><?php echo $info["ND_FACE"] ?></a></p>
+                                <p><strong>Facebook:</strong> <a target="_blank" href="<?php echo $info["ND_FACE"] ?>"><?php echo $face; ?></a></p>
                             </div>
                         </div> 
                         
@@ -986,8 +1069,19 @@
                                             </div>
                                         </div>
 
+                                        <?php 
+                                          if($this->session->userdata('id') == "")
+                                          { 
+                                            $idcomment = "#modaldangnhap";
+                                          }
+                                          else
+                                          {
+                                            $idcomment = "";
+                                          }
+                                        ?>
+
                                         <div class="form-group">
-                                            <button type="submit" id="btngui" class="btn btn-primary btn-lg" required="required"><?php echo lang('submit') ?></button>
+                                            <button data-toggle='modal' data-target='<?php echo $idcomment; ?>' type="submit" id="btngui" class="btn btn-primary btn-lg" required="required"><?php echo lang('submit') ?></button>
                                         </div>
                                     </div>
                                 </div>
@@ -1065,30 +1159,49 @@
                                         <span class="pull-right">(<label><?php echo $countbinhluan ?></label>)</span>
                                       </a>
                                     </li>
-                                    <li class="li" data-toggle='modal' data-target='#myModal'>
+                                    <?php 
+                                      if($this->session->userdata('id') == "")
+                                      { 
+                                        $iduploadimg = "#modaldangnhap";
+                                        $checkin = $yeuthich = $muonden = "#modaldangnhap";
+                                      }
+                                      else
+                                      {
+                                        $iduploadimg = "#myModal";
+                                        $checkin = "checkin";
+                                        $yeuthich = "yeuthich";
+                                        $muonden = "muonden";
+                                      }
+                                    ?>
+                                    <li class="li" data-toggle='modal' data-target='<?php echo $iduploadimg; ?>'>
                                         <a>
                                           <i class="fa fa-picture-o fa-fw"></i> <?php echo lang('upload_photos') ?> 
                                           <span class="pull-right">(<label><?php echo $counthinhanh ?></label>)</span>
                                         </a>
                                     </li>
-                                    <li id='checkin' class="li">
+                                    <li id='<?php echo $checkin; ?>' class="li" data-toggle='modal' data-target='<?php echo $checkin; ?>'>
                                        <i id="iconcheckin" class="fa fa-square-o fa-fw"></i> <?php echo lang('check_in') ?>
                                         <span class="pull-right">(<label id="countcheckin"><?php echo $countcheckin ?></label>)</span>
                                         <input class="value" type="text" value="0" id="checkinvalue" />
                                     </li>
-                                    <li id='yeuthich' class="li">
+                                    <li id='<?php echo $yeuthich; ?>' class="li" data-toggle='modal' data-target='<?php echo $yeuthich; ?>'>
                                         <i id="iconyeuthich" class="fa fa-heart-o fa-fw"></i> <?php echo lang('love') ?>
                                         <span class="pull-right">(<label id="countyeuthich"><?php echo $countyeuthich ?></label>)</span>
                                         <input class="value" type="text" value="0" id="yeuthichvalue" />
                                     </li>
-                                    <li id='muonden' class="li">
+                                    <li id='<?php echo $muonden; ?>' class="li" data-toggle='modal' data-target='<?php echo $muonden; ?>'>
                                         <i id="iconmuonden" class="fa fa-star-o fa-fw"></i> <?php echo lang('custom') ?>
                                         <span class="pull-right">(<label id="countmuonden"><?php echo $countmuonden ?></label>)</span>
                                         <input class="value" type="text" value="0" id="muondenvalue" />
                                     </li>
                                     <li>
-                                         <i id="iconluotxem" class="fa fa-eye"></i> <?php echo lang('views') ?>
+                                         <i id="iconluotxem" class="fa fa-eye fa-fw"></i> <?php echo lang('views') ?>
                                         <span class="pull-right">(<label id="countluotxem"></label>)</span>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>index.php/user/poster/<?php echo $info['DD_MA']; ?>">
+                                          <i class="fa fa-file-o fa-fw"> </i> <?php echo lang('poster') ?><span class="pull-right"></span>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -1131,18 +1244,32 @@
                      
 
                     <!-- <div class="widget categories">
-                        <h3>Categories</h3>
+                        <h3>Được nhiều người yêu thích</h3>
                         <div class="row">
                             <div class="col-sm-6">
-                                <ul class="blog_category">
-                                    <li><a href="#">Computers <span class="badge">04</span></a></li>
-                                    <li><a href="#">Smartphone <span class="badge">10</span></a></li>
-                                    <li><a href="#">Gedgets <span class="badge">06</span></a></li>
-                                    <li><a href="#">Technology <span class="badge">25</span></a></li>
-                                </ul>
+                              <div class="scrollpanel">
+                                <div class="scrollcontent">
+                                  <?php
+                                    foreach ($yeuthich as $row) {
+                                        $hinh1 = $row['HA_TEN'];
+                                    ?>
+                                       <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>" />
+                                    <?php      
+                                    } 
+                                  ?>
+                                  <?php
+                                    foreach ($yeuthich as $row) {
+                                        $hinh1 = $row['HA_TEN'];
+                                    ?>
+                                       <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>" />
+                                    <?php      
+                                    } 
+                                  ?>
+                                </div>
+                              </div>  
                             </div>
                         </div>                     
-                    </div> --><!--/.categories-->
+                    </div>  -->
     				
                 </aside>     
 

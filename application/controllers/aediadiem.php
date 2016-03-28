@@ -492,6 +492,11 @@ class Aediadiem extends CI_Controller
        	$diem = $this->mbinhluan->diemtrungbinh($id, "BL_KHONGGIAN");
        	$this->_data['diemkhonggian'] = round($diem['BL_KHONGGIAN'], 1); 
 
+       	$query = "SELECT *, count(*) count FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' GROUP BY diadiem.DD_MA  ORDER BY count DESC LIMIT 0, 5";
+
+		// Kết nối Database, thực hiện câu truy vấn
+		$this->_data['yeuthich'] = $this->mdiadiem->gettimkiem($query);
+
         $this->_data['subview'] = "user/chitietdiadiem_view1";
         $this->_data['title'] = "Địa điểm";
        	$this->load->view("user/main.php", $this->_data);
