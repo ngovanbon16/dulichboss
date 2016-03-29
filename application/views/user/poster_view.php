@@ -221,17 +221,18 @@
 </head>
 <!-- <input type="button" value="Print Div" onclick="PrintElem('#mydiv')" /> -->
 
-<div id="dialog" title="Basic dialog">
+<div id="dialog" title="CSS color">
   	<div class="demoPanel">
-		Inline (using a DIV tag):<br/><br/>
+		Chọn màu cho poster:<br/><br/>
 		<div id="cpDiv"></div>
 		<br/>
 		<div class="demo-links">
-			<a href="#" id="getVal2">Get Value</a>
+			<a href="#" id="getVal2">Get Value</a> | 
 			<a href="#" id="setVal2">Set Value</a><br/>
-			<a href="#" id="enable2">Enable</a>
+			<a href="#" id="enable2">Enable</a> | 
 			<a href="#" id="disable2">Disable</a>
-			<a href="#" id="destroy2">Destroy</a><br/><br/>
+			<!-- <a href="#" id="destroy2">Destroy</a> -->
+			<br/><br/>
 		</div> 
 	</div>
 </div>

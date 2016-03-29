@@ -497,6 +497,10 @@ class Aediadiem extends CI_Controller
 		// Kết nối Database, thực hiện câu truy vấn
 		$this->_data['yeuthich'] = $this->mdiadiem->gettimkiem($query);
 
+		$query = "SELECT * FROM baiviet WHERE DD_MA = '$id' AND BV_DUYET = '1' ORDER BY BV_NGAYDANG";
+		$this->load->model('mbaiviet');
+		$this->_data['baiviet'] = $this->mbaiviet->gettimkiem($query);
+
         $this->_data['subview'] = "user/chitietdiadiem_view1";
         $this->_data['title'] = "Địa điểm";
        	$this->load->view("user/main.php", $this->_data);

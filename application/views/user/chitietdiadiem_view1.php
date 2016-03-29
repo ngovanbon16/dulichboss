@@ -3,14 +3,14 @@
 <head>
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
-    
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.arctic.css" type="text/css" />
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/demos.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxslider.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxbuttons.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxpanel.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxfileupload.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxrating.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
 
     <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-notify.js"></script>
@@ -52,51 +52,26 @@
 
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
-            function displayEvent(event) {
-                var eventData = event.type;
-                eventData += ': ' + event.args.value;
-                $('#events').jqxPanel('clearContent');
-                $('#events').jqxPanel('prepend', '<div class="item" style="margin-top: 5px;">' + event.args.value + '</div>');
-                var tb = ($("#BL_PHUCVU").val() + $("#BL_KHONGGIAN").val() + event.args.value)/3;
-                $("#diemtrungbinh").html(tb.toFixed(1));
-            }
 
-            $('#events').jqxPanel({  height: '30px', width: '10px' });
-            $('#jqxSlider div').css('margin', '5px');
-            //change event
-            $('#BL_CHATLUONG').jqxSlider({ tooltip: true, showButtons: false, value: 5, mode: 'fixed', width: '150' });
-            $('#BL_CHATLUONG').on('change', function (event) {
-                displayEvent(event);
+            $("#BL_CHATLUONG").jqxRating({ width: "100%", height: 35, theme: 'classic'});
+            $("#BL_CHATLUONG").on('change', function (event) {
+                var diem = event.value*2;
+                var tb = ($("#BL_PHUCVU").val()*2 + $("#BL_KHONGGIAN").val()*2 + diem)/3;
+                $("#diemtrungbinh").html(tb.toFixed(1));
             });
 
-            function displayEvent1(event) {
-                var eventData = event.type;
-                eventData += ': ' + event.args.value;
-                $('#events1').jqxPanel('clearContent');
-                $('#events1').jqxPanel('prepend', '<div class="item" style="margin-top: 5px;">' + event.args.value + '</div>');
-                var tb = ($("#BL_CHATLUONG").val() + $("#BL_KHONGGIAN").val() + event.args.value)/3;
+            $("#BL_PHUCVU").jqxRating({ width: "100%", height: 35, theme: 'classic'});
+            $("#BL_PHUCVU").on('change', function (event) {
+                var diem = event.value*2;
+                var tb = ($("#BL_CHATLUONG").val()*2 + $("#BL_KHONGGIAN").val()*2 + diem)/3;
                 $("#diemtrungbinh").html(tb.toFixed(1));
-            }
-            $('#events1').jqxPanel({  height: '30px', width: '10px' });
-            //change event
-            $('#BL_PHUCVU').jqxSlider({ tooltip: true, showButtons: false, value: 5, mode: 'fixed', width: '150' });
-            $('#BL_PHUCVU').on('change', function (event) {
-                displayEvent1(event);
             });
 
-            function displayEvent2(event) {
-                var eventData = event.type;
-                eventData += ': ' + event.args.value;
-                $('#events2').jqxPanel('clearContent');
-                $('#events2').jqxPanel('prepend', '<div class="item" style="margin-top: 5px;">' + event.args.value + '</div>');
-                var tb = ($("#BL_CHATLUONG").val() + $("#BL_PHUCVU").val() + event.args.value)/3;
+            $("#BL_KHONGGIAN").jqxRating({ width: "100%", height: 35, theme: 'classic'});
+            $("#BL_KHONGGIAN").on('change', function (event) {
+                var diem = event.value*2;
+                var tb = ($("#BL_CHATLUONG").val()*2 + $("#BL_PHUCVU").val()*2 + diem)/3;
                 $("#diemtrungbinh").html(tb.toFixed(1));
-            }
-            $('#events2').jqxPanel({  height: '30px', width: '10px' });
-            //change event
-            $('#BL_KHONGGIAN').jqxSlider({ tooltip: true, showButtons: false, value: 5, mode: 'fixed', width: '150' });
-            $('#BL_KHONGGIAN').on('change', function (event) {
-                displayEvent2(event);
             });
 
             $("#btngui").click(function(){
@@ -136,15 +111,51 @@
                 document.getElementById('BL_NOIDUNG').style.backgroundColor = "#FFF";
               }
 
+              if($("#BL_CHATLUONG").val() == "")
+              {
+                document.getElementById('BL_CHATLUONG').style.backgroundColor = "#F99";
+                $("#BL_CHATLUONG").focus();
+                thongbao("", "<?php echo lang('please').' '.lang('rating').'!' ?>", "danger");
+                return;
+              }
+              else
+              {
+                document.getElementById('BL_CHATLUONG').style.backgroundColor = "#FFF";
+              }
+
+              if($("#BL_PHUCVU").val() == "")
+              {
+                document.getElementById('BL_PHUCVU').style.backgroundColor = "#F99";
+                $("#BL_PHUCVU").focus();
+                thongbao("", "<?php echo lang('please').' '.lang('rating').'!' ?>", "danger");
+                return;
+              }
+              else
+              {
+                document.getElementById('BL_PHUCVU').style.backgroundColor = "#FFF";
+              }
+
+              if($("#BL_KHONGGIAN").val() == "")
+              {
+                document.getElementById('BL_KHONGGIAN').style.backgroundColor = "#F99";
+                $("#BL_KHONGGIAN").focus();
+                thongbao("", "<?php echo lang('please').' '.lang('rating').'!' ?>", "danger");
+                return;
+              }
+              else
+              {
+                document.getElementById('BL_KHONGGIAN').style.backgroundColor = "#FFF";
+              }
+
               var url, dta;
               url="<?php echo base_url(); ?>index.php/binhluan/add?t=" + Math.random();
               dta = {
                 "DD_MA" : "<?php echo $info['DD_MA']; ?>",
                 "BL_TIEUDE" : $("#BL_TIEUDE").val(),
                 "BL_NOIDUNG" : $("#BL_NOIDUNG").val(),
-                "BL_CHATLUONG" : $("#BL_CHATLUONG").val(),
-                "BL_PHUCVU" : $("#BL_PHUCVU").val(),
-                "BL_KHONGGIAN" : $("#BL_KHONGGIAN").val()
+                "BL_CHATLUONG" : $("#BL_CHATLUONG").val()*2,
+                "BL_PHUCVU" : $("#BL_PHUCVU").val()*2,
+                "BL_KHONGGIAN" : $("#BL_KHONGGIAN").val()*2
               };
               console.log(dta);
               $.post(url, dta, function(data, status){
@@ -1021,43 +1032,12 @@
       
                             <form style="margin-top: -30px;" id="main-contact-form" class="contact-form" name="contact-form" method="post" action="" role="form">
                                 <div class="row">
-                                    <div class="col-sm-5">
+                                    
+                                    <div class="col-sm-7">  
                                         <div class="form-group">
                                             <label><?php echo lang('title') ?> *</label>
                                             <input type="text" id="BL_TIEUDE" placeholder="<?php echo lang('input').' '.lang('title'); ?>" class="form-control" required="required">
-                                        </div>
-                                        <div class="form-group">
-                                            <label><?php echo lang('rating') ?> *</label> <br>
-                                            <?php echo lang('quality') ?>: 
-                                            <div style="margin-bottom: -20px;" id='jqxWidget'>
-                                              <div id="container">
-                                                  <div id='BL_CHATLUONG'></div>
-                                              </div> 
-                                              <div id="events" class="events"></div>    
-                                            </div>
-                                            <br>
-                                            <?php echo lang('service') ?>: 
-                                            <div style="margin-bottom: -20px;" id='jqxWidget1'>
-                                                <div id="container1">
-                                                    <div id='BL_PHUCVU'></div>
-                                                </div>     
-                                                <div id="events1" class="events"></div>
-                                            </div>
-                                            <br>
-                                            <?php echo lang('space') ?>: 
-                                            <div style="margin-bottom: -20px;" id='jqxWidget2'>
-                                                <div id="container2">
-                                                    <div id='BL_KHONGGIAN'></div>
-                                                </div>   
-                                                <div id="events2" class="events"></div>  
-                                            </div>
-                                            <br>
-                                            <div style="float: left; padding-right: 5px; font-weight: bolder;"><?php echo lang('average') ?>: </div>  
-                                            <div id="diemtrungbinh" style="float: left; font-weight: bolder;">5</div>
-                                            
-                                        </div>                   
-                                    </div>
-                                    <div class="col-sm-7">                        
+                                        </div>                      
                                         <div class="form-group">
                                             <label><?php echo lang('content') ?> *</label>
                                             <textarea name="message" id="BL_NOIDUNG" placeholder="<?php echo lang('input').' '.lang('content'); ?>" required="required" class="form-control" rows="8"></textarea>
@@ -1084,6 +1064,39 @@
                                             <button data-toggle='modal' data-target='<?php echo $idcomment; ?>' type="submit" id="btngui" class="btn btn-primary btn-lg" required="required"><?php echo lang('submit') ?></button>
                                         </div>
                                     </div>
+
+                                    <div class="col-sm-5">
+                                  
+                                        <div class="form-group">
+                                            <h2><label><?php echo lang('rating') ?> *</label></h2>
+                                            <div style="width: 100%; height: 40px;">
+                                              <b style="float: left; width: 40%;"><?php echo lang('quality') ?>: </b>
+                                              <div id='jqxWidget' style="float: right; width: 60%; font-size: 13px; font-family: Verdana;">
+                                                  <div id='BL_CHATLUONG'></div>
+                                              </div>
+                                            </div>
+
+                                            <div style="width: 100%; height: 40px;">
+                                              <b style="float: left; width: 40%;"><?php echo lang('service') ?>: </b>
+                                              <div id='jqxWidget1' style="float: right; width: 60%; font-size: 13px; font-family: Verdana;">
+                                                  <div id='BL_PHUCVU'></div>
+                                              </div>
+                                            </div>
+
+                                            <div style="width: 100%; height: 40px;">
+                                              <b style="float: left; width: 40%;"><?php echo lang('space') ?>: </b>
+                                              <div id='jqxWidget2' style="float: right; width: 60%; font-size: 13px; font-family: Verdana;">
+                                                  <div id='BL_KHONGGIAN'></div>
+                                              </div>
+                                            </div>
+                                            <div style="width: 100%; height: 40px;">
+                                              <div style="width: 40%; float: left; padding-right: 5px; font-weight: bolder;"><?php echo lang('average') ?>: </div>  
+                                              <div id="diemtrungbinh" style="width: 60%; float: left; font-weight: bolder; font-size: 20px; font-style: italic;">0.0</div>
+                                            </div>
+                                            
+                                        </div>                   
+                                    </div>
+
                                 </div>
                             </form>     
                         </div><!--/#contact-page-->
@@ -1200,13 +1213,41 @@
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/user/poster/<?php echo $info['DD_MA']; ?>">
-                                          <i class="fa fa-file-o fa-fw"> </i> <?php echo lang('poster') ?><span class="pull-right"></span>
+                                          <i class="fa fa-print fa-fw"> </i> <?php echo lang('poster') ?><span class="pull-right"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>index.php/baiviet/thembaiviet/<?php echo $info['DD_MA']; ?>">
+                                          <i class="fa fa-pencil fa-fw"> </i> <?php echo lang('posts') ?><span class="pull-right"></span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>                     
                     </div><!--/.archieve-->
+
+                    <div style="margin-top: -30px;" class="widget categories">
+                        <h3><?php echo lang('posts') ?></h3>
+                        <div class="row">
+                            <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="5">
+                              <?php
+                                foreach ($baiviet as $row) {
+                                    $BV_MA = $row['BV_MA'];
+                                    $BV_TIEUDE = $row['BV_TIEUDE'];
+                                ?>
+                                  <a href="<?php echo base_url(); ?>index.php/baiviet/detail/<?php echo $BV_MA; ?>">
+                                  <span style="margin-right: 20px;">
+                                    <span style="font-size: 13; width: 100px; overflow: hidden;">
+                                      <?php echo $BV_TIEUDE; ?>
+                                    </span>
+                                   </span>
+                                   </a>
+                                <?php      
+                                } 
+                              ?>
+                            </marquee>  
+                        </div>                     
+                    </div><!--/.recent comments-->
 
                     <div style="margin-top: -30px;" class="widget blog_gallery">
                         <h3><?php echo lang('photos') ?></h3>
