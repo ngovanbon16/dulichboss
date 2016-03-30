@@ -59,7 +59,8 @@
 	    		data = {
 	    			"DD_MA" : "<?php echo $DD_MA; ?>",
 	    			"BV_TIEUDE" : BV_TIEUDE,
-	    			"BV_NOIDUNG" : BV_NOIDUNG
+	    			"BV_NOIDUNG" : BV_NOIDUNG,
+	    			"BV_DUYET" : '0'
 	    		};
 	    		console.log(data);
 	    		$.post(url, data, function(data, status){

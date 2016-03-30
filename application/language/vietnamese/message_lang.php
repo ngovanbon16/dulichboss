@@ -203,4 +203,6 @@ $lang['result'] = "Kết quả";
 $lang['click_the_plus_icon_to_view_the_contents_of_introducing'] = "Nhấp vào biểu tượng dấu cộng để xem nội dung giới thiệu.";
 $lang['poster'] = "Áp phích";
 $lang['posts'] = "Bài viết";
+$lang['no_posts_yet'] = "Không có bài đăng nào";
+$lang['related_places'] = "Các địa điểm liên quan";
 ?>

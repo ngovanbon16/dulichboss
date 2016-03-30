@@ -66,6 +66,15 @@ class Mbaiviet extends CI_Model {
         return $this->db->count_all($this->_table); 
     }
 
+    public function countid($id){ // dem theo dia diem
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where("DD_MA", $id);
+        $this->db->where("BV_DUYET", "1");
+        $query = $this -> db -> get();           
+        return $query->num_rows(); 
+    }
+
     public function countdaduyet()
     {
         $this->db->select('*');
@@ -105,5 +114,22 @@ class Mbaiviet extends CI_Model {
         $this->db->where("BV_MA", $id);
         return $this->db->update($this->_table, $data_update);
     }
+
+    function testMa($ma) 
+    {
+        $this -> db -> select('BV_MA');
+        $this -> db -> from($this->_table);
+        $this -> db -> where('BV_MA', $ma);
+        $this -> db -> limit(1);
+        $query = $this -> db -> get();           
+        if($query -> num_rows() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }    
 }
 ?>

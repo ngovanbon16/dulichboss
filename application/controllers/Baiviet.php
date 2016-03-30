@@ -13,9 +13,16 @@ class Baiviet extends CI_Controller
 
 	public function index()
 	{
-		/*$this->_data['subview'] = 'user/baiviet_view';
+		$this->_data['subview'] = 'admin/baiviet_view';
        	$this->_data['title'] = lang('posts');
-       	$this->load->view('user/main.php', $this->_data);*/
+       	$this->load->view('main.php', $this->_data);
+	}
+
+	public function theodiadiem($id)
+	{
+		$this->_data['subview'] = 'admin/baiviet_view';
+       	$this->_data['title'] = lang('posts');
+       	$this->load->view('main.php', $this->_data);
 	}
 
 	public function thembaiviet($id)
@@ -30,11 +37,29 @@ class Baiviet extends CI_Controller
        	$this->load->view('user/main.php', $this->_data);
 	}
 
+	public function addadmin()
+	{
+		$this->_data['subview'] = 'admin/thembaiviet_view';
+       	$this->_data['title'] = lang('posts');
+       	$this->load->view('main.php', $this->_data);
+	}
+
+	public function editadmin($id)
+	{
+		$query = "SELECT * FROM baiviet WHERE baiviet.BV_MA = '$id' ";
+		$this->_data['baiviet'] = $this->mbaiviet->getdata($query);
+
+		$this->_data['subview'] = 'admin/thembaiviet_view';
+       	$this->_data['title'] = lang('posts');
+       	$this->load->view('main.php', $this->_data);
+	}
+
 	public function add()
 	{	
 		$DD_MA = $_POST["DD_MA"];
 		$BV_TIEUDE = $_POST["BV_TIEUDE"];
 		$BV_NOIDUNG = $_POST["BV_NOIDUNG"];
+		$BV_DUYET = $_POST["BV_DUYET"];
 		$ND_MA = $this->session->userdata['id'];
 
 		date_default_timezone_set('Asia/Ho_Chi_Minh');  
@@ -46,13 +71,38 @@ class Baiviet extends CI_Controller
        		"BV_TIEUDE" => $BV_TIEUDE,
        		"BV_NOIDUNG" => $BV_NOIDUNG,
        		"BV_NGAYDANG" => $date,
-       		"BV_DUYET" => '0',
+       		"BV_DUYET" => $BV_DUYET,
        		"BV_LUOTXEM" => '0'
         );
 
 		$status = "error";
 
         if($this->mbaiviet->insert($data))
+		{
+			$status = "success";
+		}
+			
+        $response = array('status' => $status, 'data' => $data);
+		$jsonString = json_encode($response);
+        echo $jsonString;
+	}
+
+	public function edit()
+	{	
+		$DD_MA = $_POST["DD_MA"];
+		$BV_MA = $_POST["BV_MA"];
+		$BV_TIEUDE = $_POST["BV_TIEUDE"];
+		$BV_NOIDUNG = $_POST["BV_NOIDUNG"];
+
+		$data = array(
+			"DD_MA" => $DD_MA,
+       		"BV_TIEUDE" => $BV_TIEUDE,
+       		"BV_NOIDUNG" => $BV_NOIDUNG
+        );
+
+		$status = "error";
+
+        if($this->mbaiviet->update($BV_MA, $data))
 		{
 			$status = "success";
 		}
@@ -93,7 +143,7 @@ class Baiviet extends CI_Controller
 
 		$iddd = $result['DD_MA'];
 
-		$queryall = "SELECT * FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA JOIN nguoidung ON nguoidung.ND_MA = baiviet.ND_MA WHERE baiviet.DD_MA = '$iddd' AND baiviet.BV_MA <> '$id' AND baiviet.BV_DUYET = '1' ORDER BY baiviet.BV_NGAYDANG ";
+		$queryall = "SELECT * FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA JOIN nguoidung ON nguoidung.ND_MA = baiviet.ND_MA WHERE baiviet.DD_MA = '$iddd' AND baiviet.BV_MA <> '$id' AND baiviet.BV_DUYET = '1' ORDER BY baiviet.BV_NGAYDANG DESC";
 
 		$allresult = $this->mbaiviet->gettimkiem($queryall);
 		$this->_data['allbaiviet'] = $allresult;
@@ -107,14 +157,13 @@ class Baiviet extends CI_Controller
 	{
 		if (isset($_GET['update'])) // code update
 		{
-			$ma = $_GET["ND_MA"];
-			$kichhoat = $_GET['ND_KICHHOAT'];
+			$ma = $_GET["BV_MA"];
+			$kichhoat = $_GET['BV_DUYET'];
 
 			$data = array(
-	            "ND_MA" => $ma,
-	       		"ND_KICHHOAT" => $kichhoat
+	       		"BV_DUYET" => $kichhoat
 	        );
-	        echo $this->mnguoidung->update($ma, $data);
+	        echo $this->mbaiviet->update($ma, $data);
 		}
 		else
 		{
@@ -123,10 +172,10 @@ class Baiviet extends CI_Controller
 			$start = $pagenum * $pagesize;
 			$where = "";
 			$sort = "";
-			$total_rows = $this->mnguoidung->countAll();
+			$total_rows = $this->mbaiviet->countAll();
 			
 			$query = $where." LIMIT $start, $total_rows";
-			$table = $this->mnguoidung->getList2($query);
+			$table = $this->mbaiviet->getList2($query);
 
 			if (isset($_GET['sortdatafield'])) // code sap xep
 			{
@@ -242,7 +291,7 @@ class Baiviet extends CI_Controller
 			}
 
 			$query = $where." ".$sort." LIMIT $start, $total_rows";
-			$table = $this->mnguoidung->getList2($query);
+			$table = $this->mbaiviet->getList2($query);
 			 
 			$data[] = array(
 			   'TotalRows' => $total_rows,
@@ -250,6 +299,34 @@ class Baiviet extends CI_Controller
 			);
 			echo json_encode($data);
 		}
+	}
+
+	public function delete()
+	{
+		$ma = $_POST["ma"];
+		$msg = array();
+		$status = "error";
+		$error = "";
+
+		if(!($this->mbaiviet->testMa($ma)))
+		{
+			$error = lang('code_does_not_exist');
+		}
+
+		if($error != "")
+		{
+			$msg["error"] = $error;
+		}
+
+		if(count($msg) == 0)
+		{
+            $this->mbaiviet->delete($ma);
+            $status = "success";
+		}
+
+		$response = array('status' => $status,'msg' => $msg);
+		$jsonString = json_encode($response);
+		echo $jsonString;
 	}
 
 	/*public function data1($size, $star) // dung cho load du lieu tung phan co kich thuoc va vitri bat dau

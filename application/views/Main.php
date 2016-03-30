@@ -264,7 +264,7 @@
                                 <a href="<?php echo base_url(); ?>index.php/nguoidung" class="active"><i class="fa fa-user fa-fw"></i> <?php echo lang('user') ?></a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-dribbble"></i> <?php echo lang('area') ?><span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-dribbble fa-fw"></i> <?php echo lang('area') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/tinh"> <?php echo lang('provincial') ?></a>
@@ -279,7 +279,7 @@
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-th-list"></i> <?php echo lang('category') ?><span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-th-list fa-fw"></i> <?php echo lang('category') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/danhmuc"> Nhóm danh mục</a>
@@ -294,7 +294,7 @@
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-map-marker"></i> <?php echo lang('place') ?><span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-map-marker fa-fw"></i> <?php echo lang('place') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/map"> Map Codeigniter</a>
@@ -329,7 +329,7 @@
                                 </ul>
                             </li> -->
                             <li>
-                                <a href="#"><i class="fa fa-comments"></i> <?php echo lang('comment') ?><span class="fa arrow"></span></a>
+                                <a href="#"><i class="fa fa-comments fa-fw"></i> <?php echo lang('comment') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/binhluan"><?php echo lang('comment') ?></a>
@@ -342,6 +342,14 @@
                                     </li> -->
                                 </ul>
                                 <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-pencil fa-fw"></i> <?php echo lang('posts') ?><span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="<?php echo base_url(); ?>index.php/baiviet"><?php echo lang('posts') ?></a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> <?php echo lang('authority') ?><span class="fa arrow"></span></a>

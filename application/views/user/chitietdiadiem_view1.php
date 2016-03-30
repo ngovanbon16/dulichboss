@@ -586,6 +586,8 @@
             mau('trungbinh', trungbinh);
             danhgia('danhgiatb', trungbinh);
             mau('danhgiatb', trungbinh);
+
+            $("#trungbinhsao").jqxRating({ value: parseFloat(trungbinh/2).toFixed(0), width: "100%", height: 35, theme: 'classic', disabled:true});
         }
 
         function mau(id, diem)
@@ -744,7 +746,7 @@
 
 </head><!--/head-->
 
-<body onload="onload();">
+<body style="background-color: #F8F8FF;" onload="onload();">
 
     <section style="margin-top: -50px;" id="blog" class="container">
         <div style="margin-bottom: 20px; margin-top: 0px;">
@@ -787,7 +789,7 @@
 
         <div class="blog">
             <div class="row">
-                <div class="col-md-8">
+                <div style="background-color: #FFF; border: solid 1px #DCDCDC; padding-top: 20px;" class="col-md-8">
                     <div class="blog-item">
                         <div class="center" style="margin-bottom: 0px; padding: 0px; text-transform: capitalize;">
                             <h2 style="margin-bottom: 0px;"><?php echo $info['DD_TEN']; ?></h2>
@@ -1104,9 +1106,12 @@
 
                 <aside class="col-md-4">
 
-                    <div class="widget tags">
+                    <div class="widget tags" style="background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;">
                         <h3><?php echo lang('rating'); ?> 
                           <!-- <div style="margin-top: -10px;" class="rw-ui-container"></div> -->
+                          <div id='jqxWidget3' style="float: right; width: 70%; font-size: 13px; font-family: Verdana;">
+                              <div id='trungbinhsao'></div>
+                          </div>
                         </h3>
                         
                         <div id="diembinhluan">
@@ -1165,7 +1170,7 @@
                     <div style="margin-top: -30px;" class="widget archieve">
                         <div class="row">
                             <div class="col-sm-12">
-                                <ul class="blog_archieve">
+                                <ul class="blog_archieve" style="background-color: #FFF; border: solid 1px #DCDCDC; padding: 10px 10px 10px 10px;">
                                     <li>
                                       <a href="#name">
                                         <i class="fa fa-comment fa-fw"></i> <?php echo lang('comment') ?>
@@ -1218,7 +1223,7 @@
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/baiviet/thembaiviet/<?php echo $info['DD_MA']; ?>">
-                                          <i class="fa fa-pencil fa-fw"> </i> <?php echo lang('posts') ?><span class="pull-right"></span>
+                                          <i class="fa fa-pencil fa-fw"> </i> <?php echo lang('posts') ?><span class="pull-right">(<label id="countbaiviet"><?php echo $countbaiviet; ?></label>)</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -1226,30 +1231,38 @@
                         </div>                     
                     </div><!--/.archieve-->
 
-                    <div style="margin-top: -30px;" class="widget categories">
+                    <div style="margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
                         <h3><?php echo lang('posts') ?></h3>
-                        <div class="row">
-                            <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="5">
+                        
+                            <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="2" direction="up" width="100%" height="200" align="center">
                               <?php
+                                $bien = count($baiviet);
+                                if ($bien == 0) {
+                                    echo "<b>".lang('no_posts_yet')."</b>";
+                                    echo '<img style="cursor: pointer;" onclick="xemhinhanh()" data-toggle=\'modal\' data-target=\'#Modalimg\' class="img-responsive img-blog" src="'.base_url().'uploads/diadiem/'.$anhdaidien.'" width="100%" alt="" />';
+                                }
                                 foreach ($baiviet as $row) {
-                                    $BV_MA = $row['BV_MA'];
-                                    $BV_TIEUDE = $row['BV_TIEUDE'];
-                                ?>
-                                  <a href="<?php echo base_url(); ?>index.php/baiviet/detail/<?php echo $BV_MA; ?>">
-                                  <span style="margin-right: 20px;">
-                                    <span style="font-size: 13; width: 100px; overflow: hidden;">
-                                      <?php echo $BV_TIEUDE; ?>
-                                    </span>
-                                   </span>
-                                   </a>
-                                <?php      
-                                } 
+                                  $BV_MA = $row["BV_MA"];
+                                  $BV_TIEUDE = $row["BV_TIEUDE"];
+                                  $BV_NGAYDANG = $row["BV_NGAYDANG"];
+                                  $ND_HO = $row["ND_HO"];
+                                  $ND_TEN = $row["ND_TEN"];
+                              ?>
+
+                                <a style="font-weight: bold; font-size: 15px;" href="<?php echo base_url(); ?>index.php/baiviet/detail/<?php echo $BV_MA; ?>">
+                                    <?php echo $BV_TIEUDE; ?><br/>
+                                </a>
+                                <i><?php echo $ND_HO.' '.$ND_TEN; ?>: <?php echo $BV_NGAYDANG; ?></i>
+                                <br/><br/>
+
+                              <?php
+                                }
                               ?>
                             </marquee>  
-                        </div>                     
+                                         
                     </div><!--/.recent comments-->
 
-                    <div style="margin-top: -30px;" class="widget blog_gallery">
+                    <div style="margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget blog_gallery">
                         <h3><?php echo lang('photos') ?></h3>
                         <ul onclick="xemhinhanh()" style="cursor: pointer;" class="sidebar-gallery" data-toggle='modal' data-target='#Modalimg'>
                             <?php
@@ -1266,7 +1279,7 @@
                                   {
                               ?>    
                                     <li>
-                                        <img class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" width="107" height="60" />
+                                        <img class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" width="100" height="60" />
                                     </li>
                              <?php
                                   }
@@ -1275,12 +1288,50 @@
                         </ul>
                     </div><!--/.blog_gallery-->
     				
-    				        <div style="margin-top: -30px;" class="widget categories">
+    				        <div style="margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
                         <h3><?php echo lang('map') ?></h3>
-                        <div class="row">
-                            <?php echo $map['js']; ?>
-                            <?php echo $map['html']; ?>
-                        </div>                     
+                        
+                        <?php echo $map['js']; ?>
+                        <?php echo $map['html']; ?>
+                                          
+                    </div><!--/.recent comments-->
+
+                    <div style="margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
+                        <h3><?php echo lang('related_places') ?></h3>
+                        
+                        <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="2" direction="up" width="100%" height="200" align="center">
+
+                          <?php
+                            foreach ($danhmuc as $row) {
+                                $hinh3 = $row['HA_TEN'];
+                                $ma3 = $row['DD_MA'];
+                                $ten3 = $row['DD_TEN'];
+                                $tinh3 = $row['T_TEN'];
+                                $huyen3 = $row['H_TEN'];
+                            ?>
+                              <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
+                                <span>
+                                  
+                                  <table width="100%">
+                                    <tr>
+                                      <td width="110">
+                                        <img class="imggoiy" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh3; ?>" /> 
+                                      </td>
+                                      <td>
+                                        <span style="font-size: 13; width: 100px; overflow: hidden;"><?php echo $ten3; ?></span><br/>
+                                        <i style="font-size: 13px;"><?php echo $huyen3.' - '.$tinh3; ?></i>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <hr style="margin: 20px 0px 0px;" />
+                                </span>
+                              </a> <br/>
+                            <?php      
+                            } 
+                          ?>
+
+                        </marquee>
+                                          
                     </div><!--/.recent comments-->
                      
 

@@ -202,8 +202,8 @@ $lang['result'] = "Result";
 $lang['click_the_plus_icon_to_view_the_contents_of_introducing'] = "Click the plus icon to view the contents of introducing";
 $lang['poster'] = "Poster";
 $lang['posts'] = "Posts";
-$lang[''] = "";
-$lang[''] = "";
+$lang['no_posts_yet'] = "No posts yet";
+$lang['related_places'] = "Related places";
 $lang[''] = "";
 $lang[''] = "";
 ?>

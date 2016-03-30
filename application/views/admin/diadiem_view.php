@@ -71,6 +71,12 @@
         {
             setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/detailadmin/"+id+"';",0);
         }
+        function baiviet(id)
+        {
+            /*setTimeout("location.href = '<?php echo base_url(); ?>index.php/baiviet/theodiadiem/"+id+"';",0);*/
+            url = '<?php echo base_url(); ?>index.php/baiviet/theodiadiem/'+id;
+            window.open(url, '', '_blank');
+        }
         function kichhoat(id, row)
         {
             var commit = $("#jqxgrid").jqxGrid('updaterow', id, $("#jqxgrid").jqxGrid('getrowdata', row));
@@ -344,7 +350,15 @@
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.DD_MA;
-                            return "<button class='icon' onclick='chitiet(\""+id+"\")'><i class='fa fa-info-circle fa-fw'></i></button>";
+                            return "<button class='icon' onclick='chitiet(\""+id+"\")'><i class='fa fa-search fa-fw'></i></button>";
+                        }
+                    },
+                    { text: "<?php echo lang('posts') ?>", datafield: 'posts', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
+                            var offset = $("#jqxgrid").offset();
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.DD_MA;
+                            return "<button class='icon' onclick='baiviet(\""+id+"\")'><i class='fa fa-edit fa-fw'></i></button>";
                         }
                     },
                     { text: "<?php echo lang('upload_photos') ?>", datafield: 'img', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
@@ -361,7 +375,7 @@
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.DD_MA;
-                            return "<button class='icon' onclick='kichhoat(\""+id+"\",\""+row+"\")'><i class='fa fa-check-circle fa-fw'></i></button>";
+                            return "<button class='icon' onclick='kichhoat(\""+id+"\",\""+row+"\")'><i class='fa fa-check fa-fw'></i></button>";
                         }
                     }
                   
