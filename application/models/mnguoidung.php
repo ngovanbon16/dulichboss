@@ -91,6 +91,17 @@ class Mnguoidung extends CI_Model {
         }
     }
 
+    public function getquyen($id) // 32/3/2016
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('nhomquyen', 'nguoidung.NQ_MA = nhomquyen.NQ_MA');
+        $this->db->where("ND_MA", $id);
+        $query = $this -> db -> get();  
+        $nhomquyen = $query->row_array();
+        return $nhomquyen['NQ_MA'];  
+    }
+
     public function insert($data_insert){
         $this->db->insert($this->_table,$data_insert);
     }
@@ -103,6 +114,11 @@ class Mnguoidung extends CI_Model {
 
     public function update($id, $data_update){
         $this->db->where("ND_MA", $id);
+        return $this->db->update($this->_table, $data_update);
+    }
+
+    public function updateemail($email, $data_update){
+        $this->db->where("ND_DIACHIMAIL", $email);
         return $this->db->update($this->_table, $data_update);
     }
 

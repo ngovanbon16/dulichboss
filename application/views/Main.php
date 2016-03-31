@@ -392,16 +392,14 @@
                 <!-- /.row -->
                 <div class="row">
                         <div class="panel panel-default">
-                            <!-- <iframe src="<?php echo base_url(); ?>index.php/registration" width="100%" height="500"></iframe> -->
                             <?php 
-                                if($this->session->userdata("id") != "")
+                                if($this->session->userdata["id"] != "" && $this->session->userdata['admin'] == '1')
                                 {
-                                    //echo $this->session->userdata("id");
                                     $this->load->view($subview);
                                 }
                                 else
                                 {
-
+                                    echo "<center><h1>Chúng tôi rất tiếc bạn không có quyền sử dụng tính năng này!</h1></center>";
                                 }
                             ?>
                         </div>

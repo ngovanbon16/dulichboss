@@ -128,6 +128,7 @@
     		background-color: #FFF;
     		padding-top: 10px;
     		border: solid 1px #DCDCDC;
+            border-radius: 2px;
     	}
     	.p{
     		font-style: italic;
@@ -136,24 +137,43 @@
             background-color: #FFF;
             padding-left: 20px;
             border: solid 1px #DCDCDC;
+            border-radius: 2px;
+        }
+        .tieudetren{
+            width: 100%;
+            margin-bottom: 10px;
         }
     </style>
 </head><!--/head-->
 
 <body style="background-color: #F8F8FF">
 
-    <section id="blog" class="container" style="">
-        <!-- <div class="center">
-            <h2>Blogs</h2>
-            <p class="lead">Pellentesque habitant morbi tristique senectus et netus et malesuada</p>
-        </div> -->
+    <section id="blog" class="container" style="margin-top: -50px;">
+        <div class="tieudetren">
+           <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="4" direction="left" width="100%" align="center">
+                <i class="fa fa-star-o"></i> <?php echo lang('posts').' '.lang('propose'); ?>: 
+                <?php
+                    foreach ($baivietkhuvuc as $iteam) {
+                        $BV_MA1 = $iteam["BV_MA"];
+                        $BV_TIEUDE1 = $iteam["BV_TIEUDE"];
+                ?>
 
+                <a style="margin: 10px;" href="<?php echo base_url(); ?>index.php/baiviet/detail/<?php echo $BV_MA1; ?>">
+                    <?php echo $BV_TIEUDE1; ?>
+                </a> <i class="fa fa-angle-double-right"></i>
+
+                <?php
+                    }
+                ?>
+            </marquee>
+        </div>
+        <?php //print_r($baivietkhuvuc); ?>
         <div class="blog">
             <div class="row">
                 <div class="col-md-8" id="left">
                     <div class="blog-item" >
                     	<div>
-                    		<h2><?php echo $baiviet['BV_TIEUDE']; ?></h2>
+                    		<h1 style="color: #0033FF; font-size: 22px;"><?php echo $baiviet['BV_TIEUDE']; ?> <i style="font-size: 16px; font-weight: normal;">[<?php echo $baiviet['H_TEN'].' - '.$baiviet['T_TEN']; ?>]</i> </h1>
                     		<p class="p"> 
                     			Người đăng: <?php echo $baiviet['ND_HO'].' '.$baiviet['ND_TEN']; ?><br>
                     			Được viết vào ngày: <?php echo $baiviet['BV_NGAYDANG']; ?><br>
@@ -237,6 +257,43 @@
                         </div>                     
                     </div><!--/.recent comments-->
     					
+                    <div style="margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px; border-radius: 2px;" class="widget categories">
+                        <h3><?php echo lang('the_places_have_be_appreciated') ?></h3>
+                        
+                        <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="2" direction="up" width="100%" height="200" align="center">
+
+                          <?php
+                            foreach ($danhgia as $row) {
+                                $hinh3 = $row['HA_TEN'];
+                                $ma3 = $row['DD_MA'];
+                                $ten3 = $row['DD_TEN'];
+                                $tinh3 = $row['T_TEN'];
+                                $huyen3 = $row['H_TEN'];
+                            ?>
+                              <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
+                                <span>
+                                  
+                                  <table width="100%">
+                                    <tr>
+                                      <td width="110">
+                                        <img style="width: 100px; height: 80px; border-radius: 3px 20px 3px; border: solid 2px #DCDCDC;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh3; ?>" /> 
+                                      </td>
+                                      <td>
+                                        <span style="font-size: 13; width: 100px; overflow: hidden;"><?php echo $ten3; ?></span><br/>
+                                        <i style="font-size: 13px;"><?php echo $huyen3.' - '.$tinh3; ?></i>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <hr style="margin: 20px 0px 0px;" />
+                                </span>
+                              </a> <br/>
+                            <?php      
+                            } 
+                          ?>
+
+                        </marquee>
+                                          
+                    </div><!--/.recent comments-->
     				
                 </aside>     
 

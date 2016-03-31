@@ -27,6 +27,18 @@
 
 	    $(document).ready(function(){
 	    	$("#btngui").click(function(){
+	    		<?php 
+                    if($this->session->userdata('id') == "")
+                    { 
+                ?>
+                    thongbao("", "<?php echo lang('please').' '.lang('login'); ?>", "info");
+                    return;
+                <?php
+                    }
+                    else
+                    {
+                ?>
+
 	    		var BV_NOIDUNG = CKEDITOR.instances.BV_NOIDUNG.getData();
 	    		var BV_TIEUDE = $("#BV_TIEUDE").val();
 
@@ -82,6 +94,9 @@
 	    			}
 	    			
 	    		}, 'json');
+	    		<?php
+                    }
+                ?>
 	    	});
 	    });
 
@@ -98,8 +113,17 @@
 	    					<label for="BV_TIEUDE"><?php echo lang('title'); ?>:</label>
 			  				<input type="text" class="form-control" id="BV_TIEUDE" placeholder="<?php echo lang('input').' '.lang('title'); ?>">
 	    				</td>
+
+	    				<?php 
+                            $btngui = "";
+                            if($this->session->userdata('id') == "")
+                            { 
+                                $btngui = "#modaldangnhap";
+                            }
+                        ?>
+
 	    				<td valign="bottom" align="left">
-	    					<button id="btngui" style="margin-left: 10px; width: 100px;" type="button" class="btn btn-default"><?php echo lang('submit'); ?></button>
+	    					<button data-toggle='modal' data-target='<?php echo $btngui; ?>' id="btngui" style="margin-left: 10px; width: 100px;" type="button" class="btn btn-default"><?php echo lang('submit'); ?></button>
 	    				</td>
 	    			</tr>
 	    		</table>

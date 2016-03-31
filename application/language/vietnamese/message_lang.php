@@ -205,4 +205,17 @@ $lang['poster'] = "Áp phích";
 $lang['posts'] = "Bài viết";
 $lang['no_posts_yet'] = "Không có bài đăng nào";
 $lang['related_places'] = "Các địa điểm liên quan";
+$lang['colors'] = "Màu sắc";
+$lang['theme_colors'] = "Màu sắc chủ đề";
+$lang['standard_colors'] = "Màu sắc tiêu chuẩn";
+$lang['history'] = "Lịch sử";
+$lang['web_colors'] = "Màu sắc Web";
+$lang['set_value'] = "Đặt giá trị";
+$lang['enable'] = "Cho phép";
+$lang['disable'] = "Vô hiệu hóa";
+$lang['apply'] = "Áp dụng";
+$lang['the_places_have_be_appreciated'] = "Những địa điểm được đánh giá cao";
+$lang['propose'] = "Đề xuất";
+$lang['forgot'] = "Quên";
+$lang['sending'] = "Đang gửi";
 ?>

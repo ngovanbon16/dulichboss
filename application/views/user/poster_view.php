@@ -1,34 +1,29 @@
 <head>
-	<link id="jquiCSS" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-lightness/jquery-ui.css" type="text/css" media="all">
+	<title><?php echo $title; ?></title>
+	<link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/logo.ico" type="image/x-icon" />
+
+	<link id="jquiCSS" rel="stylesheet" href="<?php echo base_url(); ?>assets/jqueryui/jquery-ui.css" type="text/css" media="all">
 	
 	<link href="<?php echo base_url(); ?>assets/colorpicker/css/evol-colorpicker.min.css" rel="stylesheet" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
-	<script src="<?php echo base_url(); ?>assets/colorpicker/js/evol-colorpicker.min.js" type="text/javascript"></script>
+	<script src="<?php echo base_url(); ?>assets/jqueryui/external/jquery/jquery.js" type="text/javascript"></script>
+	<script src="<?php echo base_url(); ?>assets/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+	<?php if(lang('lang') == 'vi') { ?>
+		<script src="<?php echo base_url(); ?>assets/colorpicker/js/evol-colorpicker_vi.js" type="text/javascript"></script>
+	<?php } else { ?>
+		<script src="<?php echo base_url(); ?>assets/colorpicker/js/evol-colorpicker.js" type="text/javascript"></script>
+	<?php } ?>
 <script type="text/javascript">
+	alert("Vui lòng bấm vào tiêu đề để print poster và bấm vào logo để đổi màu nền!")
+    function printDiv(divName) {
+	     var printContents = document.getElementById(divName).innerHTML;
+	     var originalContents = document.body.innerHTML;
 
-    function PrintElem(elem)
-    {
-        Popup($(elem).html());
-    }
+	     document.body.innerHTML = printContents;
 
-    function Popup(data) 
-    {
-        var mywindow = window.open('', 'my div', 'height=400,width=600');
-        mywindow.document.write('<html><head><title>my div</title>');
-        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write(data);
-        mywindow.document.write('</body></html>');
+	     window.print();
 
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10
-
-        mywindow.print();
-        mywindow.close();
-
-        return true;
-    }
+	     document.body.innerHTML = originalContents;
+	}
 
     $(document).ready(function(){
 
@@ -42,15 +37,15 @@
 	// Events demo
 	$('#cp1').colorpicker({color:'#8db3e2',
 		initialHistory: ['#ff0000','#000000','red']
-})
-		.on('change.color', function(evt, color){
-			$('#cpb').css('background-color',color);
-		})
-		.on('mouseover.color', function(evt, color){
-            if(color){
-                $('#cpb').css('background-color',color);
-            }
-		});
+	})
+	.on('change.color', function(evt, color){
+		$('#cpb').css('background-color',color);
+	})
+	.on('mouseover.color', function(evt, color){
+        if(color){
+            $('#cpb').css('background-color',color);
+        }
+	});
 	
 	$('#getVal').on('click', function(){
 		alert('Selected color = "' + $('#cp1').colorpicker("val") + '"');
@@ -134,21 +129,21 @@
 
 
     $(function() {
-    $( "#dialog" ).dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 1000
-      },
-      hide: {
-        effect: "explode",
-        duration: 1000
-      }
-    });
- 
-    $( "#opener" ).click(function() {
-      $( "#dialog" ).dialog( "open" );
-    });
+	    $( "#dialog" ).dialog({
+	      autoOpen: false,
+	      show: {
+	        effect: "blind",
+	        duration: 1000
+	      },
+	      hide: {
+	        effect: "explode",
+	        duration: 1000
+	      }
+	    });
+	 
+	    $( "#opener" ).click(function() {
+	      $( "#dialog" ).dialog( "open" );
+	    });
   });
 
 </script>
@@ -158,7 +153,6 @@
 		width: 100%;
 		height: 95%;
 		border-color: #00B2EE #FFF #FFF #00B2EE;
-		cursor: pointer;
 	}
 
 	.imgtruoc{
@@ -174,7 +168,7 @@
 		width: 100%;
 		font-size: 15px;
 		text-align: justify;
-		max-height: 166px;
+		max-height: 300px;
 		overflow: hidden;
 		line-height: 1.5;
 		font-family: Arial, Helvetica, sans-serif;
@@ -219,18 +213,18 @@
 	}
 </style>
 </head>
-<!-- <input type="button" value="Print Div" onclick="PrintElem('#mydiv')" /> -->
 
-<div id="dialog" title="CSS color">
+<!-- <input type="button" onclick="printDiv('printableArea')" value="print a div!" />
+ -->
+<div id="dialog" title="<?php echo lang('select').' '.lang('colors'); ?>">
   	<div class="demoPanel">
-		Chọn màu cho poster:<br/><br/>
 		<div id="cpDiv"></div>
 		<br/>
 		<div class="demo-links">
-			<a href="#" id="getVal2">Get Value</a> | 
-			<a href="#" id="setVal2">Set Value</a><br/>
-			<a href="#" id="enable2">Enable</a> | 
-			<a href="#" id="disable2">Disable</a>
+			<a href="#" id="getVal2"><?php echo lang('apply'); ?></a> | 
+			<a href="#" id="setVal2"><?php echo lang('set_value'); ?></a><br/>
+			<a href="#" id="enable2"><?php echo lang('enable'); ?></a> | 
+			<a href="#" id="disable2"><?php echo lang('disable'); ?></a>
 			<!-- <a href="#" id="destroy2">Destroy</a> -->
 			<br/><br/>
 		</div> 
@@ -238,18 +232,18 @@
 </div>
 
 <section id="about-us">
-	<div  align="center" id="mydiv" class="container">
+	<div  align="center" id="printableArea" class="container">
 		<div class="khung">
 			<table style="width: 100%; height: 100%;" border="0">
 				<tr>
 					<td height="20%">
-						<div onclick="window.print();" class="tieude">
+						<div style="cursor: pointer;" onclick="window.print();" class="tieude">
 							<b style="font-size: 50px;"><?php echo $data['DD_TEN']; ?></b> <br/>
 							<i style="font-size: 40px;"><?php echo $data['H_TEN']; ?> - <?php echo $data['T_TEN']; ?></i>
 						</div>
 					</td>
 					<td>
-						<div id="opener" align="center" style="">
+						<div style="cursor: pointer;" id="opener" align="center" style="">
 							<?php //echo $data['DD_TEN']; ?>
 							<img class="imglogo" src="<?php echo base_url(); ?>assets/images/logo2.png">
 						</div>
@@ -268,7 +262,7 @@
 					<td width="70%">
 						<table style="width: 100%; height: 100%;" border="0">
 							<tr>
-								<td>
+								<td style="cursor: pointer;" onclick="window.print();">
 									<b style="font-size: 40px;"><?php echo $data['DD_TEN']; ?></b> <br/>
 									<i style="font-size: 30px;"><?php echo $data['H_TEN']; ?> - <?php echo $data['T_TEN']; ?></i>
 									<hr class="hr" style="margin: 10px 0px 0px 0px;" />
@@ -277,12 +271,12 @@
 							<tr>
 								<td valign="top" style="font-size: 20px; font-weight: bolder; height: 70%; overflow: hidden;">
 									Mô tả: <br/>
-									<textarea rows="8" class="p">
+									<textarea rows="7" class="p">
 										<?php echo $data['DD_MOTA']; ?>
 									</textarea>
 									<img style="width: 100%; height: 30%; margin-bottom: 10px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $data['HA_TEN']; ?>">
 									Giới thiệu: <br/>
-									<textarea rows="15" class="p">
+									<textarea rows="20" class="p">
 										<?php echo $data['DD_GIOITHIEU']; ?>
 									</textarea>
 								</td>
@@ -301,7 +295,7 @@
 							<tr>
 								<td valign="top" align="center" height="10%">
 									<div class="map">
-										<div style="margin-top: -140px; margin-left: -200px; border: none;">
+										<div style="margin-top: -140px; margin-left: 0px; border: none;">
 											<?php echo $map['js']; ?>
 					                    	<?php echo $map['html']; ?>
 										</div>

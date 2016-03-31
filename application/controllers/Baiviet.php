@@ -136,17 +136,24 @@ class Baiviet extends CI_Controller
 
 	public function detail($id)
 	{	
-		$query = "SELECT * FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA JOIN nguoidung ON nguoidung.ND_MA = baiviet.ND_MA WHERE baiviet.BV_MA = '$id' ";
-
+		$query = "SELECT * FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA JOIN nguoidung ON nguoidung.ND_MA = baiviet.ND_MA JOIN tinh ON tinh.T_MA = diadiem.T_MA JOIN huyen ON huyen.H_MA = diadiem.H_MA WHERE baiviet.BV_MA = '$id' ";
 		$result = $this->mbaiviet->getdata($query);
 		$this->_data['baiviet'] = $result;
 
 		$iddd = $result['DD_MA'];
+		$matinh = $result['T_MA'];
 
 		$queryall = "SELECT * FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA JOIN nguoidung ON nguoidung.ND_MA = baiviet.ND_MA WHERE baiviet.DD_MA = '$iddd' AND baiviet.BV_MA <> '$id' AND baiviet.BV_DUYET = '1' ORDER BY baiviet.BV_NGAYDANG DESC";
-
 		$allresult = $this->mbaiviet->gettimkiem($queryall);
 		$this->_data['allbaiviet'] = $allresult;
+
+		$this->load->model('mdiadiem');
+		$query = "SELECT diadiem.DD_MA, diadiem.DD_TEN, tinh.T_TEN, huyen.H_TEN, hinhanh.HA_TEN, (SUM(binhluan.BL_CHATLUONG)+SUM(binhluan.BL_PHUCVU)+SUM(binhluan.BL_KHONGGIAN))/count(diadiem.DD_MA)/3 diem FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN binhluan ON diadiem.DD_MA = binhluan.DD_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' GROUP BY diadiem.DD_MA  ORDER BY diem DESC LIMIT 0, 6";
+		$this->_data['danhgia'] = $this->mdiadiem->gettimkiem($query);
+
+		$query = "SELECT baiviet.BV_TIEUDE, baiviet.BV_MA FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA WHERE diadiem.T_MA = '$matinh' AND baiviet.BV_MA <> $id ORDER BY baiviet.BV_NGAYDANG DESC LIMIT 0,10";
+		$result = $this->mbaiviet->gettimkiem($query);
+		$this->_data['baivietkhuvuc'] = $result;
 
 		$this->_data['subview'] = 'user/chitietbaiviet_view';
        	$this->_data['title'] = lang('posts');

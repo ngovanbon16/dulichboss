@@ -638,6 +638,12 @@
             }
         }
 
+        function inposts(id)
+        {
+            url = '<?php echo base_url(); ?>index.php/user/poster/'+id;
+            window.open(url, '', '_blank');
+        }
+
     </script>
 
 <style type="text/css">
@@ -789,7 +795,7 @@
 
         <div class="blog">
             <div class="row">
-                <div style="background-color: #FFF; border: solid 1px #DCDCDC; padding-top: 20px;" class="col-md-8">
+                <div style="border-radius: 2px; background-color: #FFF; border: solid 1px #DCDCDC; padding-top: 20px;" class="col-md-8">
                     <div class="blog-item">
                         <div class="center" style="margin-bottom: 0px; padding: 0px; text-transform: capitalize;">
                             <h2 style="margin-bottom: 0px;"><?php echo $info['DD_TEN']; ?></h2>
@@ -1106,7 +1112,7 @@
 
                 <aside class="col-md-4">
 
-                    <div class="widget tags" style="background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;">
+                    <div class="widget tags" style="border-radius: 2px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;">
                         <h3><?php echo lang('rating'); ?> 
                           <!-- <div style="margin-top: -10px;" class="rw-ui-container"></div> -->
                           <div id='jqxWidget3' style="float: right; width: 70%; font-size: 13px; font-family: Verdana;">
@@ -1170,7 +1176,7 @@
                     <div style="margin-top: -30px;" class="widget archieve">
                         <div class="row">
                             <div class="col-sm-12">
-                                <ul class="blog_archieve" style="background-color: #FFF; border: solid 1px #DCDCDC; padding: 10px 10px 10px 10px;">
+                                <ul class="blog_archieve" style="border-radius: 2px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 10px 10px 10px 10px;">
                                     <li>
                                       <a href="#name">
                                         <i class="fa fa-comment fa-fw"></i> <?php echo lang('comment') ?>
@@ -1216,10 +1222,9 @@
                                          <i id="iconluotxem" class="fa fa-eye fa-fw"></i> <?php echo lang('views') ?>
                                         <span class="pull-right">(<label id="countluotxem"></label>)</span>
                                     </li>
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>index.php/user/poster/<?php echo $info['DD_MA']; ?>">
-                                          <i class="fa fa-print fa-fw"> </i> <?php echo lang('poster') ?><span class="pull-right"></span>
-                                        </a>
+                                    <?php $iddd1 = $info['DD_MA']; ?>
+                                    <li style="cursor: pointer;" onclick="inposts('<?php echo $iddd1; ?>')">
+                                        <i class="fa fa-print fa-fw"> </i> <?php echo lang('poster') ?><span class="pull-right"></span>
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/baiviet/thembaiviet/<?php echo $info['DD_MA']; ?>">
@@ -1231,7 +1236,7 @@
                         </div>                     
                     </div><!--/.archieve-->
 
-                    <div style="margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
+                    <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
                         <h3><?php echo lang('posts') ?></h3>
                         
                             <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="2" direction="up" width="100%" height="200" align="center">
@@ -1262,7 +1267,7 @@
                                          
                     </div><!--/.recent comments-->
 
-                    <div style="margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget blog_gallery">
+                    <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget blog_gallery">
                         <h3><?php echo lang('photos') ?></h3>
                         <ul onclick="xemhinhanh()" style="cursor: pointer;" class="sidebar-gallery" data-toggle='modal' data-target='#Modalimg'>
                             <?php
@@ -1288,7 +1293,7 @@
                         </ul>
                     </div><!--/.blog_gallery-->
     				
-    				        <div style="margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
+    				        <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
                         <h3><?php echo lang('map') ?></h3>
                         
                         <?php echo $map['js']; ?>
@@ -1296,7 +1301,7 @@
                                           
                     </div><!--/.recent comments-->
 
-                    <div style="margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
+                    <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
                         <h3><?php echo lang('related_places') ?></h3>
                         
                         <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="2" direction="up" width="100%" height="200" align="center">

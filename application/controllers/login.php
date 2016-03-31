@@ -77,6 +77,7 @@ class Login extends CI_Controller
 			{
 				foreach ($query as $row) {
 					$newdata = array(
+						'admin' => $row->NQ_MA,
                         'id' => $row->ND_MA,
                         'email'   => $row->ND_DIACHIMAIL,
                         'avata' => $row->ND_HINH,
@@ -107,6 +108,7 @@ class Login extends CI_Controller
         if($this->_user_is_login())
         {
            //neu thanh vien da dang nhap thi xoa session login
+           $this->session->unset_userdata('admin');
            $this->session->unset_userdata('id');
            $this->session->unset_userdata('email');
            $this->session->unset_userdata('avata');

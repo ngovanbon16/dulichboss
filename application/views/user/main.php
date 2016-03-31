@@ -419,6 +419,20 @@
         text-align: center;
         width: 90%;
     }
+    .glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+    }
+
+    @-webkit-keyframes spin2 {
+        from { -webkit-transform: rotate(0deg);}
+        to { -webkit-transform: rotate(360deg);}
+    }
+
+    @keyframes spin {
+        from { transform: scale(1) rotate(0deg);}
+        to { transform: scale(1) rotate(360deg);}
+    }
 </style>
 
 <script language="javascript" type="text/javascript">
@@ -456,7 +470,8 @@
                     {
                         $("#info").addClass("textsuccess").text("<?php echo lang('logged_in_successfully') ?>");
                         $("#login").remove();
-                        setTimeout("location.href = '<?php echo site_url('home/trangchu'); ?>';",1000);
+                        location.reload(true);
+                        //setTimeout("location.href = '<?php echo site_url('home/trangchu'); ?>';",1000);
                     }
                 }
             }, 'json');
@@ -467,9 +482,57 @@
             //$(this).css("background-color", "#ff0000");
 
         });
-        $("input").blur(function()
+       
+        function test(value)
         {
-            //$(this).css("background-color", "#ffffff");
+            var mau = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+             return mau.test(value);
+        }
+
+        $("#btnguiyeucau").click(function()
+        {
+            var email = $("#diachiemail").val();
+            //alert(test(email));
+            if(!test(email))
+            {
+                alert("<?php echo lang('email').' '.lang('is').' '.lang('not').' '.lang('correct') ?>!");
+                return;
+            }
+
+            if(!confirm("<?php echo lang('are_you_sure'); ?>"))
+            {
+                alert("<?php echo lang('cancel'); ?>");
+                return;
+            }
+            document.getElementById("btnvalue").innerHTML = "<?php echo lang('sending') ?>...";
+            document.getElementById("sending").style.visibility = "visible";
+            var url, dta;
+            url="<?php echo base_url(); ?>index.php/nguoidung/guimatkhau?t=" + Math.random();
+            dta = {
+                "email" : email
+            };
+            console.log(dta);
+            $.post(url, dta, function(data, status){
+
+                console.log(status);
+                console.log(data);
+
+                document.getElementById("btnvalue").innerHTML = '<?php echo lang("submit") ?><span style="visibility: hidden;" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>';
+                document.getElementById("sending").style.visibility = "hidden";
+
+                if(status == "success")
+                {   
+                    if(data.status == "error")
+                    {
+                        alert("Email chưa được gửi đi!");
+                    }
+                    else
+                    {
+                        alert("Email đã được gửi!");
+                        location.reload(true);
+                    }
+                }
+            }, 'json');
         });
     });
 </script>
@@ -497,7 +560,38 @@
             <div style="margin-bottom: 20px;" class="form-group">
                 <input class="form-control" placeholder="<?php echo lang('input').' '.lang('password') ?>" name="password" id="password" type="password" value="">
             </div>
+            <div style="margin-bottom: 20px;" class="form-group">
+                <a data-toggle="modal" data-target="#modalmatkhau" href=""><?php echo lang('forgot').' '.lang('password'); ?></a>
+            </div>
             <button type="button" id="button" class="btn btn-outline btn-success btn-lg btn-block"><?php echo lang('login') ?></button>
+        </form>
+      </div> <!-- dong body -->
+    </div><!-- dong Modal content -->
+  </div>
+</div><!-- dóng modal -->
+
+<!-- Modal -->
+<div id="modalmatkhau" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 400px;">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body"> <!-- body -->
+         
+        <div style="margin-bottom: 20px;" class="form-group">
+            <h3 id='lbldangnhap' class="panel-title"><?php echo lang('forgot').' '.lang('password'); ?></h3>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <br/>
+        <form name="login" id="login" method="post" role="form">
+            <div style="margin-bottom: 20px;" class="form-group">
+                <input class="form-control" placeholder="<?php echo lang('input').' '.lang('email') ?>" name="diachiemail" id="diachiemail" type="text" autofocus>
+            </div>
+            <button type="button" id="btnguiyeucau" class="btn btn-outline btn-success btn-lg btn-block">
+                <span style="visibility: hidden;" id="sending" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> 
+                <b id="btnvalue"><?php echo lang('submit') ?>
+                <span style="visibility: hidden;" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></b>
+            </button>
         </form>
       </div> <!-- dong body -->
     </div><!-- dong Modal content -->
