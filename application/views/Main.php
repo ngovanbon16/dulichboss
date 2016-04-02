@@ -355,12 +355,12 @@
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> <?php echo lang('authority') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/nhomquyen"> <?php echo lang('authority') ?></a>
-                                    </li>
-                                   <!--  <li>
-                                        <a href="<?php echo base_url(); ?>index.php/quyen"> Quyền</a>
+                                        <a href="<?php echo base_url(); ?>index.php/nhomquyen"> <?php echo lang('authority_groups') ?></a>
                                     </li>
                                     <li>
+                                        <a href="<?php echo base_url(); ?>index.php/quyen"> <?php echo lang('authority') ?></a>
+                                    </li>
+                                    <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/capbac"> Cấp bậc người dùng</a>
                                     </li> -->
                                 </ul>

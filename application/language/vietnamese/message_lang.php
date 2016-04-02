@@ -218,4 +218,5 @@ $lang['the_places_have_be_appreciated'] = "Những địa điểm được đán
 $lang['propose'] = "Đề xuất";
 $lang['forgot'] = "Quên";
 $lang['sending'] = "Đang gửi";
+$lang['authority_groups'] = "Nhóm quyền";
 ?>

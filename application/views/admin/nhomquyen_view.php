@@ -74,16 +74,85 @@
                 }
             });
         }
-        function chitiet(id)
+        function chitiet(id, tennq)
         {
-            thongbao("", "<?php echo lang('feature_is_being_updated') ?>", "info");
-            //setTimeout("location.href = '<?php echo base_url(); ?>index.php/nhomquyen/detail/"+id+"';",0);
+            var dta, url;
+            url = "<?php echo base_url(); ?>index.php/quyen/getidnhomquyen";
+            dta = {
+                "ma" : id
+            };
+            console.log(dta);
+            $.post(url, dta, function(data, status){
+
+                console.log(status);
+                console.log(data);
+                if(status == "success")
+                {   
+                    var ma = "";
+                    var ten = "";
+                    var str = "";
+                    document.getElementById("tennq").innerHTML = tennq;
+                    for (var i = 0; i < data.data.length; i++) {
+                        ma = data.data[i]['Q_MA'];
+                        ten = data.data[i]['Q_TEN'];
+
+                        var checked = "";
+                        length = data.data1.length;
+                        for (var j = 0; j < length; j++) {
+                            maquyen = data.data1[j]['Q_MA'];
+                            manhomquyen = data.data1[j]['NQ_MA'];
+                            if(maquyen == ma && manhomquyen == id)
+                            {
+                                checked = 'checked="checked"';
+                            }
+                        }
+
+                        str += '<label style="margin: 10px; width: 45%; border: solid 0px #000;" class="checkbox-inline" ><input class="checked" style="width: 16px; height: 16px; margin-top: 2px;" type="checkbox" value="'+ma+'" '+checked+' onclick="themquyen(\''+id+'\', \''+ma+'\',this.checked)">'+ten+'</label>';
+                    }
+                    document.getElementById("quyen").innerHTML = str;
+                }
+            }, 'json');  
+
         }
+
+        function themquyen(idnq, idq, val) {
+            //thongbao("", "Đã thêm quền vao nhom"+idnq+'= '+idq+' - '+val, "success");
+            var dta, url;
+            url = "<?php echo base_url(); ?>index.php/quyennhomquyen/phanquyen";
+            dta = {
+                "NQ_MA" : idnq,
+                "Q_MA" : idq,
+                "checked" : val
+            };
+            console.log(dta);
+            $.post(url, dta, function(data, status){
+
+                console.log(status);
+                console.log(data);
+                if(status == "success")
+                {   
+                    if(val)
+                    {
+                        thongbao("", "Thêm quyền thành công!", "success");
+                    }
+                    else
+                    {
+                        thongbao("", "Quyền đã được xóa!", "danger");
+                    }
+                }
+
+            }, 'json'); 
+        }
+
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
 
             $("#Save").jqxButton({ template: "success" });
             $("#Cancel").jqxButton({ template: "danger" });
+
+            $("#checkAll").change(function () {
+                $(".checked").prop('checked', $(this).prop("checked"));
+            });
 
             var data = {};
             var url = "<?php echo base_url(); ?>index.php/nhomquyen/data0";
@@ -290,17 +359,26 @@
                           return true;
                         }
                     },
-                    { text: "<?php lang('edit') ?>", datafield: 'addButtonColumn', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                    { text: "<?php lang('edit') ?>", datafield: 'addButtonColumn1', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             return "<button class='icon' onclick='sua(\""+row+"\")'><i class='fa fa-pencil fa-fw'></i></button>";
                         }
                     },
-                    { text: "<?php lang('delete') ?>", datafield: 'resetButtonColumn', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                    { text: "<?php lang('delete') ?>", datafield: 'resetButtonColumn1', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.NQ_MA;
                             return "<button class='icon' onclick='xoa(\""+id+"\")'><i class='fa fa-times fa-fw'></i></button>";
+                        }
+                    },
+                    { text: "<?php echo lang('authority') ?>", datafield: 'detail', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                        cellsrenderer: function (row, column, value) {
+                            var offset = $("#jqxgrid").offset();
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.NQ_MA;
+                            var ten = dataRecord.NQ_TEN;
+                            return "<button class='icon' data-toggle=\"modal\" data-target=\"#modal\" onclick='chitiet(\""+id+"\", \""+ten+"\")'><i class='fa fa-sitemap fa-fw'></i></button>";
                         }
                     }
                 ],
@@ -335,6 +413,7 @@
         .icon{
             width: 100%;
             height: 100%;
+
         }
     </style>
 </head>
@@ -363,6 +442,26 @@
             </table>
         </div>
    </div>
+
+   <div> <!-- modal  -->
+        <!-- Modal -->
+        <div id="modal" class="modal fade" role="dialog" tabindex="-1">
+          <div class="modal-dialog" style="width: 50%; ">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="height: 350px;">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-sitemap fa-fw"></i> <?php echo lang('authority_groups'); ?>: <i id="tennq"></i> </h4>
+              </div>
+              <div id="quyen" style="overflow: auto; height: 260px; font-size: 16px; border: solid 1px #DCDCDC;" class="modal-body">
+                  
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </div> <!-- dong modal  -->
 
 </body>
 </html>

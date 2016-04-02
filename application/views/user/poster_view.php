@@ -144,7 +144,7 @@
 	    $( "#opener" ).click(function() {
 	      $( "#dialog" ).dialog( "open" );
 	    });
-  });
+  	});
 
 </script>
 <style type="text/css">

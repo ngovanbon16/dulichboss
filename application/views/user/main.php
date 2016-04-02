@@ -524,11 +524,11 @@
                 {   
                     if(data.status == "error")
                     {
-                        alert("Email chưa được gửi đi!");
+                        alert("Email không tồn tại. Vui lòng kiểm tra lại Email!");
                     }
                     else
                     {
-                        alert("Email đã được gửi!");
+                        alert("Email đã được gửi vui lòng đăng nhập email để xác nhận!");
                         location.reload(true);
                     }
                 }

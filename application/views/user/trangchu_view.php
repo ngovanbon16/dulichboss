@@ -104,6 +104,15 @@
             -o-box-shadow: 0 0 4px rgba(0,0,0,4);
         }
 
+        .baiviet{
+            border-radius: 3px;
+            width: 100%;
+            margin-bottom: 20px; 
+            background-color: #FFF;
+            height: 34px;
+             box-shadow: 0 0 4px #000;
+            -webkit-box-shadow: 0 0 4px #000;
+        }
     </style>
 
 </head>
@@ -218,8 +227,28 @@
         </a>
     </section><!--/#main-slider-->
 
-    <section id="feature" >
+    <section id="feature" style="margin-top: -50px;">
         <div class="container">
+
+            <div class="baiviet">
+                <marquee style="margin: 5px;" onmouseover="this.stop()" onmouseout="this.start()" scrollamount="4" direction="left" width="100%" align="center">
+                    <i class="fa fa-star-o"></i> <?php echo lang('posts').' '.lang('new'); ?>: 
+                    <?php
+                        foreach ($baiviet as $iteam) {
+                            $BV_MA1 = $iteam["BV_MA"];
+                            $BV_TIEUDE1 = $iteam["BV_TIEUDE"];
+                    ?>
+
+                    <a style="margin: 10px;" href="<?php echo base_url(); ?>index.php/baiviet/detail/<?php echo $BV_MA1; ?>">
+                        <?php echo $BV_TIEUDE1; ?>
+                    </a> <i class="fa fa-angle-double-right"></i>
+
+                    <?php
+                        }
+                    ?>
+                </marquee>
+            </div>
+
            <div class="center wow fadeInDown">
                 <a name="name"></a>
                 <h2>Được xem nhiều nhất</h2>

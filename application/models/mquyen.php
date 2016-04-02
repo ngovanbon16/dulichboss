@@ -10,8 +10,8 @@ class Mquyen extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from($this->_table);
-        $this->db->order_by("Q_TEN", "asc");
-         $query = $this -> db -> get();           
+        $this->db->order_by("Q_MA", "asc");
+        $query = $this -> db -> get();           
         if($query->num_rows() > 0)
         {
             return $query->result_array();
@@ -19,47 +19,74 @@ class Mquyen extends CI_Model {
         else
         {
             return false;
+        }
+    }
+
+    public function getList2($query) // dung cho trang quan ly
+    {
+        $string = "SELECT * FROM ".$this->_table." ".$query;
+        $query = $this->db->query($string);          
+        if($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result_array();
         }
     }
 
     public function getid($id){
         $this->db->select('*');
-        $this->db->where('NQ_MA',$id);
-        $this->db->order_by("Q_TEN", "asc");
+        $this->db->where('Q_MA',$id);
         $this->db->from($this->_table);
          $query = $this -> db -> get();           
+        if($query->num_rows() > 0)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return $query->row_array();
+        }
+    }
+
+    public function gettimkiem($query) // dung cho trang quan ly
+    {
+        $query = $this->db->query($query);          
         if($query->num_rows() > 0)
         {
             return $query->result_array();
         }
         else
         {
-            return false;
+            return $query->result_array();
         }
-     }
+    }
+
+    public function countAll(){
+        return $this->db->count_all($this->_table); 
+    }
 
     public function insert($data_insert){
         $this->db->insert($this->_table,$data_insert);
     }
 
-    public function delete($manhomquyen, $id)
+    public function delete($id)
     {
-        $this->db->where('NQ_MA', $manhomquyen);
         $this->db->where('Q_MA', $id);
         return $this->db->delete($this->_table);
     }
 
-    public function update($manhomquyen, $id, $data_update){
-        $this->db->where("NQ_MA", $manhomquyen);
+    public function update($id, $data_update){
         $this->db->where("Q_MA", $id);
-        $this->db->update($this->_table, $data_update);
+        return $this->db->update($this->_table, $data_update);
     }
 
-    function testMa($manhomquyen, $ma) 
+    function testMa($ma) 
     {
-        $this -> db -> select('NQ_MA, Q_MA, Q_TEN');
+        $this -> db -> select('Q_MA, Q_TEN');
         $this -> db -> from($this->_table);
-        $this -> db -> where('NQ_MA', $manhomquyen);
         $this -> db -> where('Q_MA', $ma);
         $this -> db -> limit(1);
         $query = $this -> db -> get();           
@@ -73,15 +100,31 @@ class Mquyen extends CI_Model {
         }
     } 
 
-    function testTen($manhomquyen, $ten) 
+    function testTen($ten) 
     {
-        $this -> db -> select('NQ_MA, Q_MA, Q_TEN');
+        $this -> db -> select('Q_MA, Q_TEN');
         $this -> db -> from($this->_table);
-        $this -> db -> where('NQ_MA', $manhomquyen);
         $this -> db -> where('Q_TEN', $ten);
         $this -> db -> limit(1);
         $query = $this -> db -> get();           
         if($query -> num_rows() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function quyennhomquyen($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('q_nq', 'q_nq.Q_MA = quyen.Q_MA');
+        $this->db->where("quyen.Q_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
         {
             return true;
         }

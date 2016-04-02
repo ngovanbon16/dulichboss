@@ -506,81 +506,85 @@ class Nguoidung extends CI_Controller
 
 	public function guimatkhau()
     {
+    	$status = "error";
     	$email = $_POST['email'];
-        $config = Array(
+    	if($this->mnguoidung->testEmail($email))
+    	{
+	        $config = Array(
 
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.gmail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'ngovanbon99@gmail.com', // change it to yours
-            'smtp_pass' => '12345696',
-            'mailtype' => 'html',
-            'charset' => 'utf-8',
-            'wordwrap' => TRUE
-        );
+	            'protocol' => 'smtp',
+	            'smtp_host' => 'ssl://smtp.gmail.com',
+	            'smtp_port' => 465,
+	            'smtp_user' => 'ngovanbon99@gmail.com', // change it to yours
+	            'smtp_pass' => '12345696',
+	            'mailtype' => 'html',
+	            'charset' => 'utf-8',
+	            'wordwrap' => TRUE
+	        );
 
-        $this->load->library('email', $config);
-        $this->email->set_newline("\r\n");
+	        $this->load->library('email', $config);
+	        $this->email->set_newline("\r\n");
 
-        $this->email->from('ngovanbon99@gmail.com', 'Mekong Tourism');
-        $this->email->to($email);
+	        $this->email->from('ngovanbon99@gmail.com', 'Mekong Tourism');
+	        $this->email->to($email);
 
-        $this->email->subject('Email phục hồi mật khẩu cho người dùng!');
+	        $this->email->subject('Email phục hồi mật khẩu cho người dùng!');
 
-        $mk = "";
+	        $mk = "";
 
-        for ($i=0; $i < 6; $i++) { 
-        	$mk = $mk.rand(0, 9);
-        }
+	        for ($i=0; $i < 6; $i++) { 
+	        	$mk = $mk.rand(0, 9);
+	        }
 
-        $password = $mk;
+	        $password = $mk;
 
-        $note = '
-          <head>
-            <meta charset="utf-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta name="description" content="">
-            <meta name="author" content="">
-            <style type="text/css">
-              h3{
-                font-style: italic;
-                font-weight: bolder;
-                text-align: center;
-                font-size: 18px;
-              }
-              h4{
-                text-align: center;
-              }
-            </style>
-          </head>
-          <body>
-            <div style="margin: auto; width: 50%;" class="panel panel-success">
-                <a href="'.base_url().'home/trangchu">Trang chủ</a>
-                <h3>
-                  Chào mừng bạn đã đến với Website Du lịch Cửu Long! <br/>
-                  <p style="font-size: 15px; margin: 5px;" >Welcome to Website Mekong Tourism!</p>
-                </h3>
+	        $note = '
+	          <head>
+	            <meta charset="utf-8">
+	            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	            <meta name="viewport" content="width=device-width, initial-scale=1">
+	            <meta name="description" content="">
+	            <meta name="author" content="">
+	            <style type="text/css">
+	              h3{
+	                font-style: italic;
+	                font-weight: bolder;
+	                text-align: center;
+	                font-size: 18px;
+	              }
+	              h4{
+	                text-align: center;
+	              }
+	            </style>
+	          </head>
+	          <body>
+	            <div style="margin: auto; width: 50%;" class="panel panel-success">
+	                <a href="'.base_url().'home/trangchu">Trang chủ</a>
+	                <h3>
+	                  Chào mừng bạn đã đến với Website Du lịch Cửu Long! <br/>
+	                  <p style="font-size: 15px; margin: 5px;" >Welcome to Website Mekong Tourism!</p>
+	                </h3>
 
-                <h4> Mật khẩu mới của bạn là: '.$password.' | Vui lòng bấm vào link bên dưới để xác nhận! <br>
-                  <a href="'.base_url().'index.php/nguoidung/forgotpassword/'.md5($email).'/'.$password.'">http://smartmekong.vn/dulich</a>
-                </h4>
-              </div>
-            </div>
-          </body>
-        ';
-        $status = "error";
-        $this->email->message($note);
-        if ($this->email->send()) {
-            //return true;
-            $status = "success";
-        } 
-        else 
-        {
-        	$status = "error";
-            //return false;
-            //show_error($this->email->print_debugger());
-        }
+	                <h4> Mật khẩu mới của bạn là: '.$password.' | Vui lòng bấm vào link bên dưới để xác nhận! <br>
+	                  <a href="'.base_url().'index.php/nguoidung/forgotpassword/'.md5($email).'/'.$password.'">http://smartmekong.vn/dulich</a>
+	                </h4>
+	              </div>
+	            </div>
+	          </body>
+	        ';
+	        
+	        $this->email->message($note);
+	        if ($this->email->send()) {
+	            //return true;
+	            $status = "success";
+	        } 
+	        else 
+	        {
+	        	$status = "error";
+	            //return false;
+	            //show_error($this->email->print_debugger());
+	        }
+	    }
         $response = array('status' => $status);
 		$jsonString = json_encode($response);
 		echo $jsonString;

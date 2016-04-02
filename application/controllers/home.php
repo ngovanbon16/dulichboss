@@ -65,6 +65,11 @@ class Home extends CI_Controller
 		// Kết nối Database, thực hiện câu truy vấn
 		$this->_data['luotxem'] = $this->mdiadiem->gettimkiem($query);
 
+		$this->load->model("mbaiviet");
+		$query = "SELECT BV_TIEUDE, BV_MA FROM baiviet WHERE BV_DUYET = '1' ORDER BY BV_NGAYDANG DESC LIMIT 0,10";
+		$result = $this->mbaiviet->gettimkiem($query);
+		$this->_data['baiviet'] = $result;
+
        	$this->_data['title'] = 'Trang chủ';
        	$this->load->view('user/main.php', $this->_data);
 	}

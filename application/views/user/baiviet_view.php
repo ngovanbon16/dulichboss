@@ -82,6 +82,7 @@
 	    				if(data.status == "success")
 	    				{	
 	    					thongbao("", "<?php echo lang('inserted_successfully'); ?>", "success");
+	    					setTimeout("location.href = '<?php echo base_url(); ?>index.php/baiviet/thembaiviet/<?php echo $DD_MA; ?>';",2000);
 	    				}
 	    				else
 	    				{

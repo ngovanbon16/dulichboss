@@ -173,7 +173,19 @@
                 <div class="col-md-8" id="left">
                     <div class="blog-item" >
                     	<div>
-                    		<h1 style="color: #0033FF; font-size: 22px;"><?php echo $baiviet['BV_TIEUDE']; ?> <i style="font-size: 16px; font-weight: normal;">[<?php echo $baiviet['H_TEN'].' - '.$baiviet['T_TEN']; ?>]</i> </h1>
+                    		<h1 style="color: #0033FF; font-size: 22px;">
+                                <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $baiviet['DD_MA']; ?>">
+                                    <?php echo $baiviet['BV_TIEUDE']; ?> 
+                                </a>
+                                <i style="font-size: 16px; font-weight: normal;">[
+                                    <a href="<?php echo base_url(); ?>index.php/home/theohuyen/<?php echo $baiviet['T_MA'].'/'.$baiviet['H_MA']; ?>">
+                                        <?php echo $baiviet['H_TEN']; ?> 
+                                    </a> - 
+                                    <a href="<?php echo base_url(); ?>index.php/home/khuvuc/<?php echo $baiviet['T_MA']; ?>">
+                                        <?php echo $baiviet['T_TEN']; ?> 
+                                    </a>
+                                ]</i> 
+                            </h1>
                     		<p class="p"> 
                     			Người đăng: <?php echo $baiviet['ND_HO'].' '.$baiviet['ND_TEN']; ?><br>
                     			Được viết vào ngày: <?php echo $baiviet['BV_NGAYDANG']; ?><br>
