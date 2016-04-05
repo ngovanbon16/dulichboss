@@ -26,12 +26,10 @@ class Quyennhomquyen extends CI_Controller
         {
             $this->mquyennhomquyen->insert($data);
         }
-        
+
         if($checked == "false")
         {
             $this->mquyennhomquyen->delete($NQ_MA, $Q_MA);
-            //$query = "DELETE FROM q_nq WHERE NQ_MA = '".$NQ_MA."' ";
-            //$this->mquyennhomquyen->query($query);
         }
 
         $jsonString = json_encode($NQ_MA);

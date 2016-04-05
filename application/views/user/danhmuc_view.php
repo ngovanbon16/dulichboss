@@ -57,21 +57,26 @@
 </style>
 <body class="homepage" onload="loc('1', 'Du Lịch Sinh Thái')">
 
-    <section id="recent-works">
+    <section style="margin-top: -60px;" id="recent-works">
         <div class="container">
-
+            <div class="collapse navbar-collapse navbar-right">
+                    <ul class="nav navbar-nav">
             <?php 
                 foreach ($danhmuc as $iteam) {
                     $ma = $iteam['DM_MA'];
                     $ten = $iteam['DM_TEN'];
             ?>
-            <i style="font-size: 20px; font-weight: bolder; color: #000;" class="fa fa-angle-double-right"></i>
+            <!-- <i style="font-size: 20px; font-weight: bolder; color: #000;" class="fa fa-angle-double-right"></i> -->
             
-            <b class="tieude" onclick="loc('<?php echo $ma; ?>', '<?php echo $ten; ?>')" ><?php echo $ten; ?></b>
+           <!--  <b class="tieude" onclick="loc('<?php echo $ma; ?>', '<?php echo $ten; ?>')" ><?php echo $ten; ?></b> -->
+
+            <li style="margin-bottom: -30px;" class="active" onclick="loc('<?php echo $ma; ?>', '<?php echo $ten; ?>')"><a href="#"><?php echo $ten; ?></a></li>
           
             <?php
                 }
             ?>
+            </ul></div>
+            
             <h2 id="tendanhmuc"></h2>
             <hr/>
             <div class="row">

@@ -79,6 +79,24 @@
         }
     </script>
 
+    <style type="text/css">
+        ::-webkit-scrollbar {
+        width: 10px; height:8px;
+        }
+        ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+        background:#fff;
+        }
+        ::-webkit-scrollbar-thumb {
+        background: rgba(186,35,35,0.8);
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+        }
+        ::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(186,35,35,0.4);
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+        }
+    </style>
+
 </head><!--/head-->
 <body class="homepage">
 

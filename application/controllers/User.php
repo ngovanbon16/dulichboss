@@ -28,7 +28,7 @@ class User extends CI_Controller
 			$keyword = $this->db->escape_like_str($keyword);	// Lọc các ký tự đặc biệt
 
 			// Câu query lấy dữ liệu
-			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA WHERE DD_TEN LIKE '%$keyword%' OR DD_MOTA LIKE '%$keyword%' OR T_TEN LIKE '%$keyword%' OR H_TEN LIKE '%$keyword%' OR DM_TEN LIKE '%$keyword%' ORDER BY DD_TEN ASC LIMIT 0, 20";
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND ( DD_TEN LIKE '%$keyword%' OR DD_MOTA LIKE '%$keyword%' OR T_TEN LIKE '%$keyword%' OR H_TEN LIKE '%$keyword%' OR DM_TEN LIKE '%$keyword%' ) ORDER BY DD_TEN ASC LIMIT 0, 20";
 
 			// Kết nối Database, thực hiện câu truy vấn
 			$result = $this->mdiadiem->gettimkiem($query);
@@ -38,7 +38,7 @@ class User extends CI_Controller
 			if(count($result) > 0)
 			{
 				foreach ($result as $row) {
-					echo '<p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #FFF;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p>'   ;
+					echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 100px; hieght: 100px; float: left; margin-right: 10px; border-radius: 3px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #B9D3EE;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div>'   ;
 				}
 			}
 			else 

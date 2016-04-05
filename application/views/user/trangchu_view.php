@@ -52,7 +52,7 @@
                                 }
 
 
-                                document.getElementById("diadiem").innerHTML += '<div class="col-md-3 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms"><div style="float: left; height: 200px;"><table><tr><td><a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" rel="prettyPhoto"><img class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" alt=""></a></td></tr><tr><td><b style="text-transform: uppercase; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser/'+ma+'">'+ten+'</a> </b><p style="font-size: 11px; font-style: italic;">'+tenhuyen+'<i class="fa fa-angle-double-right fa-fw"></i>'+tentinh+'</p></td></tr></table></div></div><!--/.col-md-4-->';
+                                document.getElementById("diadiem").innerHTML += '<div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms"><table style="height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+ma+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+ma+'">'+ten+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+tenhuyen+'<i class="fa fa-angle-double-right fa-fw"></i>'+tentinh+'</p></td></tr></table></div>';
                             }
                             var tong = eval(data.data.length+"+"+$("#count").val());
                             $("#count").val(tong);
@@ -117,7 +117,9 @@
 
 </head>
 <body class="homepage">
-
+    <a href="#name" style="position: absolute; margin-left: 95%; margin-top: 5px; z-index: 10000;">
+        <i style="font-size: 50px;" class="fa fa-arrow-down"></i>
+    </a>
     <section id="main-slider" class="no-margin">
         <div class="carousel slide">
             <ol class="carousel-indicators">
@@ -128,21 +130,45 @@
             </ol>
             <div class="carousel-inner">
 
-                <div class="item active" style="background-image: url(<?php echo base_url(); ?>assets/images/dongthapmuoi.jpg)">
+                <div class="item active" style="background-image: url(<?php echo base_url(); ?>assets/images/caucantho.jpg)">
                     <div class="container">
                         <div class="row slide-margin">
                             <div class="col-sm-6">
                                 <div class="carousel-content">
-                                    <h1 class="animation animated-item-1">Đồng Tháp Mười</h1>
-                                    <h2 class="animation animated-item-2">Là một biểu tượng của đồng bằng Sông Cửu Long châu thổ.</h2>
-                                    <a class="btn-slide animation animated-item-3" href="#"><?php echo lang('information') ?></a>
+                                    <h1 class="animation animated-item-1">Cầu Cần Thơ</h1>
+                                    <h2 class="animation animated-item-2">Được mệnh danh là cây cầu dài nhất Đông Nam Á.</h2>
+                                    <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/74"><?php echo lang('view_more') ?></a>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 hidden-xs animation animated-item-4">
                                 <div class="slider-img">
                                     <a href="#name">
-                                        <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
+                                        <img style="width: 60%; height: 60%;" src="<?php echo base_url(); ?>assets/images/logo0.png" >
+                            
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!--/.item-->
+
+                <div class="item" style="background-image: url(<?php echo base_url(); ?>assets/images/dongthapmuoi.jpg)">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-6">
+                                <div class="carousel-content">
+                                    <h1 class="animation animated-item-1">Đồng Tháp Mười</h1>
+                                    <h2 class="animation animated-item-2">Là một biểu tượng của đồng bằng Sông Cửu Long châu thổ.</h2>
+                                    <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/80"><?php echo lang('view_more') ?></a>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 hidden-xs animation animated-item-4">
+                                <div class="slider-img">
+                                    <a href="#name">
+                                        <img style="width: 60%; height: 60%;" src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
@@ -158,37 +184,14 @@
                                 <div class="carousel-content">
                                     <h1 class="animation animated-item-1">Chùa Vạn Linh trên núi Thiên Cẩm Sơn</h1>
                                     <h2 class="animation animated-item-2">Một trong những địa điểm du lịch tâm linh không thể bỏ qua.</h2>
-                                    <a class="btn-slide animation animated-item-3" href="#"><?php echo lang('information') ?></a>
+                                    <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/83"><?php echo lang('view_more') ?></a>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 hidden-xs animation animated-item-4">
                                 <div class="slider-img">
                                     <a href="#name">
-                                        <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
-                                    </a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div><!--/.item-->
-
-                <div class="item" style="background-image: url(<?php echo base_url(); ?>assets/images/caucantho.jpg)">
-                    <div class="container">
-                        <div class="row slide-margin">
-                            <div class="col-sm-6">
-                                <div class="carousel-content">
-                                    <h1 class="animation animated-item-1">Cầu Cần Thơ</h1>
-                                    <h2 class="animation animated-item-2">Được mệnh danh là cây cầu dài nhất Đông Nam Á.</h2>
-                                    <a class="btn-slide animation animated-item-3" href="#"><?php echo lang('information') ?></a>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 hidden-xs animation animated-item-4">
-                                <div class="slider-img">
-                                    <a href="#name">
-                                        <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
+                                        <img style="width: 60%; height: 60%;" src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
@@ -204,13 +207,13 @@
                                 <div class="carousel-content">
                                     <h1 class="animation animated-item-1">Chợ Nổi Cái Răng</h1>
                                     <h2 class="animation animated-item-2">Một nơi hấp dẫn đối với những du khách sành về ăn uống.</h2>
-                                    <a class="btn-slide animation animated-item-3" href="#"><?php echo lang('information') ?></a>
+                                    <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/64"><?php echo lang('view_more') ?></a>
                                 </div>
                             </div>
                             <div class="col-sm-6 hidden-xs animation animated-item-4">
                                 <div class="slider-img">
                                     <a href="#name">
-                                        <img src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
+                                        <img style="width: 60%; height: 60%;" src="<?php echo base_url(); ?>assets/images/logo0.png" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
@@ -227,6 +230,7 @@
         </a>
     </section><!--/#main-slider-->
 
+    <a name="name"></a>
     <section id="feature" style="margin-top: -50px;">
         <div class="container">
 
@@ -250,7 +254,7 @@
             </div>
 
            <div class="center wow fadeInDown">
-                <a name="name"></a>
+                
                 <h2>Được xem nhiều nhất</h2>
                 <p class="lead">Các địa điểm được nhiều người quan tâm nhất <br> Số lượt xem cao nhất</p>
             </div>
@@ -372,19 +376,13 @@
             </div><!--/.row-->   
             <div class="row">
                  <center>
-                    <div class="grad1">
-                        <?php echo lang('total') ?>: <input id="count" style="width: 40px; height: 40px; border-radius: 50%; text-align: center; border: ; font-weight: bolder; background-color: #4F4F4F; font-size: 15px; color: #fff;" value="<?php echo $count ?>" readonly="readonly" />
+                    <div style="cursor: pointer; margin: 10px;">
+                        <button id="btnthem" type="button" class="btn btn-danger"><i class="fa  fa-eye fa-fw"></i> <?php echo lang('view_more'); ?></button>
                     </div>
-                    <!-- <div style="cursor: pointer;" class="grad1" id="btnthem"><i class="fa  fa-eye fa-fw"></i> Xem thêm</div> -->
-
-                    <!-- <div style="width: 100px; height: 5px; font-size: 10px;" class="progress-wrap">
-                        <h3>Graphic Design</h3>
-                        <div style="width: 100px; height: 5px;" class="progress">
-                            <div style="height: 5px; width: 20%;" class="progress-bar  color1" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                <span style="" class="bar-width">KG: 2</span>
-                            </div>
-                        </div>
-                    </div> -->
+                    <div style="font-weight: bolder;" class="grad1">
+                        <?php echo lang('total') ?>: <input id="count" style="width: 40px; height: 40px; border-radius: 50%; text-align: center; border: ; font-weight: bolder; background-color: #d9534f; font-size: 15px; color: #fff;" value="<?php echo $count ?>" readonly="readonly" />
+                    </div>
+                    
                  </center> 
             </div>  
         </div><!--/.container-->

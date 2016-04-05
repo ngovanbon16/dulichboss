@@ -43,7 +43,7 @@ class Home extends CI_Controller
 		$this->_data['active'] = "trangchu";
 		$this->load->model("mdiadiem");
 		$this->load->model("mhinhanh");
-		$this->_data['info'] = $this->mdiadiem->getList1(18, 0);
+		$this->_data['info'] = $this->mdiadiem->getList1(12, 0);
 		$this->_data['info1'] = $this->mhinhanh->getList();
 
 		$this->load->model("mtinh");
@@ -78,7 +78,7 @@ class Home extends CI_Controller
 	{
 		$count = $_POST["count"];
 		$this->load->model("mdiadiem");
-		$data = $this->mdiadiem->getList1(4, $count);
+		$data = $this->mdiadiem->getList1(6, $count);
 
 		$this->load->model("mhinhanh");
 		$hinh = $this->mhinhanh->getList();

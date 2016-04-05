@@ -40,26 +40,29 @@ $("#faq_search_input").keyup(function()
 		font-size: 20px;
 	}
 	a{
-		color: #FFF;
+		color: #B9D3EE;
 	}
 	.mota{
 		font-size: 15px;
-		color: #000;
+		color: #FFF; 
 	}
 </style>
 
 </head>
 <body>
-<section id="partner">
+<section style="margin-top: -50px;" id="partner">
+	<a name="name"></a>
     <div class="container">
 
 		<center><h1><?php echo lang('search').' '.lang('place'); ?></h1></center>
 	    <h3 id="faq_title"> <strong><?php echo lang('search_with_keyword'); ?> : </strong> <span id="faq_category_title"><?php echo lang('keyword'); ?> </span> </h3>
 
 	    <center> 
-	    	<input name="query" type="text" class="form-control" id="faq_search_input" style="width: 45%;" />
+	    	<a href="#name">
+	    		<input name="query" type="text" class="form-control" id="faq_search_input" style="width: 45%;" />
+	    	</a>
 	    </center>
-	    <div align="left" style=" overflow: auto; height: 400px; margin: 20px 200px 20px 200px;" id="searchresultdata" class="faq-articles"> </div>
+	    <div align="left" style=" overflow: auto; height: 450px; margin: 20px 200px 20px 200px;" id="searchresultdata" class="faq-articles"> </div>
 		    
 	</div>
 </section>

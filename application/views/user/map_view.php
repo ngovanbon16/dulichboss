@@ -1,4 +1,4 @@
-<section id="contact-info">
+<section id="contact-info" style="margin-top: 0px;">
 <div class="gmap-area">
             <div class="container">
                 <div class="row">
@@ -58,8 +58,8 @@
     <script type="text/javascript">
      $(document).ready(function () {
                 $.jqx.theme = "bootstrap";
-     			$("#xoa").jqxButton({ width: '100', height: '27'});
-     			$("#loc").jqxButton({ width: '100', height: '27'});
+     			$("#xoa").jqxButton({ width: '50%', height: '27'});
+     			$("#loc").jqxButton({ width: '50%', height: '27'});
                 var url = "<?php echo base_url(); ?>index.php/danhmuc/data";
                 // prepare the data
                 var source =
@@ -270,54 +270,33 @@
        		});
         });
     </script>
+    <style type="text/css">
+        .div{
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
-	<table width="100%">
-		<tr>
-			<td width="20%">
-				<div id="T_MA" style="float: left;"></div>
-			</td>
-			<td width="20%">
-		    	<div id="H_MA" style="float: left;"></div>
-		    </td>
-		    <td width="20%">
-		    	<div id="X_MA" style="float: left;"></div>
-		    </td>
-		    <td width="20%">
-		    	<div id="DM_MA" style="float: left;"></div>
-			</td>
-			<td width="20%">
-				<button id="loc"><?php echo lang('filter') ?></button>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?php echo $tentinh ?>
-			</td>
-			<td>
-				<?php echo $tenhuyen ?>
-			</td>
-			<td>
-				<?php echo $tenxa ?>
-			</td>
-			<td>
-				<?php echo $tendanhmuc ?>
-			</td>
-			<td>
-				<button id="xoa"><?php echo lang('delete') ?></button>
-			</td>
-		</tr>
-	</table>
-
+    <h1 style="margin-top: -20px;"><?php echo lang('places_map'); ?></h1>
     <table width="100%">
         <tr>
+            <td valign="top" style="padding-right: 10px; width: 20%;">
+                <div class="div" id="T_MA" style="float: left;"></div>
+                <div> <?php echo $tentinh ?> </div>
+                <div class="div" id="H_MA" style="float: left;"></div>
+                <div> <?php echo $tenhuyen ?> </div>
+                <div class="div" id="X_MA" style="float: left;"></div>
+                <div> <?php echo $tenxa ?> </div>
+                <div class="div" id="DM_MA" style="float: left;"></div>
+                <div> <?php echo $tendanhmuc ?> </div>
+                <div>
+                    <button style="float: left;" id="loc"><?php echo lang('search') ?></button>
+                    <button id="xoa"><?php echo lang('delete') ?></button>
+                </div>
+                
+            </td>
             <td width="100%">
                 <?php echo $map['html']; ?>
-            </td>
-        </tr>
-        <tr>
-            <td width="100%">
-                <div id="directionsDiv"></div>
             </td>
         </tr>
     </table>
