@@ -78,7 +78,8 @@
             margin: 5px;
         }
         h1{
-            text-shadow: 0 1px 0 #ccc,
+            color: #000;
+            /*text-shadow: 0 1px 0 #ccc,
                0 2px 0 #c9c9c9,
                0 3px 0 #bbb,
                0 4px 0 #b9b9b9,
@@ -89,10 +90,11 @@
                0 3px 5px rgba(0,0,0,.2),
                0 5px 10px rgba(0,0,0,.25),
                0 10px 10px rgba(0,0,0,.2),
-               0 20px 20px rgba(0,0,0,.15);
+               0 20px 20px rgba(0,0,0,.15);*/
         }
         h2{
-            text-shadow: 0 1px 0 #ccc,
+            color: #000;
+            /*text-shadow: 0 1px 0 #ccc,
                0 2px 0 #c9c9c9,
                0 3px 0 #bbb,
                0 4px 0 #b9b9b9,
@@ -103,7 +105,7 @@
                0 3px 5px rgba(0,0,0,.2),
                0 5px 10px rgba(0,0,0,.25),
                0 10px 10px rgba(0,0,0,.2),
-               0 20px 20px rgba(0,0,0,.15);
+               0 20px 20px rgba(0,0,0,.15);*/
         }
     </style>
 </head>
@@ -131,7 +133,7 @@
                             }
                         ?>
                         <h2>
-                            <?php echo $info['ND_HO'].' '.$info['ND_TEN'] ?> 
+                            <b style="color: #000;"> <?php echo $info['ND_HO'].' '.$info['ND_TEN'] ?>  </b>
                             <a href="<?php echo base_url(); ?>index.php/user/edit/<?php echo $info['ND_MA'] ?>">
                                 <i class="fa fa-edit fa-fw"></i>
                             </a>
@@ -144,7 +146,7 @@
                     </td>
                     <td style="padding: 20px; background-color: #F8F8FF; border-radius: 0px 5px 5px 0px;" valign="top">
                         <h1><?php echo lang('profile') ?></h1>
-                        <h2><?php echo lang('basic_information') ?></h2>
+                        <h2> <b style="color: #000;"><?php echo lang('basic_information') ?></b></h2>
                         <hr/>
                         <b><?php echo lang('name') ?></b>: <?php echo $info['ND_HO'].' '.$info['ND_TEN'] ?><br/>
                         <b><?php echo lang('birthday') ?></b>: <?php echo $info['ND_NGAYSINH'] ?><br/>
@@ -156,7 +158,7 @@
                                     echo lang('female');
                             ?><br/>
                         <b><?php echo lang('email') ?></b>: <?php echo $info['ND_DIACHIMAIL'] ?>
-                        <h2><?php echo lang('contact_information') ?></h2>
+                        <h2><b style="color: #000;"><?php echo lang('contact_information') ?></b></h2>
                         <hr/>
                         <?php
                             $tinh = $huyen = $xa = lang('information_is_being_updated'); 

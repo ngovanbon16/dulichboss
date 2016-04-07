@@ -121,6 +121,50 @@
               }
             }, 'json');
 
+            $(document).ready(function(){
+                $("#btnthem").click(function(){
+                    var id = "<?php echo $baiviet['DD_MA']; ?>";
+                    var start = $("#count").html();
+                    var length = 3;
+                    var url, dta;
+                    url="<?php echo base_url(); ?>index.php/baiviet/getdata?t=" + Math.random();
+                    dta = {
+                        "ma" : id,
+                        "start" : start,
+                        "length" : length
+                    };
+                    console.log(dta);
+                    $.post(url, dta, function(data, status){
+
+                        console.log(status);
+                        console.log(data);
+                        if(status == "success")
+                        {   
+                            var str = "";
+                            for (var i = 0; i < data.length; i++) {
+                                var BV_MA = data[i]['BV_MA'];
+                                var BV_TIEUDE = data[i]['BV_TIEUDE'];
+                                var ND_HO = data[i]['ND_HO'];
+                                var ND_TEN = data[i]['ND_TEN'];
+                                var BV_NGAYDANG = data[i]['BV_NGAYDANG'];
+                                var BV_LUOTXEM = data[i]['BV_LUOTXEM'];
+                                str += '<div style="margin-bottom: -15px; line-height: 1.5;" class="col-sm-12"><div class="single_comments"><a href="<?php echo base_url(); ?>index.php/baiviet/detail/'+BV_MA+'"><p>'+BV_TIEUDE+'</p></a><div class="entry-meta small muted"><span style="font-style: italic;">'+ND_HO+' '+ND_TEN+': '+BV_NGAYDANG+'<br/><?php echo lang('views'); ?>: '+BV_LUOTXEM+'</span></div></div></div>';
+                            }
+                            document.getElementById('noidung').innerHTML += str;
+
+                            if(data.length == 0)
+                            {
+                                $("#btnthem").hide();
+                            }
+                            else
+                            {
+                                document.getElementById('count').innerHTML = eval(start + "+" + data.length);
+                            }
+                        }
+                    }, 'json');
+                });
+            });
+
         });
     </script>
     <style type="text/css">
@@ -173,7 +217,22 @@
                 <div class="col-md-8" id="left">
                     <div class="blog-item" >
                     	<div>
-                    		<h1 style="color: #0033FF; font-size: 22px;">
+                            <table>
+                                <tr>
+                                    <td style="padding-right: 5px;">
+                                        <img style="width: 50px; height: 50px; border-radius: 50%; border: solid 2px #F8F8FF;" src="<?php echo base_url(); ?>uploads/user/<?php echo $baiviet['ND_HINH']; ?>" />
+                                    </td>
+                                    <td>
+                                        <h4 style="margin-bottom: 5px;"><?php echo $baiviet['ND_HO'].' '.$baiviet['ND_TEN']; ?></h4>
+                                        <p style="font-size: 13px; line-height: 1.5; opacity: 0.7;">
+                                        <?php echo lang('share'); ?> - <?php echo $baiviet['BV_NGAYDANG']; ?><br>
+                                        <?php echo lang('views'); ?> - <i id="luotxem">  </i>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr style="margin: 0px 0px -10px 0px;" />
+                    		<h1 style="color: #0033FF; font-size: 20px;">
                                 <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $baiviet['DD_MA']; ?>">
                                     <?php echo $baiviet['BV_TIEUDE']; ?> 
                                 </a>
@@ -186,11 +245,7 @@
                                     </a>
                                 ]</i> 
                             </h1>
-                    		<p class="p"> 
-                    			Người đăng: <?php echo $baiviet['ND_HO'].' '.$baiviet['ND_TEN']; ?><br>
-                    			Được viết vào ngày: <?php echo $baiviet['BV_NGAYDANG']; ?><br>
-                    			Lượt xem: <i id="luotxem">  </i>
-                    		</p>
+                    		
                     	</div>
 
                         <?php echo $baiviet['BV_NOIDUNG']; ?>
@@ -204,11 +259,11 @@
                                     <h2>Thêm bài viết mới cho địa điểm: <?php echo $baiviet['DD_TEN']; ?></h2>
                                 </div>
                                 <div class="form-group">
-                                    <label><?php echo lang('title'); ?> *</label>
+                                    <label><?php echo lang('title'); ?> <b style="color: #D00;">*</b></label>
                                     <input id="BV_TIEUDE" type="text" class="form-control" required="required" placeholder="<?php echo lang('input').' '.lang('title'); ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label><?php echo lang('content'); ?> *</label>
+                                    <label><?php echo lang('content'); ?> <b style="color: #D00;">*</b></label>
                                     <textarea name="BV_NOIDUNG" id="BV_NOIDUNG"><?php //echo $baiviet['BV_NOIDUNG']; //echo lang('input').' '.lang('content'); ?></textarea>
                                 </div>          
 
@@ -237,9 +292,9 @@
                     </div> --><!--/.search-->
     				
     				<div class="widget categories" id="baivietlienquan">
-                        <h3>Bài viết liên quan</h3>
-                        <div class="row">
-
+                        <h3>Bài viết liên quan [<b id="count"><?php echo count($allbaiviet); ?></b>]</h3>
+                        <div style="height: 360px; overflow: auto;">
+                        <div id="noidung">
                         	<?php
                         		foreach ($allbaiviet as $row) {
                         			$BV_MA = $row["BV_MA"];
@@ -247,9 +302,10 @@
                         			$BV_NGAYDANG = $row["BV_NGAYDANG"];
                         			$ND_HO = $row["ND_HO"];
                         			$ND_TEN = $row["ND_TEN"];
+                                    $BV_LUOTXEM = $row["BV_LUOTXEM"];
                         	?>
 
-                            <div class="col-sm-12">
+                            <div style="margin-bottom: -15px; line-height: 1.5;" class="col-sm-12">
                                 <div class="single_comments">
                                     <a href="<?php echo base_url(); ?>index.php/baiviet/detail/<?php echo $BV_MA; ?>">
     								    <p><?php echo $BV_TIEUDE; ?></p>
@@ -257,6 +313,8 @@
                                     <div class="entry-meta small muted">
                                         <span style="font-style: italic;">
                                             <?php echo $ND_HO.' '.$ND_TEN; ?>: <?php echo $BV_NGAYDANG; ?>
+                                            <br/>
+                                            <?php echo lang('views').': '.$BV_LUOTXEM; ?>
                                         </span>
                                     </div>
     							</div>
@@ -265,7 +323,10 @@
                             <?php
                         		}
                         	?>
-
+                        </div>
+                            <center>
+                                <button style="font-size: 12px; margin-left: -15px; margin-top: 10px;" id="btnthem" type="button" class="btn btn-danger"><i class="fa  fa-eye fa-fw"></i> <?php echo lang('view_more'); ?></button>
+                            </center>
                         </div>                     
                     </div><!--/.recent comments-->
     					

@@ -342,11 +342,12 @@ class User extends CI_Controller
 
 		$this->_data['map'] = $this->mapuser($id, $result["DD_VITRI"]);
 
+		$this->_data['vitri'] = $result["DD_VITRI"];
 		$this->_data['data'] = $result;
 		$this->_data['title'] = lang('poster');
         $this->_data['subview'] = 'user/poster_view';
         //$this->load->view('user/main.php', $this->_data);
-        $this->load->view('user/poster_view', $this->_data);
+        $this->load->view('user/poster_view1', $this->_data);
 	}
 
 	function mapuser($id, $local)

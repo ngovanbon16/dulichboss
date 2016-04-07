@@ -682,17 +682,13 @@
         -o-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
     }
     .tieudegoiy{
-      position: absolute; 
-      font-size: 13; 
+      border: none;
+      font-size: 12px; 
       width: 150px; 
-      overflow: hidden;
-      white-space: pre-line;
+      height: 25px;
       background-color: #F8F8FF;
-      opacity: 0.7;
-      font-size: 12px;
-      line-height: 1.5;
-      padding: 3px;
-      margin: 2px;
+      padding: 2px;
+      font-style: italic;
     }
     .li{
       cursor: pointer;
@@ -777,12 +773,22 @@
                 $ma1 = $row['DD_MA'];
                 $ten1 = $row['DD_TEN'];
             ?>
-              <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma1; ?>">
-              <span style="margin-right: 30px;">
-                <span class="tieudegoiy"><?php echo $ten1; ?></span>
-               <img class="imggoiy" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>" /> 
-               </span>
-               </a>
+
+                <table style="float: left; margin-right: 30px;">
+                  <tr>
+                    <td>
+                      <!-- <div class="tieudegoiy"><?php echo $ten1; ?></div> -->
+                      <input type="text" class="tieudegoiy" value="<?php echo $ten1; ?>">
+                    </td>
+                  </tr>
+                  <tr>
+                  <td>
+                  <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma1; ?>">
+                      <img class="imggoiy" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>" />  </a>
+                    </td>
+                  </tr>
+                </table>
+              
             <?php      
             } 
           ?>
@@ -1411,7 +1417,7 @@
 
     <!-- Modal upload anh -->
     <div class="modal fade" id="Modalimg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 80%;">
+    <div class="modal-dialog" style="width: 90%;">
       <div class="modal-content" style="height: 100%;">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -1439,8 +1445,12 @@
                 </ol>
                 <div style="max-height: 500px;" class="carousel-inner">
 
-                    <div class="item active" style="max-height: 500px; background-image: url(<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>)">
-                    </div><!--/.item-->
+                    <!-- <div class="item active" style="max-height: 500px; background-image: url(<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>)">
+                    </div> -->
+
+                    <div class="item active" style="max-height: 500px;">
+                      <img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" alt="" width='100%' >
+                    </div>
 
                     <?php
                       foreach ($info1 as $item) {
@@ -1449,7 +1459,10 @@
                         {
                           $hinh1 = $item['HA_TEN'];
                         ?>
-                          <div class="item" style="max-height: 500px; background-image: url(<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>)">
+                          <!-- <div class="item" style="max-height: 500px; background-image: url(<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>)">
+                          </div> -->
+                          <div class="item" style="max-height: 500px;">
+                            <img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>" alt="" width='100%' >
                           </div>
                         <?php
                         }

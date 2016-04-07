@@ -1,29 +1,212 @@
-<script type="text/javascript">
+<link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/logo.ico" type="image/x-icon" />
+<link id="jquiCSS" rel="stylesheet" href="<?php echo base_url(); ?>assets/jqueryui/jquery-ui.css" type="text/css" media="all">
+<link href="<?php echo base_url(); ?>assets/colorpicker/css/evol-colorpicker.min.css" rel="stylesheet" />
+<script src="<?php echo base_url(); ?>assets/jqueryui/external/jquery/jquery.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/jqueryui/jquery-ui.min.js" type="text/javascript"></script>
+<?php if(lang('lang') == 'vi') { ?>
+	<script src="<?php echo base_url(); ?>assets/colorpicker/js/evol-colorpicker_vi.js" type="text/javascript"></script>
+<?php } else { ?>
+	<script src="<?php echo base_url(); ?>assets/colorpicker/js/evol-colorpicker.js" type="text/javascript"></script>
+<?php } ?>
 
-    function PrintElem(elem)
-    {
-        Popup($(elem).html());
-    }
+<head>
+	<?php 
+		$str = trim($vitri);
+		$length = strlen($str);
+		$start = strpos($str, ',' );
+		$lang = substr( $str,  $start + 1, $length - $start);
+		$lat = substr( $str, '0', $length - strlen($lang) - 1 );
+	?>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+        var markers = [
+	    {
+	        "title": 'Aksa Beach',
+	        "lat": '<?php echo $lat; ?>',
+	        "lng": '<?php echo $lang; ?>',
+	        "description": 'Aksa Beach is a popular beach and a vacation spot in Aksa village at Malad, Mumbai.'
+	    }
+	    ];
+	    window.onload = function () {
+	        LoadMap();
+	    }
+	    var map, mapOptions;
+	    function LoadMap() {
+	        mapOptions = {
+	            center: new google.maps.LatLng(<?php echo $vitri; ?>),
+	            zoom: 6,
+	            mapTypeId: google.maps.MapTypeId.ROADMAP
+	        };
+	        /*map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
 
-    function Popup(data) 
-    {
-        var mywindow = window.open('', 'my div', 'height=400,width=600');
-        mywindow.document.write('<html><head><title>my div</title>');
-        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write(data);
-        mywindow.document.write('</body></html>');
+	        for (var i = 0; i < markers.length; i++) {
+	            var data = markers[i];
+	            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+	            var marker = new google.maps.Marker({
+	                position: myLatlng,
+	                map: map,
+	                title: data.title
+	            });
+	        }*/
+	    };
+	    function Export() {
+	        //URL of Google Static Maps.
+	        var staticMapUrl = "https://maps.googleapis.com/maps/api/staticmap";
 
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10
+	        //Set the Google Map Center.
+	        staticMapUrl += "?center=" + mapOptions.center.G + "," + mapOptions.center.K;
 
-        mywindow.print();
-        mywindow.close();
+	        //Set the Google Map Size.
+	        staticMapUrl += "&size=150x120";
 
-        return true;
-    }
+	        //Set the Google Map Zoom.
+	        staticMapUrl += "&zoom=" + mapOptions.zoom;
 
-</script>
+	        //Set the Google Map Type.
+	        staticMapUrl += "&maptype=" + mapOptions.mapTypeId;
+
+	        //Loop and add Markers.
+	        for (var i = 0; i < markers.length; i++) {
+	            staticMapUrl += "&markers=color:red|" + markers[i].lat + "," + markers[i].lng;
+	        }
+
+	        //Display the Image of Google Map.
+	        var imgMap = document.getElementById("imgMap");
+	        imgMap.src = staticMapUrl;
+	        imgMap.style.display = "block";
+	    }
+
+	    function printDiv(divName) {
+		     var printContents = document.getElementById(divName).innerHTML;
+		     var originalContents = document.body.innerHTML;
+
+		     document.body.innerHTML = printContents;
+
+		     window.print();
+
+		     document.body.innerHTML = originalContents;
+		}
+
+		$(document).ready(function(){
+
+			// Change theme
+		    $('.css').on('click', function(evt){ 
+		        $('#jquiCSS').attr('href','http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/'+this.innerHTML+'/jquery-ui.css');
+		        $('.css').removeClass('sel');
+		        $(this).addClass('sel');
+		    });
+			
+			// Events demo
+			$('#cp1').colorpicker({color:'#8db3e2',
+				initialHistory: ['#ff0000','#000000','red']
+			})
+			.on('change.color', function(evt, color){
+				$('#cpb').css('background-color',color);
+			})
+			.on('mouseover.color', function(evt, color){
+		        if(color){
+		            $('#cpb').css('background-color',color);
+		        }
+			});
+			
+			$('#getVal').on('click', function(){
+				alert('Selected color = "' + $('#cp1').colorpicker("val") + '"');
+			});
+			$('#setVal').on('click', function(){
+				$('#cp1').colorpicker("val",'#31859b');
+			});
+			$('#enable').on('click', function(){
+				$('#cp1').colorpicker("enable");
+			});
+			$('#disable').on('click', function(){
+				$('#cp1').colorpicker("disable");
+			});
+			$('#clear').on('click', function(){
+				var v=$('#cp1').colorpicker("clear") ;
+			});
+			$('#destroy1').on('click', function(){
+				var v=$('#cp1').colorpicker("destroy") ;
+			});
+			
+			// Instanciate colorpickers
+		    $('#cpBoth').colorpicker();
+		    $('#cpDiv').colorpicker({color:'#31859b'});
+		    $('#cpDiv2').colorpicker({color:'#31859b', defaultPalette:'web'});
+		    $('#cpFocus').colorpicker({showOn:'focus'});
+		    $('#cpButton').colorpicker({showOn:'button'});
+		    $('#cpOther').colorpicker({showOn:'none'});
+			$('#show').on('click', function(evt){
+				evt.stopImmediatePropagation();
+				$('#cpOther').colorpicker("showPalette");
+			});
+			
+			// With transparent color
+			$('#transColor').colorpicker({
+				transparentColor: true
+			});
+
+			// With hidden button
+			$('#hideButton').colorpicker({
+				hideButton: true
+			});
+
+			// No color indicator
+			$('#noIndColor').colorpicker({
+				displayIndicator: false
+			});
+
+			// French colorpicker
+			$('#frenchColor').colorpicker({
+				strings: "Couleurs de themes,Couleurs de base,Plus de couleurs,Moins de couleurs,Palette,Historique,Pas encore d'historique."
+			});
+
+			// Inline colorpicker
+			$('#getVal2').on('click', function(){
+				//alert('Selected color = "' + $('#cpDiv').colorpicker("val") + '"');
+				var color = $('#cpDiv').colorpicker("val");
+				$(".khung").css("border-color", color+" #FFF #FFF "+color);
+				$(".tieudeduoi").css("border-color", color);
+				$(".tieudeduoi").css("color", color);
+				$(".tieude").css("color", color);
+				$(".rightbottom").css("border-color", color);
+				$(".hr").css("border-color", color);
+			});
+			$('#setVal2').on('click', function(){
+				$('#cpDiv').colorpicker("val",'#31859b');
+			});
+			$('#enable2').on('click', function(){
+				$('#cpDiv').colorpicker("enable");
+			});
+			$('#disable2').on('click', function(){
+				$('#cpDiv').colorpicker("disable");
+			});
+			$('#destroy2').on('click', function(){
+				$('#cpDiv').colorpicker("destroy");
+			});
+
+			// Fix links
+			$('a[href="#"]').attr('href', 'javascript:void(0)');
+
+			$( "#dialog" ).dialog({
+		      autoOpen: false,
+		      show: {
+		        effect: "blind",
+		        duration: 1000
+		      },
+		      hide: {
+		        effect: "explode",
+		        duration: 1000
+		      }
+		    });
+		 
+		    $( "#opener" ).click(function() {
+		      $( "#dialog" ).dialog( "open" );
+		    });
+
+		});
+    </script>
+</head>
+
 <style type="text/css">
 	.khung{
 		border: solid 1px #F8F8FF;
@@ -83,13 +266,49 @@
 	}
 	.map{
 		border: none;
-		height: 90px; 
-		overflow: hidden; 
+		height: 120px; 
 		border: solid 1px #000;
 	}
 </style>
 
-<input type="button" value="Print Div" onclick="PrintElem('#mydiv')" />
+<body onload="Export()">
+
+<input type="button" onclick="printDiv('mydiv')" value="In áp phít" />
+<input type="button" id="opener" value="Đổi màu" />
+
+<!-- <input type="button" value="Print Div" onclick="PrintElem('#mydiv')" /> -->
+
+<div id="dialog" title="<?php echo lang('select').' '.lang('colors'); ?>">
+  	<div class="demoPanel">
+		<div id="cpDiv"></div>
+		<br/>
+		<div class="demo-links">
+			<a href="#" id="getVal2"><?php echo lang('apply'); ?></a> | 
+			<a href="#" id="setVal2"><?php echo lang('set_value'); ?></a><br/>
+			<a href="#" id="enable2"><?php echo lang('enable'); ?></a> | 
+			<a href="#" id="disable2"><?php echo lang('disable'); ?></a>
+			<!-- <a href="#" id="destroy2">Destroy</a> -->
+			<br/><br/>
+		</div> 
+	</div>
+</div>
+
+<!-- <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <div id="dvMap" style="width: 120px; height: 120px">
+            </div>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            <img id="imgMap1" alt="" style="display: none" />
+        </td>
+    </tr>
+</table>
+<br /> -->
+<!-- <input type="button" id="btnExport" value="Export" onclick="Export()" /> -->
 
 <section id="about-us">
 	<div id="mydiv" class="container">
@@ -134,9 +353,8 @@
 				<div style="text-align: right; float: right; width: 30%; height: 550px; margin: 10px 0px 0px 0px;">
 					
 					<div class="map">
-						<div style="margin-top: -170px; border: none;">
-							<?php echo $map['js']; ?>
-                        	<?php echo $map['html']; ?>
+						<div style=" border: none;">
+							<img id="imgMap" alt="" style="display: none" />
 						</div>
 					</div>
 					<div align="center" style="font-size: 9px; line-height: 1.5;">
@@ -176,5 +394,5 @@
 			</div>
 		</div>
 	</div>
-	<?php //echo print_r($data) ?>
 </section>
+</body>

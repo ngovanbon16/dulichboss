@@ -318,7 +318,15 @@
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.ND_MA;
                             var kichhoat = dataRecord.ND_KICHHOAT;
-                            return "<button class='icon' onclick='kichhoat(\""+id+"\",\""+row+"\")'><i class='fa fa-lock fa-fw'></i></button>";
+                            if(kichhoat == '1')
+                            {
+                                return "<button class='icon' onclick='kichhoat(\""+id+"\",\""+row+"\")'><i id='"+id+"' class='fa fa-unlock fa-fw'></i></button>";
+                            }
+                            else
+                            {
+                                return "<button class='icon' onclick='kichhoat(\""+id+"\",\""+row+"\")'><i id='"+id+"' class='fa fa-lock fa-fw'></i></button>";
+                            }
+                            
                         }
                     }
                 ],

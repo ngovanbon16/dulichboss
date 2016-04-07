@@ -56,6 +56,10 @@
                             }
                             var tong = eval(data.data.length+"+"+$("#count").val());
                             $("#count").val(tong);
+                            if(data.data.length == 0)
+                            {
+                                $("#btnthem").hide();
+                            }
                             
                         }
                     }
@@ -117,9 +121,7 @@
 
 </head>
 <body class="homepage">
-    <a href="#name" style="position: absolute; margin-left: 95%; margin-top: 5px; z-index: 10000;">
-        <i style="font-size: 50px;" class="fa fa-arrow-down"></i>
-    </a>
+    
     <section id="main-slider" class="no-margin">
         <div class="carousel slide">
             <ol class="carousel-indicators">
@@ -230,11 +232,16 @@
         </a>
     </section><!--/#main-slider-->
 
+    <center>
+    <a href="#name" style="position: absolute; margin-left: -35px; margin-top: -150px; z-index: 10000;">
+        <i style="font-size: 80px; font-weight: bolder;" class="fa fa-angle-double-down"></i>
+    </a></center>
+
     <a name="name"></a>
-    <section id="feature" style="margin-top: -50px;">
+    <section id="feature" style="margin-top: -30px;">
         <div class="container">
 
-            <div class="baiviet">
+            <!-- <div class="baiviet">
                 <marquee style="margin: 5px;" onmouseover="this.stop()" onmouseout="this.start()" scrollamount="4" direction="left" width="100%" align="center">
                     <i class="fa fa-star-o"></i> <?php echo lang('posts').' '.lang('new'); ?>: 
                     <?php
@@ -251,42 +258,40 @@
                         }
                     ?>
                 </marquee>
-            </div>
+            </div> -->
 
            <div class="center wow fadeInDown">
                 
                 <h2>Được xem nhiều nhất</h2>
-                <p class="lead">Các địa điểm được nhiều người quan tâm nhất <br> Số lượt xem cao nhất</p>
             </div>
 
-            <div style="margin-top: -50px;" class="row">
+            <div style="margin-top: -30px;" class="row">
                 <div class="features">
                     <?php 
                         foreach ($luotxem as $row) {
                             $hinh = $row['HA_TEN'];
-                            $madiadiem = $row['DD_MA'];
-                            $tendiadiem = $row['DD_TEN'];
-                            $tinhten = $row['T_TEN'];
-                            $huyenten = $row['H_TEN'];
+                            $ma = $row['DD_MA'];
+                            $ten = $row['DD_TEN'];
+                            $tentinh = $row['T_TEN'];
+                            $tenhuyen = $row['H_TEN'];
                     ?>
-                    <div style="height: 160px; " class="col-md-4 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-
-                        <div id="collapseOne1" class="panel-collapse collapse in">
-                              <div class="panel-body">
-                                  <div class="media accordion-inner">
-                                        <div class="pull-left">
-                                            <img style="width: 150px; height: 130px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $madiadiem; ?>">
-                                                <?php echo $tendiadiem; ?>
-                                            </a>
-                                             <p style="font-style: italic; font-size: 13px;"><?php echo $huyenten; ?> >> <?php echo $tinhten; ?></p>
-                                        </div>
-                                  </div>
-                              </div>
-                            </div>
-
+                    <div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <table style="height: 180px; width: 150px;" border="0">
+                                <tr>
+                                    <td height="100" width="150">
+                                        <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>">
+                                            <img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>    
+                                    <td valign="top">
+                                        <div style="max-height: 40px; overflow: hidden;">
+                                        <b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b> </div>
+                                        <p style="font-size: 13px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
+                                    </td>
+                                </tr>
+                            </table>
                     </div><!--/.col-md-4-->
                     <?php 
                         }

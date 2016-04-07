@@ -143,7 +143,7 @@ class Baiviet extends CI_Controller
 		$iddd = $result['DD_MA'];
 		$matinh = $result['T_MA'];
 
-		$queryall = "SELECT * FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA JOIN nguoidung ON nguoidung.ND_MA = baiviet.ND_MA WHERE baiviet.DD_MA = '$iddd' AND baiviet.BV_MA <> '$id' AND baiviet.BV_DUYET = '1' ORDER BY baiviet.BV_NGAYDANG DESC";
+		$queryall = "SELECT * FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA JOIN nguoidung ON nguoidung.ND_MA = baiviet.ND_MA WHERE baiviet.DD_MA = '$iddd' AND baiviet.BV_MA <> '$id' AND baiviet.BV_DUYET = '1' ORDER BY baiviet.BV_NGAYDANG DESC LIMIT 0, 5";
 		$allresult = $this->mbaiviet->gettimkiem($queryall);
 		$this->_data['allbaiviet'] = $allresult;
 
@@ -151,13 +151,27 @@ class Baiviet extends CI_Controller
 		$query = "SELECT diadiem.DD_MA, diadiem.DD_TEN, tinh.T_TEN, huyen.H_TEN, hinhanh.HA_TEN, (SUM(binhluan.BL_CHATLUONG)+SUM(binhluan.BL_PHUCVU)+SUM(binhluan.BL_KHONGGIAN))/count(diadiem.DD_MA)/3 diem FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN binhluan ON diadiem.DD_MA = binhluan.DD_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' GROUP BY diadiem.DD_MA  ORDER BY diem DESC LIMIT 0, 6";
 		$this->_data['danhgia'] = $this->mdiadiem->gettimkiem($query);
 
-		$query = "SELECT baiviet.BV_TIEUDE, baiviet.BV_MA FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA WHERE diadiem.T_MA = '$matinh' AND baiviet.BV_MA <> $id ORDER BY baiviet.BV_NGAYDANG DESC LIMIT 0,10";
+		$query = "SELECT baiviet.BV_TIEUDE, baiviet.BV_MA FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA WHERE diadiem.T_MA = '$matinh' AND baiviet.BV_MA <> $id ORDER BY baiviet.BV_LUOTXEM DESC LIMIT 0,10";
 		$result = $this->mbaiviet->gettimkiem($query);
 		$this->_data['baivietkhuvuc'] = $result;
 
 		$this->_data['subview'] = 'user/chitietbaiviet_view';
        	$this->_data['title'] = lang('posts');
        	$this->load->view('user/main.php', $this->_data);
+	}
+
+	public function getdata()
+	{
+		$DD_MA = $_POST['ma'];
+		$start = $_POST['start'];
+		$length = $_POST['length'];
+		$query = "SELECT * FROM baiviet JOIN nguoidung ON baiviet.ND_MA = nguoidung.ND_MA WHERE baiviet.DD_MA = '$DD_MA' AND baiviet.BV_DUYET = '1'  ORDER BY baiviet.BV_NGAYDANG DESC LIMIT $start, $length";
+
+		// Kết nối Database, thực hiện câu truy vấn
+		$result = $this->mbaiviet->gettimkiem($query);		
+
+		$jsonString = json_encode($result);
+		echo $jsonString;
 	}
 
 	public function data0()

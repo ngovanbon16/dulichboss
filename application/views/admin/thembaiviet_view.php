@@ -114,7 +114,7 @@
                             thongbao("", "<?php echo lang('inserted_successfully'); ?>", "success");
                             $("#BV_TIEUDE").val("");
                             CKEDITOR.instances.BV_NOIDUNG.setData("");
-                            $("#DD_MA").jqxDropDownList('selectedIndex','-1');
+                            /*$("#DD_MA").jqxDropDownList('selectedIndex','-1');*/
                         }
                         else
                         {
@@ -245,17 +245,17 @@
     <table width="100%">
         <tr>
             <td width="50%">
-                <label for="BV_TIEUDE"><?php echo lang('title'); ?>:</label>
+                <label for="BV_TIEUDE"><?php echo lang('title'); ?> <b style="color: #D00;">*</b></label>
                 [<i id="BV_MA"><?php echo $BV_MA; ?></i>]
                 <input type="text" class="form-control" id="BV_TIEUDE" value="<?php echo $BV_TIEUDE; ?>" placeholder="<?php echo lang('input').' '.lang('title'); ?>">
             </td>
             <td style="padding-left: 10px;">
-                <label for="DD_MA"><?php echo lang('place'); ?>:</label>
+                <label for="DD_MA"><?php echo lang('place'); ?> <b style="color: #D00;">*</b></label>
                 <div style="font-size: 14px;" id="DD_MA"></div>
             </td>
         </tr>
     </table>
-    <label for="usr"><?php echo lang('content'); ?>:</label>
+    <label for="usr"><?php echo lang('content'); ?> <b style="color: #D00;">*</b></label>
     <textarea name="BV_NOIDUNG" id="BV_NOIDUNG"><?php echo $BV_NOIDUNG; ?></textarea> 
     <br/>
      <button id="btnluu" style="width: 100px;" type="button" class="btn btn-default"><?php echo lang('save'); ?></button>

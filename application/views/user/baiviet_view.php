@@ -111,7 +111,7 @@
 	    		<table width="100%">
 	    			<tr>
 	    				<td width="40%">
-	    					<label for="BV_TIEUDE"><?php echo lang('title'); ?>:</label>
+	    					<label for="BV_TIEUDE"><?php echo lang('title'); ?>: (<b style="color: #D00;">*</b>) </label>
 			  				<input type="text" class="form-control" id="BV_TIEUDE" placeholder="<?php echo lang('input').' '.lang('title'); ?>">
 	    				</td>
 
@@ -132,7 +132,7 @@
 			</div>
 			
 			<div class="form-group">
-			  	<label for="usr"><?php echo lang('content'); ?>:</label>
+			  	<label for="usr"><?php echo lang('content'); ?>: (<b style="color: #D00;">*</b>)</label>
 				<textarea name="BV_NOIDUNG" id="BV_NOIDUNG">&lt;p&gt;<?php //echo lang('input').' '.lang('content'); ?>&lt;/p&gt;</textarea>
 			</div>
 		</div>

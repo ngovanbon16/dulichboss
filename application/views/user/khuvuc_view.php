@@ -3,6 +3,47 @@
     {
         setTimeout("location.href = '<?php echo base_url(); ?>index.php/home/theohuyen/"+matinh+"/"+mahuyen+"';",0);
     }
+
+    function themdiadiem(idhuyen)
+    {
+        var start = $("#"+idhuyen).html();
+        var length = 6;
+        var url, dta;
+        url="<?php echo base_url(); ?>index.php/home/gethuyen?t=" + Math.random();
+        dta = {
+            "ma" : idhuyen,
+            "start" : start,
+            "length" : length
+        };
+        console.log(dta);
+        $.post(url, dta, function(data, status){
+
+            console.log(status);
+            console.log(data);
+            if(status == "success")
+            {   
+                var str = "";
+                for (var i = 0; i < data.length; i++) {
+                    var DD_MA = data[i]['DD_MA'];
+                    var DD_TEN = data[i]['DD_TEN'];
+                    var T_TEN = data[i]['T_TEN'];
+                    var H_TEN = data[i]['H_TEN'];
+                    var HA_TEN = data[i]['HA_TEN'];
+                    str += '<div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms"><table style="height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'">'+DD_TEN+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+H_TEN+'<i class="fa fa-angle-double-right fa-fw"></i>'+T_TEN+'</p></td></tr></table></div>';
+                }
+                document.getElementById('noidung'+idhuyen).innerHTML += str;
+
+                if(data.length == 0)
+                {
+                    $("#btn"+idhuyen).hide();
+                }
+                else
+                {
+                    document.getElementById(idhuyen).innerHTML = eval(start + "+" + data.length);
+                }
+            }
+        }, 'json');
+    }
 </script>
 <style type="text/css">
     .grad1 {
@@ -46,25 +87,27 @@
 </style>
 <body class="homepage">
 
-    <section id="recent-works">
+    <section style="margin-top: -50px;" id="recent-works">
         <div class="container">
 
             <div class="row">
                 <div class="features">
 
-                    <?php 
-                        $matinh = $this->session->userdata("T_MA");
-                        foreach ($huyen as $iteam) {
-                            $mahuyen = $iteam['H_MA'];
-                            $tenhuyen = $iteam['H_TEN'];
-                    ?>
-                    <i style="font-size: 20px; font-weight: bolder; color: #000;" class="fa fa-angle-double-right"></i>
-                    <a href="">
-                        <b onclick="lochuyen(<?php echo $matinh ?>, <?php echo $mahuyen ?>)" style="font-size: 16px; text-transform: capitalize; cursor: pointer;"><?php echo $tenhuyen; ?></b>
-                    </a>
-                    <?php
-                        }
-                    ?>
+                    <ul class="nav navbar-nav">
+                        <?php 
+                            $matinh = $this->session->userdata("T_MA");
+                            foreach ($huyen as $iteam) {
+                                $mahuyen = $iteam['H_MA'];
+                                $tenhuyen = $iteam['H_TEN'];
+                        ?>
+                            <li style="margin-bottom: -30px; font-weight: bolder; font-size: 16px;" class="active" onclick="lochuyen(<?php echo $matinh ?>, <?php echo $mahuyen ?>)">
+                                <a href="#"><?php echo $tenhuyen; ?></a>
+                            </li>
+                      
+                        <?php
+                            }
+                        ?>
+                    </ul>
 
                 </div><!--/.services-->
             </div><!--/.row-->    
@@ -105,8 +148,8 @@
 
                     if($j > 0)
                     {
-                        echo "<tr><td style='padding: 10px;'> <div class='grad1' >".$tenhuyen."</div>";
-
+                        echo "<tr><td style='padding: 10px;'> <div class='grad1' ><a href='#' onclick='lochuyen(\"".$matinh."\", \"".$mahuyen1."\")' >".$tenhuyen."</a></div><div id='noidung".$mahuyen1."'>";
+                        $k = 0;
                         foreach ($info as $iteam) {
                         $ma = $iteam['DD_MA'];
                         $ten = $iteam['DD_TEN'];
@@ -121,6 +164,12 @@
                         }
                         if($duyet == "1" && $matinh == $T_MA && $mahuyen == $H_MA && $mahuyen2 == $mahuyen1)
                         {
+                            if($k > 5)
+                            {
+                                break;
+                            }
+                            $k++;
+
                             $hinh = "";
                             foreach ($info1 as $key) {
                                 if($ma == $key['DD_MA'])
@@ -134,33 +183,44 @@
 
                 ?> 
 
-                <div class="col-md-2 col-sm-10 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                    <div style="float: left; height: 120px;">
-                
-                        <table>
+                    <div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <table style="height: 180px; width: 150px;" border="0">
                             <tr>
-                                <td>
-                                    <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" rel="prettyPhoto">
-                                        <img class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
+                                <td height="100" width="150">
+                                    <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>">
+                                        <img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
                                     </a>
                                 </td>
                             </tr>
                             <tr>    
-                                <td align="left">
-                                    <b style="text-transform: uppercase; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b>
-                                    <p style="font-size: 11px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
+                                <td valign="top">
+                                    <div style="max-height: 40px; overflow: hidden;">
+                                    <b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b> </div>
+                                    <p style="font-size: 13px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
                                 </td>
                             </tr>
                         </table>
-                        
-                    </div>
-                </div><!--/.col-md-4-->
+                    </div><!--/.col-md-4-->
 
                 <?php
                             }
                         }
-                    } 
-                    echo "</td></tr>";
+                ?>
+                    </div>
+                </td></tr>
+                <tr><td>
+                    <center>
+                        <div style="cursor: pointer; margin: 10px; margin-top: -20px;">
+                            <button id="btn<?php echo $mahuyen1; ?>" type="button" class="btn btn-danger" onclick="themdiadiem(<?php echo $mahuyen1; ?>)"><i class="fa  fa-eye fa-fw"></i> <?php echo lang('view_more'); ?></button>
+                        </div>
+                        <?php echo lang('total'); ?>: <b id="<?php echo $mahuyen1; ?>"><?php echo $k; ?></b>
+                    </center>
+
+                <?php
+                    }
+                ?> 
+                   </td></tr>
+                <?php
                 }
                 ?>
                     </table><!-- dong table -->

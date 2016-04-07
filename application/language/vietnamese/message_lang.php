@@ -221,4 +221,5 @@ $lang['sending'] = "Đang gửi";
 $lang['authority_groups'] = "Nhóm quyền";
 $lang['view_more'] = "Xem thêm";
 $lang['places_map'] = "Bản đồ địa điểm";
+$lang['share'] = "Chia sẻ";
 ?>

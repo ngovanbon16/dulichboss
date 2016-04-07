@@ -125,6 +125,9 @@ class Home extends CI_Controller
 		$this->_data['subview'] = 'user/danhmuc_view';
 		$this->_data['active'] = "danhmuc";
 
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+
 		$this->load->model("mdanhmuc");
 		$this->_data['danhmuc'] = $this->mdanhmuc->getList();
 
@@ -136,7 +139,9 @@ class Home extends CI_Controller
 	{
 		$this->load->model("mdiadiem");
 		$DM_MA = $_POST['ma'];
-		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE danhmuc.DM_MA = '$DM_MA' AND hinhanh.HA_DAIDIEN = '1'  ORDER BY diadiem.DD_TEN ASC";
+		$start = $_POST['start'];
+		$length = $_POST['length'];
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE danhmuc.DM_MA = '$DM_MA' AND hinhanh.HA_DAIDIEN = '1'  ORDER BY diadiem.DD_NGAYDANG DESC LIMIT $start, $length";
 
 		// Kết nối Database, thực hiện câu truy vấn
 		$result = $this->mdiadiem->gettimkiem($query);		
@@ -205,6 +210,21 @@ class Home extends CI_Controller
 
        	$this->_data['title'] = 'Khu vực';
        	$this->load->view('user/main.php', $this->_data);
+	}
+
+	public function gethuyen()
+	{
+		$this->load->model("mdiadiem");
+		$H_MA = $_POST['ma'];
+		$start = $_POST['start'];
+		$length = $_POST['length'];
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE huyen.H_MA = '$H_MA' AND hinhanh.HA_DAIDIEN = '1'  ORDER BY diadiem.DD_NGAYDANG DESC LIMIT $start, $length";
+
+		// Kết nối Database, thực hiện câu truy vấn
+		$result = $this->mdiadiem->gettimkiem($query);		
+
+		$jsonString = json_encode($result);
+		echo $jsonString;
 	}
 
 	public function map()
