@@ -110,7 +110,14 @@
 			});
 			
 			$('#getVal').on('click', function(){
-				alert('Selected color = "' + $('#cp1').colorpicker("val") + '"');
+				/*alert('Selected color = "' + $('#cp1').colorpicker("val") + '"');*/
+
+				var color = $('#cpDiv').colorpicker("val");
+				
+				$(".khung1").css("border-color", color+" #FFF #FFF "+color);
+				$(".tieude").css("color", color);
+				$(".rightbottom").css("border-color", color);
+				$(".hr").css("border-color", color);
 			});
 			$('#setVal').on('click', function(){
 				$('#cp1').colorpicker("val",'#31859b');
@@ -164,10 +171,11 @@
 			$('#getVal2').on('click', function(){
 				//alert('Selected color = "' + $('#cpDiv').colorpicker("val") + '"');
 				var color = $('#cpDiv').colorpicker("val");
-				$(".khung").css("border-color", color+" #FFF #FFF "+color);
-				$(".tieudeduoi").css("border-color", color);
-				$(".tieudeduoi").css("color", color);
+				$(".khung").css("border-color", color);
+				$("#khung1").css("border-color", color+" #FFF #FFF "+color);
+				$("#khung2").css("border-color", color+" #FFF #FFF "+color);
 				$(".tieude").css("color", color);
+				$(".tieudeduoi").css("border-color", color);
 				$(".rightbottom").css("border-color", color);
 				$(".hr").css("border-color", color);
 			});
@@ -209,72 +217,82 @@
 
 <style type="text/css">
 	.khung{
-		border: solid 1px #F8F8FF;
-		width: 500px;
-		height: 600px;
+		border: solid 1px #00B2EE;
+		width: 650px;
+		height: 950px;
 	}
-	.khung1{
-		margin: 10px;
-		border: solid 10px #000;
-		width: 480px;
-		height: 580px;
+
+	#khung1{
+		border: solid 20px #000;
+		width: 610px;
+		height: 910px;
 		border-color: #00B2EE #FFF #FFF #00B2EE; 
 	}
+
+	#khung2{
+		border: solid 20px #000;
+		width: 610px;
+		height: 910px;
+		border-color: #00B2EE #FFF #FFF #00B2EE; 
+	}
+
+	.tieudetruoc{
+		color: #00B2EE;
+		padding-left: 20px;
+		padding-top: 15px;
+		height: 15%;
+	}
+
 	.imgtruoc{
-		width: 465px;
-		height: 480px;
+		width: 100%;
+		height: 100%;
 	}
+
 	.imglogo{
-		/*width: 50px;
-		height: 50px;*/
+
 	}
+
 	.p{
 		border: none;
 		width: 100%;
-		font-size: 11px;
+		font-size: 15px;
 		text-align: justify;
-		max-height: 166px;
+		max-height: 300px;
 		overflow: hidden;
 		line-height: 1.5;
 		font-family: Arial, Helvetica, sans-serif;
 	}
+
 	.tieudeduoi{
-		border-radius: 0px 10px 10px 0px;
-		background-color: #00B2EE;
-		width: 103%;
-		height: 23px;
+		border-radius: 0px 0px 0px 0px;
+		width: 100%;
+		height: 0px;
 		margin-left: -10px;
-		font-size: 11px;
-		font-weight: bold;
+		font-size: 20px;
 		text-align: center;
-		color: #FFF;
-		vertical-align: bottom;
+		border: solid 15px #00B2EE; 
 	}
+
 	.rightbottom{
-		font-size: 11px;
+		font-size: 15px;
 		padding: 5px;
 		text-align: left;
 		border-radius: 0px 0px 0px 30px;
-		border: solid 1px #000;
-		border-color: #FFF #FFF #00B2EE #00B2EE; 
-		height: 320px;
+		border: solid 1px #00B2EE; 
+		height: 80%;
 		line-height: 1.5;
 	}
-	.rightbottom1{
-		width: 100%; 
-		height: 110px; 
-	}
-	.map{
-		border: none;
-		height: 120px; 
-		border: solid 1px #000;
+
+	.hr{
+		margin: 5px 0px 5px 0px;
+		border: solid 1px #00B2EE; 
 	}
 </style>
 
 <body onload="Export()">
 
-<input type="button" onclick="printDiv('mydiv')" value="In áp phít" />
-<input type="button" id="opener" value="Đổi màu" />
+<img style="width: 32px; height: 32px; cursor: pointer; margin-right: 10px; margin-left: 50px;" src="<?php echo base_url(); ?>assets/images/print.png" onclick="printDiv('mydiv')">
+<img style="width: 32px; height: 32px; cursor: pointer;" src="<?php echo base_url(); ?>assets/images/color.png" id="opener">
 
 <!-- <input type="button" value="Print Div" onclick="PrintElem('#mydiv')" /> -->
 
@@ -312,85 +330,99 @@
 
 <section id="about-us">
 	<div id="mydiv" class="container">
-		<div class="khung" style="float: left; margin-right: 20px;">
-			<div class="khung1">
-				<div style="float: left; width: 60%; margin: 10px 0px 0px 10px; color: #00B2EE;">
-					<b style="font-size: 20px;"><?php echo $data['DD_TEN']; ?></b> <br/>
-					<i><?php echo $data['H_TEN']; ?><i class="fa fa-angle-double-right fa-fw"></i><?php echo $data['T_TEN']; ?></i>
-				</div>
-				<div style="text-align: right; float: right; width: 35%; margin: 10px 0px 0px 0px;">
-					<?php //echo $data['DD_TEN']; ?>
-					<img class="imglogo" src="<?php echo base_url(); ?>assets/images/logo.png">
-				</div>
-				<div style="width: 100%; height: 100%; margin-top: 80px;">
-					<img style="width: 100%;" class="imgtruoc" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $data['HA_TEN']; ?>">
-				</div>
+		<div class="khung" style="float: left; margin-bottom: 30px;">
+			<div id="khung1">
+				<table style="height: 100%; width: 100%;" border="0">
+					<tr>
+						<td valign="top" class="tieudetruoc">
+							<b class="tieude" style="font-size: 50px;"><?php echo $data['DD_TEN']; ?></b> <br/>
+							<i class="tieude" style="font-size: 30px;"><?php echo $data['H_TEN']; ?> - <?php echo $data['T_TEN']; ?></i>
+						</td>
+						<td valign="top" align="right">
+							<img style="margin-top: 20px;" class="imglogo" src="<?php echo base_url(); ?>assets/images/logo.png">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<img class="imgtruoc" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $data['HA_TEN']; ?>">
+						</td>
+					</tr>
+				</table>
 			</div>
 		</div>
-		<div class="khung" style="float: left; margin-right: 20px;">
-			<div class="khung1">
-				<div style="float: left; width: 65%; height: 550px; margin: 10px 0px 0px 10px; ">
-					<div style="height: 70px;">
-						<b style="font-size: 20px;"><?php echo $data['DD_TEN']; ?></b> <br/>
-						<i><?php echo $data['H_TEN']; ?><i class="fa fa-angle-double-right fa-fw"></i><?php echo $data['T_TEN']; ?></i>
-					</div>
-					<hr style="margin: 10px 0px 10px 0px;" />
-					<div style="height: 430px; overflow: hidden;">
-						Mô tả: <br/>
-						<textarea rows="6" class="p">
-							<?php echo $data['DD_MOTA']; ?>
-						</textarea>
-						<img style="width: 100%; height: 100px; margin-bottom: 10px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $data['HA_TEN']; ?>">
-						Giới thiệu: <br/>
-						<textarea rows="10" class="p">
-							<?php echo $data['DD_GIOITHIEU']; ?>
-						</textarea>
-					</div>
-					<div valign="bottom" class="tieudeduoi">
-						Website: [http://smartmekong.vn/dulich]
-					</div>
-				</div>
-				<div style="text-align: right; float: right; width: 30%; height: 550px; margin: 10px 0px 0px 0px;">
-					
-					<div class="map">
-						<div style=" border: none;">
-							<img id="imgMap" alt="" style="display: none" />
-						</div>
-					</div>
-					<div align="center" style="font-size: 9px; line-height: 1.5;">
-						<?php echo $data['DD_VITRI']; ?>
-					</div>
-					<div class="rightbottom">
-						<?php 
-							$diadiem = $sdt = $website = lang('information_is_being_updated');
-							if($data['DD_DIACHI'])
-							{
-								$diadiem = $data['DD_DIACHI'];
-							}
-							if($data['DD_SDT'])
-							{
-								$sdt = $data['DD_SDT'];
-							}
-							if($data['DD_WEBSITE'])
-							{
-								$website = $data['DD_WEBSITE'];
-							}
-						?>
-						Địa chỉ: <br>
-						<?php echo $diadiem; ?> <hr style="margin: 5px 0px 5px 0px;" />
-						Ngày bắt đầu: <br>
-						<?php echo $data['DD_BATDAU']; ?> <hr style="margin: 5px 0px 5px 0px;" />
-						Ngày kết thúc: <br>
-						<?php echo $data['DD_KETTHUC']; ?> <hr style="margin: 5px 0px 5px 0px;" />
-						Số điện thoại: <br>
-						<?php echo $sdt; ?> <hr style="margin: 5px 0px 5px 0px;" />
-						Website: <br>
-						<?php echo $website; ?> <hr style="margin: 5px 0px 5px 0px;" />
-					</div>
-					<div class="rightbottom1">
-						<img style="width: 100px; height: 82px; margin-top: 25px;" class="imglogo" src="<?php echo base_url(); ?>assets/images/logo2.png">
-					</div>
-				</div>
+		<div class="khung" style="float: left; ">
+			<div id="khung2">
+				<table style="width: 100%; height: 100%;" border="0">
+					<tr>
+						<td class="tieudetruoc" style="padding-right: 10px;">
+							<b class="tieude" style="font-size: 40px;"><?php echo $data['DD_TEN']; ?></b> <br/>
+							<i class="tieude" style="font-size: 25px;"><?php echo $data['H_TEN']; ?> - <?php echo $data['T_TEN']; ?></i>
+							<hr class="hr" />
+						</td>
+						<td>
+							<div style=" border: none;">
+								<img id="imgMap" alt="" style="display: none" />
+							</div>
+							<div align="center" style="font-size: 15px; line-height: 1.5;">
+								<?php echo $data['DD_VITRI']; ?>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top" style="padding-right: 10px; padding-left: 10px;">
+							Mô tả: <br/>
+							<textarea rows="6" class="p">
+								<?php echo $data['DD_MOTA']; ?>
+							</textarea>
+							<img style="width: 100%; height: 120px; margin-bottom: 10px; margin-top: 10px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $data['HA_TEN']; ?>">
+							Giới thiệu: <br/>
+							<textarea rows="20" class="p">
+								<?php echo $data['DD_GIOITHIEU']; ?>
+							</textarea>
+						</td>
+						<td>
+							<div class="rightbottom">
+								<h3 style="margin: 0px 0px 0px 0px;"><?php echo lang('information'); ?></h3>
+								<hr class="hr" />
+								<?php 
+									$diadiem = $sdt = $website = lang('information_is_being_updated');
+									if($data['DD_DIACHI'])
+									{
+										$diadiem = $data['DD_DIACHI'];
+									}
+									if($data['DD_SDT'])
+									{
+										$sdt = $data['DD_SDT'];
+									}
+									if($data['DD_WEBSITE'])
+									{
+										$website = $data['DD_WEBSITE'];
+									}
+								?>
+								Địa chỉ: <br>
+								<?php echo $diadiem; ?> <hr class="hr" />
+								Ngày bắt đầu: <br>
+								<?php echo $data['DD_BATDAU']; ?> <hr class="hr" />
+								Ngày kết thúc: <br>
+								<?php echo $data['DD_KETTHUC']; ?> <hr class="hr" />
+								Số điện thoại: <br>
+								<?php echo $sdt; ?> <hr class="hr" />
+								Website: <br>
+								<?php echo $website; ?> <hr class="hr" />
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="tieudeduoi">
+								<div style="margin-top: -10px;"> Website: [http://smartmekong.vn/dulich] </div>
+							</div>
+						</td>
+						<td height="5%">
+							<img class="imglogo" src="<?php echo base_url(); ?>assets/images/logo2.png">
+						</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
