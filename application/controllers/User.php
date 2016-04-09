@@ -13,6 +13,9 @@ class User extends CI_Controller
 
 	public function searchplace()
 	{
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+
 		$this->_data['title'] = lang('search');
         $this->_data['subview'] = 'user/timkiem_view';
         $this->load->view('user/main.php', $this->_data);
@@ -27,6 +30,81 @@ class User extends CI_Controller
 		    $keyword = 	trim($_GET['keyword']) ;		// Cắt bỏ khoảng trắng
 			$keyword = $this->db->escape_like_str($keyword);	// Lọc các ký tự đặc biệt
 
+			$chuoi = "";
+
+			$str = $keyword.",";
+
+			$a = array();
+			$i = 0;
+			while ($str != "") 
+			{
+				$lenght = strlen($str);
+				$start = strpos($str, ",");
+				$chuoi = substr($str, 0, $lenght - strlen(substr($str, $start)));
+				$str = substr($str, $start + 1);
+				$a[$i] = $chuoi;
+				$i++;
+			}
+
+			$str0 = "";
+			$str1 = "";
+			$str2 = "";
+			$str3 = "";
+			$kytu = "x";
+			if(isset($a[0]))
+			{
+				$value = trim($a[0]);
+				if($value != $kytu)
+				{
+					$str0 = $value;
+				}
+			}
+			if(isset($a[1]))
+			{
+				$value = trim($a[1]);
+				if($value != $kytu)
+				{
+					$str1 = $value;
+				}
+			}
+			if(isset($a[2]))
+			{
+				$value = trim($a[2]);
+				if($value != $kytu)
+				{
+					$str2 = $value;
+				}
+			}
+			if(isset($a[3]))
+			{
+				$value = trim($a[3]);
+				if($value != $kytu)
+				{
+					$str3 = $value;
+				}
+			}
+
+			/*echo $str0;
+			echo  " | ";
+			echo $str1;
+			echo  " | ";
+			echo $str2;
+			echo  " | ";
+			echo $str3;*/
+
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND (( DD_TEN LIKE '%$str0%' ) AND ( DM_TEN LIKE '%$str1%' ) AND ( H_TEN LIKE '%$str2%' ) AND ( T_TEN LIKE '%$str3%' )) ORDER BY DD_TEN ASC LIMIT 0, 10";
+
+			$result = $this->mdiadiem->gettimkiem($query);
+
+			echo '<h3>'.count($result).' '.lang('result').': "'.$_GET['keyword'].'" </h3>';
+			if(count($result) > 0)
+			{
+				foreach ($result as $row) {
+					echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 150px; height: 100px; float: left; margin-right: 10px; border-radius: 3px;"> <div style="min-height: 100px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #B9D3EE;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['DM_TEN'].' | '.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div> </div>'   ;
+				}
+			}
+
+
 			// Câu query lấy dữ liệu
 			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND ( DD_TEN LIKE '%$keyword%' OR DD_MOTA LIKE '%$keyword%' OR T_TEN LIKE '%$keyword%' OR H_TEN LIKE '%$keyword%' OR DM_TEN LIKE '%$keyword%' ) ORDER BY DD_TEN ASC LIMIT 0, 20";
 
@@ -38,7 +116,7 @@ class User extends CI_Controller
 			if(count($result) > 0)
 			{
 				foreach ($result as $row) {
-					echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 100px; hieght: 100px; float: left; margin-right: 10px; border-radius: 3px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #B9D3EE;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div>'   ;
+					echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 130px; height: 90px; float: left; margin-right: 10px; border-radius: 3px;"> <div style="min-height: 90px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #B9D3EE;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['DM_TEN'].' | '.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div> </div>'   ;
 				}
 			}
 			else 
@@ -339,6 +417,10 @@ class User extends CI_Controller
 
 		// Kết nối Database, thực hiện câu truy vấn
 		$result = $this->mdiadiem->getdata($query);
+
+		$query1 = "SELECT * FROM hinhanh WHERE DD_MA = '$id'";
+		$result1 = $this->mdiadiem->gettimkiem($query1);
+		$this->_data['hinhanh'] = $result1;
 
 		$this->_data['map'] = $this->mapuser($id, $result["DD_VITRI"]);
 

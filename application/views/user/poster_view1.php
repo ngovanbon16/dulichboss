@@ -211,7 +211,33 @@
 		      $( "#dialog" ).dialog( "open" );
 		    });
 
+		    $( "#dialog1" ).dialog({
+		      autoOpen: false,
+		      width: 500,
+		      show: {
+		        effect: "blind",
+		        duration: 1000
+		      },
+		      hide: {
+		        effect: "explode",
+		        duration: 1000
+		      }
+		    });
+		 
+		    $( "#opener1" ).click(function() {
+		      $( "#dialog1" ).dialog( "open" );
+		    });
+
 		});
+
+		function change(tenhinh)
+		{
+			//alert(tenhinh);
+			$('.imgtruoc').attr({
+		        'src': '<?php echo base_url(); ?>uploads/diadiem/'+tenhinh,
+		        'alt': 'Ảnh đại diện'
+		    });
+		}
     </script>
 </head>
 
@@ -287,12 +313,22 @@
 		margin: 5px 0px 5px 0px;
 		border: solid 1px #00B2EE; 
 	}
+
+	.img{
+		margin-right: 5px; 
+		width: 100px; 
+		height: 100px;
+		border-radius: 3px;
+		cursor: pointer;
+	}
 </style>
 
 <body onload="Export()">
 
 <img style="width: 32px; height: 32px; cursor: pointer; margin-right: 10px; margin-left: 50px;" src="<?php echo base_url(); ?>assets/images/print.png" onclick="printDiv('mydiv')">
-<img style="width: 32px; height: 32px; cursor: pointer;" src="<?php echo base_url(); ?>assets/images/color.png" id="opener">
+<img style="width: 32px; height: 32px; cursor: pointer; margin-right: 10px;" src="<?php echo base_url(); ?>assets/images/color.png" id="opener">
+
+<img style="width: 32px; height: 32px; cursor: pointer;" src="<?php echo base_url(); ?>assets/images/img.png" id="opener1">
 
 <!-- <input type="button" value="Print Div" onclick="PrintElem('#mydiv')" /> -->
 
@@ -309,6 +345,19 @@
 			<br/><br/>
 		</div> 
 	</div>
+</div>
+
+<div id="dialog1" title="<?php echo lang('select').' '.lang('colors'); ?>">
+  	<div style="max-height: 400px; overflow: auto;" class="demoPanel">
+  		<?php 
+  			foreach ($hinhanh as $row) {
+  				$tenhinh = $row["HA_TEN"];
+			?>
+				<img class="img" onclick="change('<?php echo $tenhinh; ?>')" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $tenhinh; ?>">
+			<?php
+  			}
+  		?>
+  </div>
 </div>
 
 <!-- <table border="0" cellpadding="0" cellspacing="0">
