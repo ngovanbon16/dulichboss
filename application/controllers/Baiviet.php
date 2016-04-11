@@ -27,6 +27,9 @@ class Baiviet extends CI_Controller
 
 	public function thembaiviet($id)
 	{
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+
 		$this->load->model("mdiadiem");
 		$data = $this->mdiadiem->getID($id);
 		$this->_data['DD_MA'] = $id;
@@ -136,6 +139,9 @@ class Baiviet extends CI_Controller
 
 	public function detail($id)
 	{	
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+		
 		$query = "SELECT * FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA JOIN nguoidung ON nguoidung.ND_MA = baiviet.ND_MA JOIN tinh ON tinh.T_MA = diadiem.T_MA JOIN huyen ON huyen.H_MA = diadiem.H_MA WHERE baiviet.BV_MA = '$id' ";
 		$result = $this->mbaiviet->getdata($query);
 		$this->_data['baiviet'] = $result;

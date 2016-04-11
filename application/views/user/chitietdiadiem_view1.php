@@ -470,6 +470,104 @@
                     $(this).css('text-align','justify');
                 });
             });
+
+            function mau(diem)
+              {
+                  if(diem >= 0 && diem < 2)
+                  {
+                    return "#F00";
+                  }
+                  if(diem >= 2 && diem < 4)
+                  {
+                    return "#F90";
+                  }
+                  if(diem >= 4 && diem < 6)
+                  {
+                    return "#0CF";
+                  }
+                  if(diem >= 6 && diem < 8)
+                  {
+                    return "#03F";
+                  }
+                  if(diem >= 8 && diem <= 10)
+                  {
+                    return "#0D0";
+                  }
+              }
+
+            $("#btnthem").click(function(){
+              //alert("them");
+              var id = "<?php echo $info['DD_MA']; ?>";
+              var start = $("#count").html();
+              var length = 5;
+              var url, dta;
+              url="<?php echo base_url(); ?>index.php/aediadiem/getdata?t=" + Math.random();
+              dta = {
+                  "ma" : id,
+                  "start" : start,
+                  "length" : length
+              };
+              console.log(dta);
+              $.post(url, dta, function(data, status){
+
+                  console.log(status);
+                  console.log(data);
+                  if(status == "success")
+                  {   
+                      var str = "";
+                      var hinhanh = "";
+                      var j = 0;
+                      for (var i = 0; i < data.diadiem.length; i++) {
+
+                          mabinhluan = data.diadiem[i]['BL_MA'];
+                          tieude = data.diadiem[i]['BL_TIEUDE'];
+                          noidung = data.diadiem[i]['BL_NOIDUNG'];
+                          chatluong = data.diadiem[i]['BL_CHATLUONG'];
+                          phucvu = data.diadiem[i]['BL_PHUCVU'];
+                          khonggian = data.diadiem[i]['BL_KHONGGIAN'];
+                          ngaydang = data.diadiem[i]['BL_NGAYDANG'];
+
+                          diem = eval("(" + chatluong + "+" + phucvu + "+" + khonggian + ")/3");
+                          diem = diem.toFixed(1);
+
+                          maucl = mau(chatluong);
+                          maupv = mau(phucvu);
+                          maukg = mau(khonggian);
+                          mautb = mau(diem);
+
+                          honguoidang = data.diadiem[i]['ND_HO'];
+                          tennguoidang = data.diadiem[i]['ND_TEN'];
+                          hinhnguoidang = data.diadiem[i]['ND_HINH'];
+
+                          /*hinhanh = "";
+                          j = 0;
+                          for (var i = 0; i < data.hinhanh.length; i++) {
+                            mbl = data.hinhanh[i]["BL_MA"];
+                            tenhinh = data.hinhanh[i]["ABL_TEN"];
+                            if(mbl == mabinhluan && j < 5)
+                            {
+                              hinhanh += '<img class="img" src="<?php echo base_url(); ?>uploads/binhluan/'+tenhinh+'" width="120" height="100">';
+                              j++;
+                            }
+                          }*/
+
+                          hinhanh = '<img class="img" src="<?php echo base_url(); ?>uploads/binhluan/anhdaidien.jpg" width="120" height="100">';
+
+                          str += '<div class="media reply_section"><div class="pull-left post_reply text-center" style="margin: 10px;"><a href="#"><img style="border: solid 1px #DCDCDC; width: 70px; height: 70px;" src="<?php echo base_url(); ?>uploads/user/'+hinhnguoidang+'" class="img-circle" alt="" /></a></div><div class="media-body post_reply_content" style="color: #000; margin: 10px;"><h5 style="text-transform: capitalize; color: #000;"> '+honguoidang+' '+tennguoidang+' - <i style="font-size: 13px;"><?php echo lang("comment"); ?> </i><i style="font-size: 13px; opacity: 0.7;">'+ngaydang+'</i><div style="margin-top: 5px; font-size: 13px;"><i><?php echo lang("quality") ?>: </i><span style="color: '+maucl+'; font-weight: bolder;" >'+chatluong+'</span> | <i><?php echo lang("service") ?>: </i><span style="color: '+maupv+'; font-weight: bolder;" >'+phucvu+'</span> | <i><?php echo lang("space") ?>: </i><span style="color: '+maukg+'; font-weight: bolder;" >'+khonggian+'</span> | <i><?php echo lang("average") ?>: </i><span style="color: '+mautb+'; font-weight: bolder;" >'+diem+'</span></div></h5><h3 style="color: #000; font-weight: bold; font-size: 18px; text-transform: capitalize;">'+tieude+'</h3><p><div style="text-align: justify; margin-bottom: 10px; line-height: 1.5; font-size: 13px;">'+noidung+' </div><div style="cursor: pointer;" data-toggle="modal" data-target="#Modalcomment" onclick="xemanhbinhluan('+mabinhluan+')">'+hinhanh+'</div></p><div style="text-align: right;"><a style="z-index: 10;" href="#name"><button style="background-color: #1AA5D1;" type="button" class="btn btn-info"> <i class="fa fa-comment-o fa-fw"></i> <?php echo lang("comment") ?></button></a></div></div></div>';
+                      }
+                      document.getElementById('noidung').innerHTML += str;
+
+                      if(data.diadiem.length == 0)
+                      {
+                          $("#btnthem").hide();
+                      }
+                      else
+                      {
+                          document.getElementById('count').innerHTML = eval(start + "+" + data.diadiem.length);
+                      }
+                  }
+              }, 'json');
+            });
         });
 
         function xemhinhanh()
@@ -536,13 +634,13 @@
                       var tenanh = data.data[i]["ABL_TEN"];
                       if(i == '0')
                       {
-                        ol += '<li data-target="#my-pics" data-slide-to="0" class="active"></li>';
-                        div += '<div class="item active"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/binhluan/'+tenanh+'" alt="" width="100%" ></div>';
+                        ol += '<li data-target="#main-slider1" data-slide-to="0" class="active"></li>';
+                        div += '<div class="item active" style="max-height: 500px;"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/binhluan/'+tenanh+'" alt="" width="100%" ></div>';
                       }
                       else
                       {
-                        ol += '<li data-target="#my-pics" data-slide-to="'+i+'"></li>';
-                        div += '<div class="item"><img src="<?php echo base_url(); ?>uploads/binhluan/'+tenanh+'" alt="" width="100%" style="height: 500px;"></div>';
+                        ol += '<li data-target="#main-slider1" data-slide-to="'+i+'"></li>';
+                        div += '<div class="item" style="max-height: 500px;"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/binhluan/'+tenanh+'" alt="" width="100%" ></div>';
                       }
                       //console.log(data.data[i]["ABL_TEN"]);
                     }
@@ -828,15 +926,23 @@
                             </p>
                         </div>
                         <!-- <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" rel="prettyPhoto"> -->
-                          <img style="cursor: pointer;" onclick="xemhinhanh()" data-toggle='modal' data-target='#Modalimg' class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="<?php echo lang('avatar') ?>" />
+                          <div>
+                            <?php $iddd1 = $info['DD_MA']; ?>
+                            <b style="margin: 5px; cursor: pointer; position: absolute; font-size: 25px;" onclick="inposts('<?php echo $iddd1; ?>')">
+                                <i style="color: #000;" class="fa fa-print fa-fw"> </i><span class="pull-right"></span>
+                            </b>
+                            <img style="cursor: pointer;" onclick="xemhinhanh()" data-toggle='modal' data-target='#Modalimg' class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="<?php echo lang('avatar') ?>" />
+                          </div>
+                          
                         <!-- </a> -->
                             <div style="margin-top: -30px;" class="row">  
                                 <div class="col-xs-12 col-sm-2 text-center">
                                     <div class="entry-meta">
                                         <span id="publish_date"><?php echo $info["DD_NGAYDANG"] ?></span>
-                                        <span style="text-transform: capitalize;"><i class="fa fa-user"></i> <a href="#"> <?php echo $info["ND_TEN"] ?></a></span>
-                                        <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments"><?php echo $countbinhluan ?> <?php echo lang('comment') ?></a></span>
-                                        <span><i class="fa fa-heart"></i><a href="#"><?php echo $countyeuthich ?> <?php echo lang('likes') ?></a></span>
+                                        <span style="text-transform: capitalize;"><i class="fa fa-user fa-fw"></i> <a href="#"> <?php echo $info["ND_TEN"] ?></a></span>
+                                        <span><i class="fa fa-comment fa-fw"></i> <a href="blog-item.html#comments"><?php echo $countbinhluan ?> <?php echo lang('comment') ?></a></span>
+                                        <span><i class="fa fa-heart fa-fw"></i> <a href="#"><?php echo $countyeuthich ?> <?php echo lang('likes') ?></a></span>
+                                        <span><i class="fa fa-pencil fa-fw"></i> <a href="<?php echo base_url(); ?>index.php/baiviet/thembaiviet/<?php echo $info['DD_MA']; ?>"><?php echo $countbaiviet ?> <?php echo lang('posts') ?></a></span>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-10 blog-content">
@@ -924,25 +1030,23 @@
                                     </p>
                                     <p>
                                         <i class="fa fa-tag fa-fw"></i> <b> <?php echo lang('min_price') ?> </b>
-                                        <?php echo number_format($info['DD_GIATU'], 2, ',', '.'); ?> - <?php echo number_format($info['DD_GIADEN'], 2, ',', '.'); ?> VND
+                                        <?php echo number_format($info['DD_GIATU'], 0, ',', '.'); ?> - <?php echo number_format($info['DD_GIADEN'], 0, ',', '.'); ?> VND
                                     </p>
 
                                 </div>
                             </div>
                         </div><!--/.blog-item-->
                         
-                        <div style="margin-top: -60px;" class="media reply_section">
-                            <div class="pull-left post_reply text-center">
-                                <a href="#"><img style="width: 70px; height: 70px;" src="<?php echo base_url(); ?>uploads/user/<?php echo $info['ND_HINH']; ?>" class="img-circle" alt="" /></a>
-                                <ul>
+                        <div style="margin-top: -60px; padding: 0px;" class="media reply_section">
+                            <div class="pull-left post_reply text-center" style="margin: 10px;">
+                                <a href="#"><img style="border: solid 1px #DCDCDC; width: 70px; height: 70px;" src="<?php echo base_url(); ?>uploads/user/<?php echo $info['ND_HINH']; ?>" class="img-circle" alt="" /></a>
+                                <!-- <ul>
                                     <li style="padding-left: 18px;"><a target="_blank" href="<?php echo $info["ND_FACE"] ?>"><i class="fa fa-facebook"></i></a></li>
-                                    <!-- <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-google-plus"></i> </a></li> -->
-                                </ul>
+                                </ul> -->
                             </div>
-                            <div class="media-body post_reply_content">
-                                <h3 style="text-transform: capitalize;"><?php echo $info["ND_HO"]." ".$info["ND_TEN"] ?> - <i><?php echo $info['DD_NGAYDANG']; ?></i></h3>
-                                <p class="lead">
+                            <div class="media-body post_reply_content" style="color: #000; margin: 10px 10px 0px 0px;">
+                                <h5 style="text-transform: capitalize; color: #000;"><?php echo $info["ND_HO"]." ".$info["ND_TEN"] ?> - <i style="font-size: 13px; opacity: 0.7;"><?php echo $info['DD_NGAYDANG']; ?></i></h5>
+                                <p style="line-height: 1.5; font-size: 13px; text-align: justify;">
                                     <?php 
                                         echo $info["DD_MOTA"]; 
                                         if($info["ND_FACE"] == "")
@@ -954,13 +1058,14 @@
                                           $face = $info["ND_FACE"];
                                         }
                                     ?>
+                                    <br/>
+                                    <strong>Facebook:</strong> <a target="_blank" href="<?php echo $info["ND_FACE"] ?>"><?php echo $face; ?></a>
                                 </p>
-                                <p><strong>Facebook:</strong> <a target="_blank" href="<?php echo $info["ND_FACE"] ?>"><?php echo $face; ?></a></p>
                             </div>
                         </div> 
                         
-                        <h1 style="margin-top: 20px; margin-bottom: -10px;" id="comments_title"><?php echo $countbinhluan ?> <?php echo lang('comment') ?></h1>
-
+                        <h1 style="margin-top: 20px; margin-bottom: 10px; font-size: 16px; color: #000;" id="comments_title"><?php echo $countbinhluan ?> <?php echo lang('comment') ?></h1>
+                        <div id="noidung">
                         <?php
                             function mau($diem)
                             {
@@ -985,8 +1090,12 @@
                                   return "#0D0";
                                 }
                             }
-
+                            $count = 0;
                             foreach ($binhluan as $iteam) {
+                              if ($count > 4) {
+                                break;
+                              }
+                              $count++;
                               $mabinhluan = $iteam['BL_MA'];
                               $tieude = $iteam['BL_TIEUDE'];
                               $noidung = $iteam['BL_NOIDUNG'];
@@ -1008,47 +1117,67 @@
                               $hinhnguoidang = $iteam['ND_HINH'];
                         ?>
 
-                        <div class="media comment_section">
-                            <div class="pull-left post_comments">
-                                <a href="#"><img style="border: solid 5px #F8F8FF;" src="<?php echo base_url(); ?>uploads/user/<?php echo $hinhnguoidang; ?>" class="img-circle" alt="" /></a>
+                        <div class="media reply_section">
+                            <div class="pull-left post_reply text-center" style="margin: 10px;">
+                                <a href="#"><img style="border: solid 1px #DCDCDC; width: 70px; height: 70px;" src="<?php echo base_url(); ?>uploads/user/<?php echo $hinhnguoidang; ?>" class="img-circle" alt="" /></a>
                             </div>
-                            <div style="padding: 10px;" class="media-body post_reply_comments">
-                                <b style="text-transform: capitalize; font-size: 16px;"><?php echo $honguoidang." ".$tennguoidang ?></b> - 
-                                <b style="font-style: italic;"><?php echo $ngaydang ?></b>
-                                <div class="danhgia">
-                                      <i><?php echo lang('quality') ?>: </i>
-                                      <span style="color: <?php echo $maucl; ?>; font-weight: bolder;" ><?php echo $chatluong ?></span> | 
-                                      <i><?php echo lang('service') ?>: </i>
-                                      <span style="color: <?php echo $maupv; ?>; font-weight: bolder;" ><?php echo $phucvu ?></span> | 
-                                      <i><?php echo lang('space') ?>: </i>
-                                      <span style="color: <?php echo $maukg; ?>; font-weight: bolder;" ><?php echo $khonggian ?></span> | 
-                                      <i><?php echo lang('average') ?>: </i>
-                                      <span style="color: <?php echo $mautb; ?>; font-weight: bolder;" ><?php echo $diem ?></span>
-                                </div>
-                                <b style="font-weight: bold; font-size: 20px; text-transform: capitalize;"><?php echo $tieude ?></b>
-                                <p style="cursor: pointer;" data-toggle='modal' data-target='#Modalcomment' onclick="xemanhbinhluan('<?php echo $mabinhluan; ?>')">
-                                    <?php echo $noidung ?>
-                                <br/>
+                            <div class="media-body post_reply_content" style="color: #000; margin: 10px;">
+                                <h5 style="text-transform: capitalize; color: #000;">
+                                  <?php echo $honguoidang." ".$tennguoidang ?> - <i style="font-size: 13px;"><?php echo lang("comment"); ?> </i>
+                                  <i style="font-size: 13px; opacity: 0.7;"><?php echo $ngaydang ?></i>
+                                  <div style="margin-top: 5px; font-size: 13px;">
+                                        <i><?php echo lang("quality") ?>: </i>
+                                        <span style="color: <?php echo $maucl; ?>; font-weight: bolder;" ><?php echo $chatluong ?></span> | 
+                                        <i><?php echo lang("service") ?>: </i>
+                                        <span style="color: <?php echo $maupv; ?>; font-weight: bolder;" ><?php echo $phucvu ?></span> | 
+                                        <i><?php echo lang("space") ?>: </i>
+                                        <span style="color: <?php echo $maukg; ?>; font-weight: bolder;" ><?php echo $khonggian ?></span> | 
+                                        <i><?php echo lang("average") ?>: </i>
+                                        <span style="color: <?php echo $mautb; ?>; font-weight: bolder;" ><?php echo $diem ?></span>
+                                  </div>
+                                </h5>
+                                
+                                <h3 style="color: #000; font-weight: bold; font-size: 18px; text-transform: capitalize;"><?php echo $tieude ?></h3>
+                                <p>
+                                    <div style="text-align: justify; margin-bottom: 10px; line-height: 1.5; font-size: 13px;"><?php echo $noidung ?> </div>
+                                    <div style="cursor: pointer;" data-toggle="modal" data-target="#Modalcomment" onclick="xemanhbinhluan('<?php echo $mabinhluan; ?>')">
                                     <?php
+                                         $j = 0;
                                          foreach ($anhbinhluan as $key) {
                                             if($key['BL_MA'] == $mabinhluan)
                                             {
+                                              if($j < 5)
+                                              {
                                               $tenanh = $key['ABL_TEN'];
                                       ?>
-                                            <img class="img" src="<?php echo base_url(); ?>uploads/binhluan/<?php echo $tenanh ?>" width="80" height="50">
+                                            <img class="img" src="<?php echo base_url(); ?>uploads/binhluan/<?php echo $tenanh ?>" width="120" height="100">
                                       <?php
+                                              }
+                                              $j++;
                                             }
                                           }
                                     ?>
+                                    </div>
                                 </p>
 
-                                <a style="z-index: 10;" href="#name"><?php echo lang('comment') ?></a>
+                                <div style="text-align: right;">
+                                  <a style="z-index: 10;" href="#name">
+                                    <button style="background-color: #1AA5D1;" type="button" class="btn btn-info"> <i class="fa fa-comment-o fa-fw"></i> <?php echo lang('comment') ?></button>
+                                  </a>
+                                </div>
+                                
                             </div>
                         </div>
 
                         <?php
                             }
                         ?> 
+                        </div>
+
+                        <button style="background-color: #1AA5D1; margin-top: 10px; margin-bottom: 5px;" id="btnthem" type="button" class="btn btn-info"> <i class="fa fa-eye fa-fw"></i> <?php echo lang('view_more') ?></button> 
+                        <br/>
+                        <?php echo lang('total') ?>: <b id="count"><?php echo $count; ?></b>
+
                         <a name="name"></a>
                         <div style="margin-top: -30px;" id="contact-page clearfix">
                             <div class="status alert alert-success" style="display: none"></div>
@@ -1088,7 +1217,7 @@
                                         ?>
 
                                         <div class="form-group">
-                                            <button data-toggle='modal' data-target='<?php echo $idcomment; ?>' type="submit" id="btngui" class="btn btn-primary btn-lg" required="required"><?php echo lang('submit') ?></button>
+                                            <button style="background-color: #1AA5D1;" data-toggle='modal' data-target='<?php echo $idcomment; ?>' type="submit" id="btngui" class="btn btn-primary btn-lg" required="required"><i class="fa fa-comment-o fa-fw"></i> <?php echo lang('submit') ?></button>
                                         </div>
                                     </div>
 
@@ -1269,15 +1398,19 @@
                                   $BV_MA = $row["BV_MA"];
                                   $BV_TIEUDE = $row["BV_TIEUDE"];
                                   $BV_NGAYDANG = $row["BV_NGAYDANG"];
+                                  $BV_LUOTXEM = $row["BV_LUOTXEM"];
                                   $ND_HO = $row["ND_HO"];
                                   $ND_TEN = $row["ND_TEN"];
                               ?>
 
-                                <a style="font-weight: bold; font-size: 15px;" href="<?php echo base_url(); ?>index.php/baiviet/detail/<?php echo $BV_MA; ?>">
+                                <a style="text-transform: capitalize; font-size: 15px;" href="<?php echo base_url(); ?>index.php/baiviet/detail/<?php echo $BV_MA; ?>">
                                     <?php echo $BV_TIEUDE; ?><br/>
                                 </a>
-                                <i><?php echo $ND_HO.' '.$ND_TEN; ?>: <?php echo $BV_NGAYDANG; ?></i>
-                                <br/><br/>
+                                <i style="font-size: 13px; color: #000;">
+                                  <?php echo $ND_HO.' '.$ND_TEN; ?>: <?php echo $BV_NGAYDANG; ?><br/>
+                                  <?php echo lang('views'); ?>: <?php echo $BV_LUOTXEM; ?>
+                                </i>
+                                <hr style="margin: 5px 0px 5px 0px;" />
 
                               <?php
                                 }
@@ -1421,7 +1554,7 @@
       <div class="modal-content" style="height: 100%;">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('view') ?></h4>
+            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('view').' '.lang('photos'); ?></h4>
         </div>
         <div class="modal-body">
         
@@ -1484,56 +1617,69 @@
     </div><!-- /.modal-dialog --> 
     </div><!-- /.modal -->
 
-    <!-- Modal anh binh luan -->
+    <!-- Modal upload anh -->
     <div class="modal fade" id="Modalcomment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 80%;">
+    <div class="modal-dialog" style="width: 90%;">
       <div class="modal-content" style="height: 100%;">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-picture-o fa-fw"></i> Xem ảnh</h4>
+            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('view').' '.lang('photos'); ?></h4>
         </div>
         <div class="modal-body">
         
-          <div class="container-fluid">
-          
-          <!-- Carousel container -->
-          <div id="my-pics" class="carousel slide" data-ride="carousel">
+          <section id="main-slider1" class="no-margin">
+            <div class="carousel slide">
+                <ol id="ol" class="carousel-indicators">
+                    <li data-target="#main-slider1" data-slide-to="0" class="active"></li>
+                    
+                    <?php
+                      $i = 0; 
+                      foreach ($info1 as $item) {
+                        $i++;
+                        if($item["HA_TEN"] != $anhdaidien)
+                        {
+                        ?>
+                          <li data-target="#main-slider1" data-slide-to="<?php echo $i; ?>"></li>
+                        <?php
+                        }
+                      }
+                    ?>
+                </ol>
+                <div id="div" style="max-height: 500px;" class="carousel-inner">
 
-          <!-- Indicators -->
-          <ol id="ol" class="carousel-indicators">
-          <li data-target="#my-pics" data-slide-to="0" class="active"></li>
-          </ol>
+                    <!-- <div class="item active" style="max-height: 500px; background-image: url(<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>)">
+                    </div> -->
 
-          <!-- Content -->
-          <div id="div" class="carousel-inner" role="listbox">
+                    <div class="item active" style="max-height: 500px;">
+                      <img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" alt="" width='100%' >
+                    </div>
 
-          <!-- Slide 1 -->
-          <div class="item active">
-          <img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" alt="" width='100%' >
-          </div>
+                    <?php
+                      foreach ($info1 as $item) {
+                        
+                        if($item["HA_TEN"] != $anhdaidien)
+                        {
+                          $hinh1 = $item['HA_TEN'];
+                        ?>
+                          <!-- <div class="item" style="max-height: 500px; background-image: url(<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>)">
+                          </div> -->
+                          <div class="item" style="max-height: 500px;">
+                            <img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>" alt="" width='100%' >
+                          </div>
+                        <?php
+                        }
+                      }
+                    ?>
 
-          </div>
-
-          <!-- Previous/Next controls -->
-          <a id="previous" class="left carousel-control" href="#my-pics" role="button" data-slide="prev">
-          <span class="icon-prev" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-          </a>
-          <a id="next" class="right carousel-control" href="#my-pics" role="button" data-slide="next">
-          <span class="icon-next" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-          </a>
-
-          </div>
-
-          <!-- Center the image -->
-          <style scoped>
-          .item img{
-              margin: 0 auto;
-          }
-          </style>
-
-          </div>
+                </div><!--/.carousel-inner-->
+            </div><!--/.carousel-->
+            <a id="previous" class="left carousel-control" href="#main-slider1" role="button" data-slide="prev">
+            <span class="icon-prev" aria-hidden="true"></span>
+            </a>
+            <a id="next" class="right carousel-control" href="#main-slider1" role="button" data-slide="next">
+            <span class="icon-next" aria-hidden="true"></span>
+            </a>
+        </section><!--/#main-slider-->
 
         </div>
       </div> <!-- /.modal-content --> 

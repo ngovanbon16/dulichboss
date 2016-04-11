@@ -276,7 +276,7 @@
                                 ?>
 
                                 <div class="form-group">
-                                    <button data-toggle='modal' data-target='<?php echo $btngui; ?>' type="button" id="btngui" class="btn btn-primary btn-lg" required="required"><?php echo lang('submit'); ?></button>
+                                    <button data-toggle='modal' data-target='<?php echo $btngui; ?>' type="button" id="btngui" class="btn btn-primary btn-lg" required="required"><i class="fa fa-comment-o fa-fw"></i> <?php echo lang('submit'); ?></button>
                                 </div>
                                 
                             </div>
@@ -325,7 +325,7 @@
                         	?>
                         </div>
                             <center>
-                                <button style="font-size: 12px; margin-left: -15px; margin-top: 10px;" id="btnthem" type="button" class="btn btn-danger"><i class="fa  fa-eye fa-fw"></i> <?php echo lang('view_more'); ?></button>
+                                <button style="font-size: 12px; margin-left: -15px; margin-top: 10px;" id="btnthem" type="button" class="btn btn-danger"><i class="fa fa-eye fa-fw"></i> <?php echo lang('view_more'); ?></button>
                             </center>
                         </div>                     
                     </div><!--/.recent comments-->

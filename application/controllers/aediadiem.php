@@ -509,6 +509,23 @@ class Aediadiem extends CI_Controller
        	$this->load->view("user/main.php", $this->_data);
 	}
 
+	public function getdata()
+	{
+		$DD_MA = $_POST['ma'];
+		$start = $_POST['start'];
+		$length = $_POST['length'];
+		$query = "SELECT * FROM diadiem JOIN nguoidung ON diadiem.ND_MA = nguoidung.ND_MA JOIN binhluan ON binhluan.DD_MA = diadiem.DD_MA WHERE diadiem.DD_MA = '$DD_MA' ORDER BY binhluan.BL_NGAYDANG DESC LIMIT $start, $length";
+		$diadiem = $this->mdiadiem->gettimkiem($query);
+
+		$query = "SELECT * FROM anhbinhluan";
+		$hinhanh = $this->mdiadiem->gettimkiem($query);	
+
+		$response = array('diadiem' => $diadiem, 'hinhanh' => $hinhanh);
+		$jsonString = json_encode($response);
+		//$jsonString = json_encode($result);
+		echo $jsonString;
+	}
+
 	public function update()
 	{
 		$DD_MA = $_POST["DD_MA"];
