@@ -73,11 +73,17 @@ class Login extends CI_Controller
 		{
 			$status = "success";
 			$query = $this->mlogin->getuser($email, $password);
+			$quyen = "0";
+			if($this->mlogin->testquyen($email))
+			{
+				$quyen = "1";
+			}
+
 			if($query)
 			{
 				foreach ($query as $row) {
 					$newdata = array(
-						'admin' => $row->NQ_MA,
+						'admin' => $quyen,
                         'id' => $row->ND_MA,
                         'email'   => $row->ND_DIACHIMAIL,
                         'avata' => $row->ND_HINH,

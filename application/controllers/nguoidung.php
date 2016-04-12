@@ -13,9 +13,20 @@ class Nguoidung extends CI_Controller
 
 	public function index()
 	{
-		$this->_data['subview'] = 'admin/nguoidung_view';
-       	$this->_data['title'] = lang('user');
-       	$this->load->view('main.php', $this->_data);
+		$this->load->model("mquyen");
+		$email = $this->session->userdata["email"];
+		if($this->mquyen->testquyen($email, "2"))
+		{
+			$this->_data['subview'] = 'admin/nguoidung_view';
+	       	$this->_data['title'] = lang('user');
+	       	$this->load->view('main.php', $this->_data);
+       	}
+       	else
+       	{
+       		$this->_data['subview'] = 'home';
+	       	$this->_data['title'] = lang('home');
+	       	$this->load->view('main.php', $this->_data);
+       	}
 	}
 
 	public function add()

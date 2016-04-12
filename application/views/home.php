@@ -61,25 +61,25 @@
       <!-- Slide 1 -->
       <div class="item active">
       <div class="tieude">Cầu Cần Thơ</div>
-      <img src="<?php echo base_url(); ?>assets/images/caucantho.jpg" alt="" width='100%' height=''>
+      <img style="height: 450px;" src="<?php echo base_url(); ?>assets/images/caucantho.jpg" alt="" width='100%' height=''>
       </div>
 
       <!-- Slide 2 -->
       <div class="item">
       <div class="tieude">Đồng Tháp Mười</div>
-      <img src="<?php echo base_url(); ?>assets/images/dongthapmuoi.jpg" alt="" width='100%' height=''>
+      <img style="height: 450px;" src="<?php echo base_url(); ?>assets/images/dongthapmuoi.jpg" alt="" width='100%' height=''>
       </div>
 
       <!-- Slide 3 -->
       <div class="item">
       <div class="tieude">Rừng Tràm Trà Sư</div>
-      <img src="<?php echo base_url(); ?>assets/images/rungtramtrasu.jpg" alt="" width='100%' height=''>
+      <img style="height: 450px;" src="<?php echo base_url(); ?>assets/images/rungtramtrasu.jpg" alt="" width='100%' height=''>
       </div>
 
       <!-- Slide 3 -->
       <div class="item">
       <div class="tieude">Chợ Cái Răng Cần Thơ</div>
-      <img src="<?php echo base_url(); ?>assets/images/chocairang.jpg" alt="" width='100%' height=''>
+      <img style="height: 450px;" src="<?php echo base_url(); ?>assets/images/chocairang.jpg" alt="" width='100%' height=''>
       </div>
 
       </div>

@@ -13,10 +13,24 @@ class Nhomquyen extends CI_Controller
 
 	public function index()
 	{
-		$this->_data['subview'] = 'admin/nhomquyen_view';
+		/*$this->_data['subview'] = 'admin/nhomquyen_view';
        	$this->_data['title'] = lang('authority_groups');
        	$this->_data['info'] = $this->mnhomquyen->getList();
-       	$this->load->view('main.php', $this->_data);
+       	$this->load->view('main.php', $this->_data);*/
+       	$this->load->model("mquyen");
+		$email = $this->session->userdata["email"];
+		if($this->mquyen->testquyen($email, "9"))
+		{
+			$this->_data['subview'] = 'admin/nhomquyen_view';
+	       	$this->_data['title'] = lang('authority_groups');
+	       	$this->load->view('main.php', $this->_data);
+       	}
+       	else
+       	{
+       		$this->_data['subview'] = 'home';
+	       	$this->_data['title'] = lang('home');
+	       	$this->load->view('main.php', $this->_data);
+       	}
 	}
 
 	public function add()
@@ -235,7 +249,12 @@ class Nhomquyen extends CI_Controller
 
 		if($this->mnhomquyen->nhomquyennguoidung($ma))
         {
-           	$error .= lang('have_data_relating_to_the_table')." \"NGUOIDUNG\".";
+           	$error .= lang('have_data_relating_to_the_table')." \"NGUOIDUNG\". <br/>";
+        }
+
+        if($this->mnhomquyen->quyennhomquyen($ma))
+        {
+           	$error .= lang('have_data_relating_to_the_table')." \"QUYEN_NHOMQUYEN\".";
         }
 
 		if($error == "")

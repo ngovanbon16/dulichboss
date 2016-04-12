@@ -353,9 +353,9 @@
                     <div class="widget">
                         <h3><?php echo lang('discover') ?></h3>
                         <ul>
-                            <li><a href="#"><?php echo lang('newsletter') ?></a></li>
-                            <li><a href="#">Mobile Web</a></li>
-                            <li><a href="#"><?php echo lang('term_of_use') ?></a></li>
+                            <li><a href="./"><?php echo lang('newsletter') ?></a></li>
+                            <li><a href="./">Mobile Web</a></li>
+                            <li><a href="<?php echo base_url(); ?>home/gioithieu"><?php echo lang('term_of_use') ?></a></li>
                         </ul>
                     </div>    
                 </div>
@@ -364,9 +364,9 @@
                     <div class="widget">
                         <h3><?php echo lang('license') ?></h3>
                         <ul>
-                            <li><a href="#">ICP 85/GP-ICP-STTTT</a></li>
-                            <li><a href="#">MXH 152/GXN-TTDT</a></li>
-                            <li><a href="#">SGD TMĐT 111</a></li>
+                            <li><a href="./">ICP 86/GP-ICP-STTTT</a></li>
+                            <li><a href="./">MXH 153/GXN-TTDT</a></li>
+                            <li><a href="./">SGD TMĐT 112</a></li>
                         </ul>
                     </div>    
                 </div>
@@ -375,9 +375,9 @@
                     <div class="widget">
                         <h3><?php echo lang('contact') ?></h3>
                         <ul>
-                            <li><a href="#">Email</a>: smartmekong@gmail.com</li>
-                            <li><a href="#"><?php echo lang('phone') ?></a>: 84 710 3831301</li>
-                            <li><a href="#">Facebook</a>: www.facebook.com/smartmekong</li>
+                            <li><a href="./">Email</a>: smartmekong@gmail.com</li>
+                            <li><a href="./"><?php echo lang('phone') ?></a>: 84 710 3831301</li>
+                            <li><a href="./">Fb</a>: www.facebook.com/smartmekong</li>
                         </ul>
                     </div>    
                 </div>

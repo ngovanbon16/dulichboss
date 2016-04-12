@@ -132,6 +132,9 @@ class User extends CI_Controller
 
 	public function account()
 	{
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+
 		$id = "0";
 		if(isset($this->session->userdata['id']))
 		{
@@ -168,6 +171,9 @@ class User extends CI_Controller
 
 	public function edit($id)
 	{
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+
 		if(isset($this->session->userdata['id']))
 		{
 			$this->_data['info'] = $this->mnguoidung->getID($id);
@@ -397,6 +403,9 @@ class User extends CI_Controller
 
 	public function addnewplace()
 	{
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+		
 		if(isset($this->session->userdata['id']))
 		{
 			$this->_data['map'] = $this->map("");

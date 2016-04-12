@@ -13,14 +13,34 @@ class Binhluan extends CI_Controller
 
 	public function index()
 	{
-		if(isset($this->session->userdata['DD_MA']))
+		/*if(isset($this->session->userdata['DD_MA']))
 		{
 			$this->session->unset_userdata("DD_MA");
 		}
 
 		$this->_data['subview'] = 'admin/binhluan_view';
        	$this->_data['title'] = lang('comment');
-       	$this->load->view('main.php', $this->_data);
+       	$this->load->view('main.php', $this->_data);*/
+
+       	$this->load->model("mquyen");
+		$email = $this->session->userdata["email"];
+		if($this->mquyen->testquyen($email, "6"))
+		{
+			if(isset($this->session->userdata['DD_MA']))
+			{
+				$this->session->unset_userdata("DD_MA");
+			}
+
+			$this->_data['subview'] = 'admin/binhluan_view';
+	       	$this->_data['title'] = lang('comment');
+	       	$this->load->view('main.php', $this->_data);
+       	}
+       	else
+       	{
+       		$this->_data['subview'] = 'home';
+	       	$this->_data['title'] = lang('home');
+	       	$this->load->view('main.php', $this->_data);
+       	}
 	}
 
 	public function data0()

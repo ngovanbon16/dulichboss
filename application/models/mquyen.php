@@ -121,7 +121,7 @@ class Mquyen extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from($this->_table);
-        $this->db->join('q_nq', 'q_nq.Q_MA = quyen.Q_MA');
+        $this->db->join('quyen_nhomquyen', 'quyen_nhomquyen.Q_MA = quyen.Q_MA');
         $this->db->where("quyen.Q_MA", $id);
         $query = $this->db->get();           
         if($query->num_rows() > 0)
@@ -132,6 +132,25 @@ class Mquyen extends CI_Model {
         {
             return false;
         }
-    }              
+    }  
+
+    function testquyen($email, $quyen)
+    {
+        $this->db->select('*');
+        $this->db->from("nhomquyen");
+        $this->db->join('nguoidung', 'nhomquyen.NQ_MA = nguoidung.NQ_MA');
+        $this->db->join('quyen_nhomquyen', 'nhomquyen.NQ_MA = quyen_nhomquyen.NQ_MA');
+        $this->db->where("nguoidung.ND_DIACHIMAIL", $email);
+        $this->db->where("quyen_nhomquyen.Q_MA", $quyen);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }            
 }            
 ?>

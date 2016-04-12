@@ -13,10 +13,24 @@ class Tinh extends CI_Controller
 
 	public function index()
 	{
-		$this->_data['subview'] = 'admin/tinh_view';
+		/*$this->_data['subview'] = 'admin/tinh_view';
        	$this->_data['title'] = lang('provincial');
-       	/*$this->_data['info'] = $this->mtinh->getList();*/
-       	$this->load->view('main.php', $this->_data);
+       	$this->load->view('main.php', $this->_data);*/
+
+       	$this->load->model("mquyen");
+		$email = $this->session->userdata["email"];
+		if($this->mquyen->testquyen($email, "3"))
+		{
+			$this->_data['subview'] = 'admin/tinh_view';
+	       	$this->_data['title'] = lang('provincial');
+	       	$this->load->view('main.php', $this->_data);
+       	}
+       	else
+       	{
+       		$this->_data['subview'] = 'home';
+	       	$this->_data['title'] = lang('home');
+	       	$this->load->view('main.php', $this->_data);
+       	}
 	}
 
 	public function add()

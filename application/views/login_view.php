@@ -59,7 +59,7 @@
                             {
                                 $("#info").addClass("textsuccess").text("<?php echo lang('logged_in_successfully') ?>");
                                 $("#login").remove();
-                                setTimeout("location.href = '<?php echo site_url('home'); ?>';",1000);
+                                setTimeout("location.href = '<?php echo site_url('admin'); ?>';",1000);
                             }
                         }
                     }, 'json');

@@ -13,9 +13,23 @@ class Diadiem extends CI_Controller
 
 	public function index()
 	{
-		$this->_data['subview'] = 'admin/diadiem_view';
+		/*$this->_data['subview'] = 'admin/diadiem_view';
        	$this->_data['title'] = lang('place');
-       	$this->load->view('main.php', $this->_data);
+       	$this->load->view('main.php', $this->_data);*/
+       	$this->load->model("mquyen");
+		$email = $this->session->userdata["email"];
+		if($this->mquyen->testquyen($email, "5"))
+		{
+			$this->_data['subview'] = 'admin/diadiem_view';
+	       	$this->_data['title'] = lang('place');
+	       	$this->load->view('main.php', $this->_data);
+       	}
+       	else
+       	{
+       		$this->_data['subview'] = 'home';
+	       	$this->_data['title'] = lang('home');
+	       	$this->load->view('main.php', $this->_data);
+       	}
 	}
 
 	public function update()

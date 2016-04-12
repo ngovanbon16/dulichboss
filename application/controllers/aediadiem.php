@@ -322,6 +322,13 @@ class Aediadiem extends CI_Controller
 
 	public function detailadmin($id) // id la ma cua dia diem - ham dung cho quan ly dia diem
 	{
+		$this->load->model("mquyen");
+		$email = $this->session->userdata["email"];
+		if(!$this->mquyen->testquyen($email, "5"))
+		{
+			redirect(base_url() . "admin");
+       	}
+
        	$info = $this->mdiadiem->getID($id);
        	$madanhmuc = $info['DM_MA'];
        	$matinh = $info['T_MA'];
@@ -525,6 +532,17 @@ class Aediadiem extends CI_Controller
 		//$jsonString = json_encode($result);
 		echo $jsonString;
 	}
+
+	/*public function getanhbinhluan()
+	{
+		$BL_MA = $_POST['ma'];
+
+		$query = "SELECT * FROM anhbinhluan WHERE BL_MA = '$BL_MA' ";
+		$result = $this->mdiadiem->gettimkiem($query);	
+
+		$jsonString = json_encode($result);
+		echo $jsonString;
+	}*/
 
 	public function update()
 	{

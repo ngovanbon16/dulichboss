@@ -119,6 +119,23 @@ class Mnhomquyen extends CI_Model {
         {
             return false;
         }
+    }
+
+    function quyennhomquyen($id)
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->join('quyen_nhomquyen', 'nhomquyen.NQ_MA = quyen_nhomquyen.NQ_MA');
+        $this->db->where("nhomquyen.NQ_MA", $id);
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }              
 }            
 ?>

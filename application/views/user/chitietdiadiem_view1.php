@@ -538,6 +538,24 @@
                           honguoidang = data.diadiem[i]['ND_HO'];
                           tennguoidang = data.diadiem[i]['ND_TEN'];
                           hinhnguoidang = data.diadiem[i]['ND_HINH'];
+                          /*hinhanh = "";
+                          var url1, datah;
+                          url1="<?php echo base_url(); ?>index.php/aediadiem/getanhbinhluan?t=" + Math.random();
+                          datah = {
+                              "ma" : mabinhluan
+                          };
+                          console.log(datah);
+                          $.post(url1, datah, function(data, status){
+
+                              console.log(status);
+                              console.log(data);
+                              if(status == "success")
+                              {   
+                                 for (var i = 0; i < data.length; i++) {
+                                    hinhanh += '<img class="img" src="<?php echo base_url(); ?>uploads/binhluan/'+data[i]["ABL_TEN"]+'" width="120" height="100">';
+                                 }
+                              }
+                          }, 'json');*/
 
                           /*hinhanh = "";
                           j = 0;

@@ -58,6 +58,25 @@ class Mlogin extends CI_Model {
         }
     }  
 
+    function testquyen($email)
+    {
+        $this->db->select('*');
+        $this->db->from("nhomquyen");
+        $this->db->join('nguoidung', 'nhomquyen.NQ_MA = nguoidung.NQ_MA');
+        $this->db->join('quyen_nhomquyen', 'nhomquyen.NQ_MA = quyen_nhomquyen.NQ_MA');
+        $this->db->where("nguoidung.ND_DIACHIMAIL", $email);
+        $this->db->where("quyen_nhomquyen.Q_MA", "1");
+        $query = $this->db->get();           
+        if($query->num_rows() > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public function kichhoat($id)
     {
         $this -> db -> select('ND_MA, ND_KICHHOAT');

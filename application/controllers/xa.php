@@ -13,7 +13,7 @@ class Xa extends CI_Controller
 
     public function index()
     {
-        $this->_data['subview'] = 'admin/xa_view';
+        /*$this->_data['subview'] = 'admin/xa_view';
         $this->_data['title'] = lang('town');
         if(isset($this->session->userdata['T_MA']))
         {
@@ -32,7 +32,39 @@ class Xa extends CI_Controller
                 }
             }
         }
-        $this->load->view('main.php', $this->_data);
+        $this->load->view('main.php', $this->_data);*/
+
+        $this->load->model("mquyen");
+        $email = $this->session->userdata["email"];
+        if($this->mquyen->testquyen($email, "3"))
+        {
+            $this->_data['subview'] = 'admin/xa_view';
+            $this->_data['title'] = lang('town');
+            if(isset($this->session->userdata['T_MA']))
+            {
+                $matinh = $this->session->userdata['T_MA'];
+                $this->load->model("mtinh");
+                $query = $this->mtinh->getList();
+                $i = -1;
+                if($query != false)
+                {
+                    foreach ($query as $item) {
+                        $i++;
+                        if($matinh == $item["T_MA"])
+                        {
+                            $this->_data['indextinh'] = $i;
+                        }
+                    }
+                }
+            }
+            $this->load->view('main.php', $this->_data);
+        }
+        else
+        {
+            $this->_data['subview'] = 'home';
+            $this->_data['title'] = lang('home');
+            $this->load->view('main.php', $this->_data);
+        }
     }
 
     public function add()

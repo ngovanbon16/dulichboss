@@ -13,10 +13,23 @@ class Quyen extends CI_Controller
 
     public function index()
     {
-        $this->_data['subview'] = 'admin/quyen_view';
+        /*$this->_data['subview'] = 'admin/quyen_view';
         $this->_data['title'] = lang('authority');
         $this->_data['info'] = $this->mquyen->getList();
-        $this->load->view('main.php', $this->_data);
+        $this->load->view('main.php', $this->_data);*/
+        $email = $this->session->userdata["email"];
+        if($this->mquyen->testquyen($email, "8"))
+        {
+            $this->_data['subview'] = 'admin/quyen_view';
+            $this->_data['title'] = lang('authority');
+            $this->load->view('main.php', $this->_data);
+        }
+        else
+        {
+            $this->_data['subview'] = 'home';
+            $this->_data['title'] = lang('home');
+            $this->load->view('main.php', $this->_data);
+        }
     }
 
     public function add()
@@ -248,7 +261,7 @@ class Quyen extends CI_Controller
 
         if($this->mquyen->quyennhomquyen($ma))
         {
-            $error .= lang('have_data_relating_to_the_table')." \"NQ_Q\".";
+            $error .= lang('have_data_relating_to_the_table')." \"QUYEN_NHOMQUYEN\".";
         }
 
         if($error == "")
