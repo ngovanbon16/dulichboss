@@ -206,11 +206,12 @@
                         { name: 'NQ_TEN' }
                     ],
                     url: url,
-                    async: true
+                    async: false
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#NQ_MA").jqxDropDownList({ selectedIndex: <?php echo $indexnhomquyen; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('authority') ?>:", displayMember: "NQ_TEN", valueMember: "NQ_MA", width: 300, height: 25});
+                $("#NQ_MA").jqxDropDownList({ source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('authority') ?>:", displayMember: "NQ_TEN", valueMember: "NQ_MA", width: 300, height: 25});
+                $("#NQ_MA").jqxDropDownList('selectItem', "<?php echo $info['NQ_MA']; ?>");
 
                 var url = "<?php echo base_url(); ?>index.php/tinh/data";
                 // prepare the data

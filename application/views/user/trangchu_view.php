@@ -66,6 +66,11 @@
                 }, 'json');
             });
         });
+
+        function oppen()
+        {
+            $(".benner").toggleClass("benner1");
+        }
     </script>
 
     <style type="text/css">
@@ -117,11 +122,58 @@
              box-shadow: 0 0 4px #000;
             -webkit-box-shadow: 0 0 4px #000;
         }
+
+        .benner{
+            margin: 10px;
+            background-color: #FFF; 
+            width: 250px; 
+            height: 320px;
+            border-radius: 3px;
+            opacity: 0.7;
+            margin-right: -220px;
+            -webkit-transition: margin-right 3s;
+            transition:  margin-right 3s;
+        }
+        .benner1{
+            margin-right: 10px;
+            -webkit-transition:  margin-right 3s;
+            transition:  margin-right 3s;
+        }
+        .benner2{
+            margin: 5px;
+        }
     </style>
 
 </head>
 <body class="homepage">
-    
+    <div align="right" style="position: absolute; z-index: 10000; float: right; width: 100%; overflow: hidden;">
+        <div class="benner" onclick="oppen()">
+            <marquee class="benner2" onmouseover="this.stop()" onmouseout="this.start()" scrollamount="3" direction="up" width="240" height="310" align="center">
+
+              <?php
+                foreach ($danhgia as $row) {
+                    $hinh3 = $row['HA_TEN'];
+                    $ma3 = $row['DD_MA'];
+                    $ten3 = $row['DD_TEN'];
+                    $tinh3 = $row['T_TEN'];
+                    $huyen3 = $row['H_TEN'];
+                    $diem = $row['diem'];
+                ?>
+                  <a target="_blank" href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
+                    <span>
+                      
+                    <span style="font-size: 13; width: 100px; overflow: hidden;"><?php echo $ten3; ?></span><br/>
+                    <i style="font-size: 13px;"><?php echo $huyen3.' - '.$tinh3; ?> | <?php echo lang('rating').': '.round($diem, 1); ?></i>
+                    <img class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh3; ?>" />
+
+                  </a> <hr/>
+                <?php      
+                } 
+              ?>
+
+            </marquee>
+        </div>
+    </div>
     <section id="main-slider" class="no-margin">
         <div class="carousel slide">
             <ol class="carousel-indicators">

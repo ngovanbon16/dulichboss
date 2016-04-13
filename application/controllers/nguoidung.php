@@ -434,6 +434,26 @@ class Nguoidung extends CI_Controller
 		echo $jsonString;
 	}
 
+	public function updatenhomquyen()
+	{
+		$ND_MA = $_POST["ND_MA"];
+		$NQ_MA = $_POST["NQ_MA"];
+		
+		$status = "error";
+		
+		$data = array(
+           "NQ_MA" => $NQ_MA
+        );
+        if($this->mnguoidung->update($ND_MA, $data))
+        {
+        	$status = "success";
+        }
+
+		$response = array('status' => $status, 'data' => $data);
+		$jsonString = json_encode($response);
+		echo $jsonString;
+	}
+
 	public function delete()
 	{
 		$ma = $_POST["ma"];

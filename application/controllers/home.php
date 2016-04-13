@@ -70,6 +70,9 @@ class Home extends CI_Controller
 		$result = $this->mbaiviet->gettimkiem($query);
 		$this->_data['baiviet'] = $result;
 
+		$query = "SELECT diadiem.DD_MA, diadiem.DD_TEN, tinh.T_TEN, huyen.H_TEN, hinhanh.HA_TEN, (SUM(binhluan.BL_CHATLUONG)+SUM(binhluan.BL_PHUCVU)+SUM(binhluan.BL_KHONGGIAN))/count(diadiem.DD_MA)/3 diem FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN binhluan ON diadiem.DD_MA = binhluan.DD_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' GROUP BY diadiem.DD_MA  ORDER BY diem DESC LIMIT 0, 6";
+		$this->_data['danhgia'] = $this->mdiadiem->gettimkiem($query);
+
        	$this->_data['title'] = 'Trang chủ';
        	$this->load->view('user/main.php', $this->_data);
 	}

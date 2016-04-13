@@ -10,7 +10,7 @@ class Mnhomquyen extends CI_Model {
     {
         $this->db->select('*');
         $this->db->from($this->_table);
-        $this->db->order_by("NQ_MA", "asc");
+        $this->db->order_by("NQ_TEN", "asc");
         $query = $this -> db -> get();           
         if($query->num_rows() > 0)
         {
@@ -18,7 +18,7 @@ class Mnhomquyen extends CI_Model {
         }
         else
         {
-            return false;
+            return $query->result_array();
         }
     }
 

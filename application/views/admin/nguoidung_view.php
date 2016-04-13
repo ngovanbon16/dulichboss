@@ -85,6 +85,7 @@
             {
                 datatype: "json",
                 datafields: [
+                    { name: 'NQ_MA', type: 'string' },
                     { name: 'ND_HINH', type: 'string' },
                     { name: 'ND_MA', type: 'number' },
                     { name: 'ND_HO', type: 'string' },
@@ -156,7 +157,7 @@
                     });
                 },
                 deleterow: function (rowid, commit) {
-                    var dta, url, test;
+                    var dta, url;
                     url = "<?php echo base_url(); ?>index.php/nguoidung/delete";
                     dta = {
                         "ma" : rowid
@@ -263,11 +264,46 @@
 
                 columns: [
                     { text: "<?php echo lang('photo') ?>", datafield: 'ND_HINH', width: "5%", sortable: false, filterable: false, cellsrenderer: imagerenderer, cellsalign: 'center', align: "center", },
+                    { text: "<?php echo lang('authority_groups') ?>", dataField: 'NQ_MA', width: "11%", cellsalign: 'center', align: "left", columntype: 'number',
+                        cellsrenderer: function (row, column, value) {
+                            var offset = $("#jqxgrid").offset();
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.ND_MA;
+                            var NQ_MA = dataRecord.NQ_MA;
+
+                            var dta, url;
+                            url = "<?php echo base_url(); ?>index.php/nhomquyen/data";
+                            dta = {
+                                "ma" : id
+                            };
+                            /*console.log(dta);*/
+                            $.post(url, dta, function(data, status){
+                                /*console.log(status);
+                                console.log(data);*/
+                                if(status == "success")
+                                {   
+                                    var str = '<select class="select" onchange="change('+id+', (this).value)">';
+                                    for (var i = 0; i < data.length; i++) {
+                                        var ma = data[i]['NQ_MA'];
+                                        var ten = data[i]['NQ_TEN'];
+                                        if(ma == NQ_MA)
+                                            str += '<option value="'+ma+'" selected>'+ten+'</option>';
+                                        else
+                                            str += '<option value="'+ma+'" >'+ten+'</option>';
+                                    }
+                                    str += "</select>";
+                                    document.getElementById(id+"a").innerHTML = str;
+                                }
+                            }, 'json');
+
+                            return "<div id='"+id+"a'></div>";
+                        }
+                    },
                     { text: "<?php echo lang('key') ?>", dataField: 'ND_MA', width: "5%", cellsalign: 'center', align: "center", },
-                    { text: "<?php echo lang('lastname') ?>", dataField: 'ND_HO', width: "7.5%" },
+                    { text: "<?php echo lang('lastname') ?>", dataField: 'ND_HO', width: "5%" },
                     /*{ text: 'Mã người dùng', dataField: 'ND_MA', width: "10%" },*/
                     { text: "<?php echo lang('firstname') ?>", dataField: 'ND_TEN', width: "10%" },
-                    { text: "<?php echo lang('email') ?>", dataField: 'ND_DIACHIMAIL', width: "19%" },
+                    { text: "<?php echo lang('email') ?>", dataField: 'ND_DIACHIMAIL', width: "16%" },
                     { text: "<?php echo lang('activate') ?>", dataField: 'ND_KICHHOAT', width: "10%", columntype: 'textbox', filtertype: 'textbox', align: 'center',
                         cellsrenderer: function (row, column, value) {
                             var tt = "";
@@ -286,8 +322,8 @@
                             return tt;
                         }
                     },
-                    { text: "<?php echo lang('updates_day') ?>", dataField: 'ND_NGAYCAPNHAT', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
-                    { text: "<?php echo lang('creates_date') ?>", dataField: 'ND_NGAYTAO', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
+                    { text: "<?php echo lang('updates_day') ?>", dataField: 'ND_NGAYCAPNHAT', width: "10%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
+                    { text: "<?php echo lang('creates_date') ?>", dataField: 'ND_NGAYTAO', width: "10%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
                     { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
@@ -333,8 +369,39 @@
             });
             
         });
+
+        function change(id, manq)
+        {
+            var dta, url;
+            url = "<?php echo base_url(); ?>index.php/nguoidung/updatenhomquyen";
+            dta = {
+                "ND_MA" : id,
+                "NQ_MA" : manq
+            };
+            console.log(dta);
+            $.post(url, dta, function(data, status){
+
+                console.log(status);
+                console.log(data);
+                if(status == "success")
+                {   
+                    if(data.status == "error")
+                    {
+                        thongbao("", "Error", "danger");
+                    }
+                    else
+                    {
+                        thongbao("", "<?php echo lang('updated_successfully') ?>", "success");
+                    }
+                }
+            }, 'json');  
+        }
     </script>
     <style type="text/css">
+        .select{
+            width: 100%;
+            height: 28px;
+        }
         .icon{
             width: 100%;
             height: 100%;
