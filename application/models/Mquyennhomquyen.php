@@ -38,6 +38,24 @@ class Mquyennhomquyen extends CI_Model {
             return $query->result_array();
         }
     }
+
+    function testMa($manq, $maq) 
+    {
+        $this -> db -> select('NQ_MA, Q_MA');
+        $this -> db -> from($this->_table);
+        $this -> db -> where('NQ_MA', $manq);
+        $this -> db -> where('Q_MA', $maq);
+        $this -> db -> limit(1);
+        $query = $this -> db -> get();           
+        if($query -> num_rows() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    } 
              
 }            
 ?>

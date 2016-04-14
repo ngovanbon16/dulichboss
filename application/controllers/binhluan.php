@@ -45,6 +45,14 @@ class Binhluan extends CI_Controller
 
 	public function data0()
 	{
+		$this->load->model("mquyen");
+		$email = $this->session->userdata["email"];
+		$T_MA = $this->session->userdata["T_MA"];
+		$test = "0";
+		if($this->mquyen->testquyen($email, "10"))
+		{
+			$test = "1";
+		}
 		if (isset($_GET['update'])) // code update
 		{
 			/*$ma = $_GET['T_MA'];
@@ -113,13 +121,29 @@ class Binhluan extends CI_Controller
 				
 				if ($filterscount > 0)
 				{
-					if($iddd == "")
+					
+					if($test == "1")
 					{
-						$where = " WHERE (";
+						if($iddd == "")
+						{
+							$where = " WHERE (";
+						}
+						else
+						{
+							$where = "WHERE (binhluan.DD_MA='".$iddd."') AND (";
+						}
 					}
 					else
 					{
-						$where = "WHERE (binhluan.DD_MA='".$iddd."') AND (";
+						/*$where = "WHERE (diadiem.T_MA='".$T_MA."' ) AND (";*/
+						if($iddd == "")
+						{
+							$where = " WHERE (diadiem.T_MA='".$T_MA."' ) AND  (";
+						}
+						else
+						{
+							$where = "WHERE (diadiem.T_MA='".$T_MA."' ) AND (binhluan.DD_MA='".$iddd."') AND (";
+						}
 					}
 					$tmpdatafield = "";
 					$tmpfilteroperator = "";
@@ -201,17 +225,48 @@ class Binhluan extends CI_Controller
 				}
 				else
 				{
+					if($test == "1")
+					{
+						//$where = "WHERE diadiem.T_MA='".$T_MA."' ";
+						if($iddd != "")
+						{
+							$where = "WHERE binhluan.DD_MA='".$iddd."' ";
+						}
+					}
+					else
+					{
+						if($iddd != "")
+						{
+							$where = "WHERE (diadiem.T_MA='".$T_MA."') AND (binhluan.DD_MA='".$iddd."') ";
+						}
+						else
+						{
+							$where = "WHERE diadiem.T_MA='".$T_MA."' ";
+						}
+					}
+					
+				}
+			}
+			else
+			{
+				if($test == "1")
+				{
+					//$where = "WHERE diadiem.T_MA='".$T_MA."' ";
 					if($iddd != "")
 					{
 						$where = "WHERE binhluan.DD_MA='".$iddd."' ";
 					}
 				}
-			}
-			else
-			{
-				if($iddd != "")
+				else
 				{
-					$where = "WHERE binhluan.DD_MA='".$iddd."' ";
+					if($iddd != "")
+					{
+						$where = "WHERE (diadiem.T_MA='".$T_MA."') AND (binhluan.DD_MA='".$iddd."') ";
+					}
+					else
+					{
+						$where = "WHERE diadiem.T_MA='".$T_MA."' ";
+					}
 				}
 			}
 

@@ -196,6 +196,14 @@ class Baiviet extends CI_Controller
 
 	public function data0()
 	{
+		$this->load->model("mquyen");
+		$email = $this->session->userdata["email"];
+		$T_MA = $this->session->userdata["T_MA"];
+		$test = "0";
+		if($this->mquyen->testquyen($email, "10"))
+		{
+			$test = "1";
+		}
 		if (isset($_GET['update'])) // code update
 		{
 			$ma = $_GET["BV_MA"];
@@ -250,7 +258,14 @@ class Baiviet extends CI_Controller
 				
 				if ($filterscount > 0)
 				{
-					$where = " WHERE (";
+					if($test == "1")
+					{
+						$where = " WHERE (";
+					}
+					else
+					{
+						$where = "WHERE (diadiem.T_MA='".$T_MA."' ) AND (";
+					}
 					$tmpdatafield = "";
 					$tmpfilteroperator = "";
 					for ($i=0; $i < $filterscount; $i++)
@@ -329,7 +344,24 @@ class Baiviet extends CI_Controller
 					/*$query = "SELECT * FROM tinh ".$where." LIMIT $start, $total_rows";
 					$table = $this->mtinh->getList2($query);*/			
 				}
+				else
+				{
+					if($test != "1")
+					{
+						$where = "WHERE diadiem.T_MA='".$T_MA."' ";
+					}
+				}
 			}
+			else
+			{
+				if($test != "1")
+				{
+					$where = "WHERE diadiem.T_MA='".$T_MA."' ";
+				}
+			}
+
+			$query2 = $where." "; 
+			$total_rows = $this->mbaiviet->countAll2($query2);
 
 			$query = $where." ".$sort." LIMIT $start, $total_rows";
 			$table = $this->mbaiviet->getList2($query);

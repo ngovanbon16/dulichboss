@@ -75,6 +75,13 @@ class Mnguoidung extends CI_Model {
         return $this->db->count_all($this->_table); 
     }
 
+    public function countAll2($query) // them ngay 15/3
+    {
+        $string = "SELECT * FROM ".$this->_table." JOIN nhomquyen ON nguoidung.NQ_MA = nhomquyen.NQ_MA ".$query;
+        $query = $this->db->query($string);          
+        return $query->num_rows();
+    }
+
     public function getID($id)
     {
         $this->db->select('*');

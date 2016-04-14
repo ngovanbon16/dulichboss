@@ -66,6 +66,13 @@ class Mbaiviet extends CI_Model {
         return $this->db->count_all($this->_table); 
     }
 
+    public function countAll2($query) // them ngay 15/3
+    {
+        $string = "SELECT * FROM ".$this->_table." JOIN diadiem ON baiviet.DD_MA = diadiem.DD_MA ".$query;
+        $query = $this->db->query($string);          
+        return $query->num_rows();
+    }
+
     public function countid($id){ // dem theo dia diem
         $this->db->select('*');
         $this->db->from($this->_table);

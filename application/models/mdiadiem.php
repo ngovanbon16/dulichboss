@@ -103,6 +103,13 @@ class Mdiadiem extends CI_Model {
         return $this->db->count_all($this->_table); 
     }
 
+    public function countAll2($query) // them ngay 15/3
+    {
+        $string = "SELECT * FROM ".$this->_table." JOIN danhmuc ON danhmuc.DM_MA = diadiem.DM_MA ".$query;
+        $query = $this->db->query($string);          
+        return $query->num_rows();
+    }
+
     public function countnewplace()
     {
         $this->db->select('*');

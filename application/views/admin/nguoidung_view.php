@@ -85,6 +85,7 @@
             {
                 datatype: "json",
                 datafields: [
+                    { name: 'T_MA', type: 'string' },
                     { name: 'NQ_MA', type: 'string' },
                     { name: 'ND_HINH', type: 'string' },
                     { name: 'ND_MA', type: 'number' },
@@ -283,13 +284,30 @@
                                 if(status == "success")
                                 {   
                                     var str = '<select class="select" onchange="change('+id+', (this).value)">';
+                                    var admin = "<?php echo $this->session->userdata['NQ_MA']; ?>";
+                                      
                                     for (var i = 0; i < data.length; i++) {
                                         var ma = data[i]['NQ_MA'];
                                         var ten = data[i]['NQ_TEN'];
-                                        if(ma == NQ_MA)
-                                            str += '<option value="'+ma+'" selected>'+ten+'</option>';
+            
+                                        if(admin == "1")
+                                        {
+                                            if(ma == NQ_MA)
+                                                str += '<option value="'+ma+'" selected>'+ten+'</option>';
+                                            else
+                                                str += '<option value="'+ma+'" >'+ten+'</option>';
+                                        }
                                         else
-                                            str += '<option value="'+ma+'" >'+ten+'</option>';
+                                        {
+                                            if(ma != "1")
+                                            {
+                                                if(ma == NQ_MA)
+                                                    str += '<option value="'+ma+'" selected>'+ten+'</option>';
+                                                else
+                                                    str += '<option value="'+ma+'" >'+ten+'</option>';
+                                            }
+                                        }
+
                                     }
                                     str += "</select>";
                                     document.getElementById(id+"a").innerHTML = str;
@@ -299,12 +317,13 @@
                             return "<div id='"+id+"a'></div>";
                         }
                     },
+                    { text: "<?php echo lang('key') ?>", dataField: 'T_MA', width: "5%", cellsalign: 'center', align: "center", },
                     { text: "<?php echo lang('key') ?>", dataField: 'ND_MA', width: "5%", cellsalign: 'center', align: "center", },
                     { text: "<?php echo lang('lastname') ?>", dataField: 'ND_HO', width: "5%" },
                     /*{ text: 'Mã người dùng', dataField: 'ND_MA', width: "10%" },*/
                     { text: "<?php echo lang('firstname') ?>", dataField: 'ND_TEN', width: "10%" },
                     { text: "<?php echo lang('email') ?>", dataField: 'ND_DIACHIMAIL', width: "16%" },
-                    { text: "<?php echo lang('activate') ?>", dataField: 'ND_KICHHOAT', width: "10%", columntype: 'textbox', filtertype: 'textbox', align: 'center',
+                    { text: "<?php echo lang('activate') ?>", dataField: 'ND_KICHHOAT', width: "9%", columntype: 'textbox', filtertype: 'textbox', align: 'center',
                         cellsrenderer: function (row, column, value) {
                             var tt = "";
                             if(value == "0")
@@ -322,8 +341,8 @@
                             return tt;
                         }
                     },
-                    { text: "<?php echo lang('updates_day') ?>", dataField: 'ND_NGAYCAPNHAT', width: "10%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
-                    { text: "<?php echo lang('creates_date') ?>", dataField: 'ND_NGAYTAO', width: "10%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
+                    { text: "<?php echo lang('updates_day') ?>", dataField: 'ND_NGAYCAPNHAT', width: "8%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
+                    { text: "<?php echo lang('creates_date') ?>", dataField: 'ND_NGAYTAO', width: "8%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: 'right' },
                     { text: "<?php echo lang('edit') ?>", datafield: 'Edit', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();

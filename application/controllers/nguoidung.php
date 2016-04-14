@@ -15,7 +15,7 @@ class Nguoidung extends CI_Controller
 	{
 		$this->load->model("mquyen");
 		$email = $this->session->userdata["email"];
-		if($this->mquyen->testquyen($email, "2"))
+		if($this->mquyen->testquyen($email, "2") || $this->mquyen->testquyen($email, "10"))
 		{
 			$this->_data['subview'] = 'admin/nguoidung_view';
 	       	$this->_data['title'] = lang('user');
@@ -86,6 +86,14 @@ class Nguoidung extends CI_Controller
 
 	public function data0()
 	{
+		$this->load->model("mquyen");
+		$email = $this->session->userdata["email"];
+		$T_MA = $this->session->userdata["T_MA"];
+		$test = "0";
+		if($this->mquyen->testquyen($email, "10"))
+		{
+			$test = "1";
+		}
 		if (isset($_GET['update'])) // code update
 		{
 			$ma = $_GET["ND_MA"];
@@ -141,7 +149,14 @@ class Nguoidung extends CI_Controller
 				
 				if ($filterscount > 0)
 				{
-					$where = " WHERE (";
+					if($test == "1")
+					{
+						$where = " WHERE (";
+					}
+					else
+					{
+						$where = "WHERE (nguoidung.T_MA='".$T_MA."' && nguoidung.NQ_MA <> '2' && nguoidung.NQ_MA <> '1' ) AND (";
+					}
 					$tmpdatafield = "";
 					$tmpfilteroperator = "";
 					for ($i=0; $i < $filterscount; $i++)
@@ -220,7 +235,24 @@ class Nguoidung extends CI_Controller
 					/*$query = "SELECT * FROM tinh ".$where." LIMIT $start, $total_rows";
 					$table = $this->mtinh->getList2($query);*/			
 				}
+				else
+				{
+					if($test != "1")
+					{
+						$where = "WHERE nguoidung.T_MA='".$T_MA."' && nguoidung.NQ_MA <> '2' && nguoidung.NQ_MA <> '1' ";
+					}
+				}
 			}
+			else
+			{
+				if($test != "1")
+				{
+					$where = "WHERE nguoidung.T_MA='".$T_MA."' && nguoidung.NQ_MA <> '2' && nguoidung.NQ_MA <> '1' ";
+				}
+			}
+
+			$query2 = $where." "; // them ngay 15/3
+			$total_rows = $this->mnguoidung->countAll2($query2);
 
 			$query = $where." ".$sort." LIMIT $start, $total_rows";
 			$table = $this->mnguoidung->getList2($query);
@@ -255,6 +287,11 @@ class Nguoidung extends CI_Controller
        	//$this->_data['title'] = 'Người dùng';
        		
        	//$this->load->view('main.php', $this->_data);
+		$this->load->model("mquyen");
+		$email = $this->session->userdata["email"];
+		if($this->mquyen->testquyen($email, "2") || $this->mquyen->testquyen($email, "10"))
+		{
+
        		$this->_data['info'] = $this->mnguoidung->getID($id);
        		$info = $this->mnguoidung->getID($id);
 
@@ -323,8 +360,15 @@ class Nguoidung extends CI_Controller
 	            }
         	}
 
-        $this->_data['title'] = lang("edit").' '.lang('profile');
-       	$this->load->view("admin/suand_view", $this->_data);
+	        $this->_data['title'] = lang("edit").' '.lang('profile');
+	       	$this->load->view("admin/suand_view", $this->_data);
+       }
+       else
+       {
+       		$this->_data['subview'] = 'home';
+	       	$this->_data['title'] = lang('home');
+	       	$this->load->view('main.php', $this->_data);
+       }
 	}
 
 	public function update()

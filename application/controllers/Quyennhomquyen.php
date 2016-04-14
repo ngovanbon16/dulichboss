@@ -22,14 +22,20 @@ class Quyennhomquyen extends CI_Controller
             'Q_MA' =>  $Q_MA
         );
 
-        if($checked == "true")
+        if($checked == "1")
         {
-            $this->mquyennhomquyen->insert($data);
+            if(!$this->mquyennhomquyen->testMa($NQ_MA, $Q_MA))
+            {
+                $this->mquyennhomquyen->insert($data);
+            }
         }
 
-        if($checked == "false")
+        if($checked == "0")
         {
-            $this->mquyennhomquyen->delete($NQ_MA, $Q_MA);
+            if($this->mquyennhomquyen->testMa($NQ_MA, $Q_MA))
+            {
+                $this->mquyennhomquyen->delete($NQ_MA, $Q_MA);
+            }
         }
 
         $jsonString = json_encode($NQ_MA);

@@ -299,12 +299,12 @@
                                     <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/map"> Map Codeigniter</a>
                                     </li> -->
-                                    <li>
+                                    <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/map/map"> <?php echo lang('map') ?></a>
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/map/mapfromAtoB"> A -> B</a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/diadiem"> <?php echo lang('place') ?></a>
                                     </li>

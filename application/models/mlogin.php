@@ -42,7 +42,7 @@ class Mlogin extends CI_Model {
 
     function getuser($email, $password) 
     {
-        $this -> db -> select('NQ_MA, ND_MA, ND_DIACHIMAIL, ND_MATKHAU, ND_HINH');
+        $this -> db -> select('NQ_MA, ND_MA, ND_DIACHIMAIL, ND_MATKHAU, ND_HINH, T_MA');
         $this -> db -> from($this->_table);
         $this -> db -> where('ND_DIACHIMAIL', $email);
         $this -> db -> where('ND_MATKHAU', md5($password));

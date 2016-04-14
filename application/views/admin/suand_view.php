@@ -439,7 +439,7 @@
                             <input id="ND_MA" value="<?php echo $info['ND_MA'] ?>" readonly="readonly" />
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="display: none;">
                         <td>
                             <?php echo lang('authority') ?>:
                         </td>

@@ -92,6 +92,7 @@
                     var ten = "";
                     var str = "";
                     document.getElementById("tennq").innerHTML = tennq;
+                    document.getElementById("manq").innerHTML = id;
                     for (var i = 0; i < data.data.length; i++) {
                         ma = data.data[i]['Q_MA'];
                         ten = data.data[i]['Q_TEN'];
@@ -107,12 +108,12 @@
                             }
                         }
 
-                        str += '<label style="margin: 10px; width: 45%; border: solid 0px #000;" class="checkbox-inline" ><input class="checked" style="width: 16px; height: 16px; margin-top: 2px;" type="checkbox" value="'+ma+'" '+checked+' onclick="themquyen(\''+id+'\', \''+ma+'\',this.checked)">'+ten+'</label>';
+                        /*str += '<label style="margin: 10px; width: 45%; border: solid 0px #000;" class="checkbox-inline" ><input class="checked" style="width: 16px; height: 16px; margin-top: 2px;" type="checkbox" value="'+ma+'" '+checked+' onclick="themquyen(\''+id+'\', \''+ma+'\',this.checked)">'+ten+'</label>';*/
+                        str += '<label style="margin: 10px; width: 45%; border: solid 0px #000;" class="checkbox-inline" ><input name="slt'+id+'" class="checked" style="width: 16px; height: 16px; margin-top: 2px;" type="checkbox" value="'+ma+'" '+checked+' >'+ten+'</label>';
                     }
                     document.getElementById("quyen").innerHTML = str;
                 }
-            }, 'json');  
-
+            }, 'json');     
         }
 
         function themquyen(idnq, idq, val) {
@@ -124,20 +125,20 @@
                 "Q_MA" : idq,
                 "checked" : val
             };
-            console.log(dta);
+            //console.log(dta);
             $.post(url, dta, function(data, status){
 
-                console.log(status);
-                console.log(data);
+                //console.log(status);
+                //console.log(data);
                 if(status == "success")
                 {   
                     if(val)
                     {
-                        thongbao("", "Thêm quyền thành công!", "success");
+                        /*thongbao("", "Thêm quyền thành công!", "success");*/
                     }
                     else
                     {
-                        thongbao("", "Quyền đã được xóa!", "danger");
+                        /*thongbao("", "Quyền đã được xóa!", "danger");*/
                     }
                 }
 
@@ -406,6 +407,22 @@
                     $("#popupWindow").jqxWindow('hide');
                 }
             });
+
+            $("#btnsave").click(function(){
+                var id = document.getElementById("manq").innerHTML;
+                var slt = document.getElementsByName("slt" + id);
+                for (var i = 0; i < slt.length; i++) {
+                    if(slt[i].checked)
+                    {
+                        themquyen(id, slt[i].value, "1");
+                    }
+                    else
+                    {
+                        themquyen(id, slt[i].value, "0");
+                    }
+                }
+                thongbao("", "<?php echo lang('updated_successfully'); ?>", "success");
+            });
             
         });
     </script>
@@ -449,13 +466,17 @@
           <div class="modal-dialog" style="width: 50%; ">
 
             <!-- Modal content-->
-            <div class="modal-content" style="height: 350px;">
+            <div class="modal-content" style="height: 380px;">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-sitemap fa-fw"></i> <?php echo lang('authority_groups'); ?>: <i id="tennq"></i> </h4>
+                <h4 class="modal-title"><i class="fa fa-sitemap fa-fw"></i> <?php echo lang('authority_groups'); ?>: <i id="tennq"></i> [<i id="manq"></i>] </h4>
               </div>
               <div id="quyen" style="overflow: auto; height: 260px; font-size: 16px; border: solid 1px #DCDCDC;" class="modal-body">
                   
+              </div>
+              <div class="modal-footer">
+                <button id="btnsave" style="width: 80px;" type="button" class="btn btn-success"><?php echo lang('save'); ?></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('cancel'); ?></button>
               </div>
             </div>
 
