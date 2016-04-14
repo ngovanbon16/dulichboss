@@ -107,7 +107,7 @@
                     <div class="col-sm-6 col-xs-4">
                         <div class="top-number"><p>
 
-                        <li style="list-style: none;" class="dropdown">
+                        <li style="list-style: none; z-index: 1001;" class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
                                 <?php //echo $this->session->userdata['avata']; ?>
                                 <!-- <a href="<?php echo base_url(); ?>index.php/avata"> -->

@@ -360,12 +360,12 @@
                           return true;
                         }
                     },
-                    { text: "<?php lang('edit') ?>", datafield: 'addButtonColumn1', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                    { text: "<?php lang('edit') ?>", datafield: 'addButtonColumn', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             return "<button class='icon' onclick='sua(\""+row+"\")'><i class='fa fa-pencil fa-fw'></i></button>";
                         }
                     },
-                    { text: "<?php lang('delete') ?>", datafield: 'resetButtonColumn1', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
+                    { text: "<?php lang('delete') ?>", datafield: 'resetButtonColumn', columntype: 'number', width: "60", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);

@@ -265,7 +265,7 @@
 
                 columns: [
                     { text: "<?php echo lang('photo') ?>", datafield: 'ND_HINH', width: "5%", sortable: false, filterable: false, cellsrenderer: imagerenderer, cellsalign: 'center', align: "center", },
-                    { text: "<?php echo lang('authority_groups') ?>", dataField: 'NQ_MA', width: "11%", cellsalign: 'center', align: "left", columntype: 'number',
+                    { text: "<?php echo lang('authority_groups') ?>", dataField: 'NQ_MA', width: "15%", filterable: false, cellsalign: 'center', align: "left", columntype: 'number',
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
@@ -359,14 +359,14 @@
                             return "<button class='icon' onclick='xoa(\""+id+"\")'><i class='fa fa-times fa-fw'></i></button>";
                         }
                     },
-                    { text: "<?php echo lang('detail') ?>", datafield: 'detail', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
+                    /*{ text: "<?php echo lang('detail') ?>", datafield: 'detail', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.ND_MA;
                             return "<button class='icon' onclick='chitiet(\""+id+"\")'><i class='fa fa-search fa-fw'></i></button>";
                         }
-                    },
+                    },*/
                     { text: "<?php echo lang('blocked') ?>", datafield: 'blocked', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();
