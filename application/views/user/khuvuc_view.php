@@ -47,9 +47,11 @@
 </script>
 <style type="text/css">
     .grad1 {
+        font-weight: bold;
+        text-align: left;
         font-size: 20px;
         padding: 5px;
-        height: 50px;
+        height: 30px;
         border-radius: 3px;
         margin-top: 5px;
         margin-bottom: 10px;
@@ -94,6 +96,9 @@
                 <div class="features">
 
                     <ul class="nav navbar-nav">
+                        <li style="margin-bottom: -30px; font-weight: bolder; font-size: 16px;" class="active">
+                             <a href="<?php echo base_url(); ?>index.php/home/khuvuc/<?php echo $this->session->userdata("T_MA"); ?>" ><?php echo lang('view').' '.lang('all'); ?></a>
+                        </li>
                         <?php 
                             $matinh = $this->session->userdata("T_MA");
                             foreach ($huyen as $iteam) {
@@ -115,8 +120,6 @@
             <br/>
             <div id="noidung" class="center wow fadeInDown">
                 <h2>Các địa điểm thuộc tỉnh <?php echo $tentinh ?></h2>
-                 <a style="font-weight: bolder; font-size: 16px; font-style: inherit;" href="<?php echo base_url(); ?>index.php/home/khuvuc/<?php echo $this->session->userdata("T_MA"); ?>" >Xem tất cả</a>
-                 <br/><br/>
                 <?php 
                     $T_MA = $this->session->userdata("T_MA"); // ma khu vuc lay tu session
                     $H_MA = "";

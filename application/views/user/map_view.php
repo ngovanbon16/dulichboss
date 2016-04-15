@@ -1,4 +1,4 @@
-<section id="contact-info" style="margin-top: 0px;">
+<section id="contact-info" style="margin-top: -100px; margin-bottom: -100px;">
 <div class="gmap-area">
             <div class="container">
                 <div class="row">
@@ -37,29 +37,11 @@
 	<?php echo $map['js']; ?>
     <script type="text/javascript">
 		var centreGot = false;
-
-   /*     if (!$marker['visible']) {
-            $marker_output .= ',
-                visible: false';
-        }*/
-
-         /*marker_19.setOptions({
-                visible: false;
-            });*/
-
-        /* $marker_19['visible'] = false;*/
-         // $("#marker_19").visible = false;
-        /* $marker['19'].setOptions({
-                visible: false;
-            });*/
-
 	</script>
 
     <script type="text/javascript">
      $(document).ready(function () {
                 $.jqx.theme = "bootstrap";
-     			$("#xoa").jqxButton({ width: '50%', height: '27'});
-     			$("#loc").jqxButton({ width: '50%', height: '27'});
                 var url = "<?php echo base_url(); ?>index.php/danhmuc/data";
                 // prepare the data
                 var source =
@@ -70,15 +52,19 @@
                         { name: 'DM_TEN' }
                     ],
                     url: url,
-                    async: true
+                    async: false
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#DM_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('category') ?>...", displayMember: "DM_TEN", valueMember: "DM_MA", width: "100%", height: 25, dropDownHeight: "150px" });
+                $("#DM_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('category') ?>...", displayMember: "DM_TEN", valueMember: "DM_MA", width: "100%", height: 30, dropDownHeight: "150px" });
+                $("#DM_MA").jqxDropDownList('selectItem', "<?php echo $DM_MA; ?>");
 
                 var source = [];
-                $("#H_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '100%', height: '25px', promptText: "<?php echo lang('select').' '.lang('district') ?>...", dropDownHeight: "150px" });
-                $("#X_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '100%', height: '25px', promptText: "<?php echo lang('select').' '.lang('town') ?>...", dropDownHeight: "150px" });
+                $("#H_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '100%', height: 30, promptText: "<?php echo lang('select').' '.lang('district') ?>...", dropDownHeight: "150px" });
+                
+
+                $("#X_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '100%', height: 30, promptText: "<?php echo lang('select').' '.lang('town') ?>...", dropDownHeight: "150px" });
+                
 
                 var url = "<?php echo base_url(); ?>index.php/tinh/data";
                 // prepare the data
@@ -90,11 +76,12 @@
                         { name: 'T_TEN' }
                     ],
                     url: url,
-                    async: true
+                    async: false
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#T_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('provincial') ?>...", displayMember: "T_TEN", valueMember: "T_MA", width: "100%", height: 25, dropDownHeight: "150px" });
+                $("#T_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('provincial') ?>...", displayMember: "T_TEN", valueMember: "T_MA", width: "100%", height: 30, dropDownHeight: "150px" });
+                
 
                 $("#T_MA").on('select', function (event) {
                     var matinh = $("#T_MA").val();
@@ -109,11 +96,11 @@
                             { name: 'H_TEN' }
                         ],
                         url: url,
-                        async: true
+                        async: false
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#H_MA").jqxDropDownList({ selectedIndex: '-1', source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>...", displayMember: "H_TEN", valueMember: "H_MA", width: "100%", height: 25, dropDownHeight: "150px" });
+                    $("#H_MA").jqxDropDownList({ selectedIndex: '-1', source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>...", displayMember: "H_TEN", valueMember: "H_MA", width: "100%", height: 30, dropDownHeight: "150px" });
                 });
 
                 $("#H_MA").on('select', function (event) {
@@ -129,13 +116,16 @@
                             { name: 'X_TEN' }
                         ],
                         url: url,
-                        async: true
+                        async: false
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#X_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>...", displayMember: "X_TEN", valueMember: "X_MA", width: "100%", height: 25, dropDownHeight: "150px" });
+                    $("#X_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>...", displayMember: "X_TEN", valueMember: "X_MA", width: "100%", height: 30, dropDownHeight: "150px" });
                 });
 
+            $("#T_MA").jqxDropDownList('selectItem', "<?php echo $T_MA; ?>");
+            $("#H_MA").jqxDropDownList('selectItem', "<?php echo $H_MA; ?>");
+            $("#X_MA").jqxDropDownList('selectItem', "<?php echo $X_MA; ?>");
             //alert("<?php echo $this->session->userdata('DM_MA') ?>");
 
             $("#DM_MA").change(function(){
@@ -272,7 +262,35 @@
     </script>
     <style type="text/css">
         .div{
-            margin-top: 5px;
+            max-width: 200px;
+            width: 100%;
+            margin-right: 3px;
+        }
+        .img{
+            border-radius: 3px;
+            max-height: 170px;
+            height: 100%;
+        }
+        p{
+            line-height: 1.3;
+            font-size: 12px;
+            text-align: justify;
+            font-weight: bold;
+        }
+        a{
+            font-size: 15px;
+        }
+        .vitri{
+            font-size: 10px;
+            font-weight: normal;
+        }
+        .mota{
+            height: 100px;
+            overflow: auto;
+            font-style: normal;
+            line-height: 1.3;
+            font-size: 12px;
+            text-align: justify;
         }
     </style>
 </head>
@@ -280,21 +298,16 @@
     <h1 style="margin-top: -20px;"><?php echo lang('places_map'); ?></h1>
     <table width="100%">
         <tr>
-            <td valign="top" style="padding-right: 10px; width: 20%;">
+            <td valign="top" style="min-width: 250px;">
                 <div class="div" id="T_MA" style="float: left;"></div>
-                <div> <?php echo $tentinh ?> </div>
                 <div class="div" id="H_MA" style="float: left;"></div>
-                <div> <?php echo $tenhuyen ?> </div>
                 <div class="div" id="X_MA" style="float: left;"></div>
-                <div> <?php echo $tenxa ?> </div>
                 <div class="div" id="DM_MA" style="float: left;"></div>
-                <div> <?php echo $tendanhmuc ?> </div>
-                <div>
-                    <button style="float: left;" id="loc"><?php echo lang('search') ?></button>
-                    <button id="xoa"><?php echo lang('delete') ?></button>
-                </div>
-                
+                <button style="font-size: 13px;" type="button" id="loc" class="btn btn-success"><?php echo lang('search') ?></button>
+                <button style="font-size: 13px;" type="button" id="xoa" class="btn btn-danger"><?php echo lang('delete') ?></button>
             </td>
+        </tr>        
+        <tr>
             <td width="100%">
                 <?php echo $map['html']; ?>
             </td>

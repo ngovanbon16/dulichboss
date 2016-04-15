@@ -34,8 +34,8 @@ class Quyen extends CI_Controller
 
     public function add()
     {
-        $ma = $_POST["Q_MA"];
-        $ten = $_POST['Q_TEN'];
+        $ma = $this->db->escape_like_str($_POST["Q_MA"]);
+        $ten = $this->db->escape_like_str($_POST['Q_TEN']);
         $status = "error";
         $error = "";
         $msg = array();
@@ -96,8 +96,8 @@ class Quyen extends CI_Controller
         if (isset($_GET['update'])) // code update
         {
             $result = "0";
-            $ma = $_GET['Q_MA'];
-            $ten = $_GET['Q_TEN'];
+            $ma = $this->db->escape_like_str($_GET['Q_MA']);
+            $ten = $this->db->escape_like_str($_GET['Q_TEN']);
             /*if(!$this->mquyen->testTen($ten))
             {*/
                 $data = array(

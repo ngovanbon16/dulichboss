@@ -36,8 +36,8 @@ class Danhmuc extends CI_Controller
 
 	public function add()
 	{
-		$ma = $_POST["DM_MA"];
-		$ten = $_POST['DM_TEN'];
+		$ma = $this->db->escape_like_str($_POST["DM_MA"]);
+		$ten = $this->db->escape_like_str($_POST['DM_TEN']);
 		$hinh = $_POST['DM_HINH'];
 		$msg = array();
 		$status = "error";
@@ -96,8 +96,8 @@ class Danhmuc extends CI_Controller
 	{
 		if (isset($_GET['update'])) // code update
 		{
-			$ma = $_GET['DM_MA'];
-			$ten = $_GET['DM_TEN'];
+			$ma = $this->db->escape_like_str($_GET['DM_MA']);
+			$ten = $this->db->escape_like_str($_GET['DM_TEN']);
 			$result = "0";
 
 			$data = array(

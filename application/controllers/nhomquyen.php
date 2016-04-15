@@ -35,8 +35,8 @@ class Nhomquyen extends CI_Controller
 
 	public function add()
 	{
-		$ma = $_POST["NQ_MA"];
-		$ten = $_POST['NQ_TEN'];
+		$ma = $this->db->escape_like_str($_POST["NQ_MA"]);
+		$ten = $this->db->escape_like_str($_POST['NQ_TEN']);
 		$status = "error";
 		$error = "";
 		$msg = array();
@@ -84,8 +84,8 @@ class Nhomquyen extends CI_Controller
 		if (isset($_GET['update'])) // code update
 		{
 			$result = "0";
-			$ma = $_GET['NQ_MA'];
-			$ten = $_GET['NQ_TEN'];
+			$ma = $this->db->escape_like_str($_GET['NQ_MA']);
+			$ten = $this->db->escape_like_str($_GET['NQ_TEN']);
 			if(!$this->mnhomquyen->testTen($ten))
 			{
 				$data = array(

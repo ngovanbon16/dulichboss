@@ -235,50 +235,49 @@ class Home extends CI_Controller
 		$this->load->model("mtinh");
 		$this->_data['tinh'] = $this->mtinh->getList();
 
+		$WHERE_DM = "";
+		$WHERE_T = "";
+		$WHERE_H = "";
+		$WHERE_X = "";
+
 		$DM_MA = "";
 		if(isset($this->session->userdata['DM_MA']))
 		{
 			$DM_MA = $this->session->userdata['DM_MA'];
+			$WHERE_DM = " AND diadiem.DM_MA = '".$DM_MA."' ";
 		}
 
 		$T_MA = "";
 		if(isset($this->session->userdata['T_MA']))
 		{
 			$T_MA = $this->session->userdata['T_MA'];
+			$WHERE_T = " AND diadiem.T_MA = '".$T_MA."' ";
 		}
 
 		$H_MA = "";
 		if(isset($this->session->userdata['H_MA']))
 		{
 			$H_MA = $this->session->userdata['H_MA'];
+			$WHERE_H = " AND diadiem.H_MA = '".$H_MA."' ";
 		}
 
 		$X_MA = "";
 		if(isset($this->session->userdata['X_MA']))
 		{
 			$X_MA = $this->session->userdata['X_MA'];
+			$WHERE_X = " AND diadiem.X_MA = '".$X_MA."' ";
 		}
 
-		$this->load->model("mdanhmuc"); // lay ten
-       	$xa = $this->mdanhmuc->getID($DM_MA);
-       	$this->_data['tendanhmuc'] = $xa["DM_TEN"];
-
-       	$this->load->model("mtinh");
-       	$tinh = $this->mtinh->getID($T_MA);
-       	$this->_data['tentinh'] = $tinh["T_TEN"];
-
-       	$this->load->model("mhuyen");
-       	$huyen = $this->mhuyen->getten($T_MA, $H_MA);
-       	$this->_data['tenhuyen'] = $huyen["H_TEN"];
-
-       	$this->load->model("mxa");
-       	$xa = $this->mxa->getten($T_MA, $H_MA, $X_MA);
-       	$this->_data['tenxa'] = $xa["X_TEN"];
+		$this->_data['DM_MA'] = $DM_MA;
+		$this->_data['T_MA'] = $T_MA;
+		$this->_data['H_MA'] = $H_MA;
+		$this->_data['X_MA'] = $X_MA;
 
 		$this->load->library('googlemaps');
 		$config = array();
 		$config['center'] = 'can tho';
 		$config['zoom'] = '9';
+		$config['cluster'] = TRUE;
 		$config['onboundschanged'] = 'if (!centreGot) {
 			var mapCentre = map.getCenter();
 			marker_0.setOptions({
@@ -300,31 +299,46 @@ class Home extends CI_Controller
 		$this->googlemaps->add_marker($marker);
 
 		$this->load->model("mdiadiem");
-		$this->load->model("mhinhanh");
-		$query = $this->mdiadiem->getloc($T_MA, $H_MA, $X_MA, $DM_MA);
-		foreach ($query as $item) {
+
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' ".$WHERE_DM.$WHERE_T.$WHERE_H.$WHERE_X;
+
+		$result = $this->mdiadiem->gettimkiem($query);
+
+		foreach ($result as $item) {
 			$local = $item['DD_VITRI'];
 			$danhmuc = $item['DM_MA'];
 			$marker = array();
 			$marker['position'] = $local;
 
 			$madd = $item['DD_MA'];
-            $anhdaidien = "anhdaidien.jpg";
-            $info1 = $this->mhinhanh->getloc($madd);
-            if($info1 != "") 
-            foreach ($info1 as $key) {  
-	            $dd = $key['HA_DAIDIEN'];
-	            if($dd == "1")
-	            {
-	                $anhdaidien = $key['HA_TEN'];
-	            }
+            $anhdaidien = $item['HA_TEN'];
+
+            $duong = lang('information_is_being_updated');
+            if($item["DD_DIACHI"] != "")
+            {
+            	$duong = $item["DD_DIACHI"];
             }
 
-			$hinh = "<img src='".base_url()."uploads/diadiem/".$anhdaidien."' width='150' hgiht='150'>";
-			$noidung = "<a target='_blank' href='".base_url()."index.php/aediadiem/detailuser1/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a><br/>".$item['DD_DIACHI'];
-			$marker['infowindow_content'] = $hinh.$noidung;
+            $sdt = lang('information_is_being_updated');
+            if($item["DD_SDT"] != "")
+            {
+            	$sdt = $item["DD_SDT"];
+            }
+
+            $mota = lang('information_is_being_updated');
+            if($item["DD_MOTA"] != "")
+            {
+            	$mota = $item["DD_MOTA"];
+            }
+
+			$hinh = "<img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='150' hgiht='150'>";
+			$noidung = "<a target='_blank' href='".base_url()."index.php/aediadiem/detailuser1/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a>";
+			$thongtin = '<br/><p><i class="fa fa-map-marker fa-fw"></i><b class="vitri">'.$item["DD_VITRI"].'</b>';
+			$thongtin .= '<br/><i class="fa fa-road fa-fw"></i> '.$duong;
+			$thongtin .= '<br/><i class="fa fa-phone fa-fw"></i> '.$sdt;
+			$thongtin .= '<div class="mota"><i class="fa fa-bookmark fa-fw"></i> '.$mota.'</div></p>';
+			$marker['infowindow_content'] = "<table><tr><td>".$hinh."</td><td valign='top' width='220'>".$noidung.$thongtin."</td></tr></table>";
 			$marker['id'] = $madd;
-			//$marker['onclick'] = 'alert("You just clicked me!!")';
 			$marker['icon'] = base_url().'/uploads/danhmuc/'.$danhmuc.'.png';
 			$this->googlemaps->add_marker($marker);
 		}

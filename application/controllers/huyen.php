@@ -35,9 +35,9 @@ class Huyen extends CI_Controller
 
     public function add()
     {
-        $tentinh = $_POST["T_TEN"];
-        $ma = $_POST["H_MA"];
-        $ten = $_POST['H_TEN'];
+        $tentinh = $this->db->escape_like_str($_POST["T_TEN"]);
+        $ma = $this->db->escape_like_str($_POST["H_MA"]);
+        $ten = $this->db->escape_like_str($_POST['H_TEN']);
         $status = "error";
         $error = "";
         $msg = array();
@@ -90,8 +90,8 @@ class Huyen extends CI_Controller
         if (isset($_GET['update'])) // code update
         {
             $result = "0";
-            $ma = $_GET['H_MA'];
-            $ten = $_GET['H_TEN'];
+            $ma = $this->db->escape_like_str($_GET['H_MA']);
+            $ten = $this->db->escape_like_str($_GET['H_TEN']);
             $data = array(
                "H_MA" => $ma,
                "H_TEN" => $ten

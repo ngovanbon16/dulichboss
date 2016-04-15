@@ -22,13 +22,13 @@ class Registration extends CI_Controller
 
 	public function registration()
 	{
-		$ho = $_POST["ho"];
-		$ten = $_POST["ten"];
-		$email = $_POST["email"];
-		$matkhau = $_POST["matkhau"];
-		$matkhau1 = $_POST["matkhau1"];
-		$ngaysinh = $_POST["ngaysinh"];
-		$gioitinh = $_POST["gioitinh"];
+		$ho = $this->db->escape_like_str($_POST["ho"]);
+		$ten = $this->db->escape_like_str($_POST["ten"]);
+		$email = $this->db->escape_like_str($_POST["email"]);
+		$matkhau = $this->db->escape_like_str($_POST["matkhau"]);
+		$matkhau1 = $this->db->escape_like_str($_POST["matkhau1"]);
+		$ngaysinh = $this->db->escape_like_str($_POST["ngaysinh"]);
+		$gioitinh = $this->db->escape_like_str($_POST["gioitinh"]);
 		$msg = array();
 
     $gender = lang('male');

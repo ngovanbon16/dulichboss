@@ -73,10 +73,10 @@ class Baiviet extends CI_Controller
 
 	public function add()
 	{	
-		$DD_MA = $_POST["DD_MA"];
-		$BV_TIEUDE = $_POST["BV_TIEUDE"];
-		$BV_NOIDUNG = $_POST["BV_NOIDUNG"];
-		$BV_DUYET = $_POST["BV_DUYET"];
+		$DD_MA =  $this->db->escape_like_str($_POST["DD_MA"]);
+		$BV_TIEUDE =  $this->db->escape_like_str($_POST["BV_TIEUDE"]);
+		$BV_NOIDUNG =  $_POST["BV_NOIDUNG"];
+		$BV_DUYET =  $this->db->escape_like_str($_POST["BV_DUYET"]);
 		$ND_MA = $this->session->userdata['id'];
 
 		date_default_timezone_set('Asia/Ho_Chi_Minh');  
@@ -106,10 +106,10 @@ class Baiviet extends CI_Controller
 
 	public function edit()
 	{	
-		$DD_MA = $_POST["DD_MA"];
-		$BV_MA = $_POST["BV_MA"];
-		$BV_TIEUDE = $_POST["BV_TIEUDE"];
-		$BV_NOIDUNG = $_POST["BV_NOIDUNG"];
+		$DD_MA =  $this->db->escape_like_str($_POST["DD_MA"]);
+		$BV_MA =  $this->db->escape_like_str($_POST["BV_MA"]);
+		$BV_TIEUDE =  $this->db->escape_like_str($_POST["BV_TIEUDE"]);
+		$BV_NOIDUNG =  $_POST["BV_NOIDUNG"];
 
 		$data = array(
 			"DD_MA" => $DD_MA,

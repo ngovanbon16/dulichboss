@@ -375,25 +375,25 @@ class Nguoidung extends CI_Controller
 	{
 		$password = "";
 
-		$ND_MA = $_POST["ND_MA"];
-		$NQ_MA = $_POST["NQ_MA"];
+		$ND_MA = $this->db->escape_like_str($_POST["ND_MA"]);
+		$NQ_MA = $this->db->escape_like_str($_POST["NQ_MA"]);
 		//$CB_MA = $_POST["CB_MA"];
-		$ND_HO = $_POST["ND_HO"];
-		$ND_TEN = $_POST["ND_TEN"];
-		$ND_DIACHIMAIL = $_POST["ND_DIACHIMAIL"];
-		$passwordold = $_POST["passwordold"];
-		$ND_MATKHAU = $_POST["ND_MATKHAU"];
-		$ND_NGAYSINH = $_POST["ND_NGAYSINH"];
-		$ND_GIOITINH = $_POST["ND_GIOITINH"];
-		$T_MA = $_POST["T_MA"];
-		$H_MA = $_POST["H_MA"];
-		$X_MA = $_POST["X_MA"];
-		$ND_DIACHI = $_POST["ND_DIACHI"];
-		$ND_SDT = $_POST["ND_SDT"];
-		$ND_FACE = $_POST["ND_FACE"];
-		$ND_GIOITHIEU = $_POST["ND_GIOITHIEU"];
-		$ND_DIEM = $_POST["ND_DIEM"];
-		$ND_THUONG = $_POST["ND_THUONG"];
+		$ND_HO = $this->db->escape_like_str($_POST["ND_HO"]);
+		$ND_TEN = $this->db->escape_like_str($_POST["ND_TEN"]);
+		$ND_DIACHIMAIL = $this->db->escape_like_str($_POST["ND_DIACHIMAIL"]);
+		$passwordold = $this->db->escape_like_str($_POST["passwordold"]);
+		$ND_MATKHAU = $this->db->escape_like_str($_POST["ND_MATKHAU"]);
+		$ND_NGAYSINH = $this->db->escape_like_str($_POST["ND_NGAYSINH"]);
+		$ND_GIOITINH = $this->db->escape_like_str($_POST["ND_GIOITINH"]);
+		$T_MA = $this->db->escape_like_str($_POST["T_MA"]);
+		$H_MA = $this->db->escape_like_str($_POST["H_MA"]);
+		$X_MA = $this->db->escape_like_str($_POST["X_MA"]);
+		$ND_DIACHI = $this->db->escape_like_str($_POST["ND_DIACHI"]);
+		$ND_SDT = $this->db->escape_like_str($_POST["ND_SDT"]);
+		$ND_FACE = $this->db->escape_like_str($_POST["ND_FACE"]);
+		$ND_GIOITHIEU = $this->db->escape_like_str($_POST["ND_GIOITHIEU"]);
+		$ND_DIEM = $this->db->escape_like_str($_POST["ND_DIEM"]);
+		$ND_THUONG = $this->db->escape_like_str($_POST["ND_THUONG"]);
 		$msg = array();
 
 		$gender = lang('male');

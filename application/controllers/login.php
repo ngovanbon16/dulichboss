@@ -21,8 +21,8 @@ class Login extends CI_Controller
 
 	public function login()
 	{
-		$email = $_POST["email"];
-		$password = $_POST["password"];
+		$email = $this->db->escape_like_str($_POST["email"]);
+		$password = $this->db->escape_like_str($_POST["password"]);
 		$msg = array();
 		$error = "";
 

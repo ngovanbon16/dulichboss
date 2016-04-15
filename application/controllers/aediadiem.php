@@ -138,23 +138,23 @@ class Aediadiem extends CI_Controller
 
 	public function add()
 	{
-		$DD_TEN = $_POST["DD_TEN"];
-		$DM_MA = $_POST["DM_MA"];
-		$T_MA = $_POST["T_MA"];
-		$H_MA = $_POST["H_MA"];
-		$X_MA = $_POST["X_MA"];
-		$DD_DIACHI = $_POST["DD_DIACHI"];
-		$DD_SDT = $_POST["DD_SDT"];
-		$DD_EMAIL = $_POST["DD_EMAIL"];
-		$DD_WEBSITE = $_POST["DD_WEBSITE"];
-		$DD_MOTA = $_POST["DD_MOTA"];
-		$DD_VITRI = $_POST["DD_VITRI"];
-		$DD_GIOITHIEU = $_POST["DD_GIOITHIEU"];
-		$DD_BATDAU = $_POST["DD_BATDAU"];
-		$DD_KETTHUC = $_POST["DD_KETTHUC"];
-		$DD_GIATU = $_POST["DD_GIATU"];
-		$DD_GIADEN = $_POST["DD_GIADEN"];
-		$DD_NOIDUNG = $_POST["DD_NOIDUNG"];
+		$DD_TEN =  $this->db->escape_like_str($_POST["DD_TEN"]);
+		$DM_MA =  $this->db->escape_like_str($_POST["DM_MA"]);
+		$T_MA =  $this->db->escape_like_str($_POST["T_MA"]);
+		$H_MA =  $this->db->escape_like_str($_POST["H_MA"]);
+		$X_MA =  $this->db->escape_like_str($_POST["X_MA"]);
+		$DD_DIACHI =  $this->db->escape_like_str($_POST["DD_DIACHI"]);
+		$DD_SDT =  $this->db->escape_like_str($_POST["DD_SDT"]);
+		$DD_EMAIL =  $this->db->escape_like_str($_POST["DD_EMAIL"]);
+		$DD_WEBSITE =  $this->db->escape_like_str($_POST["DD_WEBSITE"]);
+		$DD_MOTA =  $this->db->escape_like_str($_POST["DD_MOTA"]);
+		$DD_VITRI =  $this->db->escape_like_str($_POST["DD_VITRI"]);
+		$DD_GIOITHIEU =  $this->db->escape_like_str($_POST["DD_GIOITHIEU"]);
+		$DD_BATDAU =  $this->db->escape_like_str($_POST["DD_BATDAU"]);
+		$DD_KETTHUC =  $this->db->escape_like_str($_POST["DD_KETTHUC"]);
+		$DD_GIATU =  $this->db->escape_like_str($_POST["DD_GIATU"]);
+		$DD_GIADEN =  $this->db->escape_like_str($_POST["DD_GIADEN"]);
+		$DD_NOIDUNG =  $this->db->escape_like_str($_POST["DD_NOIDUNG"]);
 
 		date_default_timezone_set('Asia/Ho_Chi_Minh');  
 	    $date = date('Y-m-d H:i:s');
@@ -546,25 +546,25 @@ class Aediadiem extends CI_Controller
 
 	public function update()
 	{
-		$DD_MA = $_POST["DD_MA"];
-		$DD_TEN = $_POST["DD_TEN"];
-		$DM_MA = $_POST["DM_MA"];
-		$T_MA = $_POST["T_MA"];
-		$H_MA = $_POST["H_MA"];
-		$X_MA = $_POST["X_MA"];
-		$DD_DIACHI = $_POST["DD_DIACHI"];
-		$DD_SDT = $_POST["DD_SDT"];
-		$DD_EMAIL = $_POST["DD_EMAIL"];
-		$DD_WEBSITE = $_POST["DD_WEBSITE"];
-		$DD_MOTA = $_POST["DD_MOTA"];
-		$DD_VITRI = $_POST["DD_VITRI"];
-		$DD_GIOITHIEU = $_POST["DD_GIOITHIEU"];
-		$DD_BATDAU = $_POST["DD_BATDAU"];
-		$DD_KETTHUC = $_POST["DD_KETTHUC"];
-		$DD_GIATU = $_POST["DD_GIATU"];
-		$DD_GIADEN = $_POST["DD_GIADEN"];
-		$DD_NOIDUNG = $_POST["DD_NOIDUNG"];
-		$DD_DUYET = $_POST["DD_DUYET"];
+		$DD_MA =  $this->db->escape_like_str($_POST["DD_MA"]);
+		$DD_TEN =  $this->db->escape_like_str($_POST["DD_TEN"]);
+		$DM_MA =  $this->db->escape_like_str($_POST["DM_MA"]);
+		$T_MA =  $this->db->escape_like_str($_POST["T_MA"]);
+		$H_MA =  $this->db->escape_like_str($_POST["H_MA"]);
+		$X_MA =  $this->db->escape_like_str($_POST["X_MA"]);
+		$DD_DIACHI =  $this->db->escape_like_str($_POST["DD_DIACHI"]);
+		$DD_SDT =  $this->db->escape_like_str($_POST["DD_SDT"]);
+		$DD_EMAIL =  $this->db->escape_like_str($_POST["DD_EMAIL"]);
+		$DD_WEBSITE =  $this->db->escape_like_str($_POST["DD_WEBSITE"]);
+		$DD_MOTA =  $this->db->escape_like_str($_POST["DD_MOTA"]);
+		$DD_VITRI =  $this->db->escape_like_str($_POST["DD_VITRI"]);
+		$DD_GIOITHIEU =  $this->db->escape_like_str($_POST["DD_GIOITHIEU"]);
+		$DD_BATDAU =  $this->db->escape_like_str($_POST["DD_BATDAU"]);
+		$DD_KETTHUC =  $this->db->escape_like_str($_POST["DD_KETTHUC"]);
+		$DD_GIATU =  $this->db->escape_like_str($_POST["DD_GIATU"]);
+		$DD_GIADEN =  $this->db->escape_like_str($_POST["DD_GIADEN"]);
+		$DD_NOIDUNG =  $this->db->escape_like_str($_POST["DD_NOIDUNG"]);
+		$DD_DUYET =  $this->db->escape_like_str($_POST["DD_DUYET"]);
 
 		if($DD_DUYET == 'true')
 		{

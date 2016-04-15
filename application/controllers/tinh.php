@@ -35,8 +35,8 @@ class Tinh extends CI_Controller
 
 	public function add()
 	{
-		$ma = $_POST["T_MA"];
-		$ten = $_POST['T_TEN'];
+		$ma = $this->db->escape_like_str($_POST["T_MA"]);
+		$ten = $this->db->escape_like_str($_POST['T_TEN']);
 		$msg = array();
 		$error = "";
 		$status = "error";
@@ -85,8 +85,8 @@ class Tinh extends CI_Controller
 		if (isset($_GET['update'])) // code update
 		{
 			$result = "0";
-			$ma = $_GET['T_MA'];
-			$ten = $_GET['T_TEN'];
+			$ma = $this->db->escape_like_str($_GET['T_MA']);
+			$ten = $this->db->escape_like_str($_GET['T_TEN']);
 			if(!$this->mtinh->testTen($ten))
 			{
 				$data = array(

@@ -69,9 +69,9 @@ class Xa extends CI_Controller
 
     public function add()
     {
-        $tenhuyen = $_POST["H_TEN"];
-        $ma = $_POST["X_MA"];
-        $ten = $_POST['X_TEN'];
+        $tenhuyen = $this->db->escape_like_str($_POST["H_TEN"]);
+        $ma = $this->db->escape_like_str($_POST["X_MA"]);
+        $ten = $this->db->escape_like_str($_POST['X_TEN']);
         $status = "error";
         $error = "";
         $msg = array();
@@ -147,8 +147,8 @@ class Xa extends CI_Controller
         }
         if (isset($_POST['update'])) // code update
         {
-            $ma = $_POST['X_MA'];
-            $ten = $_POST['X_TEN'];
+            $ma = $this->db->escape_like_str($_POST['X_MA']);
+            $ten = $this->db->escape_like_str($_POST['X_TEN']);
             $status = "error";
             $msg = array();
 

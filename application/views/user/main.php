@@ -294,7 +294,7 @@
                                     }
                                 ?> 
                             <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
+                            <ul style="z-index: 1001;" class="dropdown-menu">
                                 <?php
                                     if(isset($tinh))
                                     foreach ($tinh as $iteam) {

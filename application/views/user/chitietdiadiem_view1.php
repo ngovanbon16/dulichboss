@@ -494,7 +494,7 @@
                     return "#0D0";
                   }
               }
-
+              var hinhanh;
             $("#btnthem").click(function(){
               //alert("them");
               var id = "<?php echo $info['DD_MA']; ?>";
@@ -507,15 +507,17 @@
                   "start" : start,
                   "length" : length
               };
-              console.log(dta);
-              $.post(url, dta, function(data, status){
 
-                  console.log(status);
-                  console.log(data);
-                  if(status == "success")
-                  {   
-                      var str = "";
-                      var hinhanh = "";
+              $.ajax({
+                  url : url,
+                  type : 'post',
+                  dataType : 'json',
+                  data : dta,
+                  success : function (data){
+                      console.log(data);
+
+                     var str = "";
+                      
                       var j = 0;
                       for (var i = 0; i < data.diadiem.length; i++) {
 
@@ -538,6 +540,25 @@
                           honguoidang = data.diadiem[i]['ND_HO'];
                           tennguoidang = data.diadiem[i]['ND_TEN'];
                           hinhnguoidang = data.diadiem[i]['ND_HINH'];
+                          url1="<?php echo base_url(); ?>index.php/aediadiem/getanhbinhluan?t=" + Math.random();
+                          data1 = {
+                              "ma" : mabinhluan
+                          };
+                          hinhanh = "";
+                           $.ajax({
+                              url : url1,
+                              type : 'post',
+                              dataType : 'json',
+                              data : data1,
+                              success : function (data){
+                                  //$('#result1').html(result);
+                                  console.log(data);
+
+                                  for (var i = 0; i < data.length; i++) {
+                                    hinhanh += '<img class="img" src="<?php echo base_url(); ?>uploads/binhluan/'+data[i]["ABL_TEN"]+'" width="120" height="100">';
+                                 }
+                              }
+                          });
                           /*hinhanh = "";
                           var url1, datah;
                           url1="<?php echo base_url(); ?>index.php/aediadiem/getanhbinhluan?t=" + Math.random();
@@ -584,7 +605,8 @@
                           document.getElementById('count').innerHTML = eval(start + "+" + data.diadiem.length);
                       }
                   }
-              }, 'json');
+              });
+
             });
         });
 

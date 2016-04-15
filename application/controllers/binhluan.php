@@ -324,9 +324,9 @@ class Binhluan extends CI_Controller
 	public function add() // dung cho them binh luan cua user
 	{
 		$ND_MA = $this->session->userdata('id');
-		$DD_MA = $_POST["DD_MA"];
-		$BL_TIEUDE = $_POST['BL_TIEUDE'];
-		$BL_NOIDUNG = $_POST['BL_NOIDUNG'];
+		$DD_MA = $this->db->escape_like_str($_POST["DD_MA"]);
+		$BL_TIEUDE = $this->db->escape_like_str($_POST['BL_TIEUDE']);
+		$BL_NOIDUNG = $this->db->escape_like_str($_POST['BL_NOIDUNG']);
 		$BL_CHATLUONG = $_POST['BL_CHATLUONG'];
 		$BL_PHUCVU = $_POST['BL_PHUCVU'];
 		$BL_KHONGGIAN = $_POST['BL_KHONGGIAN'];
