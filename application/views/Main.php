@@ -109,6 +109,7 @@
                 <ul class="nav navbar-right navbar-top-links">
                     <li class="dropdown navbar-inverse">
                         <?php
+                            $colorall = "";
                             $color = "";
                             $new = "0";
                             if(isset($newplace))
@@ -117,15 +118,28 @@
                                 {
                                     $new = $newplace;
                                     $color = "#F00";
+                                    $colorall = "#F00";
+                                }
+                            }
+
+                            $colorbv = "";
+                            $newbv = "0";
+                            if(isset($baivietmoi))
+                            {
+                                if($baivietmoi > 0)
+                                {
+                                    $newbv = $baivietmoi;
+                                    $colorbv = "#F00";
+                                    $colorall = "#F00";
                                 }
                             }
                         ?>
-                        <a style="color: <?php echo $color ?>;" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <a style="color: <?= $colorall; ?>;" class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>
-                                <a style="color: <?php echo $color ?>;" href="<?php echo base_url(); ?>nguoidung">
+                                <a style="color: <?= $color ?>;" href="<?php echo base_url(); ?>diadiem">
                                     <div>
                                         <i class="fa fa-comment fa-fw"></i> <?php echo lang('new_place') ?>
                                         <span class="pull-right text-muted small"><?php echo $new ?></span>
@@ -133,6 +147,14 @@
                                 </a>
                             </li>
                             <li>
+                                <a style="color: <?= $colorbv ?>;" href="<?php echo base_url(); ?>baiviet">
+                                    <div>
+                                        <i class="fa fa-pencil fa-fw"></i> <?php echo lang('new_post') ?>
+                                        <span class="pull-right text-muted small"><?php echo $newbv ?></span>
+                                    </div>
+                                </a>
+                            </li>
+                            <!-- <li>
                                 <a href="#">
                                     <div>
                                         <i class="fa fa-twitter fa-fw"></i> 3 New Followers
@@ -170,7 +192,7 @@
                                     <strong>See All Alerts</strong>
                                     <i class="fa fa-angle-right"></i>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -249,7 +271,7 @@
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
                         <ul class="nav" id="side-menu">
-                            <li class="sidebar-search">
+                            <!-- <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
                                     <input type="text" class="form-control" placeholder="<?php echo lang('search') ?>...">
                                     <span class="input-group-btn">
@@ -258,10 +280,12 @@
                                     </button>
                                 </span>
                                 </div>
-                                <!-- /input-group -->
+                            </li> -->
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/admin" ><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a>
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/nguoidung" class="active"><i class="fa fa-user fa-fw"></i> <?php echo lang('user') ?></a>
+                                <a href="<?php echo base_url(); ?>index.php/nguoidung"><i class="fa fa-user fa-fw"></i> <?php echo lang('user') ?></a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-dribbble fa-fw"></i> <?php echo lang('area') ?><span class="fa arrow"></span></a>
@@ -279,23 +303,20 @@
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-th-list fa-fw"></i> <?php echo lang('category') ?><span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <!-- <li>
-                                        <a href="<?php echo base_url(); ?>index.php/danhmuc"> Nhóm danh mục</a>
-                                    </li> -->
+                                <a href="<?php echo base_url(); ?>index.php/danhmuc"><i class="fa fa-th-list fa-fw"></i> <?php echo lang('category') ?></a>
+                                <!-- <ul class="nav nav-second-level">
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/danhmuc"> <?php echo lang('category') ?></a>
                                     </li>
-                                   <!--  <li>
+                                    <li>
                                         <a href="<?php echo base_url(); ?>index.php/danhmuchinh"><?php echo lang('picture') ?></a>
-                                    </li> -->
-                                </ul>
+                                    </li>
+                                </ul> -->
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-map-marker fa-fw"></i> <?php echo lang('place') ?><span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
+                                <a href="<?php echo base_url(); ?>index.php/diadiem"><i class="fa fa-map-marker fa-fw"></i> <?php echo lang('place') ?></a>
+                                <!-- <ul class="nav nav-second-level"> -->
                                     <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/map"> Map Codeigniter</a>
                                     </li> -->
@@ -305,16 +326,16 @@
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/map/mapfromAtoB"> A -> B</a>
                                     </li> -->
-                                    <li>
+                                    <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/diadiem"> <?php echo lang('place') ?></a>
-                                    </li>
+                                    </li> -->
                                     <!-- <li>
                                         <a href="<?php echo base_url(); ?>index.php/diadiemhinh"> Địa điểm hình ảnh</a>
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url(); ?>index.php/mua"> Mùa</a>
                                     </li> -->
-                                </ul>
+                                <!-- </ul> -->
                                 <!-- /.nav-second-level -->
                             </li>
                             <!-- <li>
@@ -329,27 +350,10 @@
                                 </ul>
                             </li> -->
                             <li>
-                                <a href="#"><i class="fa fa-comments fa-fw"></i> <?php echo lang('comment') ?><span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>index.php/binhluan"><?php echo lang('comment') ?></a>
-                                    </li>
-                                    <!-- <li>
-                                        <a href="#">Hình ảnh bình luận Y</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Đánh giá Y</a>
-                                    </li> -->
-                                </ul>
-                                <!-- /.nav-second-level -->
+                                <a href="<?php echo base_url(); ?>index.php/binhluan"><i class="fa fa-comments fa-fw"></i> <?php echo lang('comment') ?></a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-pencil fa-fw"></i> <?php echo lang('posts') ?><span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="<?php echo base_url(); ?>index.php/baiviet"><?php echo lang('posts') ?></a>
-                                    </li>
-                                </ul>
+                                <a href="<?php echo base_url(); ?>index.php/baiviet"><i class="fa fa-pencil fa-fw"></i> <?php echo lang('posts') ?></a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> <?php echo lang('authority') ?><span class="fa arrow"></span></a>
@@ -365,6 +369,9 @@
                                     </li> -->
                                 </ul>
                                 <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/thongtin"><i class="fa fa-info fa-fw"></i> <?php echo lang('information') ?></a>
                             </li>
                             <!-- <li>
                                 <a href="#"><i class="fa fa-bar-chart-o"></i> Thống kê<span class="fa arrow"></span></a>

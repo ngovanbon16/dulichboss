@@ -29,6 +29,28 @@
             {
                 $("#button").click(function()
                 {
+                    login();
+                });
+
+                $('input').keypress(function(event){
+                    var keycode = (event.keyCode ? event.keyCode : event.which);
+                    if (keycode == '13') {
+                        login();
+                    }
+                });
+
+                $("input").focus(function()
+                {
+                    //$(this).css("background-color", "#ff0000");
+
+                });
+                $("input").blur(function()
+                {
+                    //$(this).css("background-color", "#ffffff");
+                });
+
+                function login()
+                {
                     var url, dta;
                     url="<?php echo base_url(); ?>index.php/login/login?t=" + Math.random();
                     dta = {
@@ -63,17 +85,7 @@
                             }
                         }
                     }, 'json');
-                });
-
-                $("input").focus(function()
-                {
-                    //$(this).css("background-color", "#ff0000");
-
-                });
-                $("input").blur(function()
-                {
-                    //$(this).css("background-color", "#ffffff");
-                });
+                }
             });
         </script>
 

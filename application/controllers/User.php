@@ -16,6 +16,9 @@ class User extends CI_Controller
 		$this->load->model("mtinh");
 		$this->_data['tinh'] = $this->mtinh->getList();
 
+		$this->load->model("mdanhmuc");
+		$this->_data['danhmuc'] = $this->mdanhmuc->getList();
+
 		$this->_data['title'] = lang('search');
         $this->_data['subview'] = 'user/timkiem_view';
         $this->load->view('user/main.php', $this->_data);
@@ -127,6 +130,66 @@ class User extends CI_Controller
 		else 
 		{
 			echo 'Không có từ khóa nào được gởi đến.';
+		}
+	}
+
+	public function search1()
+	{
+		$this->load->model("mdiadiem");
+		$keyworddd1 = "";
+		if(isset($_GET['keyworddd']))
+		{
+			$keyworddd = trim($_GET['keyworddd']);
+			$keyworddd = $this->db->escape_like_str($keyworddd);
+			if($keyworddd != "")
+			{
+				$keyworddd1 = " AND ( DD_TEN LIKE '%".$keyworddd."%' ) ";
+			}
+		}
+
+		$keyworddm1 = "";
+		if(isset($_GET['keyworddm']))
+		{
+			$keyworddm = trim($_GET['keyworddm']);
+			$keyworddm = $this->db->escape_like_str($keyworddm);
+			if($keyworddm != "")
+			{
+				$keyworddm1 = " AND ( diadiem.DM_MA = '".$keyworddm."' ) ";
+			}
+		}
+
+		$keywordt1 = "";
+		if(isset($_GET['keywordt']))
+		{
+			$keywordt = trim($_GET['keywordt']);
+			$keywordt = $this->db->escape_like_str($keywordt);
+			if($keywordt != "")
+			{
+				$keywordt1 = " AND ( diadiem.T_MA = '".$keywordt."' ) ";
+			}
+		}
+
+		$keywordh1 = "";
+		if(isset($_GET['keywordh']))
+		{
+			$keywordh = trim($_GET['keywordh']);
+			$keywordh = $this->db->escape_like_str($keywordh);
+			if($keywordh != "")
+			{
+				$keywordh1 = " AND ( diadiem.H_MA = '".$keywordh."' ) ";
+			}
+		}
+
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' ".$keyworddd1.$keyworddm1.$keywordt1.$keywordh1." ORDER BY DD_TEN ASC LIMIT 0, 20";
+
+		$result = $this->mdiadiem->gettimkiem($query);
+
+		echo '<h2>'.count($result).' '.lang('result').': </h2>';
+		if(count($result) > 0)
+		{
+			foreach ($result as $row) {
+				echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 150px; height: 100px; float: left; margin-right: 10px; border-radius: 3px;"> <div style="min-height: 100px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #B9D3EE;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['DM_TEN'].' | '.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div> </div>'   ;
+			}
 		}
 	}
 

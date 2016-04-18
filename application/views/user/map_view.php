@@ -304,7 +304,7 @@
                 <div class="div" id="X_MA" style="float: left;"></div>
                 <div class="div" id="DM_MA" style="float: left;"></div>
                 <button style="font-size: 13px;" type="button" id="loc" class="btn btn-success"><?php echo lang('search') ?></button>
-                <button style="font-size: 13px;" type="button" id="xoa" class="btn btn-danger"><?php echo lang('delete') ?></button>
+                <button style="font-size: 13px;" type="button" id="xoa" class="btn btn-danger"><?php echo lang('reset') ?></button>
             </td>
         </tr>        
         <tr>

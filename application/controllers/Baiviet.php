@@ -79,6 +79,11 @@ class Baiviet extends CI_Controller
 		$BV_DUYET =  $this->db->escape_like_str($_POST["BV_DUYET"]);
 		$ND_MA = $this->session->userdata['id'];
 
+		if($BV_DUYET == "0")
+		{
+			$BV_NOIDUNG =  $this->db->escape_like_str($_POST["BV_NOIDUNG"]);
+		}
+
 		date_default_timezone_set('Asia/Ho_Chi_Minh');  
         $date = date('Y-m-d H:i:s');
 

@@ -135,7 +135,7 @@
             width: 250px; 
             height: 320px;
             border-radius: 3px;
-            opacity: 0.7;
+            opacity: 0.8;
             margin-right: -250px;
             -webkit-transition: margin-right 3s;
             transition:  margin-right 3s;
@@ -144,9 +144,19 @@
             margin-right: 10px;
             -webkit-transition:  margin-right 3s;
             transition:  margin-right 3s;
+            background-color: #F00;
         }
         .benner2{
             margin: 5px;
+        }
+        .tieudebenner{
+            font-size: 13; 
+            width: 100px; 
+            color: #FFF; 
+            overflow: hidden;
+        }
+        .tieudebenner:hover {
+            color: #000;
         }
         #iconleft{
             box-shadow: 0 0 4px #000;
@@ -186,11 +196,11 @@
                                 $huyen3 = $row['H_TEN'];
                                 $diem = $row['diem'];
                             ?>
-                              <a target="_blank" href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
+                              <a class="tieudebenner" target="_blank" href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
                                 <span>
                                   
-                                <span style="font-size: 13; width: 100px; overflow: hidden;"><?php echo $ten3; ?></span><br/>
-                                <i style="font-size: 13px;"><?php echo $huyen3.' - '.$tinh3; ?> | <?php echo lang('rating').': '.round($diem, 1); ?></i>
+                                <span><?php echo $ten3; ?></span><br/>
+                                <i style="font-size: 13px; color: #FFF;"><?php echo $huyen3.' - '.$tinh3; ?> | <?php echo lang('rating').': '.round($diem, 1); ?></i>
                                 <img class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh3; ?>" />
 
                               </a> <hr/>

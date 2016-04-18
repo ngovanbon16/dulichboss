@@ -169,17 +169,21 @@
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
-                            <ul class="social-share">
+                            <!-- <ul class="social-share">
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fa fa-linkedin"></i></a></li> 
                                 <li><a href="#"><i class="fa fa-skype"></i></a></li>
                                 <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                            </ul>
+                            </ul> -->
                             <div class="search">
                                 <form role="form">
-                                    <a href="<?php echo base_url(); ?>index.php/user/searchplace"> <input type="text" class="search-form" autocomplete="off" placeholder="<?php echo lang('search'); ?>">
-                                    <i class="fa fa-search"></i> </a>
+                                    <a href="<?php echo base_url(); ?>index.php/user/searchplace"> 
+                                    <!-- <input type="text" class="search-form" autocomplete="off" placeholder="<?php echo lang('search'); ?>"> -->
+
+                                    <button style="background-color: #000; color: #FFF;" type="button" class="btn btn-default"> <i class="fa fa-search fa-fw"></i> <?= lang('search'); ?></button>
+
+                                    </a>
 
                                     <!-- <div style="z-index: 2000000;" id='content'>
                                         <script type="text/javascript">
@@ -458,6 +462,25 @@
     {
         $("#button").click(function()
         {
+            login();
+        });
+
+        $('#email').keypress(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                login();
+            }
+        });
+
+        $('#password').keypress(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                login();
+            }
+        });
+
+        function login()
+        {
             var url, dta;
             url="<?php echo base_url(); ?>index.php/login/login?t=" + Math.random();
             dta = {
@@ -493,13 +516,7 @@
                     }
                 }
             }, 'json');
-        });
-
-        $("input").focus(function()
-        {
-            //$(this).css("background-color", "#ff0000");
-
-        });
+        }
        
         function test(value)
         {
@@ -508,6 +525,11 @@
         }
 
         $("#btnguiyeucau").click(function()
+        {
+            yeucau();
+        });
+
+        function yeucau()
         {
             var email = $("#diachiemail").val();
             //alert(test(email));
@@ -551,7 +573,7 @@
                     }
                 }
             }, 'json');
-        });
+        }
     });
 </script>
 

@@ -1,8 +1,4 @@
-<section id="contact-info">
-        <div class="center">                
-            <h2><?php echo lang('how_to_contact_us') ?></h2>
-            <p class="lead"><?php echo lang('can_contact_us_anytime_and_anywhere_with_the_information_below') ?></p>
-        </div>
+<section style="margin-top: -80px; margin-bottom: -80px;" id="contact-info">
         <div class="gmap-area">
             <div class="container">
                 <div class="row">
@@ -13,7 +9,10 @@
                     </div>
 
                     <div class="col-sm-7 map-content">
-                        <ul class="row">
+                        <h1><?php echo lang('how_to_contact_us') ?></h1>
+                        <p class="lead"><?php echo lang('can_contact_us_anytime_and_anywhere_with_the_information_below') ?></p>
+                        <?= $gioithieu["TT_LIENHE"]; ?>
+                        <!-- <ul class="row">
                             <li class="col-sm-6">
                                 <address>
 
@@ -52,7 +51,7 @@
                                     </p>
                                 </address>
                             </li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
             </div>

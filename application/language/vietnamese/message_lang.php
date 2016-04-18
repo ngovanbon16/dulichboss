@@ -29,7 +29,7 @@ $lang['register'] = "Đăng ký";
 $lang['change'] = "Đổi";
 $lang['search'] = "Tìm kiếm";
 $lang['add'] = "Thêm";
-$lang['reset'] = "Xóa";
+$lang['reset'] = "Nạp lại";
 $lang['enter'] = "Nhập";
 $lang['key'] = "Mã";
 $lang['name'] = "Tên";
@@ -223,4 +223,5 @@ $lang['view_more'] = "Xem thêm";
 $lang['places_map'] = "Bản đồ địa điểm";
 $lang['share'] = "Chia sẻ";
 $lang['all'] = "Tất cả";
+$lang['new_post'] = "Bài viết mới";
 ?>

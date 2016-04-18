@@ -11,10 +11,11 @@
 		color: #1AA5D1;
 	}
 </style>
-<section style="background-color: #F8F8FF;" id="about-us">
+<section style="margin-top: -50px; background-color: #F8F8FF;" id="about-us">
         <div class="container">
 			<div>
-				<table width="100%">
+				<?= $gioithieu["TT_GIOITHIEU"]; ?>
+				<!-- <table width="100%">
 					<tr>
 						<td>
 							<h2>Quy định sử dụng</h2>
@@ -74,7 +75,7 @@
 				<h2>Cấm truy cập</h2>
 				<p>
 					Chúng tôi có toàn quyền, vào mọi lúc, cấm hoặc từ chối truy cập của bạn vào Mekong Tourism hoặc bất kỳ phần nào của website ngay lập tức và không cần báo trước nếu chúng tôi cho rằng bạn đã vi phạm bất cứ điều khoản nào trong bản Quy định này, hoặc việc cấm truy cập xuất phát từ nhận định của chúng tôi, khi chúng tôi cho rằng từ chối đó phù hợp và cần thiết trong thẩm quyền của chúng tôi.
-				</p>
+				</p> -->
 			</div>
 
 			<!-- our-team -->

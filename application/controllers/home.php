@@ -32,6 +32,9 @@ class Home extends CI_Controller
 		$this->load->model("mdiadiem");
 		$this->_data['newplace'] = $this->mdiadiem->countnewplace();
 
+		$this->load->model("mbaiviet");
+		$this->_data['baivietmoi'] = $this->mbaiviet->countdaduyet();
+
 		$this->_data['subview'] = 'home';
        	$this->_data['title'] = lang('home');
        	$this->load->view('main.php', $this->_data);
@@ -107,6 +110,9 @@ class Home extends CI_Controller
 		$this->load->model("mtinh");
 		$this->_data['tinh'] = $this->mtinh->getList();
 
+		$this->load->model("mthongtin");
+		$this->_data["gioithieu"] = $this->mthongtin->getID("1");
+
        	$this->_data['title'] = 'Giới thiệu';
        	$this->load->view('user/main.php', $this->_data);
 	}
@@ -118,6 +124,9 @@ class Home extends CI_Controller
 
 		$this->load->model("mtinh");
 		$this->_data['tinh'] = $this->mtinh->getList();
+
+		$this->load->model("mthongtin");
+		$this->_data["gioithieu"] = $this->mthongtin->getID("1");
 
        	$this->_data['title'] = 'Liên hệ';
        	$this->load->view('user/main.php', $this->_data);
