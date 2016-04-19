@@ -902,7 +902,7 @@
 <body style="background-color: #F8F8FF;" onload="onload();">
 
     <section style="margin-top: -50px;" id="blog" class="container">
-        <div style="margin-bottom: 20px; margin-top: 0px;">
+        <div style="margin-bottom: 20px; margin-top: 0px; max-height: 90px; overflow: hidden;">
         <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="5">
 
           <?php

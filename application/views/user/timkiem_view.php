@@ -152,8 +152,8 @@ $('#txthuyen').change(function(event){
 	    <h3 id="faq_title" style="display: none;"> <strong><?= lang('search_with_keyword'); ?> : </strong> <span id="faq_category_title"><?= lang('keyword'); ?> </span> </h3>
 
 	    <center> 
-	    	<a class="a" id="btnchung" style="color: #000;">Tìm kiếm chung</a> | 
-	    	<a class="a" id="btnchitiet">Tìm kiếm chi tiết</a>
+	    	<a class="a" id="btnchung" style="color: #000;"><?= lang('general_search'); ?></a> | 
+	    	<a class="a" id="btnchitiet"><?= lang('detailed_search'); ?></a>
 	    	<!-- <b>Qui tắc: Tên địa điểm, loại địa điểm, tên huyện, tên tỉnh (Phải theo thứ tự và nếu không có thì để 'x'). <br/>VD: Tìm loại điểm địa tham quan tại cần thơ thì nhập: x, tham quan, x, can tho</b> -->
 	    	<form>	
 	    	<div id="chung">

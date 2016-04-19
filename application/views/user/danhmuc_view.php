@@ -25,7 +25,7 @@
                     var T_TEN = data[i]['T_TEN'];
                     var H_TEN = data[i]['H_TEN'];
                     var HA_TEN = data[i]['HA_TEN'];
-                    str += '<div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms"><table style="height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'">'+DD_TEN+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+H_TEN+'<i class="fa fa-angle-double-right fa-fw"></i>'+T_TEN+'</p></td></tr></table></div>';
+                    str += '<table style="float: left; margin-right: 13px; height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'">'+DD_TEN+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+H_TEN+'<i class="fa fa-angle-double-right fa-fw"></i>'+T_TEN+'</p></td></tr></table>';
                 }
                 document.getElementById('noidung').innerHTML = str;
                 document.getElementById('tendanhmuc').innerHTML = ten;
@@ -48,7 +48,7 @@
         $("#btnthem").click(function(){
             var id = $("#ma").html();
             var start = $("#count").html();
-            var length = 6;
+            var length = 7;
             var url, dta;
             url="<?php echo base_url(); ?>index.php/home/getdanhmuc?t=" + Math.random();
             dta = {
@@ -70,7 +70,7 @@
                         var T_TEN = data[i]['T_TEN'];
                         var H_TEN = data[i]['H_TEN'];
                         var HA_TEN = data[i]['HA_TEN'];
-                        str += '<div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms"><table style="height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'">'+DD_TEN+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+H_TEN+'<i class="fa fa-angle-double-right fa-fw"></i>'+T_TEN+'</p></td></tr></table></div>';
+                        str += '<table style="float: left; margin-right: 13px; height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'">'+DD_TEN+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+H_TEN+'<i class="fa fa-angle-double-right fa-fw"></i>'+T_TEN+'</p></td></tr></table>';
                     }
                     document.getElementById('noidung').innerHTML += str;
 
@@ -111,12 +111,12 @@
         color: #F00;
     }
 </style>
-<body class="homepage" onload="loc('1', 'Du Lịch Sinh Thái', 0, 6)">
+<body class="homepage" onload="loc('1', 'Du Lịch Sinh Thái', 0, 7)">
 
-    <section style="margin-top: -60px;" id="recent-works">
+    <section style="margin-top: -50px;" id="recent-works">
         <div class="container">
-            <div class="collapse navbar-collapse navbar-right">
-                <ul class="nav navbar-nav">
+            <div style="font-size: 16px; font-weight: bold;" class="features">
+                <!-- <ul class="nav navbar-nav">
                     <?php 
                         foreach ($danhmuc as $iteam) {
                             $ma = $iteam['DM_MA'];
@@ -129,14 +129,23 @@
                     <?php
                         }
                     ?>
-                </ul>
+                </ul> -->
+                <?php 
+                    foreach ($danhmuc as $iteam) {
+                        $ma = $iteam['DM_MA'];
+                        $ten = $iteam['DM_TEN'];
+                ?>
+                    <a href="#" onclick="loc('<?php echo $ma; ?>', '<?php echo $ten; ?>', 0, 7)"><?php echo $ten; ?></a> | 
+                <?php
+                    }
+                ?>
             </div>
             
             <h2> <b id="tendanhmuc"></b>: <b id="count">0</b> <?php echo lang('result'); ?> </h2>
             <b id="ma" style="display: none;"></b>
             <hr/>
             <div class="row">
-                <div id="noidung" class="features">
+                <div style="margin-left: 15px;" id="noidung" class="features">
 
                 </div><!--/.services-->
             </div><!--/.row-->    

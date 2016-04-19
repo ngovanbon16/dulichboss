@@ -10,6 +10,7 @@
 <?php } ?>
 
 <head>
+	<title>smartmekong_<?= $data['DD_TEN']; ?></title>
 	<?php 
 		$str = trim($vitri);
 		$length = strlen($str);
@@ -242,6 +243,9 @@
 </head>
 
 <style type="text/css">
+	@page {
+	    size: A4;
+	}
 	.khung{
 		border: solid 1px #00B2EE;
 		width: 650px;

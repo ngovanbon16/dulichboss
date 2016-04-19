@@ -46,7 +46,7 @@ class Home extends CI_Controller
 		$this->_data['active'] = "trangchu";
 		$this->load->model("mdiadiem");
 		$this->load->model("mhinhanh");
-		$this->_data['info'] = $this->mdiadiem->getList1(12, 0);
+		$this->_data['info'] = $this->mdiadiem->getList1(14, 0);
 		$this->_data['info1'] = $this->mhinhanh->getList();
 
 		$this->load->model("mtinh");
@@ -63,7 +63,7 @@ class Home extends CI_Controller
 
 		$this->_data['huyentt'] = $this->mhuyen->getid($T_MA);
 
-		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1'  ORDER BY diadiem.DD_LUOTXEM DESC LIMIT 0, 6";
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1'  ORDER BY diadiem.DD_LUOTXEM DESC LIMIT 0, 7";
 
 		// Kết nối Database, thực hiện câu truy vấn
 		$this->_data['luotxem'] = $this->mdiadiem->gettimkiem($query);
@@ -84,7 +84,7 @@ class Home extends CI_Controller
 	{
 		$count = $_POST["count"];
 		$this->load->model("mdiadiem");
-		$data = $this->mdiadiem->getList1(6, $count);
+		$data = $this->mdiadiem->getList1(7, $count);
 
 		$this->load->model("mhinhanh");
 		$hinh = $this->mhinhanh->getList();

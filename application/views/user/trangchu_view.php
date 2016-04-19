@@ -52,7 +52,7 @@
                                 }
 
 
-                                document.getElementById("diadiem").innerHTML += '<div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms"><table style="height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+ma+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+ma+'">'+ten+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+tenhuyen+'<i class="fa fa-angle-double-right fa-fw"></i>'+tentinh+'</p></td></tr></table></div>';
+                                document.getElementById("diadiem").innerHTML += '<table style="float: left; margin-right: 13px; height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+ma+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+ma+'">'+ten+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+tenhuyen+'<i class="fa fa-angle-double-right fa-fw"></i>'+tentinh+'</p></td></tr></table>';
                             }
                             var tong = eval(data.data.length+"+"+$("#count").val());
                             $("#count").val(tong);
@@ -133,18 +133,20 @@
             margin: 10px;
             background-color: #FFF; 
             width: 250px; 
-            height: 320px;
+            height: 600px;
             border-radius: 3px;
             opacity: 0.8;
             margin-right: -250px;
             -webkit-transition: margin-right 3s;
             transition:  margin-right 3s;
+            box-shadow: 0 0 4px #8DEEEE;
+            -webkit-box-shadow: 0 0 4px #8DEEEE;
         }
         .benner1{
-            margin-right: 10px;
+            margin-right: 0px;
             -webkit-transition:  margin-right 3s;
             transition:  margin-right 3s;
-            background-color: #F00;
+            background-color: #DCDCDC;
         }
         .benner2{
             margin: 5px;
@@ -152,22 +154,23 @@
         .tieudebenner{
             font-size: 13; 
             width: 100px; 
-            color: #FFF; 
+            color: #F00; 
             overflow: hidden;
         }
         .tieudebenner:hover {
             color: #000;
         }
         #iconleft{
-            box-shadow: 0 0 4px #000;
-            -webkit-box-shadow: 0 0 4px #000;
-            margin-right: -10px;
-            margin-top: 10px;
+            box-shadow: 0 0 4px #8DEEEE;
+            -webkit-box-shadow: 0 0 4px #8DEEEE;
+            margin-right: -12px;
+            margin-top: 12px;
             cursor: pointer;
-            width: 100px;
-            height: 100px;
-            font-size: 95px;
+            width: 50px;
+            height: 50px;
+            font-size: 50px;
             color: #c52d2f;
+            border-radius: 5px 0px 0px 5px;
         }
         #iconleft:hover{
             color: #F00;
@@ -185,7 +188,7 @@
                 </td>
                 <td>
                     <div class="benner" >
-                        <marquee class="benner2" onmouseover="this.stop()" onmouseout="this.start()" scrollamount="3" direction="up" width="240" height="310" align="center">
+                        <marquee class="benner2" onmouseover="this.stop()" onmouseout="this.start()" scrollamount="3" direction="up" width="240" height="590" align="center">
 
                           <?php
                             foreach ($danhgia as $row) {
@@ -200,7 +203,7 @@
                                 <span>
                                   
                                 <span><?php echo $ten3; ?></span><br/>
-                                <i style="font-size: 13px; color: #FFF;"><?php echo $huyen3.' - '.$tinh3; ?> | <?php echo lang('rating').': '.round($diem, 1); ?></i>
+                                <i style="font-size: 13px; color: #F00;"><?php echo $huyen3.' - '.$tinh3; ?> | <?php echo lang('rating').': '.round($diem, 1); ?></i>
                                 <img class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh3; ?>" />
 
                               </a> <hr/>
@@ -317,10 +320,10 @@
                 </div><!--/.item-->
             </div><!--/.carousel-inner-->
         </div><!--/.carousel-->
-        <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+        <a style="z-index: 1001;" class="prev hidden-xs" href="#main-slider" data-slide="prev">
             <i class="fa fa-chevron-left"></i>
         </a>
-        <a class="next hidden-xs" href="#main-slider" data-slide="next">
+        <a style="z-index: 1001;" class="next hidden-xs" href="#main-slider" data-slide="next">
             <i class="fa fa-chevron-right"></i>
         </a>
     </section><!--/#main-slider-->
@@ -358,7 +361,7 @@
                 <h2>Được xem nhiều nhất</h2>
             </div>
 
-            <div style="margin-top: -30px;" class="row">
+            <div style="margin-left: 0px; margin-top: -30px;" class="row">
                 <div class="features">
                     <?php 
                         foreach ($luotxem as $row) {
@@ -368,8 +371,8 @@
                             $tentinh = $row['T_TEN'];
                             $tenhuyen = $row['H_TEN'];
                     ?>
-                    <div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms">
-                        <table style="height: 180px; width: 150px;" border="0">
+                    <!-- <div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms"> -->
+                        <table style="float: left; margin-right: 13px; height: 180px; width: 150px;" border="0">
                                 <tr>
                                     <td height="100" width="150">
                                         <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>">
@@ -385,7 +388,7 @@
                                     </td>
                                 </tr>
                             </table>
-                    </div><!--/.col-md-4-->
+                    <!-- </div> --><!--/.col-md-4-->
                     <?php 
                         }
                     ?>
@@ -402,7 +405,7 @@
             </div>
 
             <div class="row">
-                <div id="diadiem" class="features">
+                <div style="margin-left: 15px;" id="diadiem" class="features">
 
                     <?php 
                         $count = 0;
@@ -446,8 +449,8 @@
 
                     ?>
 
-                    <div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms">
-                        <table style="height: 180px; width: 150px;" border="0">
+                    <!-- <div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms">
+ -->                        <table style="float: left; margin-right: 13px; height: 180px; width: 150px;" border="0">
                                 <tr>
                                     <td height="100" width="150">
                                         <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>">
@@ -463,7 +466,7 @@
                                     </td>
                                 </tr>
                             </table>
-                    </div><!--/.col-md-4-->
+                    <!-- </div> -->
 
                     <?php
                             }

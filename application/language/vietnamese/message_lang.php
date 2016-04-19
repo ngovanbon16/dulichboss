@@ -224,4 +224,6 @@ $lang['places_map'] = "Bản đồ địa điểm";
 $lang['share'] = "Chia sẻ";
 $lang['all'] = "Tất cả";
 $lang['new_post'] = "Bài viết mới";
+$lang['general_search'] = "Tìm kiếm chung";
+$lang['detailed_search'] = "Tìm kiếm chi tiết";
 ?>
