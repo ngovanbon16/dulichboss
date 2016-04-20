@@ -443,7 +443,7 @@
                 $('#eventsPanel1').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
                     fileName + ';<br />' + 'size: ' + fileSize + '<br />');
 
-                if(fileSize > 2500000)
+                if(fileSize > 6000000)
                 {
                   $('#jqxFileUpload1').jqxFileUpload('cancelFile', fileindex);
                   thongbao("", "<?php echo lang('sorry_your_file_is_too_large') ?>", "danger");
@@ -549,6 +549,12 @@
 		</div>
 		<div style="float: right; width: 70%; height: 250px; overflow: auto;">
 			<table style="min-width: 278px; opacity: 1; color: #000;" class="tablenoidung" width="100%">
+			  <tr>
+                <td class="cot1"><i class="fa fa-photo fa-fw"></i> Hình ảnh </td>
+                <td class="cot2">
+                	<button class="btnhinhanh" data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo lang('view') ?></button>
+                </td>
+              </tr>
               <tr>
                 <td class="cot1"><i class="fa fa-th-large fa-fw"></i> Thuộc dạng du lịch </td>
                 <td class="cot2"><?php echo $tendanhmuc; ?></td>
@@ -656,12 +662,6 @@
                                                     echo $value;
                                                   }
                                                 ?></td>
-              </tr>
-              <tr>
-                <td class="cot1"><i class="fa fa-photo fa-fw"></i> Hình ảnh </td>
-                <td class="cot2">
-                	<button class="btnhinhanh" data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo lang('view') ?></button>
-                </td>
               </tr>
             </table>
 		</div>

@@ -43,7 +43,7 @@ class Upload extends CI_Controller
             $uploadOk = 0;
         }
         // Check file size
-        if ($_FILES["fileToUpload"]["size"] > 2500000) {
+        if ($_FILES["fileToUpload"]["size"] > 6000000) {
             echo lang('sorry_your_file_is_too_large');
             $uploadOk = 0;
         }

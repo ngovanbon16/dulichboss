@@ -56,7 +56,7 @@ class Diadiemhinh extends CI_Controller
             $uploadOk = 0;
         }
         // Check file size
-        if ($_FILES["fileToUpload"]["size"] > 2500000) {
+        if ($_FILES["fileToUpload"]["size"] > 6000000) {
             echo lang('sorry_your_file_is_too_large');
             $uploadOk = 0;
         }
@@ -72,7 +72,7 @@ class Diadiemhinh extends CI_Controller
         // if everything is ok, try to upload file
         } else {
         	$namespam = $id.".".$imageFileType;
-        	for ($i=0; $i < 100; $i++) { 
+        	for ($i=0; $i < 500; $i++) { 
         		$tentam = $id.$i.".".$imageFileType;
         		if(!$this->mhinhanh->testten($tentam))
         		{

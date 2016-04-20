@@ -195,7 +195,7 @@
                         $('#eventsPanel').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
                             fileName + ';<br />' + 'size: ' + fileSize + '<br />');
 
-                        if(fileSize > 2500000)
+                        if(fileSize > 6000000)
                         {
                           $('#jqxFileUpload').jqxFileUpload('cancelFile', fileindex);
                           thongbao("", "<?php echo lang('sorry_your_file_is_too_large') ?>", "danger");
@@ -421,7 +421,7 @@
                 $('#eventsPanel1').jqxPanel('append', '<strong>' + event.type + ':</strong> ' +
                     fileName + ';<br />' + 'size: ' + fileSize + '<br />');
 
-                if(fileSize > 2500000)
+                if(fileSize > 6000000)
                 {
                   $('#jqxFileUpload1').jqxFileUpload('cancelFile', fileindex);
                   thongbao("", "<?php echo lang('sorry_your_file_is_too_large') ?>", "danger");
