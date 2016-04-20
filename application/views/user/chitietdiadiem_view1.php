@@ -540,57 +540,16 @@
                           honguoidang = data.diadiem[i]['ND_HO'];
                           tennguoidang = data.diadiem[i]['ND_TEN'];
                           hinhnguoidang = data.diadiem[i]['ND_HINH'];
-                          url1="<?php echo base_url(); ?>index.php/aediadiem/getanhbinhluan?t=" + Math.random();
-                          data1 = {
-                              "ma" : mabinhluan
-                          };
+
                           hinhanh = "";
-                           $.ajax({
-                              url : url1,
-                              type : 'post',
-                              dataType : 'json',
-                              data : data1,
-                              success : function (data){
-                                  //$('#result1').html(result);
-                                  console.log(data);
-
-                                  for (var i = 0; i < data.length; i++) {
-                                    hinhanh += '<img class="img" src="<?php echo base_url(); ?>uploads/binhluan/'+data[i]["ABL_TEN"]+'" width="120" height="100">';
-                                 }
-                              }
-                          });
-                          /*hinhanh = "";
-                          var url1, datah;
-                          url1="<?php echo base_url(); ?>index.php/aediadiem/getanhbinhluan?t=" + Math.random();
-                          datah = {
-                              "ma" : mabinhluan
-                          };
-                          console.log(datah);
-                          $.post(url1, datah, function(data, status){
-
-                              console.log(status);
-                              console.log(data);
-                              if(status == "success")
-                              {   
-                                 for (var i = 0; i < data.length; i++) {
-                                    hinhanh += '<img class="img" src="<?php echo base_url(); ?>uploads/binhluan/'+data[i]["ABL_TEN"]+'" width="120" height="100">';
-                                 }
-                              }
-                          }, 'json');*/
-
-                          /*hinhanh = "";
-                          j = 0;
-                          for (var i = 0; i < data.hinhanh.length; i++) {
-                            mbl = data.hinhanh[i]["BL_MA"];
-                            tenhinh = data.hinhanh[i]["ABL_TEN"];
-                            if(mbl == mabinhluan && j < 5)
+                          for (var j = 0; j < data.diadiem[i]["ANHBINHLUAN"].length; j++) {
+                            tenhinh = data.diadiem[i]["ANHBINHLUAN"][j]["ABL_TEN"];
+                            if(j > 4)
                             {
-                              hinhanh += '<img class="img" src="<?php echo base_url(); ?>uploads/binhluan/'+tenhinh+'" width="120" height="100">';
-                              j++;
+                              break;
                             }
-                          }*/
-
-                          hinhanh = '<img class="img" src="<?php echo base_url(); ?>uploads/binhluan/anhdaidien.jpg" width="120" height="100">';
+                            hinhanh += '<img style="margin: 2px;" class="img" src="<?php echo base_url(); ?>uploads/binhluan/'+tenhinh+'" width="120" height="100">';
+                          }
 
                           str += '<div class="media reply_section"><div class="pull-left post_reply text-center" style="margin: 10px;"><a href="#"><img style="border: solid 1px #DCDCDC; width: 70px; height: 70px;" src="<?php echo base_url(); ?>uploads/user/'+hinhnguoidang+'" class="img-circle" alt="" /></a></div><div class="media-body post_reply_content" style="color: #000; margin: 10px;"><h5 style="text-transform: capitalize; color: #000;"> '+honguoidang+' '+tennguoidang+' - <i style="font-size: 13px;"><?php echo lang("comment"); ?> </i><i style="font-size: 13px; opacity: 0.7;">'+ngaydang+'</i><div style="margin-top: 5px; font-size: 13px;"><i><?php echo lang("quality") ?>: </i><span style="color: '+maucl+'; font-weight: bolder;" >'+chatluong+'</span> | <i><?php echo lang("service") ?>: </i><span style="color: '+maupv+'; font-weight: bolder;" >'+phucvu+'</span> | <i><?php echo lang("space") ?>: </i><span style="color: '+maukg+'; font-weight: bolder;" >'+khonggian+'</span> | <i><?php echo lang("average") ?>: </i><span style="color: '+mautb+'; font-weight: bolder;" >'+diem+'</span></div></h5><h3 style="color: #000; font-weight: bold; font-size: 18px; text-transform: capitalize;">'+tieude+'</h3><p><div style="text-align: justify; margin-bottom: 10px; line-height: 1.5; font-size: 13px;">'+noidung+' </div><div style="cursor: pointer;" data-toggle="modal" data-target="#Modalcomment" onclick="xemanhbinhluan('+mabinhluan+')">'+hinhanh+'</div></p><div style="text-align: right;"><a style="z-index: 10;" href="#name"><button style="background-color: #1AA5D1;" type="button" class="btn btn-info"> <i class="fa fa-comment-o fa-fw"></i> <?php echo lang("comment") ?></button></a></div></div></div>';
                       }

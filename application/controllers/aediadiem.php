@@ -524,25 +524,32 @@ class Aediadiem extends CI_Controller
 		$query = "SELECT * FROM diadiem JOIN nguoidung ON diadiem.ND_MA = nguoidung.ND_MA JOIN binhluan ON binhluan.DD_MA = diadiem.DD_MA WHERE diadiem.DD_MA = '$DD_MA' ORDER BY binhluan.BL_NGAYDANG DESC LIMIT $start, $length";
 		$diadiem = $this->mdiadiem->gettimkiem($query);
 
-		$query = "SELECT * FROM anhbinhluan";
-		$hinhanh = $this->mdiadiem->gettimkiem($query);	
+		$this->load->model("manhbinhluan");
+		$binhluan = array();
 
-		$response = array('diadiem' => $diadiem, 'hinhanh' => $hinhanh);
+		$i = 0;
+		foreach ($diadiem as $row) {
+			$tam = array();
+			$tam["BL_MA"] = $row["BL_MA"];
+			$tam["BL_TIEUDE"] = $row["BL_TIEUDE"];
+			$tam["BL_NOIDUNG"] = $row["BL_NOIDUNG"];
+			$tam["BL_CHATLUONG"] = $row["BL_CHATLUONG"];
+			$tam["BL_PHUCVU"] = $row["BL_PHUCVU"];
+			$tam["BL_KHONGGIAN"] = $row["BL_KHONGGIAN"];
+			$tam["BL_NGAYDANG"] = $row["BL_NGAYDANG"];
+			$tam["ND_HO"] = $row["ND_HO"];
+			$tam["ND_TEN"] = $row["ND_TEN"];
+			$tam["ND_HINH"] = $row["ND_HINH"];
+			$tam["ANHBINHLUAN"] = $this->manhbinhluan->getanhbinhluan($row["BL_MA"]);
+
+			$binhluan[$i] = $tam;
+			$i++;
+		}
+
+		$response = array('diadiem' => $binhluan);
 		$jsonString = json_encode($response);
-		//$jsonString = json_encode($result);
 		echo $jsonString;
 	}
-
-	/*public function getanhbinhluan()
-	{
-		$BL_MA = $_POST['ma'];
-
-		$query = "SELECT * FROM anhbinhluan WHERE BL_MA = '$BL_MA' ";
-		$result = $this->mdiadiem->gettimkiem($query);	
-
-		$jsonString = json_encode($result);
-		echo $jsonString;
-	}*/
 
 	public function update()
 	{
