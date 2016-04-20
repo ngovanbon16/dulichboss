@@ -83,10 +83,29 @@ class Aediadiem extends CI_Controller
 		$this->load->library('googlemaps');
 
 		$config = array();
-		$config['center'] = $local;
+		$config['center'] = 'auto';
 		$config['zoom'] = '17';
 
+		//$config['onclick'] = 'alert(\'You just clicked at: \' + event.latLng.lat() + \', \' + event.latLng.lng());';
+		$config['onboundschanged'] = 'if (!centreGot) {
+			var mapCentre = map.getCenter();
+			marker_0.setOptions({
+				position: new google.maps.LatLng(mapCentre.lat(), mapCentre.lng()) 
+			});
+		}
+		centreGot = true;';
+		$config['directions'] = TRUE;
+		$config['directionsStart'] = $config['center'];
+		$config['directionsEnd'] = $local;
+		$config['directionsDivID'] = 'directionsDiv';
 		$this->googlemaps->initialize($config);
+		   
+		// set up the marker ready for positioning 
+		// once we know the users location
+		$marker = array();
+		$this->googlemaps->add_marker($marker);
+
+		//$this->googlemaps->initialize($config);
 
 		$this->load->model("mdiadiem");
 		$this->load->model("mhinhanh");

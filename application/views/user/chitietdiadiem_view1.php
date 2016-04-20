@@ -743,6 +743,10 @@
 
     </script>
 
+    <script type="text/javascript">
+      var centreGot = false;
+    </script>
+
 <style type="text/css">
     #diembinhluan{
         border-radius: 3px;
@@ -1449,6 +1453,7 @@
                         
                         <?php echo $map['js']; ?>
                         <?php echo $map['html']; ?>
+                        <div style="max-height: 200px; overflow: auto;" id="directionsDiv"></div>
                                           
                     </div><!--/.recent comments-->
 
