@@ -226,4 +226,9 @@ $lang['all'] = "Tất cả";
 $lang['new_post'] = "Bài viết mới";
 $lang['general_search'] = "Tìm kiếm chung";
 $lang['detailed_search'] = "Tìm kiếm chi tiết";
+$lang['places_you_have_checkined'] = "Những nơi bạn đã đến";
+$lang['your_favorite_places'] = "Những địa điểm ưu thích của bạn";
+$lang['places_you_want_to_visit'] = "Những nơi bạn muốn ghé thăm";
+$lang['the_articles_you_posted'] = "Những bài viết bạn đã đăng";
+$lang['albums'] = "Albums";
 ?>

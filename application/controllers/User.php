@@ -521,6 +521,87 @@ class User extends CI_Controller
 		return $this->googlemaps->create_map();
 	}
 
+	public function info()
+	{
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+
+		$id = "0";
+		if(isset($this->session->userdata['id']))
+		{
+			$id = $this->session->userdata['id'];
+
+			$this->load->model("mdiadiem");
+			$query = "SELECT * FROM nguoidung WHERE ND_MA = '$id' ";
+			$this->_data["info"] = $this->mdiadiem->getdata($query);
+
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND nguoidung_diadiem.NDDD_YEUTHICH = '1' ";
+			$this->_data["yeuthich"] = $this->mdiadiem->gettimkiem($query);
+
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND nguoidung_diadiem.NDDD_MUONDEN = '1' ";
+			$this->_data["muonden"] = $this->mdiadiem->gettimkiem($query);
+
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND nguoidung_diadiem.NDDD_DADEN = '1' ";
+			$this->_data["daden"] = $this->mdiadiem->gettimkiem($query);
+
+			$query = "SELECT * FROM baiviet WHERE ND_MA = '$id' ";
+			$this->_data["baiviet"] = $this->mdiadiem->gettimkiem($query);
+
+			$this->_data['title'] = lang('account');
+	        $this->_data['subview'] = 'user/thongtinnguoidung_view';
+	        $this->load->view('user/main.php', $this->_data);
+    	}
+    	else
+    	{
+    		redirect("./");
+    	}
+	}
+
+	public function getdatainfo()
+	{
+		$id = $this->session->userdata['id'];
+		$ten = $_POST["ten"];
+		$start = $_POST["start"];
+		$length = $_POST["length"];
+
+		$str = "";
+		if($ten == "yeuthich")
+		{
+			$str = "nguoidung_diadiem.NDDD_YEUTHICH";
+		}
+		if($ten == "muonden")
+		{
+			$str = "nguoidung_diadiem.NDDD_MUONDEN";
+		}
+		if($ten == "daden")
+		{
+			$str = "nguoidung_diadiem.NDDD_DADEN";
+		}
+
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND ".$str." = '1' LIMIT $start, $length";
+		
+		$this->load->model("mdiadiem");
+		$response = $this->mdiadiem->gettimkiem($query);
+
+		$jsonString = json_encode($response);
+		echo $jsonString;
+	}
+
+	public function getdatainfobaiviet()
+	{
+		$id = $this->session->userdata['id'];
+		$start = $_POST["start"];
+		$length = $_POST["length"];
+
+		$query = "SELECT * FROM baiviet WHERE ND_MA = '$id' LIMIT $start, $length";
+		
+		$this->load->model("mdiadiem");
+		$response = $this->mdiadiem->gettimkiem($query);
+
+		$jsonString = json_encode($response);
+		echo $jsonString;
+	}
+
 }
 
 ?>

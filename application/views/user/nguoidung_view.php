@@ -56,6 +56,7 @@
                 if(serverResponce.indexOf("!") != "-1")
                 {
                     thongbao("", serverResponce, "success");
+                    location.reload(true);
                 }
                 else
                 {

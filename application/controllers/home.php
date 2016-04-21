@@ -285,27 +285,21 @@ class Home extends CI_Controller
 		$this->load->library('googlemaps');
 		$config = array();
 		$config['center'] = 'can tho';
-		$config['zoom'] = '9';
+		$config['zoom'] = '8';
 		$config['cluster'] = TRUE;
-		$config['onboundschanged'] = 'if (!centreGot) {
+		/*$config['onboundschanged'] = 'if (!centreGot) {
 			var mapCentre = map.getCenter();
 			marker_0.setOptions({
 				position: new google.maps.LatLng(mapCentre.lat(), mapCentre.lng()) 
 			});
 		}
-		centreGot = true;';
-
-		/*$config['places'] = TRUE; // them cac maker xung quanh dia diem dinh san
-		$config['placesLocation'] = '10.033046, 105.784651';
-		$config['placesRadius'] = 200; */
+		centreGot = true;';*/
 
 		$this->googlemaps->initialize($config);
-		   
-		// set up the marker ready for positioning 
-		// once we know the users location
-		$marker = array();
+
+		/*$marker = array();
 		$marker['onclick'] = 'alert("Bạn đang ở vị trí này!")';
-		$this->googlemaps->add_marker($marker);
+		$this->googlemaps->add_marker($marker);*/
 
 		$this->load->model("mdiadiem");
 

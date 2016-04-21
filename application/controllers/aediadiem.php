@@ -87,25 +87,22 @@ class Aediadiem extends CI_Controller
 		$config['zoom'] = '17';
 
 		//$config['onclick'] = 'alert(\'You just clicked at: \' + event.latLng.lat() + \', \' + event.latLng.lng());';
-		$config['onboundschanged'] = 'if (!centreGot) {
+		/*$config['onboundschanged'] = 'if (!centreGot) {
 			var mapCentre = map.getCenter();
 			marker_0.setOptions({
 				position: new google.maps.LatLng(mapCentre.lat(), mapCentre.lng()) 
 			});
 		}
-		centreGot = true;';
+		centreGot = true;';*/
 		$config['directions'] = TRUE;
+		$config['cluster'] = TRUE;
 		$config['directionsStart'] = $config['center'];
 		$config['directionsEnd'] = $local;
 		$config['directionsDivID'] = 'directionsDiv';
 		$this->googlemaps->initialize($config);
 		   
-		// set up the marker ready for positioning 
-		// once we know the users location
-		$marker = array();
-		$this->googlemaps->add_marker($marker);
-
-		//$this->googlemaps->initialize($config);
+		/*$marker = array();
+		$this->googlemaps->add_marker($marker);*/
 
 		$this->load->model("mdiadiem");
 		$this->load->model("mhinhanh");
@@ -135,8 +132,8 @@ class Aediadiem extends CI_Controller
 		            }
 	            }
 
-				$hinh = "<img src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
-				$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: -20px 0px -20px 0px; padding: 0px; width: 180px;'><a href='".base_url()."index.php/aediadiem/detailuser1/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a></div><br/><div style='width: 180px; text-transform: capitalize; color: #FFF; background-color: #39F; padding: 5px; font-weight: bold;'>".$item['DD_DIACHI']."</div>";
+				$hinh = "<a href='".base_url()."index.php/aediadiem/detailuser1/".$madd."'><img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
+				$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: 0px 0px 0px 0px; padding: 0px; width: 180px; max-height: 30px;'><input style='width: 180px; cursor: pointer; font-weight: bold;' type='text' value='".$item['DD_TEN']."' > </a></div><div style='width: 180px; text-transform: capitalize; color: #1AA5D1; background-color: #FFF; font-weight: bold;'><i>".$item['DD_DIACHI']."</i></div>";
 				$marker['infowindow_content'] = $hinh.$noidung;
 				$marker['id'] = $madd;
 				//$marker['onclick'] = 'alert("You just clicked me!!")';

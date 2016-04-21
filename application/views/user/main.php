@@ -148,7 +148,7 @@
                                 <li><a href="<?php echo base_url(); ?>index.php/user/addnewplace"><i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('add_new_place'); ?></a>
                                 </li>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/user/account"><i class="fa fa-gear fa-fw"></i> <?php echo lang('setting') ?></a>
+                                <li><a href="<?php echo base_url(); ?>index.php/user/info"><i class="fa fa-book fa-fw"></i> <?php echo lang('albums') ?></a>
                                 </li>
                                 <li class="divider"></li>
 
