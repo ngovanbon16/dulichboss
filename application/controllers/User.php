@@ -103,7 +103,7 @@ class User extends CI_Controller
 			if(count($result) > 0)
 			{
 				foreach ($result as $row) {
-					echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 150px; height: 100px; float: left; margin-right: 10px; border-radius: 3px;"> <div style="min-height: 100px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #B9D3EE;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['DM_TEN'].' | '.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div> </div>'   ;
+					echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 150px; height: 100px; float: left; margin-right: 10px; border-radius: 3px;"> <div style="min-height: 100px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #1AA5D1;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['DM_TEN'].' | '.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div> </div>'   ;
 				}
 			}
 
@@ -119,7 +119,7 @@ class User extends CI_Controller
 			if(count($result) > 0)
 			{
 				foreach ($result as $row) {
-					echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 130px; height: 90px; float: left; margin-right: 10px; border-radius: 3px;"> <div style="min-height: 90px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #B9D3EE;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['DM_TEN'].' | '.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div> </div>'   ;
+					echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 130px; height: 90px; float: left; margin-right: 10px; border-radius: 3px;"> <div style="min-height: 90px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #1AA5D1;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['DM_TEN'].' | '.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div> </div>'   ;
 				}
 			}
 			else 
@@ -188,7 +188,7 @@ class User extends CI_Controller
 		if(count($result) > 0)
 		{
 			foreach ($result as $row) {
-				echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 150px; height: 100px; float: left; margin-right: 10px; border-radius: 3px;"> <div style="min-height: 100px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #B9D3EE;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['DM_TEN'].' | '.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div> </div>'   ;
+				echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 150px; height: 100px; float: left; margin-right: 10px; border-radius: 3px;"> <div style="min-height: 100px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #1AA5D1;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['DM_TEN'].' | '.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div> </div>'   ;
 			}
 		}
 	}
@@ -544,6 +544,9 @@ class User extends CI_Controller
 			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND nguoidung_diadiem.NDDD_DADEN = '1' ";
 			$this->_data["daden"] = $this->mdiadiem->gettimkiem($query);
 
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung ON nguoidung.ND_MA = diadiem.ND_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung.ND_MA = '$id'";
+			$this->_data["diadiem"] = $this->mdiadiem->gettimkiem($query);
+
 			$query = "SELECT * FROM baiviet WHERE ND_MA = '$id' ";
 			$this->_data["baiviet"] = $this->mdiadiem->gettimkiem($query);
 
@@ -580,6 +583,11 @@ class User extends CI_Controller
 
 		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND ".$str." = '1' LIMIT $start, $length";
 		
+		if($ten == "diadiem")
+		{
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung ON diadiem.ND_MA = nguoidung.ND_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.ND_MA = '$id' LIMIT $start, $length";
+		}
+
 		$this->load->model("mdiadiem");
 		$response = $this->mdiadiem->gettimkiem($query);
 

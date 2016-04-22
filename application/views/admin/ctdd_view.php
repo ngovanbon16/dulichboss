@@ -102,16 +102,18 @@
 				if(tg == '1')
 				{
 					thongbao("", "<?php echo lang('photo_approved') ?>", "success");
+					$("#img"+id).css("opacity", "1");
 				}
 				else
 				{
 					thongbao("", "<?php echo lang('cancelled_accept_photos') ?>", "danger");
+					$("#img"+id).css("opacity", "0.5");
 				}
 
 	        }, 'json');
 		}
 
-		function daidien(id)
+		function daidien(id, ten)
 		{
 			var url, dta;
 	        url = "<?php echo base_url(); ?>index.php/diadiemhinh/daidien";
@@ -127,6 +129,7 @@
 		        console.log(data);
 
 		        document.getElementById('avatar'+id).src = "<?php echo base_url(); ?>assets/images/avatar.png";
+
 		        thongbao("", "<?php echo lang('updates_successfully_avatar') ?>", "success");
 
 		        for (var i = 0; i < data.data.length; i++) {
@@ -136,7 +139,8 @@
 		        	{
 		        		document.getElementById('avatar'+ma).src = "<?php echo base_url(); ?>assets/images/unavatar.png";
 		        	}
-		        } 
+		        }
+		        loc('2');
 
 	        }, 'json');
 		}
@@ -254,9 +258,12 @@
 		        	var hadaidien = data.data[i]['HA_DAIDIEN'];
 		        	var duyet = "";
 		        	var avatar = "";
+		        	var domo = "0.5";
+		        	var maudaidien = "";
 		        	if(haduyet == '1')
                 	{
                 		duyet = "check.png";
+                		domo = '1';
                 	}
                 	else
                 	{
@@ -266,6 +273,7 @@
                 	if(hadaidien == '1')
                 	{
                 		avatar = "avatar.png";
+                		maudaidien = "#1AA5D1";
                 	}
                 	else
                 	{
@@ -274,7 +282,7 @@
 
 		        	if(haduyet == bien || bien == '2')
 		        	{
-		        		chuoi += '<span class="span" id="'+haten+'"><a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/'+haten+'" rel="prettyPhoto"><img class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/'+haten+'" width="100%" height="80%" /></a><div class="div"><img id="'+hama+'" class="btncheck" src="<?php echo base_url(); ?>assets/images/'+duyet+'" onclick="duyet('+hama+')" /><input style="display: none;" id="check'+hama+'" type="text" value="'+haduyet+'" /><img id="avatar'+hama+'" class="btnavatar" src="<?php echo base_url(); ?>assets/images/'+avatar+'" onclick="daidien('+hama+')" /><img class="btnbin" src="<?php echo base_url(); ?>assets/images/bin.png" onclick="xoahinhanh(\''+haten+'\')" /><label class="checkbox-inline" ><input name="hinhanhchk" class="hinhanhchk" style="width: 20px; height: 20px; margin-top: -10px;" type="checkbox" value="'+haten+'"></label></div></span>';
+		        		chuoi += '<span style="background-color: '+maudaidien+';" class="span" id="'+haten+'"><a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/'+haten+'" rel="prettyPhoto"><img id="img'+hama+'" style="opacity: '+domo+';" class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/'+haten+'" width="100%" height="80%" /></a><div class="div"><img id="'+hama+'" class="btncheck" src="<?php echo base_url(); ?>assets/images/'+duyet+'" onclick="duyet('+hama+')" /><input style="display: none;" id="check'+hama+'" type="text" value="'+haduyet+'" /><img id="avatar'+hama+'" class="btnavatar" src="<?php echo base_url(); ?>assets/images/'+avatar+'" onclick="daidien('+hama+')" /><img class="btnbin" src="<?php echo base_url(); ?>assets/images/bin.png" onclick="xoahinhanh(\''+haten+'\')" /><label class="checkbox-inline" ><input name="hinhanhchk" class="hinhanhchk" style="width: 20px; height: 20px; margin-top: -10px;" type="checkbox" value="'+haten+'"></label></div></span>';
 
 		        		count++;
 		        		//document.getElementById(haten).style.display = "block";
@@ -423,8 +431,7 @@
         	}
         }
 
-        function uploadimg()
-        {
+        $(document).ready(function(){
         	//dang anh cho dia diem
             var path = "<?php echo base_url(); ?>index.php/diadiemhinh/uploadimg/" + "<?php echo $info['DD_MA']; ?>";
 
@@ -472,7 +479,7 @@
                     thongbao("", serverResponce, "danger");
                 }
             });
-        }
+        });
 	</script>
 
 	<style type="text/css">
@@ -736,7 +743,7 @@
 			        <i class="fa fa-send-o"></i>
 			        <b id="total"><?php echo count($info1); ?></b>
 			        <i class="fa fa-angle-double-right"></i>
-			        <button class="btnhinhanh" data-toggle="modal" data-target="#modalthemanh" onclick="uploadimg()"><?php echo lang('upload_photos') ?></button>
+			        <button class="btnhinhanh" data-toggle="modal" data-target="#modalthemanh"><?php echo lang('upload_photos') ?></button>
 
 			    </div>
 		    	<div id='hinhdiadiem' class="modal-body" style="width: 100%; height: 450px; overflow: auto;">
@@ -751,9 +758,13 @@
 	                    	$haduyet = $item['HA_DUYET'];
 	                    	$hadaidien = $item['HA_DAIDIEN'];
 
+	                    	$domo = "0.5";
+	                    	$maudaidien = "";
+
 	                    	if($haduyet == '1')
 	                    	{
 	                    		$duyet = "check.png";
+	                    		$domo = "1";
 	                    	}
 	                    	else
 	                    	{
@@ -763,6 +774,7 @@
 	                    	if($hadaidien == '1')
 	                    	{
 	                    		$avatar = "avatar.png";
+	                    		$maudaidien = "#1AA5D1";
 	                    	}
 	                    	else
 	                    	{
@@ -770,10 +782,10 @@
 	                    	}
 
                     ?>
-                    	<span class="span" id="<?php echo $haten ?>">
+                    	<span style="background-color: <?= $maudaidien; ?>;" class="span" id="<?php echo $haten ?>">
 
                     		<a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $haten; ?>" rel="prettyPhoto">
-	                            <img class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $haten; ?>" width="100%" height="80%" />
+	                            <img id="img<?= $hama; ?>" style="opacity: <?= $domo; ?>;" class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $haten; ?>" width="100%" height="80%" />
 	                        </a>
 
                     		<!-- <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $haten; ?>" width='100%' height='80%'> -->
@@ -781,7 +793,7 @@
                     			<img id="<?php echo $hama ?>" class="btncheck" src="<?php echo base_url(); ?>assets/images/<?php echo $duyet ?>" onclick="duyet('<?php echo $hama ?>')" />
                     			<input style="display: none;" id="check<?php echo $hama ?>" type="text" value="<?php echo $haduyet ?>" />
 
-                    			<img id="avatar<?php echo $hama ?>" class="btnavatar" src="<?php echo base_url(); ?>assets/images/<?php echo $avatar ?>" onclick="daidien('<?php echo $hama ?>')" />
+                    			<img id="avatar<?php echo $hama ?>" class="btnavatar" src="<?php echo base_url(); ?>assets/images/<?php echo $avatar ?>" onclick="daidien('<?= $hama ?>','<?= $haten ?>')" />
 
                     			<img class="btnbin" src="<?php echo base_url(); ?>assets/images/bin.png" onclick="xoahinhanh('<?php echo $haten ?>')" />
 

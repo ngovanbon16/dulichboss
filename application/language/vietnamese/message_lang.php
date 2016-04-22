@@ -231,4 +231,11 @@ $lang['your_favorite_places'] = "Những địa điểm ưu thích của bạn";
 $lang['places_you_want_to_visit'] = "Những nơi bạn muốn ghé thăm";
 $lang['the_articles_you_posted'] = "Những bài viết bạn đã đăng";
 $lang['albums'] = "Albums";
+$lang['what_is_the_reason'] = "Lý do là gì?";
+$lang['send'] = "Gửi";
+$lang['no'] = "Không";
+$lang['reason'] = "Lý do";
+$lang['locked'] = "Đã bị khóa";
+$lang['email_hasnt_been_sent'] = "Email chưa được gửi";
+$lang['your_places'] = "Các địa điểm của bạn";
 ?>

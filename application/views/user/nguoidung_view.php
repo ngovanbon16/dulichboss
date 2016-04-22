@@ -111,11 +111,11 @@
     </style>
 </head>
 <body>
-     <section id="services" class="service-item">
+     <section style="background-color: #DCDCDC;" class="service-item">
        <div class="container">
             <table border="0">
                 <tr>
-                    <td style="padding: 20px; background-color: #DCDCDC; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
+                    <td style="border: solid 1px #F8F8FF; padding: 20px; background-color: #DCDCDC; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
                         <?php
                             $ten = $info["ND_HINH"];
                             $file_path = "uploads/user/".$ten;
@@ -143,7 +143,7 @@
                         <hr/>
                         <h3><?php echo lang('change').' '.lang('avatar') ?></h3>
                         <div id="jqxFileUpload"></div>
-                        <div id="eventsPanel"></div>
+                        <div style="display: none;" id="eventsPanel"></div>
                     </td>
                     <td style="padding: 20px; background-color: #F8F8FF; border-radius: 0px 5px 5px 0px;" valign="top">
                         <h1><?php echo lang('profile') ?></h1>

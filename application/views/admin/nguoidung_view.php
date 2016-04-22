@@ -19,25 +19,17 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxgrid.selection.js"></script> 
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxpanel.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/demos.js"></script>
-
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxinput.js"></script>
-
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxtooltip.js"></script> 
-
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxgrid.edit.js"></script>
-
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxwindow.js"></script>
-
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxnumberinput.js"></script>
-
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
-    
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcalendar.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
-
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
-
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/demos/jqxgrid/localization.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxloader.js"></script>
 
     <script type="text/javascript">
         function sua(id)
@@ -73,10 +65,90 @@
         }
         function kichhoat(id, row)
         {
-            var commit = $("#jqxgrid").jqxGrid('updaterow', id, $("#jqxgrid").jqxGrid('getrowdata', row));
+            $("#jqxgrid").hide();
+            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+            var kichhoat = dataRecord.ND_KICHHOAT;
+            var email = dataRecord.ND_DIACHIMAIL;
+            if(kichhoat == "-1")
+            {
+                mscConfirm({
+                    title: "<?php echo lang('notification') ?>",
+
+                    subtitle: "<?php echo lang('are_you_sure') ?>",  // default: ''
+
+                    okText: "<?php echo lang('i_agree') ?>",    // default: OK
+
+                    cancelText: "<?php echo lang('i_dont') ?>", // default: Cancel
+
+                    onOk: function() {
+                        var commit = $("#jqxgrid").jqxGrid('updaterow', id, $("#jqxgrid").jqxGrid('getrowdata', row));
+                        $("#jqxgrid").show();
+                    },
+
+                    onCancel: function() {
+                        $("#jqxgrid").show();
+                    }
+                });
+            }
+            if(kichhoat == "1")
+            {
+                mscPrompt({
+                  title: '<?php echo lang('notification') ?>',
+
+                  subtitle: '<?= lang('what_is_the_reason') ?>',  // default: ''
+
+                  okText: '<?= lang("send")." ".lang("email") ?>',    // default: OK
+
+                  cancelText: '<?= lang("no")." ".lang("send")." ".lang("email") ?>', // default: Cancel,
+
+                  placeholder: '<?= lang("input")." ".lang("reason") ?>...', // default: empty, placeholder for input text box
+
+                  onOk: function(val) {
+                    //mscAlert("Your email: "+val+" has subscribed to the newsletter.");
+                    $("#jqxgrid").jqxGrid('updaterow', id, $("#jqxgrid").jqxGrid('getrowdata', row));
+
+                    $('#jqxLoader').jqxLoader('open');
+                    var dta, url;
+                    url = "<?php echo base_url(); ?>index.php/nguoidung/guimailkhoataikhoan";
+                    data = {
+                        "email" : email,
+                        "noidung" : val
+                    };
+                    console.log(data);
+                    $.ajax({
+                          url : url,
+                          type : 'post',
+                          dataType : 'json',
+                          data : data,
+                          success : function (data){
+                            console.log(data);
+                            if(data.status != "error")
+                            {
+                                thongbao("", email+" <?= lang('locked') ?>", "success");
+                            }
+                            else
+                            {
+                                thongbao("", "<?= lang('email_hasnt_been_sent') ?>", "danger");
+                            }
+                            
+                            $('#jqxLoader').jqxLoader('close');
+                            $("#jqxgrid").show();
+                          }
+                      });
+                  },
+
+                  onCancel: function() {
+                    //mscAlert(":( You cancelled on me.");
+                    thongbao("", "<?= lang('cancel') ?>", "danger");
+                    $("#jqxgrid").show();
+                  }
+                });
+            }
         }
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
+
+            $("#jqxLoader").jqxLoader({ isModal: true, text: "<?php echo lang('sending') ?>...", width: 100, height: 60, imagePosition: 'top' });
 
             var data = {};
             var url = "<?php echo base_url(); ?>index.php/nguoidung/data0";
@@ -470,6 +542,7 @@
     </style>
 </head>
 <body class='default'>
+    <div id="jqxLoader"></div>
     <div id='jqxWidget' style="font-size: 13px; font-family: Verdana;">
         <div id="jqxgrid">
         </div>

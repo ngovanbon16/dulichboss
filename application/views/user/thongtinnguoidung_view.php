@@ -94,6 +94,7 @@
             document.getElementById("yeuthich").style.color = "#000";
             document.getElementById("muonden").style.color = "#000";
             document.getElementById("baiviet").style.color = "#000";
+            document.getElementById("diadiem").style.color = "#000";
 
             if(ten == "daden")
             {
@@ -110,11 +111,15 @@
                 tenhien = "<?= lang('places_you_want_to_visit') ?>";
                 document.getElementById("muonden").style.color = "#F00";
             }
-
             if(ten == "baiviet")
             {
                 tenhien = "<?= lang('the_articles_you_posted') ?>";
                 document.getElementById("baiviet").style.color = "#F00";
+            }
+            if(ten == "diadiem")
+            {
+                tenhien = "<?= lang('your_places') ?>";
+                document.getElementById("diadiem").style.color = "#F00";
             }
 
             document.getElementById("tenhien").innerHTML = tenhien;
@@ -242,11 +247,11 @@
     </style>
 </head>
 <body>
-     <section id="services" class="service-item">
-       <div class="container">
+     <section style="background-color: #DCDCDC;" class="service-item">
+       <div style="border: solid 1px #F8F8FF;" class="container">
             <table border="0">
                 <tr>
-                    <td valign="top" style="padding: 20px; background-color: #DCDCDC; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
+                    <td valign="top" style="padding: 10px; background-color: #DCDCDC; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
                         <?php
                             $ten = $info["ND_HINH"];
                             $file_path = "uploads/user/".$ten;
@@ -271,9 +276,8 @@
                             </a>
                             
                         </h2>
-                        <hr/>
 
-                        <ul class="blog_archieve" style="border-radius: 2px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 10px 10px 10px 10px;">
+                        <ul class="blog_archieve" style="border-radius: 3px; background-color: #FFF; border: solid 1px #F8F8FF; padding: 10px 10px 10px 10px;">
                             <li id="daden" style="color: #F00;" class="li" onclick="xem('daden', '0', '5')">
                                   <i class="fa fa-check-square-o fa-fw"></i> <?php echo lang('check_in') ?>
                                   <span class="pull-right"><label> <?= count($daden) ?></label></span>
@@ -289,6 +293,10 @@
                             <li id="baiviet" class="li" onclick="xembaiviet()">
                                   <i class="fa fa-pencil fa-fw"></i> <?= lang('posts') ?>
                                   <span class="pull-right"><label> <?= count($baiviet) ?></label></span>
+                            </li>
+                            <li id="diadiem" class="li" onclick="xem('diadiem', '0', '5')">
+                                  <i class="fa fa-globe fa-fw"></i> <?= lang('place') ?>
+                                  <span class="pull-right"><label> <?= count($diadiem) ?></label></span>
                             </li>
                         </ul>
 

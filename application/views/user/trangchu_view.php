@@ -133,29 +133,32 @@
             margin: 10px;
             background-color: #FFF; 
             width: 250px; 
-            height: 600px;
+            height: 530px;
             border-radius: 3px;
-            opacity: 0.8;
-            margin-right: -250px;
+            opacity: 0.7;
+            margin-right: 0px;
             -webkit-transition: margin-right 3s;
             transition:  margin-right 3s;
             box-shadow: 0 0 4px #8DEEEE;
             -webkit-box-shadow: 0 0 4px #8DEEEE;
         }
         .benner1{
-            margin-right: 0px;
+            margin-right: -250px;
             -webkit-transition:  margin-right 3s;
             transition:  margin-right 3s;
             background-color: #DCDCDC;
         }
         .benner2{
             margin: 5px;
+            opacity: 1;
         }
         .tieudebenner{
             font-size: 13; 
             width: 100px; 
             color: #F00; 
             overflow: hidden;
+            opacity: 1;
+            font-weight: bold;
         }
         .tieudebenner:hover {
             color: #000;
@@ -166,14 +169,26 @@
             margin-right: -12px;
             margin-top: 12px;
             cursor: pointer;
-            width: 50px;
-            height: 50px;
-            font-size: 50px;
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
             color: #c52d2f;
             border-radius: 5px 0px 0px 5px;
         }
         #iconleft:hover{
             color: #F00;
+        }
+        .tieudebanner{
+            padding: 5px;
+            background-color: #FF3300;
+            color: #FFF;
+            text-align: center;
+            border-radius: 3px 3px 5px 5px;
+            width: 100%;
+            box-shadow: 0 0 4px #000;
+            -webkit-box-shadow: 0 0 4px #000;
+            font-weight: bold;
+            font-size: 13px;
         }
     </style>
 
@@ -188,7 +203,8 @@
                 </td>
                 <td>
                     <div class="benner" >
-                        <marquee class="benner2" onmouseover="this.stop()" onmouseout="this.start()" scrollamount="3" direction="up" width="240" height="590" align="center">
+                        <div class="tieudebanner"><?= lang('the_places_have_be_appreciated') ?></div>
+                        <marquee class="benner2" onmouseover="this.stop()" onmouseout="this.start()" scrollamount="3" direction="up" width="240" height="485" align="center">
 
                           <?php
                             foreach ($danhgia as $row) {
@@ -226,9 +242,9 @@
                 <li data-target="#main-slider" data-slide-to="2"></li>
                 <li data-target="#main-slider" data-slide-to="3"></li>
             </ol>
-            <div class="carousel-inner">
+            <div style="max-height: 550px;" class="carousel-inner">
 
-                <div class="item active" style="background-image: url(<?php echo base_url(); ?>assets/images/caucantho.jpg)">
+                <div class="item active" style="max-height: 550px; background-image: url(<?php echo base_url(); ?>assets/images/caucantho.jpg)">
                     <div class="container">
                         <div class="row slide-margin">
                             <div class="col-sm-6">
