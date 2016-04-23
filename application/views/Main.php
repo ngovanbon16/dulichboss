@@ -103,7 +103,7 @@
                 </button>
 
                 <ul class="nav navbar-nav navbar-left navbar-top-links">
-                    <li><a href="<?php echo base_url(); ?>home/trangchu"><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a></li>
+                    <li><a href="<?php echo base_url(); ?>trangchu"><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a></li>
                 </ul>
 
                 <ul class="nav navbar-right navbar-top-links">
@@ -198,7 +198,7 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
                             <?php //echo $this->session->userdata['avata']; ?>
-                            <!-- <a href="<?php echo base_url(); ?>index.php/avata"> -->
+                            <!-- <a href="<?php echo base_url(); ?>avata"> -->
                             <?php
                                 if($this->session->userdata("email") != "")
                                 {
@@ -219,7 +219,7 @@
                                 }
                                 else
                                 {
-                                    redirect(site_url("login"));
+                                    redirect(base_url()."login");
                                     ?>
                                         <i class="fa fa-user fa-fw"></i>
                                     <?php
@@ -228,25 +228,25 @@
                             <?php echo $this->session->userdata("email"); ?> <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="<?php echo base_url(); ?>index.php/nguoidung/edit/<?php echo $this->session->userdata('id'); ?>"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
+                            <li><a href="<?php echo base_url(); ?>nguoidung/edit/<?php echo $this->session->userdata('id'); ?>"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
                             </li>
-                            <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-camera fa-fw"></i> <?php echo lang('photo') ?></a>
+                            <li><a href="<?php echo base_url(); ?>avata"><i class="fa fa-camera fa-fw"></i> <?php echo lang('photo') ?></a>
                             </li>
                             </li>
-                            <li><a href="<?php echo base_url(); ?>index.php/avata"><i class="fa fa-gear fa-fw"></i> <?php echo lang('setting') ?></a>
+                            <li><a href="<?php echo base_url(); ?>avata"><i class="fa fa-gear fa-fw"></i> <?php echo lang('setting') ?></a>
                             </li>
                             <li>
                                 <?php
                                     if(lang('lang') == 'vi') 
                                     {
                                     ?>
-                                         <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english"><i class="fa fa-language fa-fw"> English</i></a> 
+                                         <a href="<?php echo base_url(); ?>langswitch/switchLanguage/english"><i class="fa fa-language fa-fw"> English</i></a> 
                                     <?php
                                     }
                                     else
                                     {
                                     ?>
-                                         <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese"><i class="fa fa-language fa-fw"> Tiếng Việt</i></a> 
+                                         <a href="<?php echo base_url(); ?>langswitch/switchLanguage/vietnamese"><i class="fa fa-language fa-fw"> Tiếng Việt</i></a> 
                                     <?php
                                     } 
                                 ?>
@@ -254,13 +254,13 @@
                             <li class="divider"></li>
 
                             <?php if($this->session->userdata("id") != ""){ ?>
-                            <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-mail-forward fa-fw"></i> <?php echo lang('change').' '.lang('account') ?></a>
-                            <li><a href="<?php echo base_url(); ?>index.php/login/logout"><i class="fa fa-sign-out fa-fw"></i> <?php echo lang('logout') ?></a>
+                            <li><a href="<?php echo base_url(); ?>login"><i class="fa fa-mail-forward fa-fw"></i> <?php echo lang('change').' '.lang('account') ?></a>
+                            <li><a href="<?php echo base_url(); ?>login/logout"><i class="fa fa-sign-out fa-fw"></i> <?php echo lang('logout') ?></a>
                             <?php }else{ ?>
-                            <li><a href="<?php echo base_url(); ?>index.php/login"><i class="fa fa-sign-in"></i> <?php echo lang('login') ?></a>
+                            <li><a href="<?php echo base_url(); ?>login"><i class="fa fa-sign-in"></i> <?php echo lang('login') ?></a>
                             </li>
                             </li>
-                            <li><a href="<?php echo base_url(); ?>index.php/registration"><i class="fa fa-pencil-square-o"></i> <?php echo lang('register') ?></a>
+                            <li><a href="<?php echo base_url(); ?>registration"><i class="fa fa-pencil-square-o"></i> <?php echo lang('register') ?></a>
                             </li>
                             <?php } ?>
                         </ul>
@@ -282,58 +282,58 @@
                                 </div>
                             </li> -->
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/admin" ><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a>
+                                <a href="<?php echo base_url(); ?>admin" ><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a>
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/nguoidung"><i class="fa fa-user fa-fw"></i> <?php echo lang('user') ?></a>
+                                <a href="<?php echo base_url(); ?>nguoidung"><i class="fa fa-user fa-fw"></i> <?php echo lang('user') ?></a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-dribbble fa-fw"></i> <?php echo lang('area') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/tinh"> <?php echo lang('provincial') ?></a>
+                                        <a href="<?php echo base_url(); ?>tinh"> <?php echo lang('provincial') ?></a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/huyen"> <?php echo lang('district') ?></a>
+                                        <a href="<?php echo base_url(); ?>huyen"> <?php echo lang('district') ?></a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/xa"> <?php echo lang('town') ?></a>
+                                        <a href="<?php echo base_url(); ?>xa"> <?php echo lang('town') ?></a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/danhmuc"><i class="fa fa-th-list fa-fw"></i> <?php echo lang('category') ?></a>
+                                <a href="<?php echo base_url(); ?>danhmuc"><i class="fa fa-th-list fa-fw"></i> <?php echo lang('category') ?></a>
                                 <!-- <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/danhmuc"> <?php echo lang('category') ?></a>
+                                        <a href="<?php echo base_url(); ?>danhmuc"> <?php echo lang('category') ?></a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/danhmuchinh"><?php echo lang('picture') ?></a>
+                                        <a href="<?php echo base_url(); ?>danhmuchinh"><?php echo lang('picture') ?></a>
                                     </li>
                                 </ul> -->
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/diadiem"><i class="fa fa-map-marker fa-fw"></i> <?php echo lang('place') ?></a>
+                                <a href="<?php echo base_url(); ?>diadiem"><i class="fa fa-map-marker fa-fw"></i> <?php echo lang('place') ?></a>
                                 <!-- <ul class="nav nav-second-level"> -->
                                     <!-- <li>
-                                        <a href="<?php echo base_url(); ?>index.php/map"> Map Codeigniter</a>
+                                        <a href="<?php echo base_url(); ?>map"> Map Codeigniter</a>
                                     </li> -->
                                     <!-- <li>
-                                        <a href="<?php echo base_url(); ?>index.php/map/map"> <?php echo lang('map') ?></a>
+                                        <a href="<?php echo base_url(); ?>map/map"> <?php echo lang('map') ?></a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/map/mapfromAtoB"> A -> B</a>
+                                        <a href="<?php echo base_url(); ?>map/mapfromAtoB"> A -> B</a>
                                     </li> -->
                                     <!-- <li>
-                                        <a href="<?php echo base_url(); ?>index.php/diadiem"> <?php echo lang('place') ?></a>
+                                        <a href="<?php echo base_url(); ?>diadiem"> <?php echo lang('place') ?></a>
                                     </li> -->
                                     <!-- <li>
-                                        <a href="<?php echo base_url(); ?>index.php/diadiemhinh"> Địa điểm hình ảnh</a>
+                                        <a href="<?php echo base_url(); ?>diadiemhinh"> Địa điểm hình ảnh</a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/mua"> Mùa</a>
+                                        <a href="<?php echo base_url(); ?>mua"> Mùa</a>
                                     </li> -->
                                 <!-- </ul> -->
                                 <!-- /.nav-second-level -->
@@ -342,36 +342,36 @@
                                 <a href="#"><i class="fa fa-camera-retro"></i> Đa phương tiện<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/loaihinhanh"> Nhóm hình ảnh</a>
+                                        <a href="<?php echo base_url(); ?>loaihinhanh"> Nhóm hình ảnh</a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/upload"> Upload hình ảnh</a>
+                                        <a href="<?php echo base_url(); ?>upload"> Upload hình ảnh</a>
                                     </li>
                                 </ul>
                             </li> -->
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/binhluan"><i class="fa fa-comments fa-fw"></i> <?php echo lang('comment') ?></a>
+                                <a href="<?php echo base_url(); ?>binhluan"><i class="fa fa-comments fa-fw"></i> <?php echo lang('comment') ?></a>
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/baiviet"><i class="fa fa-pencil fa-fw"></i> <?php echo lang('posts') ?></a>
+                                <a href="<?php echo base_url(); ?>baiviet"><i class="fa fa-pencil fa-fw"></i> <?php echo lang('posts') ?></a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> <?php echo lang('authority') ?><span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/nhomquyen"> <?php echo lang('authority_groups') ?></a>
+                                        <a href="<?php echo base_url(); ?>nhomquyen"> <?php echo lang('authority_groups') ?></a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/quyen"> <?php echo lang('authority') ?></a>
+                                        <a href="<?php echo base_url(); ?>quyen"> <?php echo lang('authority') ?></a>
                                     </li>
                                     <!-- <li>
-                                        <a href="<?php echo base_url(); ?>index.php/capbac"> Cấp bậc người dùng</a>
+                                        <a href="<?php echo base_url(); ?>capbac"> Cấp bậc người dùng</a>
                                     </li> -->
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/thongtin"><i class="fa fa-info fa-fw"></i> <?php echo lang('information') ?></a>
+                                <a href="<?php echo base_url(); ?>thongtin"><i class="fa fa-info fa-fw"></i> <?php echo lang('information') ?></a>
                             </li>
                             <!-- <li>
                                 <a href="#"><i class="fa fa-bar-chart-o"></i> Thống kê<span class="fa arrow"></span></a>
@@ -406,7 +406,8 @@
                                 }
                                 else
                                 {
-                                    echo "<center><h1>Chúng tôi rất tiếc bạn không có quyền sử dụng tính năng này!</h1></center>";
+                                    /*echo "<center><h1>Chúng tôi rất tiếc bạn không có quyền sử dụng tính năng này!</h1></center>";*/
+                                    redirect(base_url());
                                 }
                             ?>
                         </div>

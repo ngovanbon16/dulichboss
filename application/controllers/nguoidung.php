@@ -537,8 +537,20 @@ class Nguoidung extends CI_Controller
 
 		if(count($msg) == 0)
 		{
-            $this->mnguoidung->delete($ma);
-            $status = "success";
+			$query = "SELECT * FROM nguoidung WHERE ND_MA = '$ma'";
+            $this->load->model("mdiadiem");
+			$result = $this->mdiadiem->getdata($query);
+
+			$ten = $result["ND_HINH"];
+            $file_path = "uploads/user/".$ten;
+            if (file_exists($file_path) && $ten != "avata.png") 
+            {
+                unlink("uploads/user/".$ten);
+            }
+            if($this->mnguoidung->delete($ma))
+            { 
+	            $status = "success";
+            }
 		}
 
 		$response = array('status' => $status,'msg' => $msg);

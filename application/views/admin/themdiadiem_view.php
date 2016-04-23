@@ -78,8 +78,8 @@
             $("#DD_VITRI").jqxTooltip({ content: "<b><i><?php echo lang('open_the_map_and_move_an_icon_to_the_location_you_want'); ?>!</i></b>", position: 'mouse', name: 'movieTooltip'});
 
             $("#DD_GIOITHIEU").jqxInput({  width: '350px', height: '50px' });
-            $("#DD_BATDAU").jqxDateTimeInput({ formatString: 'yyyy-MM-dd hh:mm:ss',  width: '250px', height: '25px' });
-            $("#DD_KETTHUC").jqxDateTimeInput({ formatString: 'yyyy-MM-dd hh:mm:ss',  width: '250px', height: '25px' });
+            $("#DD_BATDAU").jqxDateTimeInput({ formatString: 'yyyy-MM-dd HH:mm:ss',  width: '250px', height: '25px' });
+            $("#DD_KETTHUC").jqxDateTimeInput({ formatString: 'yyyy-MM-dd HH:mm:ss',  width: '250px', height: '25px' });
 
             if("<?php echo lang('lang'); ?>" == "en")
             {
@@ -233,7 +233,7 @@
                         else
                         {
                             openSuccess("<?php echo lang('inserted_successfully') ?>");
-                            setTimeout("location.href = '<?php echo site_url('diadiem'); ?>';",1000);
+                            //setTimeout("location.href = '<?php echo site_url('diadiem'); ?>';",1000);
                         }
                     }
                     //$("#submit").show();

@@ -123,11 +123,11 @@ class Login extends CI_Controller
            $this->session->unset_userdata('T_MA');
            $this->session->unset_userdata('NQ_MA');
            $this->session->set_flashdata('flash_message', 'Đăng xuất thành công');
-           redirect(base_url() . "index.php/home/".$trang);
+           redirect(base_url() . "home/".$trang);
         }
         else
         {
-        	redirect(base_url() . "index.php/login");
+        	redirect(base_url() . "login");
         }
     }
 }

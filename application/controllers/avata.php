@@ -72,10 +72,12 @@ class Avata extends CI_Controller{
 
                 $ten = $this->session->userdata('avata');
                 $file_path = "uploads/user/".$ten;
-                if (file_exists($file_path) && $ten != $namenew) 
+                if (file_exists($file_path) && $ten != $namenew && $ten != "avata.png") 
                 {
                     unlink("uploads/user/".$ten);
                 } 
+                $this->session->unset_userdata("avata");
+                $this->session->set_userdata($array);
 
                 $this->load->library("image_lib");
                 $config['image_library'] = 'gd2';
@@ -127,7 +129,7 @@ class Avata extends CI_Controller{
 
                     $ten = $this->session->userdata('avata');
                     $file_path = "uploads/user/".$ten;
-                    if (file_exists($file_path) && $ten != $namenew) 
+                    if (file_exists($file_path) && $ten != $namenew && $ten != "avata.png") 
                     {
                         unlink("uploads/user/".$ten);
                     } 

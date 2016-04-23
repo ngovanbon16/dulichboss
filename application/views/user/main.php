@@ -245,7 +245,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/home/trangchu"><img src="<?php echo base_url(); ?>assets/images/logo.png" alt="logo"></a>
+                    <a class="navbar-brand" href="<?php echo base_url(); ?>trangchu"><img src="<?php echo base_url(); ?>assets/images/logo.png" alt="logo"></a>
                 </div>
                 
                 <div class="collapse navbar-collapse navbar-right">
@@ -274,7 +274,7 @@
                         }
                     ?>
                     <ul class="nav navbar-nav">
-                        <li class="<?php echo $trangchu; ?>"><a href="<?php echo site_url('home/trangchu') ?>"><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a></li>
+                        <li class="<?php echo $trangchu; ?>"><a href="<?= base_url() ?>trangchu"><i class="fa fa-home fa-fw"></i> <?php echo lang('home') ?></a></li>
                         <!-- <li><a href="services.html"><i class="fa fa-heart fa-fw"></i> Yêu thích</a></li> -->
                         <li class="<?php echo $map; ?>"><a href="<?php echo site_url('home/map') ?>"><i class="fa fa-location-arrow fa-fw"></i> <?php echo lang('map') ?></a></li>
                         <li  class="<?php echo $khuvuc; ?>" >
@@ -399,7 +399,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="<?php echo site_url('home/trangchu') ?>"><?php echo lang('home'); ?></a></li>
+                        <li><a href="<?= base_url() ?>trangchu"><?php echo lang('home'); ?></a></li>
                         <li><a href="<?php echo site_url('home/gioithieu') ?>"><?php echo lang('introduce'); ?></a></li>
                         <li><a href="<?php echo site_url('home/lienhe') ?>"><?php echo lang('contact'); ?></a> </li>
                     </ul>

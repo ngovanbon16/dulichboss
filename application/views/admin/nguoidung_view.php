@@ -34,7 +34,7 @@
     <script type="text/javascript">
         function sua(id)
         {
-            setTimeout("location.href = '<?php echo base_url(); ?>index.php/nguoidung/edit/"+id+"';",0);
+            setTimeout("location.href = '<?php echo base_url(); ?>nguoidung/edit/"+id+"';",0);
         }
         function xoa(id)
         {
@@ -61,7 +61,7 @@
         function chitiet(id)
         {
             thongbao("", "<?php echo lang('feature_is_being_updated') ?>", "info");
-            //setTimeout("location.href = '<?php echo base_url(); ?>index.php/nguoidung/detail/"+id+"';",0);
+            //setTimeout("location.href = '<?php echo base_url(); ?>nguoidung/detail/"+id+"';",0);
         }
         function kichhoat(id, row)
         {
@@ -109,7 +109,7 @@
 
                     $('#jqxLoader').jqxLoader('open');
                     var dta, url;
-                    url = "<?php echo base_url(); ?>index.php/nguoidung/guimailkhoataikhoan";
+                    url = "<?php echo base_url(); ?>nguoidung/guimailkhoataikhoan";
                     data = {
                         "email" : email,
                         "noidung" : val
@@ -151,7 +151,7 @@
             $("#jqxLoader").jqxLoader({ isModal: true, text: "<?php echo lang('sending') ?>...", width: 100, height: 60, imagePosition: 'top' });
 
             var data = {};
-            var url = "<?php echo base_url(); ?>index.php/nguoidung/data0";
+            var url = "<?php echo base_url(); ?>nguoidung/data0";
             // prepare the data
             var source =
             {
@@ -207,7 +207,7 @@
                     console.log(data);
                     $.ajax({
                         dataType: 'json',
-                        url: '<?php echo base_url(); ?>index.php/nguoidung/data0',
+                        url: '<?php echo base_url(); ?>nguoidung/data0',
                         data: data,
                         success: function (data, status, xhr) {
                             // update command is executed.
@@ -231,7 +231,7 @@
                 },
                 deleterow: function (rowid, commit) {
                     var dta, url;
-                    url = "<?php echo base_url(); ?>index.php/nguoidung/delete";
+                    url = "<?php echo base_url(); ?>nguoidung/delete";
                     dta = {
                         "ma" : rowid
                     };
@@ -299,7 +299,7 @@
                     $("#deleterowbutton").jqxTooltip({ content: "<?php echo lang('delete') ?>"});
                     // create new row.
                     $("#addrowbutton").on('click', function () {
-                        setTimeout("location.href = '<?php echo site_url('registration'); ?>';",0);
+                        setTimeout("location.href = '<?= base_url(); ?>registration';",0);
                     });
                     // delete row.
                     $("#deleterowbutton").on('click', function () {
@@ -345,7 +345,7 @@
                             var NQ_MA = dataRecord.NQ_MA;
 
                             var dta, url;
-                            url = "<?php echo base_url(); ?>index.php/nhomquyen/data";
+                            url = "<?php echo base_url(); ?>nhomquyen/data";
                             dta = {
                                 "ma" : id
                             };
@@ -464,7 +464,7 @@
         function change(id, manq)
         {
             var dta, url;
-            url = "<?php echo base_url(); ?>index.php/nguoidung/updatenhomquyen";
+            url = "<?php echo base_url(); ?>nguoidung/updatenhomquyen";
             dta = {
                 "ND_MA" : id,
                 "NQ_MA" : manq

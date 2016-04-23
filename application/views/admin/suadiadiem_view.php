@@ -77,8 +77,8 @@
 
 
             $("#DD_GIOITHIEU").jqxInput({  width: '350px', height: '50px' });
-            $("#DD_BATDAU").jqxDateTimeInput({ formatString: 'yyyy-MM-dd hh:mm:ss',  width: '250px', height: '25px' });
-            $("#DD_KETTHUC").jqxDateTimeInput({ formatString: 'yyyy-MM-dd hh:mm:ss',  width: '250px', height: '25px' });
+            $("#DD_BATDAU").jqxDateTimeInput({ formatString: 'yyyy-MM-dd HH:mm:ss',  width: '250px', height: '25px' });
+            $("#DD_KETTHUC").jqxDateTimeInput({ formatString: 'yyyy-MM-dd HH:mm:ss',  width: '250px', height: '25px' });
 
             if("<?php echo lang('lang'); ?>" == "en")
             {
@@ -236,7 +236,7 @@
                         else
                         {
                             openSuccess("<?php echo lang('updated_successfully') ?>");
-                            setTimeout("location.href = '<?php echo site_url('diadiem'); ?>';",1000);
+                            setTimeout("location.href = '<?= base_url(); ?>diadiem';",1000);
                         }
                     }
                     //$("#submit").show();

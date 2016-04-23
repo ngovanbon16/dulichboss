@@ -52,7 +52,7 @@
                 function login()
                 {
                     var url, dta;
-                    url="<?php echo base_url(); ?>index.php/login/login?t=" + Math.random();
+                    url="<?php echo base_url(); ?>login/login?t=" + Math.random();
                     dta = {
                         "email" : $("#login :text[name='email']").val(),
                         "password" : $("#login :password[name='password']").val()
@@ -81,7 +81,7 @@
                             {
                                 $("#info").addClass("textsuccess").text("<?php echo lang('logged_in_successfully') ?>");
                                 $("#login").remove();
-                                setTimeout("location.href = '<?php echo site_url('admin'); ?>';",1000);
+                                setTimeout("location.href = '<?= base_url(); ?>admin';",1000);
                             }
                         }
                     }, 'json');
@@ -112,7 +112,7 @@
                     <div class="login-panel panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><?php echo lang('login') ?></h3>
-                            <a href="<?php echo base_url(); ?>index.php/registration"><?php echo lang('register') ?></a>
+                            <a href="<?php echo base_url(); ?>registration"><?php echo lang('register') ?></a>
                         </div>
                         <div class="panel-body">
                             <div id="info" class="form-group"><?php echo lang('notification') ?></div>

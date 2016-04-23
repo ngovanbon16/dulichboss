@@ -775,7 +775,7 @@
     }
     .imggoiy{
         width: 150px;
-        height: 60px;
+        height: 80px;
         border-radius: 2px;
         box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
         -moz-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
@@ -1457,10 +1457,14 @@
                                           
                     </div><!--/.recent comments-->
 
+                    <?php
+                      if(count($danhmuc) > 0)
+                      {
+                    ?>
                     <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
                         <h3><?php echo lang('related_places') ?></h3>
                         
-                        <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="2" direction="up" width="100%" height="200" align="center">
+                        <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="2" direction="up" width="100%" height="250" align="center">
 
                           <?php
                             foreach ($danhmuc as $row) {
@@ -1475,10 +1479,10 @@
                                   
                                   <table width="100%">
                                     <tr>
-                                      <td width="110">
+                                      <td width="100">
                                         <img class="imggoiy" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh3; ?>" /> 
                                       </td>
-                                      <td>
+                                      <td style="padding-left: 3px;">
                                         <span style="font-size: 13; width: 100px; overflow: hidden;"><?php echo $ten3; ?></span><br/>
                                         <i style="font-size: 13px;"><?php echo $huyen3.' - '.$tinh3; ?></i>
                                       </td>
@@ -1494,7 +1498,97 @@
                         </marquee>
                                           
                     </div><!--/.recent comments-->
+
+                    <?php
+                      }
+                      if(count($khachsan) > 0)
+                      {
+                    ?>
+                    <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
+                        <h3><?= lang('restaurant') ?></h3>
+                        
+                        <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="2" direction="up" width="100%" height="250" align="center">
+
+                          <?php
+                            foreach ($nhahang as $row) {
+                                $hinh3 = $row['HA_TEN'];
+                                $ma3 = $row['DD_MA'];
+                                $ten3 = $row['DD_TEN'];
+                                $tinh3 = $row['T_TEN'];
+                                $huyen3 = $row['H_TEN'];
+                            ?>
+                              <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
+                                <span>
+                                  
+                                  <table width="100%">
+                                    <tr>
+                                      <td width="100">
+                                        <img class="imggoiy" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh3; ?>" /> 
+                                      </td>
+                                      <td style="padding-left: 3px;">
+                                        <span style="font-size: 13; width: 100px; overflow: hidden;"><?php echo $ten3; ?></span><br/>
+                                        <i style="font-size: 13px;"><?php echo $huyen3.' - '.$tinh3; ?></i>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <hr style="margin: 20px 0px 0px;" />
+                                </span>
+                              </a> <br/>
+                            <?php      
+                            } 
+                          ?>
+
+                        </marquee>
+                                          
+                    </div><!--/.recent comments-->
+
+                    <?php
+                      }
+                      if(count($nhahang) > 0)
+                      {
+                    ?>
                      
+                     <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
+                        <h3><?= lang('hotel') ?></h3>
+                        
+                        <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="2" direction="up" width="100%" height="250" align="center">
+
+                          <?php
+                            foreach ($khachsan as $row) {
+                                $hinh3 = $row['HA_TEN'];
+                                $ma3 = $row['DD_MA'];
+                                $ten3 = $row['DD_TEN'];
+                                $tinh3 = $row['T_TEN'];
+                                $huyen3 = $row['H_TEN'];
+                            ?>
+                              <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
+                                <span>
+                                  
+                                  <table width="100%">
+                                    <tr>
+                                      <td width="100">
+                                        <img class="imggoiy" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh3; ?>" /> 
+                                      </td>
+                                      <td style="padding-left: 3px;">
+                                        <span style="font-size: 13; width: 100px; overflow: hidden;"><?php echo $ten3; ?></span><br/>
+                                        <i style="font-size: 13px;"><?php echo $huyen3.' - '.$tinh3; ?></i>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <hr style="margin: 20px 0px 0px;" />
+                                </span>
+                              </a> <br/>
+                            <?php      
+                            } 
+                          ?>
+
+                        </marquee>
+                                          
+                    </div><!--/.recent comments-->
+
+                    <?php
+                      }
+                    ?>
 
                     <!-- <div class="widget categories">
                         <h3>Được nhiều người yêu thích</h3>

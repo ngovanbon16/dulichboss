@@ -57,6 +57,7 @@
                 {
                     thongbao("", serverResponce, "success");
                     location.reload(true);
+                    setTimeout("location.href = '<?= base_url() ?>index.php/user/account';",1000);
                 }
                 else
                 {

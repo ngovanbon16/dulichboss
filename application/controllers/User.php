@@ -535,19 +535,19 @@ class User extends CI_Controller
 			$query = "SELECT * FROM nguoidung WHERE ND_MA = '$id' ";
 			$this->_data["info"] = $this->mdiadiem->getdata($query);
 
-			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND nguoidung_diadiem.NDDD_YEUTHICH = '1' ";
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND nguoidung_diadiem.NDDD_YEUTHICH = '1' ORDER BY diadiem.DD_NGAYDANG DESC";
 			$this->_data["yeuthich"] = $this->mdiadiem->gettimkiem($query);
 
-			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND nguoidung_diadiem.NDDD_MUONDEN = '1' ";
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND nguoidung_diadiem.NDDD_MUONDEN = '1' ORDER BY diadiem.DD_NGAYDANG DESC";
 			$this->_data["muonden"] = $this->mdiadiem->gettimkiem($query);
 
-			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND nguoidung_diadiem.NDDD_DADEN = '1' ";
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND nguoidung_diadiem.NDDD_DADEN = '1' ORDER BY diadiem.DD_NGAYDANG DESC";
 			$this->_data["daden"] = $this->mdiadiem->gettimkiem($query);
 
-			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung ON nguoidung.ND_MA = diadiem.ND_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung.ND_MA = '$id'";
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung ON nguoidung.ND_MA = diadiem.ND_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung.ND_MA = '$id' ORDER BY diadiem.DD_NGAYDANG DESC";
 			$this->_data["diadiem"] = $this->mdiadiem->gettimkiem($query);
 
-			$query = "SELECT * FROM baiviet WHERE ND_MA = '$id' ";
+			$query = "SELECT * FROM baiviet WHERE ND_MA = '$id' ORDER BY BV_NGAYDANG DESC";
 			$this->_data["baiviet"] = $this->mdiadiem->gettimkiem($query);
 
 			$this->_data['title'] = lang('account');
@@ -581,11 +581,11 @@ class User extends CI_Controller
 			$str = "nguoidung_diadiem.NDDD_DADEN";
 		}
 
-		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND ".$str." = '1' LIMIT $start, $length";
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND nguoidung_diadiem.ND_MA = '$id' AND ".$str." = '1' ORDER BY diadiem.DD_NGAYDANG DESC LIMIT $start, $length";
 		
 		if($ten == "diadiem")
 		{
-			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung ON diadiem.ND_MA = nguoidung.ND_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.ND_MA = '$id' LIMIT $start, $length";
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA JOIN nguoidung ON diadiem.ND_MA = nguoidung.ND_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.ND_MA = '$id' ORDER BY diadiem.DD_NGAYDANG DESC LIMIT $start, $length";
 		}
 
 		$this->load->model("mdiadiem");
@@ -601,7 +601,7 @@ class User extends CI_Controller
 		$start = $_POST["start"];
 		$length = $_POST["length"];
 
-		$query = "SELECT * FROM baiviet WHERE ND_MA = '$id' LIMIT $start, $length";
+		$query = "SELECT * FROM baiviet WHERE ND_MA = '$id' ORDER BY BV_NGAYDANG DESC LIMIT $start, $length";
 		
 		$this->load->model("mdiadiem");
 		$response = $this->mdiadiem->gettimkiem($query);

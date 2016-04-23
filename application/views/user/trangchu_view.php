@@ -131,11 +131,9 @@
 
         .benner{
             margin: 10px;
-            background-color: #FFF; 
             width: 250px; 
             height: 530px;
             border-radius: 3px;
-            opacity: 0.7;
             margin-right: 0px;
             -webkit-transition: margin-right 3s;
             transition:  margin-right 3s;
@@ -155,7 +153,7 @@
         .tieudebenner{
             font-size: 13; 
             width: 100px; 
-            color: #F00; 
+            color: #FFF; 
             overflow: hidden;
             opacity: 1;
             font-weight: bold;
@@ -167,7 +165,7 @@
             box-shadow: 0 0 4px #8DEEEE;
             -webkit-box-shadow: 0 0 4px #8DEEEE;
             margin-right: -12px;
-            margin-top: 12px;
+            margin-top: 10.5px;
             cursor: pointer;
             width: 30px;
             height: 30px;
@@ -180,7 +178,6 @@
         }
         .tieudebanner{
             padding: 5px;
-            background-color: #FF3300;
             color: #FFF;
             text-align: center;
             border-radius: 3px 3px 5px 5px;
@@ -189,6 +186,27 @@
             -webkit-box-shadow: 0 0 4px #000;
             font-weight: bold;
             font-size: 13px;
+        }
+        .nentieude{
+            position: absolute;
+            background-color: #000;
+            width: 250px;
+            height: 30px;
+            opacity: 0.7;
+            border-radius: 3px;
+            box-shadow: 0 0 4px #8DEEEE;
+            -webkit-box-shadow: 0 0 4px #8DEEEE;
+            z-index: -1;
+        }
+        .nenbanner{
+            position: absolute; 
+            width: 250px; 
+            height: 500px; 
+            background-color: #000;
+            border-radius: 3px;
+            box-shadow: 0 0 4px #8DEEEE;
+            -webkit-box-shadow: 0 0 4px #8DEEEE;
+            opacity: 0.5;
         }
     </style>
 
@@ -203,7 +221,9 @@
                 </td>
                 <td>
                     <div class="benner" >
+                        <div class="nentieude"></div>
                         <div class="tieudebanner"><?= lang('the_places_have_be_appreciated') ?></div>
+                        <div class="nenbanner"></div>
                         <marquee class="benner2" onmouseover="this.stop()" onmouseout="this.start()" scrollamount="3" direction="up" width="240" height="485" align="center">
 
                           <?php
@@ -219,10 +239,10 @@
                                 <span>
                                   
                                 <span><?php echo $ten3; ?></span><br/>
-                                <i style="font-size: 13px; color: #F00;"><?php echo $huyen3.' - '.$tinh3; ?> | <?php echo lang('rating').': '.round($diem, 1); ?></i>
+                                <i style="font-size: 13px; color: #FFF; font-weight: normal;"><?php echo $huyen3.' - '.$tinh3; ?> | <?php echo lang('rating').': '.round($diem, 1); ?></i>
                                 <img class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh3; ?>" />
 
-                              </a> <hr/>
+                              </a> <hr style="margin-bottom: 10px;" />
                             <?php      
                             } 
                           ?>

@@ -53,5 +53,18 @@ $route['default_controller'] = 'home/trangchu';
 $route['404_override'] = 'error';
 $route['translate_uri_dashes'] = TRUE;
 $route['admin'] = "home";
-$route['home'] = "home/trangchu";
+$route['trangchu'] = "home/trangchu";
+$route['bando'] = "home/map";
+$route['tinh/(:num)'] = "home/khuvuc/$1";
+$route['loaidiadiem'] = "home/theodanhmuc";
+$route['gioithieu'] = "home/gioithieu";
+$route['lienhe'] = "home/lienhe";
+$route['timkiem'] = "user/searchplace";
+$route['huyen/(:num)/(:num)'] = "home/theohuyen/$1/$2";
+$route['diadiem/(:num)'] = "aediadiem/detailuser1/$1";
+
+$route['taikhoan'] = "user/account";
+$route['themdiadiem'] = "user/addnewplace";
+$route['bosuutap'] = "user/info";
+$route['suataikhoan/(:num)'] = "user/edit/$1";
 

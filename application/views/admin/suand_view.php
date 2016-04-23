@@ -147,7 +147,7 @@
                 //$("#createAccount").jqxExpander('setContent', '<span style="margin: 10px;">Account created.</span>');
 
                 var url, dta;
-                url="<?php echo base_url(); ?>index.php/nguoidung/update?t=" + Math.random();
+                url="<?php echo base_url(); ?>nguoidung/update?t=" + Math.random();
                 dta = {
                     "ND_MA" : $("#ND_MA").val(),
                     "NQ_MA" : $("#NQ_MA").val(),
@@ -196,7 +196,7 @@
     <script type="text/javascript">
      $(document).ready(function () {
 
-                var url = "<?php echo base_url(); ?>index.php/nhomquyen/data";
+                var url = "<?php echo base_url(); ?>nhomquyen/data";
                 // prepare the data
                 var source =
                 {
@@ -213,7 +213,7 @@
                 $("#NQ_MA").jqxDropDownList({ source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('authority') ?>:", displayMember: "NQ_TEN", valueMember: "NQ_MA", width: 300, height: 25});
                 $("#NQ_MA").jqxDropDownList('selectItem', "<?php echo $info['NQ_MA']; ?>");
 
-                var url = "<?php echo base_url(); ?>index.php/tinh/data";
+                var url = "<?php echo base_url(); ?>tinh/data";
                 // prepare the data
                 var source =
                 {
@@ -243,7 +243,7 @@
                 });
 
                 $("#T_MA").change(function(){
-                    var url = "<?php echo base_url(); ?>index.php/huyen/data/" + matinh;
+                    var url = "<?php echo base_url(); ?>huyen/data/" + matinh;
                     // prepare the data
                     var source =
                     {
@@ -260,7 +260,7 @@
                     $("#H_MA").jqxDropDownList({ selectedIndex: <?php echo $indexhuyen; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>:", displayMember: "H_TEN", valueMember: "H_MA", width: 300, height: 25});
 
 
-                    var url = "<?php echo base_url(); ?>index.php/xa/data/" + $("#T_MA").val() + "/" + $("#H_MA").val();
+                    var url = "<?php echo base_url(); ?>xa/data/" + $("#T_MA").val() + "/" + $("#H_MA").val();
                     // prepare the data
                     //alert(matinh+" | "+mahuyen);
                     var source =
@@ -278,7 +278,7 @@
                     $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
                 });
 
-                var url = "<?php echo base_url(); ?>index.php/huyen/data/" + <?php echo $info["T_MA"]; ?>;
+                var url = "<?php echo base_url(); ?>huyen/data/" + <?php echo $info["T_MA"]; ?>;
                 // prepare the data
                 var source =
                 {
@@ -309,7 +309,7 @@
                 });
 
                 $("#H_MA").change(function(){
-                    var url = "<?php echo base_url(); ?>index.php/xa/data/" + $("#T_MA").val() + "/" + $("#H_MA").val();
+                    var url = "<?php echo base_url(); ?>xa/data/" + $("#T_MA").val() + "/" + $("#H_MA").val();
                     // prepare the data
                     //alert(matinh+" | "+mahuyen);
                     var source =
@@ -327,7 +327,7 @@
                     $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
                 });
 
-                var url = "<?php echo base_url(); ?>index.php/xa/data/" + <?php echo $info["T_MA"]; ?> + "/" + <?php echo $info["H_MA"]; ?>;
+                var url = "<?php echo base_url(); ?>xa/data/" + <?php echo $info["T_MA"]; ?> + "/" + <?php echo $info["H_MA"]; ?>;
                 // prepare the data
                 var source =
                 {
@@ -418,8 +418,8 @@
         <div>
             <div class="div1"><?php echo lang('edit').' '.lang('profile') ?></div>
             <div class="div2">
-                <a href="<?php echo base_url(); ?>index.php/home"><?php echo lang('home') ?></a> |  
-                <a href="<?php echo base_url(); ?>index.php/login"><?php echo lang('login') ?></a>
+                <a href="<?php echo base_url(); ?>home"><?php echo lang('home') ?></a> |  
+                <a href="<?php echo base_url(); ?>login"><?php echo lang('login') ?></a>
             </div>
         </div>
         <div style="font-family: Verdana; font-size: 13px;">

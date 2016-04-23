@@ -134,7 +134,7 @@
                 //$("#createAccount").jqxExpander('setContent', '<span style="margin: 10px;">Account created.</span>');
                 $('#jqxLoader').jqxLoader('open');
                 var url, dta;
-                url="<?php echo base_url(); ?>index.php/registration/registration?t=" + Math.random();
+                url="<?php echo base_url(); ?>registration/registration?t=" + Math.random();
                 dta = {
                     "ho" : $("#firstName").val(),
                     "ten" : $("#lastName").val(),
@@ -254,8 +254,8 @@
         <div id="tieude">
             <div class="div1"><?php echo lang('register_account') ?></div>
             <div class="div2">
-                <a href="<?php echo base_url(); ?>index.php/home"><?php echo lang('home') ?></a> |  
-                <a href="<?php echo base_url(); ?>index.php/login"><?php echo lang('login') ?></a>
+                <a href="<?php echo base_url(); ?>trangchu"><?php echo lang('home') ?></a> |  
+                <a href="<?php echo base_url(); ?>login"><?php echo lang('login') ?></a>
             </div>
         </div>
         <div style="font-family: Verdana; font-size: 13px;">

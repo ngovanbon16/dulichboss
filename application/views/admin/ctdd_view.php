@@ -33,10 +33,6 @@
 			$(".delete").jqxButton({ template: "danger" });
 			$(".btnhinhanh").jqxButton({ template: "" });
 
-			$(".btnbin").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_delete") ?></i>', position: 'mouse', name: 'movieTooltip'});
-			$(".btncheck").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_accept_photos") ?></i>', position: 'mouse', name: 'movieTooltip'});
-			$(".btnavatar").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_change_avatar") ?></i>', position: 'mouse', name: 'movieTooltip'});
-
 			$("#checkAll").change(function () {
 			    $(".binhluanchk").prop('checked', $(this).prop("checked"));
 			});
@@ -479,6 +475,10 @@
                     thongbao("", serverResponce, "danger");
                 }
             });
+
+            $(".btnbin").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_delete") ?></i>', position: 'mouse', name: 'movieTooltip'});
+			$(".btncheck").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_accept_photos") ?></i>', position: 'mouse', name: 'movieTooltip'});
+			$(".btnavatar").jqxTooltip({ content: '<b><?php echo lang("note") ?>:</b> <i><?php echo lang("click_to_change_avatar") ?></i>', position: 'mouse', name: 'movieTooltip'});
         });
 	</script>
 

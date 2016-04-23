@@ -20,7 +20,7 @@
 
             $('#jqxFileUpload').jqxFileUpload({ multipleFilesUpload: false });
 
-            $('#jqxFileUpload').jqxFileUpload({ browseTemplate: 'success', width: "400", height: "120", uploadUrl: path, fileInputName: 'fileToUpload'});
+            $('#jqxFileUpload').jqxFileUpload({ browseTemplate: 'success', width: "400", height: "150", uploadUrl: path, fileInputName: 'fileToUpload'});
 
             $('#eventsPanel').jqxPanel({ width: "400", height: "100" });
             $('#jqxFileUpload').on('select', function (event) {
@@ -54,6 +54,7 @@
                 if(serverResponce.indexOf("!") != "-1")
                 {
                     thongbao("", serverResponce, "success");
+                    setTimeout("location.href = '<?= base_url() ?>avata';",1000);
                 }
                 else
                 {
@@ -69,6 +70,16 @@
         margin: 10px;
         padding-left: 10px;
     }
+    .img{
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        border: solid 1px #DCDCDC;
+        box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+        -moz-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+        -webkit-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+        -o-box-shadow: 0 -4px 4px -4px rgba(0,0,0,4);
+    }
     </style>
 </head>
 <body>
@@ -80,7 +91,7 @@
             if(file_exists($file_path))
             {
                 ?>
-                    <img id="avata" src="<?php echo base_url(); ?>uploads/user/<?php echo $this->session->userdata['avata']; ?>" height="" width="">
+                    <img class="img" id="avata" src="<?php echo base_url(); ?>uploads/user/<?php echo $this->session->userdata['avata']; ?>" height="" width="">
                 <?php
             }
             else
@@ -93,7 +104,7 @@
     </div>
     <div class="div1">
     	<div id="jqxFileUpload"></div>
-        <div id="eventsPanel"></div>
+        <div style="display: none;" id="eventsPanel"></div>
     </div>
 </body>
 </html>

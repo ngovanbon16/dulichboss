@@ -43,7 +43,7 @@
 
         function sua(id)
         {
-            setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/edit/"+id+"';",0);
+            setTimeout("location.href = '<?php echo base_url(); ?>aediadiem/edit/"+id+"';",0);
         }
         function xoa(id)
         {
@@ -69,15 +69,15 @@
         }
         function chitiet(id)
         {
-            setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/detailadmin/"+id+"';",0);
+            //setTimeout("location.href = '<?php echo base_url(); ?>aediadiem/detailadmin/"+id+"';",0);
 
-            /*url = '<?php echo base_url(); ?>index.php/aediadiem/detailadmin/'+id;
-            window.open(url, '', '_blank');*/
+            url = '<?php echo base_url(); ?>aediadiem/detailadmin/'+id;
+            window.open(url, '', '_blank');
         }
         function baiviet(id)
         {
-            /*setTimeout("location.href = '<?php echo base_url(); ?>index.php/baiviet/theodiadiem/"+id+"';",0);*/
-            url = '<?php echo base_url(); ?>index.php/baiviet/theodiadiem/'+id;
+            /*setTimeout("location.href = '<?php echo base_url(); ?>baiviet/theodiadiem/"+id+"';",0);*/
+            url = '<?php echo base_url(); ?>baiviet/theodiadiem/'+id;
             window.open(url, '', '_blank');
         }
         function kichhoat(id, row)
@@ -87,7 +87,7 @@
         function taianh(id, ten)
         {
             //dang anh cho dia diem
-            var path = "<?php echo base_url(); ?>index.php/diadiemhinh/uploadimg/" + id;
+            var path = "<?php echo base_url(); ?>diadiemhinh/uploadimg/" + id;
 
             $('#jqxFileUpload1').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_all') ?>", cancelButton: "<?php echo lang('cancel_all') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
 
@@ -140,7 +140,7 @@
             $.jqx.theme = "bootstrap";
 
             var data = {};
-            var url = "<?php echo base_url(); ?>index.php/diadiem/data0";
+            var url = "<?php echo base_url(); ?>diadiem/data0";
             // prepare the data
             var source =
             {
@@ -189,7 +189,7 @@
                         "DD_DUYET" : kichhoat
                     };
 
-                    url = "<?php echo base_url(); ?>index.php/diadiem/update";
+                    url = "<?php echo base_url(); ?>diadiem/update";
                     console.log(data);
                     $.post(url, data, function(data, status){
                         console.log(status);
@@ -212,7 +212,7 @@
                 },
                 deleterow: function (rowid, commit) {
                     var dta, url, test;
-                    url = "<?php echo base_url(); ?>index.php/diadiem/delete";
+                    url = "<?php echo base_url(); ?>diadiem/delete";
                     dta = {
                         "ma" : rowid
                     };
@@ -274,7 +274,7 @@
                     $("#deleterowbutton").jqxTooltip({ content: "<?php echo lang('delete') ?>"});
                     // create new row.
                     $("#addrowbutton").on('click', function () {
-                        setTimeout("location.href = '<?php echo site_url('aediadiem'); ?>';",0);
+                        setTimeout("location.href = '<?= base_url(); ?>aediadiem';",0);
                     });
                     // delete row.
                     $("#deleterowbutton").on('click', function () {

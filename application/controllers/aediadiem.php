@@ -518,11 +518,17 @@ class Aediadiem extends CI_Controller
        	$diem = $this->mbinhluan->diemtrungbinh($id, "BL_KHONGGIAN");
        	$this->_data['diemkhonggian'] = round($diem['BL_KHONGGIAN'], 1); 
 
-       	$query = "SELECT *, count(*) count FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' GROUP BY diadiem.DD_MA  ORDER BY count DESC LIMIT 0, 6";
+       	$query = "SELECT *, count(*) count FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN nguoidung_diadiem ON diadiem.DD_MA = nguoidung_diadiem.DD_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1' GROUP BY diadiem.DD_MA  ORDER BY count DESC LIMIT 0, 6";
 		$this->_data['yeuthich'] = $this->mdiadiem->gettimkiem($query);
 
-		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE (diadiem.DM_MA = '$madanhmuc' OR diadiem.H_MA = '$mahuyen') AND hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_MA <> '$id' ORDER BY diadiem.DD_NGAYDANG DESC LIMIT 0, 6";
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE (diadiem.DM_MA <> '7' AND diadiem.DM_MA <> '11' AND diadiem.DM_MA <> '8' AND diadiem.DM_MA <> '12') AND diadiem.H_MA = '$mahuyen' AND hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1' AND diadiem.DD_MA <> '$id' ORDER BY diadiem.DD_NGAYDANG DESC LIMIT 0, 6";
 		$this->_data['danhmuc'] = $this->mdiadiem->gettimkiem($query);
+
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE (diadiem.DM_MA = '7' OR diadiem.DM_MA = '11') AND diadiem.H_MA = '$mahuyen' AND hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1' AND diadiem.DD_MA <> '$id' ORDER BY diadiem.DD_NGAYDANG DESC LIMIT 0, 6";
+		$this->_data['nhahang'] = $this->mdiadiem->gettimkiem($query);
+
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE (diadiem.DM_MA = '8' OR diadiem.DM_MA = '12') AND diadiem.H_MA = '$mahuyen' AND hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1' AND diadiem.DD_MA <> '$id' ORDER BY diadiem.DD_NGAYDANG DESC LIMIT 0, 6";
+		$this->_data['khachsan'] = $this->mdiadiem->gettimkiem($query);
 
 		$query = "SELECT * FROM baiviet JOIN diadiem ON diadiem.DD_MA = baiviet.DD_MA JOIN nguoidung ON nguoidung.ND_MA = baiviet.ND_MA WHERE baiviet.DD_MA = '$id' AND baiviet.BV_DUYET = '1' ORDER BY baiviet.BV_NGAYDANG DESC LIMIT 0,6";
 		$this->_data['baiviet'] = $this->mbaiviet->gettimkiem($query);

@@ -50,7 +50,7 @@
             CKEDITOR.instances.BV_NOIDUNG.setData(BV_NOIDUNG);
             $("#DD_MA").jqxDropDownList('selectItem', DD_MA);
             $("#BV_MA").html(BV_MA);*/
-            setTimeout("location.href = '<?php echo base_url(); ?>index.php/baiviet/editadmin/"+BV_MA+"';",0);
+            setTimeout("location.href = '<?php echo base_url(); ?>baiviet/editadmin/"+BV_MA+"';",0);
         }
         function xoa(id)
         {
@@ -77,8 +77,8 @@
         function chitiet(id)
         {
             //thongbao("", "<?php echo lang('feature_is_being_updated') ?>", "info");
-            //setTimeout("location.href = '<?php echo base_url(); ?>index.php/baiviet/detail/"+id+"';",0);
-            url = '<?php echo base_url(); ?>index.php/baiviet/detail/'+id;
+            //setTimeout("location.href = '<?php echo base_url(); ?>baiviet/detail/"+id+"';",0);
+            url = '<?php echo base_url(); ?>baiviet/detail/'+id;
             window.open(url, '', '_blank');
         }
         function kichhoat(id, row)
@@ -89,7 +89,7 @@
             $.jqx.theme = "bootstrap";
 
             var data = {};
-            var url = "<?php echo base_url(); ?>index.php/baiviet/data0";
+            var url = "<?php echo base_url(); ?>baiviet/data0";
             // prepare the data
             var source =
             {
@@ -137,7 +137,7 @@
                     console.log(data);
                     $.ajax({
                         dataType: 'json',
-                        url: '<?php echo base_url(); ?>index.php/baiviet/data0',
+                        url: '<?php echo base_url(); ?>baiviet/data0',
                         data: data,
                         success: function (data, status, xhr) {
                             // update command is executed.
@@ -161,7 +161,7 @@
                 },
                 deleterow: function (rowid, commit) {
                     var dta, url, test;
-                    url = "<?php echo base_url(); ?>index.php/baiviet/delete";
+                    url = "<?php echo base_url(); ?>baiviet/delete";
                     dta = {
                         "ma" : rowid
                     };
@@ -233,7 +233,7 @@
                         $("#BV_MA").html("...");
                         $("#btngui").show();
                         $("#btnluu").hide();*/
-                        setTimeout("location.href = '<?php echo site_url('baiviet/addadmin'); ?>';",0);
+                        setTimeout("location.href = '<?= base_url(); ?>baiviet/addadmin';",0);
                     });
                     // delete row.
                     $("#deleterowbutton").on('click', function () {
@@ -389,7 +389,7 @@
                 }
 
                 var url, data;
-                url = "<?php echo base_url(); ?>index.php/baiviet/add?t=" + Math.random();
+                url = "<?php echo base_url(); ?>baiviet/add?t=" + Math.random();
                 data = {
                     "DD_MA" : DD_MA,
                     "BV_TIEUDE" : BV_TIEUDE,
@@ -465,7 +465,7 @@
                 }
 
                 var url, data;
-                url = "<?php echo base_url(); ?>index.php/baiviet/edit?t=" + Math.random();
+                url = "<?php echo base_url(); ?>baiviet/edit?t=" + Math.random();
                 data = {
                     "BV_MA" : BV_MA,
                     "DD_MA" : DD_MA,
@@ -503,7 +503,7 @@
         });
 
         $(document).ready(function () {
-            var url = "<?php echo base_url(); ?>index.php/diadiem/data";
+            var url = "<?php echo base_url(); ?>diadiem/data";
             var source =
             {
                 datatype: "json",
