@@ -110,7 +110,7 @@
                         <li style="list-style: none; z-index: 1001;" class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
                                 <?php //echo $this->session->userdata['avata']; ?>
-                                <!-- <a href="<?php echo base_url(); ?>index.php/avata"> -->
+                                <!-- <a href="<?php echo base_url(); ?>avata"> -->
                                 <?php
                                     if($this->session->userdata("email") != "")
                                     {
@@ -143,23 +143,23 @@
                                     if($this->session->userdata("id") != "")
                                     {
                                 ?>
-                                <li><a href="<?php echo base_url(); ?>index.php/user/account"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
+                                <li><a href="<?php echo base_url(); ?>user/account"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/user/addnewplace"><i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('add_new_place'); ?></a>
+                                <li><a href="<?php echo base_url(); ?>user/addnewplace"><i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('add_new_place'); ?></a>
                                 </li>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/user/info"><i class="fa fa-book fa-fw"></i> <?php echo lang('albums') ?></a>
+                                <li><a href="<?php echo base_url(); ?>user/info"><i class="fa fa-book fa-fw"></i> <?php echo lang('albums') ?></a>
                                 </li>
                                 <li class="divider"></li>
 
                                 <?php } if($this->session->userdata("id") != ""){ ?>
                                 <li data-toggle="modal" data-target="#modaldangnhap"><a href=""><i class="fa fa-mail-forward fa-fw"></i> <?php echo lang('login') ?></a>
-                                <li><a href="<?php echo base_url(); ?>index.php/login/logout/trangchu"><i class="fa fa-sign-out fa-fw"></i> <?php echo lang('logout') ?></a>
+                                <li><a href="<?php echo base_url(); ?>login/logout/trangchu"><i class="fa fa-sign-out fa-fw"></i> <?php echo lang('logout') ?></a>
                                 <?php }else{ ?>
-                                <li data-toggle="modal" data-target="#modaldangnhap" style="cursor: pointer;"><a><!-- <a href="<?php echo base_url(); ?>index.php/login"> --><i class="fa fa-sign-in fa-fw"></i> <?php echo lang('login') ?></a>
+                                <li data-toggle="modal" data-target="#modaldangnhap" style="cursor: pointer;"><a><!-- <a href="<?php echo base_url(); ?>login"> --><i class="fa fa-sign-in fa-fw"></i> <?php echo lang('login') ?></a>
                                 </li>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/registration"><i class="fa fa-pencil-square-o fa-fw"></i> <?php echo lang('register') ?></a>
+                                <li><a href="<?php echo base_url(); ?>registration"><i class="fa fa-pencil-square-o fa-fw"></i> <?php echo lang('register') ?></a>
                                 </li>
                                 <?php } ?>
                             </ul>    
@@ -178,7 +178,7 @@
                             </ul> -->
                             <div class="search">
                                 <form role="form">
-                                    <a href="<?php echo base_url(); ?>index.php/user/searchplace"> 
+                                    <a href="<?php echo base_url(); ?>user/searchplace"> 
                                     <!-- <input type="text" class="search-form" autocomplete="off" placeholder="<?php echo lang('search'); ?>"> -->
 
                                     <button style="background-color: #000; color: #FFF;" type="button" class="btn btn-default"> <i class="fa fa-search fa-fw"></i> <?= lang('search'); ?></button>
@@ -188,7 +188,7 @@
                                     <!-- <div style="z-index: 2000000;" id='content'>
                                         <script type="text/javascript">
                                             $(document).ready(function () {               
-                                                var url = "<?php echo base_url(); ?>index.php/diadiem/datafound";
+                                                var url = "<?php echo base_url(); ?>diadiem/datafound";
                                                 // prepare the data
                                                 var source =
                                                 {
@@ -225,7 +225,7 @@
                                         <div style="font-size: 12px; font-family: Verdana;" id="selectionlog"></div>
                                     </div> -->
 
-                                    <!-- <a href="<?php echo base_url(); ?>index.php/login">
+                                    <!-- <a href="<?php echo base_url(); ?>login">
                                         <button type="button" class="btn btn-outline btn-danger" data-toggle="modal" data-target="#modaldangnhap"><i class="fa fa-sign-in"></i> Đăng nhập</button>
                                     </a> -->
                                 </form>
@@ -337,13 +337,13 @@
                                     if(lang('lang') == 'vi') 
                                     {
                                     ?>
-                                         <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/english"><i class="fa fa-language fa-fw"> English</i></a> 
+                                         <a href="<?php echo base_url(); ?>langswitch/switchLanguage/english"><i class="fa fa-language fa-fw"> English</i></a> 
                                     <?php
                                     }
                                     else
                                     {
                                     ?>
-                                         <a href="<?php echo base_url(); ?>index.php/langswitch/switchLanguage/vietnamese"><i class="fa fa-language fa-fw"> TiếngViệt</i></a> 
+                                         <a href="<?php echo base_url(); ?>langswitch/switchLanguage/vietnamese"><i class="fa fa-language fa-fw"> TiếngViệt</i></a> 
                                     <?php
                                     } 
                                 ?>
@@ -482,7 +482,7 @@
         function login()
         {
             var url, dta;
-            url="<?php echo base_url(); ?>index.php/login/login?t=" + Math.random();
+            url="<?php echo base_url(); ?>login/login?t=" + Math.random();
             dta = {
                 "email" : $("#login :text[name='email']").val(),
                 "password" : $("#login :password[name='password']").val()
@@ -547,7 +547,7 @@
             document.getElementById("btnvalue").innerHTML = "<?php echo lang('sending') ?>...";
             document.getElementById("sending").style.visibility = "visible";
             var url, dta;
-            url="<?php echo base_url(); ?>index.php/nguoidung/guimatkhau?t=" + Math.random();
+            url="<?php echo base_url(); ?>nguoidung/guimatkhau?t=" + Math.random();
             dta = {
                 "email" : email
             };
@@ -585,7 +585,7 @@
     <div class="modal-content">
       <div class="modal-header">
             <h3 id='lbldangnhap' class="panel-title"><?php echo lang('login') ?></h3>
-            <a id="lbldangky" href="<?php echo base_url(); ?>index.php/registration"><?php echo lang('register') ?></a>
+            <a id="lbldangky" href="<?php echo base_url(); ?>registration"><?php echo lang('register') ?></a>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <!-- <h4 class="modal-title"><i class="fa fa-camera fa-fw"></i> Đăng nhập</h4> -->
       </div>

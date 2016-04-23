@@ -79,7 +79,7 @@
                 if($this->session->userdata('id') == "")
                 { 
                   ?>
-                    //setTimeout("location.href = '<?php echo base_url(); ?>index.php/login';",0);
+                    //setTimeout("location.href = '<?php echo base_url(); ?>login';",0);
                     thongbao("", "<?php echo lang('please').' '.lang('login'); ?>", "danger");
                   <?php
                 }
@@ -148,7 +148,7 @@
               }
 
               var url, dta;
-              url="<?php echo base_url(); ?>index.php/binhluan/add?t=" + Math.random();
+              url="<?php echo base_url(); ?>binhluan/add?t=" + Math.random();
               dta = {
                 "DD_MA" : "<?php echo $info['DD_MA']; ?>",
                 "BL_TIEUDE" : $("#BL_TIEUDE").val(),
@@ -178,7 +178,7 @@
                      var idbinhluan = data.msg['idbinhluan'];
                      //alert(idbinhluan);
                      document.getElementById("idbinhluan").value = idbinhluan;
-                     var path = "<?php echo base_url(); ?>index.php/upload/upload/" + idbinhluan;
+                     var path = "<?php echo base_url(); ?>upload/upload/" + idbinhluan;
 
                      $('#jqxFileUpload').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_all') ?>", cancelButton: "<?php echo lang('cancel_all') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
 
@@ -224,7 +224,7 @@
                             thongbao("", serverResponce, "danger");
                         }
                     });
-                    //setTimeout("location.href = '<?php echo base_url(); ?>index.php/aediadiem/detailuser/<?php echo $info['DD_MA']; ?>';",1500);
+                    //setTimeout("location.href = '<?php echo base_url(); ?>aediadiem/detailuser/<?php echo $info['DD_MA']; ?>';",1500);
                     //alert("Thêm thành công");
                   }
                 }
@@ -250,7 +250,7 @@
               }
 
               var url, dta;
-              url="<?php echo base_url(); ?>index.php/nguoidungdiadiem/checkin?t=" + Math.random();
+              url="<?php echo base_url(); ?>nguoidungdiadiem/checkin?t=" + Math.random();
               dta = {
                 "DD_MA" : "<?php echo $info['DD_MA']; ?>",
                 "NDDD_DADEN" : tg
@@ -292,7 +292,7 @@
               }
 
               var url, dta;
-              url="<?php echo base_url(); ?>index.php/nguoidungdiadiem/yeuthich?t=" + Math.random();
+              url="<?php echo base_url(); ?>nguoidungdiadiem/yeuthich?t=" + Math.random();
               dta = {
                 "DD_MA" : "<?php echo $info['DD_MA']; ?>",
                 "NDDD_YEUTHICH" : tg
@@ -333,7 +333,7 @@
               }
 
               var url, dta;
-              url="<?php echo base_url(); ?>index.php/nguoidungdiadiem/muonden?t=" + Math.random();
+              url="<?php echo base_url(); ?>nguoidungdiadiem/muonden?t=" + Math.random();
               dta = {
                 "DD_MA" : "<?php echo $info['DD_MA']; ?>",
                 "NDDD_MUONDEN" : tg
@@ -380,7 +380,7 @@
             }
 
             var url, dta;
-            url="<?php echo base_url(); ?>index.php/aediadiem/updateluotxem?t=" + Math.random();
+            url="<?php echo base_url(); ?>aediadiem/updateluotxem?t=" + Math.random();
             dta = {
               "DD_MA" : "<?php echo $info['DD_MA']; ?>"
             };
@@ -404,7 +404,7 @@
             }, 'json');
 
             //dang anh cho dia diem
-            var path = "<?php echo base_url(); ?>index.php/diadiemhinh/uploadimg/" + "<?php echo $info['DD_MA']; ?>";
+            var path = "<?php echo base_url(); ?>diadiemhinh/uploadimg/" + "<?php echo $info['DD_MA']; ?>";
 
             $('#jqxFileUpload1').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_all') ?>", cancelButton: "<?php echo lang('cancel_all') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
 
@@ -501,7 +501,7 @@
               var start = $("#count").html();
               var length = 5;
               var url, dta;
-              url="<?php echo base_url(); ?>index.php/aediadiem/getdata?t=" + Math.random();
+              url="<?php echo base_url(); ?>aediadiem/getdata?t=" + Math.random();
               dta = {
                   "ma" : id,
                   "start" : start,
@@ -610,7 +610,7 @@
         function xemanhbinhluan(idbinhluan)
         {
             var url, dta;
-            url="<?php echo base_url(); ?>index.php/binhluan/anhbinhluan?t=" + Math.random();
+            url="<?php echo base_url(); ?>binhluan/anhbinhluan?t=" + Math.random();
             dta = {
               "ma" : idbinhluan,
             };
@@ -737,7 +737,7 @@
 
         function inposts(id)
         {
-            url = '<?php echo base_url(); ?>index.php/user/poster/'+id;
+            url = '<?php echo base_url(); ?>user/poster/'+id;
             window.open(url, '', '_blank');
         }
 
@@ -884,7 +884,7 @@
                   </tr>
                   <tr>
                   <td>
-                  <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma1; ?>">
+                  <a href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma1; ?>">
                       <img class="imggoiy" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh1; ?>" />  </a>
                     </td>
                   </tr>
@@ -945,7 +945,7 @@
                                         <span style="text-transform: capitalize;"><i class="fa fa-user fa-fw"></i> <a href="#"> <?php echo $info["ND_TEN"] ?></a></span>
                                         <span><i class="fa fa-comment fa-fw"></i> <a href="blog-item.html#comments"><?php echo $countbinhluan ?> <?php echo lang('comment') ?></a></span>
                                         <span><i class="fa fa-heart fa-fw"></i> <a href="#"><?php echo $countyeuthich ?> <?php echo lang('likes') ?></a></span>
-                                        <span><i class="fa fa-pencil fa-fw"></i> <a href="<?php echo base_url(); ?>index.php/baiviet/thembaiviet/<?php echo $info['DD_MA']; ?>"><?php echo $countbaiviet ?> <?php echo lang('posts') ?></a></span>
+                                        <span><i class="fa fa-pencil fa-fw"></i> <a href="<?php echo base_url(); ?>baiviet/thembaiviet/<?php echo $info['DD_MA']; ?>"><?php echo $countbaiviet ?> <?php echo lang('posts') ?></a></span>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-10 blog-content">
@@ -1378,7 +1378,7 @@
                                         <i class="fa fa-print fa-fw"> </i> <?php echo lang('poster') ?><span class="pull-right"></span>
                                     </li>
                                     <li>
-                                        <a href="<?php echo base_url(); ?>index.php/baiviet/thembaiviet/<?php echo $info['DD_MA']; ?>">
+                                        <a href="<?php echo base_url(); ?>baiviet/thembaiviet/<?php echo $info['DD_MA']; ?>">
                                           <i class="fa fa-pencil fa-fw"> </i> <?php echo lang('posts') ?><span class="pull-right">(<label id="countbaiviet"><?php echo $countbaiviet; ?></label>)</span>
                                         </a>
                                     </li>
@@ -1406,7 +1406,7 @@
                                   $ND_TEN = $row["ND_TEN"];
                               ?>
 
-                                <a style="text-transform: capitalize; font-size: 15px;" href="<?php echo base_url(); ?>index.php/baiviet/detail/<?php echo $BV_MA; ?>">
+                                <a style="text-transform: capitalize; font-size: 15px;" href="<?php echo base_url(); ?>baiviet/detail/<?php echo $BV_MA; ?>">
                                     <?php echo $BV_TIEUDE; ?><br/>
                                 </a>
                                 <i style="font-size: 13px; color: #000;">
@@ -1474,7 +1474,7 @@
                                 $tinh3 = $row['T_TEN'];
                                 $huyen3 = $row['H_TEN'];
                             ?>
-                              <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
+                              <a href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma3; ?>">
                                 <span>
                                   
                                   <table width="100%">
@@ -1517,7 +1517,7 @@
                                 $tinh3 = $row['T_TEN'];
                                 $huyen3 = $row['H_TEN'];
                             ?>
-                              <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
+                              <a href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma3; ?>">
                                 <span>
                                   
                                   <table width="100%">
@@ -1561,7 +1561,7 @@
                                 $tinh3 = $row['T_TEN'];
                                 $huyen3 = $row['H_TEN'];
                             ?>
-                              <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
+                              <a href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma3; ?>">
                                 <span>
                                   
                                   <table width="100%">

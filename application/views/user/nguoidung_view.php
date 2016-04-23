@@ -17,7 +17,7 @@
         	$.jqx.theme = "bootstrap";
 
             var id = "<?php echo $this->session->userdata('id'); ?>";
-            var path = "<?php echo base_url(); ?>index.php/avata/upload/"+id;
+            var path = "<?php echo base_url(); ?>avata/upload/"+id;
             $('#jqxFileUpload').jqxFileUpload({ localization: { browseButton: '<?php echo lang("browse") ?>', uploadButton: "<?php echo lang('upload_file') ?>", cancelButton: "<?php echo lang('cancel') ?>", uploadFileTooltip: "<?php echo lang('upload_file') ?>", cancelFileTooltip: "<?php echo lang('cancel') ?>" } });
 
             $('#jqxFileUpload').jqxFileUpload({ multipleFilesUpload: false });
@@ -57,7 +57,7 @@
                 {
                     thongbao("", serverResponce, "success");
                     location.reload(true);
-                    setTimeout("location.href = '<?= base_url() ?>index.php/user/account';",1000);
+                    setTimeout("location.href = '<?= base_url() ?>user/account';",1000);
                 }
                 else
                 {
@@ -136,7 +136,7 @@
                         ?>
                         <h2>
                             <b style="color: #000;"> <?php echo $info['ND_HO'].' '.$info['ND_TEN'] ?>  </b>
-                            <a href="<?php echo base_url(); ?>index.php/user/edit/<?php echo $info['ND_MA'] ?>">
+                            <a href="<?php echo base_url(); ?>user/edit/<?php echo $info['ND_MA'] ?>">
                                 <i class="fa fa-edit fa-fw"></i>
                             </a>
                             

@@ -3,7 +3,7 @@
         $(document).ready(function(){
             $("#btnthem").click(function(){
                 var url, dta;
-                url="<?php echo base_url(); ?>index.php/home/loadthemdiadiem?t=" + Math.random();
+                url="<?php echo base_url(); ?>home/loadthemdiadiem?t=" + Math.random();
                 dta = {
                     "count" : $("#count").val(),
                 };
@@ -52,7 +52,7 @@
                                 }
 
 
-                                document.getElementById("diadiem").innerHTML += '<table style="float: left; margin-right: 13px; height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+ma+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+ma+'">'+ten+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+tenhuyen+'<i class="fa fa-angle-double-right fa-fw"></i>'+tentinh+'</p></td></tr></table>';
+                                document.getElementById("diadiem").innerHTML += '<table style="float: left; margin-right: 13px; height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>aediadiem/detailuser1/'+ma+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>aediadiem/detailuser1/'+ma+'">'+ten+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+tenhuyen+'<i class="fa fa-angle-double-right fa-fw"></i>'+tentinh+'</p></td></tr></table>';
                             }
                             var tong = eval(data.data.length+"+"+$("#count").val());
                             $("#count").val(tong);
@@ -235,7 +235,7 @@
                                 $huyen3 = $row['H_TEN'];
                                 $diem = $row['diem'];
                             ?>
-                              <a class="tieudebenner" target="_blank" href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma3; ?>">
+                              <a class="tieudebenner" target="_blank" href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma3; ?>">
                                 <span>
                                   
                                 <span><?php echo $ten3; ?></span><br/>
@@ -382,7 +382,7 @@
                             $BV_TIEUDE1 = $iteam["BV_TIEUDE"];
                     ?>
 
-                    <a style="margin: 10px;" href="<?php echo base_url(); ?>index.php/baiviet/detail/<?php echo $BV_MA1; ?>">
+                    <a style="margin: 10px;" href="<?php echo base_url(); ?>baiviet/detail/<?php echo $BV_MA1; ?>">
                         <?php echo $BV_TIEUDE1; ?>
                     </a> <i class="fa fa-angle-double-right"></i>
 
@@ -411,7 +411,7 @@
                         <table style="float: left; margin-right: 13px; height: 180px; width: 150px;" border="0">
                                 <tr>
                                     <td height="100" width="150">
-                                        <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>">
+                                        <a href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma; ?>">
                                             <img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
                                         </a>
                                     </td>
@@ -419,7 +419,7 @@
                                 <tr>    
                                     <td valign="top">
                                         <div style="max-height: 40px; overflow: hidden;">
-                                        <b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b> </div>
+                                        <b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b> </div>
                                         <p style="font-size: 13px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
                                     </td>
                                 </tr>
@@ -489,7 +489,7 @@
  -->                        <table style="float: left; margin-right: 13px; height: 180px; width: 150px;" border="0">
                                 <tr>
                                     <td height="100" width="150">
-                                        <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>">
+                                        <a href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma; ?>">
                                             <img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
                                         </a>
                                     </td>
@@ -497,7 +497,7 @@
                                 <tr>    
                                     <td valign="top">
                                         <div style="max-height: 40px; overflow: hidden;">
-                                        <b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b> </div>
+                                        <b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b> </div>
                                         <p style="font-size: 13px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
                                     </td>
                                 </tr>

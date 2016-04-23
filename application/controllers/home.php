@@ -335,7 +335,7 @@ class Home extends CI_Controller
             }
 
 			$hinh = "<img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='150' hgiht='150'>";
-			$noidung = "<a target='_blank' href='".base_url()."index.php/aediadiem/detailuser1/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a>";
+			$noidung = "<a target='_blank' href='".base_url()."aediadiem/detailuser1/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a>";
 			$thongtin = '<br/><p><i class="fa fa-map-marker fa-fw"></i><b class="vitri">'.$item["DD_VITRI"].'</b>';
 			$thongtin .= '<br/><i class="fa fa-road fa-fw"></i> '.$duong;
 			$thongtin .= '<br/><i class="fa fa-phone fa-fw"></i> '.$sdt;

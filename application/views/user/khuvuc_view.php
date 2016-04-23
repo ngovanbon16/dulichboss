@@ -1,7 +1,7 @@
 <script type="text/javascript">
     function lochuyen(matinh, mahuyen)
     {
-        setTimeout("location.href = '<?php echo base_url(); ?>index.php/home/theohuyen/"+matinh+"/"+mahuyen+"';",0);
+        setTimeout("location.href = '<?php echo base_url(); ?>home/theohuyen/"+matinh+"/"+mahuyen+"';",0);
     }
 
     function themdiadiem(idhuyen)
@@ -9,7 +9,7 @@
         var start = $("#"+idhuyen).html();
         var length = 7;
         var url, dta;
-        url="<?php echo base_url(); ?>index.php/home/gethuyen?t=" + Math.random();
+        url="<?php echo base_url(); ?>home/gethuyen?t=" + Math.random();
         dta = {
             "ma" : idhuyen,
             "start" : start,
@@ -29,7 +29,7 @@
                     var T_TEN = data[i]['T_TEN'];
                     var H_TEN = data[i]['H_TEN'];
                     var HA_TEN = data[i]['HA_TEN'];
-                    str += '<table style="float: left; margin-right: 13px; height: 180px; width: 135px;" border="0"><tr><td height="100" width="135"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><img style="width: 135px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/'+DD_MA+'">'+DD_TEN+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+H_TEN+'<i class="fa fa-angle-double-right fa-fw"></i>'+T_TEN+'</p></td></tr></table>';
+                    str += '<table style="float: left; margin-right: 13px; height: 180px; width: 135px;" border="0"><tr><td height="100" width="135"><a href="<?php echo base_url(); ?>aediadiem/detailuser1/'+DD_MA+'"><img style="width: 135px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>aediadiem/detailuser1/'+DD_MA+'">'+DD_TEN+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+H_TEN+'<i class="fa fa-angle-double-right fa-fw"></i>'+T_TEN+'</p></td></tr></table>';
                 }
                 document.getElementById('noidung'+idhuyen).innerHTML += str;
 
@@ -97,7 +97,7 @@
 
                     <!-- <ul class="nav navbar-nav">
                         <li style="margin-bottom: -30px; font-weight: bolder; font-size: 16px;" class="active">
-                             <a href="<?php echo base_url(); ?>index.php/home/khuvuc/<?php echo $this->session->userdata("T_MA"); ?>" ><?php echo lang('view').' '.lang('all'); ?></a>
+                             <a href="<?php echo base_url(); ?>home/khuvuc/<?php echo $this->session->userdata("T_MA"); ?>" ><?php echo lang('view').' '.lang('all'); ?></a>
                         </li>
                         <?php 
                             $matinh = $this->session->userdata("T_MA");
@@ -114,7 +114,7 @@
                         ?>
                     </ul> -->
 
-                    <a href="<?php echo base_url(); ?>index.php/home/khuvuc/<?php echo $this->session->userdata("T_MA"); ?>" ><?php echo lang('view').' '.lang('all'); ?></a> | 
+                    <a href="<?php echo base_url(); ?>home/khuvuc/<?php echo $this->session->userdata("T_MA"); ?>" ><?php echo lang('view').' '.lang('all'); ?></a> | 
                     <?php 
                         $matinh = $this->session->userdata("T_MA");
                         foreach ($huyen as $iteam) {
@@ -202,7 +202,7 @@
                         <table style="float: left; margin-right: 13px; height: 180px; width: 135px;" border="0">
                             <tr>
                                 <td height="100" width="150">
-                                    <a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>">
+                                    <a href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma; ?>">
                                         <img style="width: 135px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" alt="">
                                     </a>
                                 </td>
@@ -210,7 +210,7 @@
                             <tr>    
                                 <td valign="top">
                                     <div style="max-height: 40px; overflow: hidden;">
-                                    <b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>index.php/aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b> </div>
+                                    <b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>aediadiem/detailuser1/<?php echo $ma; ?>"><?php echo $ten; ?></a> </b> </div>
                                     <p style="font-size: 13px; font-style: italic;"><?php echo $tenhuyen.'<i class="fa fa-angle-double-right fa-fw"></i>'.$tentinh; ?></p>   
                                 </td>
                             </tr>

@@ -132,7 +132,7 @@ class Aediadiem extends CI_Controller
 		            }
 	            }
 
-				$hinh = "<a href='".base_url()."index.php/aediadiem/detailuser1/".$madd."'><img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
+				$hinh = "<a href='".base_url()."aediadiem/detailuser1/".$madd."'><img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
 				$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: 0px 0px 0px 0px; padding: 0px; width: 180px; max-height: 30px;'><input style='width: 180px; cursor: pointer; font-weight: bold;' type='text' value='".$item['DD_TEN']."' > </a></div><div style='width: 180px; text-transform: capitalize; color: #1AA5D1; background-color: #FFF; font-weight: bold;'><i>".$item['DD_DIACHI']."</i></div>";
 				$marker['infowindow_content'] = $hinh.$noidung;
 				$marker['id'] = $madd;
