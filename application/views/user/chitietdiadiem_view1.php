@@ -1449,11 +1449,14 @@
                     </div><!--/.blog_gallery-->
     				
     				        <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
-                        <h3><?php echo lang('map') ?></h3>
+                        <h3><?php echo lang('map') ?>
+                            <a target="_bank" href="<?= base_url(); ?>aediadiem/danduong/<?= $info['DD_MA']; ?>">
+                              <button style="margin-top: -5px; margin-left: 5px;" type="button" class="btn btn-success"><?= lang('direct') ?></button>
+                            </a>
+                        </h3>
                         
                         <?php echo $map['js']; ?>
                         <?php echo $map['html']; ?>
-                        <div style="max-height: 200px; overflow: auto;" id="directionsDiv"></div>
                                           
                     </div><!--/.recent comments-->
 

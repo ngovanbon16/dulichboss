@@ -240,4 +240,5 @@ $lang['email_hasnt_been_sent'] = "Email chưa được gửi";
 $lang['your_places'] = "Các địa điểm của bạn";
 $lang['restaurant'] = "Nhà hàng";
 $lang['hotel'] = "Khách sạn";
+$lang['direct'] = "Dẫn đường";
 ?>

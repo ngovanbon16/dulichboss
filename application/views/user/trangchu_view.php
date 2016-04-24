@@ -207,6 +207,7 @@
             box-shadow: 0 0 4px #8DEEEE;
             -webkit-box-shadow: 0 0 4px #8DEEEE;
             opacity: 0.5;
+            z-index: -1;
         }
     </style>
 
