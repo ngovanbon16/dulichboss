@@ -40,6 +40,22 @@ class Home extends CI_Controller
        	$this->load->view('main.php', $this->_data);
 	}
 
+	public function loaddata()
+	{
+		$this->load->model("mdiadiem");
+		$txtdiadiem = $this->mdiadiem->countnewplace();
+
+		$this->load->model("mbaiviet");
+		$txtbaiviet = $this->mbaiviet->countdaduyet();
+
+		$this->load->model("mnguoidung");
+		$txtnguoidung = $this->mnguoidung->countkichhoat();
+
+		$response = array('txtdiadiem' => $txtdiadiem, 'txtbaiviet' => $txtbaiviet, 'txtnguoidung' => $txtnguoidung);
+		$jsonString = json_encode($response);
+		echo $jsonString;
+	}
+
 	public function trangchu()
 	{
 		$this->_data['subview'] = 'user/trangchu_view';

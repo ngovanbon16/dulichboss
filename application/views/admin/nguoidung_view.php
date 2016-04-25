@@ -69,6 +69,13 @@
             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
             var kichhoat = dataRecord.ND_KICHHOAT;
             var email = dataRecord.ND_DIACHIMAIL;
+
+            if(kichhoat == "0")
+            {
+                thongbao("", "<?php echo lang('not_activated') ?>", "danger");
+                $("#jqxgrid").show();
+            }
+
             if(kichhoat == "-1")
             {
                 mscConfirm({
@@ -139,7 +146,8 @@
 
                   onCancel: function() {
                     //mscAlert(":( You cancelled on me.");
-                    thongbao("", "<?= lang('cancel') ?>", "danger");
+                    //thongbao("", "<?= lang('cancel') ?>", "danger");
+                    $("#jqxgrid").jqxGrid('updaterow', id, $("#jqxgrid").jqxGrid('getrowdata', row));
                     $("#jqxgrid").show();
                   }
                 });

@@ -38,7 +38,7 @@
                         toolbarCanCollapse : true
                     }
                 );
-                
+                donghoload();
             };
 
             var url = "<?php echo base_url(); ?>index.php/diadiem/data";

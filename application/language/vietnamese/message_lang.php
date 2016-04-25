@@ -241,4 +241,10 @@ $lang['your_places'] = "Các địa điểm của bạn";
 $lang['restaurant'] = "Nhà hàng";
 $lang['hotel'] = "Khách sạn";
 $lang['direct'] = "Dẫn đường";
+$lang['stop'] = "Dừng lại";
+$lang['time'] = "Thời gian";
+$lang['start'] = "Bắt đầu";
+$lang['new_user'] = "Người dùng mới";
+$lang['complete'] = "Hoàn tất";
+$lang['please_reload_the_page_after_a_successful_upload'] = "Vui lòng tải lại trang sau khi tải lên thành công";
 ?>

@@ -344,7 +344,7 @@
                         toolbarCanCollapse : true
                     }
                 );
-                
+                donghoload();
             };
 
             $("#btngui").click(function(){

@@ -140,7 +140,7 @@ class Nguoidung extends CI_Controller
 			}
 			else
 			{
-				/* code neu khong tim thay du lieu */
+				$sort = " ORDER BY nguoidung.ND_KICHHOAT ASC, nguoidung.ND_NGAYTAO DESC ";
 			}
 
 			if (isset($_GET['filterscount'])) // code tim kiem

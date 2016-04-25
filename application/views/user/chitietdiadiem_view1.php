@@ -172,6 +172,7 @@
                   {
                     //$('#myModalbl').modal('toggle');
                     thongbao("", "<?php echo lang('comment_successfully_posted') ?>", "success");
+                    $("#btnsuccessbl").css("display", "block");
                     $("#jqxFileUpload").show();
                     //$("#idbinhluan").show();
                      document.getElementById("btngui").disabled = true;
@@ -232,6 +233,11 @@
               <?php 
                 }
               ?>
+            });
+
+            $("#btnsuccessbl").click(function(){
+                $('#jqxFileUpload').jqxFileUpload('uploadAll');
+                thongbao("", "<?= lang('please_reload_the_page_after_a_successful_upload') ?>", "success");
             });
 
             $("#checkin").click(function(){
@@ -1206,6 +1212,7 @@
                                             </div>
                                             <div id="eventsPanel">
                                             </div>
+                                            <button style="margin-top: 10px; display: none;" id="btnsuccessbl" type="button" class="btn btn-success"><?= lang('complete'); ?></button>
                                         </div>
 
                                         <?php 

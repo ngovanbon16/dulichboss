@@ -126,7 +126,7 @@ class Diadiem extends CI_Controller
 			}
 			else
 			{
-				/* code neu khong tim thay du lieu */
+				$sort = " ORDER BY diadiem.DD_DUYET ASC, diadiem.DD_NGAYDANG DESC ";
 			}
 
 			if (isset($_GET['filterscount'])) // code tim kiem

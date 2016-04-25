@@ -82,6 +82,15 @@ class Mnguoidung extends CI_Model {
         return $query->num_rows();
     }
 
+    public function countkichhoat()
+    {
+        $this->db->select('*');
+        $this->db->from($this->_table);
+        $this->db->where("ND_KICHHOAT", "0");
+        $query = $this -> db -> get();           
+        return $query->num_rows();
+    }
+
     public function getID($id)
     {
         $this->db->select('*');

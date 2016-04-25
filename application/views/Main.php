@@ -61,7 +61,7 @@
                         icon: 'glyphicon glyphicon-star',
                         title: title+":",
                         message: message,
-                        url: "https://google.com",
+                        url: "http://smartmekong.vn/dulich",
                         target: "_blank"
                     },
                     {
@@ -83,9 +83,71 @@
                     }
                 );
             }
+
+            function donghoload()
+            {
+                load();
+                setTimeout("donghoload()", 5000);
+            }
+
+            function load()
+            {
+                var url = "<?= base_url(); ?>home/loaddata";
+                var data;
+                $.ajax({
+                  url : url,
+                  type : 'post',
+                  dataType : 'json',
+                  data : data,
+                  success : function (data){
+                    //console.log(data);
+                    var txtdiadiem = data.txtdiadiem;
+                    var txtbaiviet = data.txtbaiviet;
+                    var txtnguoidung = data.txtnguoidung;
+
+                    var colorbell = "#FFF";
+                    var colordiadiem = "#000";
+                    var colorbaiviet = "#000";
+                    var colornguoidung = "#000";
+                    if(txtdiadiem > 0)
+                    {
+                        colordiadiem = "#F00";
+                        colorbell = "#F00";
+                    }
+                    if(txtbaiviet > 0)
+                    {
+                        colorbaiviet = "#F00";
+                        colorbell = "#F00";
+                    }
+                    if(txtnguoidung > 0)
+                    {
+                        colornguoidung = "#F00";
+                        colorbell = "#F00";
+                    }
+
+                    document.getElementById("colorbell").style.color = colorbell;
+                    document.getElementById("colordiadiem").style.color = colordiadiem;
+                    document.getElementById("txtdiadiem").innerHTML = txtdiadiem;
+
+                    document.getElementById("colorbaiviet").style.color = colorbaiviet;
+                    document.getElementById("txtbaiviet").innerHTML = txtbaiviet;
+
+                    document.getElementById("colornguoidung").style.color = colornguoidung;
+                    document.getElementById("txtnguoidung").innerHTML = txtnguoidung;
+                  }
+              });
+            }
         </script>
+        <style type="text/css">
+            .color{
+                color: #000;
+            }
+            .color1{
+                color: #F00;
+            }
+        </style>
     </head>
-    <body>
+    <body onload="donghoload();">
 
         <div id="wrapper">
 
@@ -134,23 +196,31 @@
                                 }
                             }
                         ?>
-                        <a style="color: <?= $colorall; ?>;" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <a onclick="load();" id="colorbell" style="color: <?= $colorall; ?>;" class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>
-                                <a style="color: <?= $color ?>;" href="<?php echo base_url(); ?>diadiem">
+                                <a id="colornguoidung" href="<?php echo base_url(); ?>nguoidung">
                                     <div>
-                                        <i class="fa fa-comment fa-fw"></i> <?php echo lang('new_place') ?>
-                                        <span class="pull-right text-muted small"><?php echo $new ?></span>
+                                        <i class="fa fa-user fa-fw"></i> <?php echo lang('new_user') ?>
+                                        <span id="txtnguoidung" class="pull-right text-muted small"></span>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a style="color: <?= $colorbv ?>;" href="<?php echo base_url(); ?>baiviet">
+                                <a id="colordiadiem" style="color: <?= $color ?>;" href="<?php echo base_url(); ?>diadiem">
+                                    <div>
+                                        <i class="fa fa-comment fa-fw"></i> <?php echo lang('new_place') ?>
+                                        <span id="txtdiadiem" class="pull-right text-muted small"><?php echo $new ?></span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="colorbaiviet" style="color: <?= $colorbv ?>;" href="<?php echo base_url(); ?>baiviet">
                                     <div>
                                         <i class="fa fa-pencil fa-fw"></i> <?php echo lang('new_post') ?>
-                                        <span class="pull-right text-muted small"><?php echo $newbv ?></span>
+                                        <span id="txtbaiviet" class="pull-right text-muted small"><?php echo $newbv ?></span>
                                     </div>
                                 </a>
                             </li>
@@ -372,6 +442,9 @@
                             </li>
                             <li>
                                 <a href="<?php echo base_url(); ?>thongtin"><i class="fa fa-info fa-fw"></i> <?php echo lang('information') ?></a>
+                            </li>
+                            <li>
+                                <a href="https://dashboard.tawk.to/"><i class="fa fa-wechat fa-fw"></i> Chat</a>
                             </li>
                             <!-- <li>
                                 <a href="#"><i class="fa fa-bar-chart-o"></i> Thống kê<span class="fa arrow"></span></a>

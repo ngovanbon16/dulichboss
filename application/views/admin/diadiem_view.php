@@ -41,6 +41,29 @@
 
     <script type="text/javascript">
 
+        var ts = 5;
+        function dongho()
+        {
+            if(ts < 0)
+            {
+                naplai();
+                ts = 5;
+            }
+            document.getElementById("dongho").innerHTML = ts;
+            ts--;
+            dh = setTimeout("dongho()", 1000);
+        }
+
+        function naplai()
+        {
+            $("#jqxgrid").jqxGrid('updatebounddata');
+        }
+
+        function ngungnaplai()
+        {
+            clearTimeout(dh);
+        }
+
         function sua(id)
         {
             setTimeout("location.href = '<?php echo base_url(); ?>aediadiem/edit/"+id+"';",0);
@@ -268,10 +291,12 @@
                     toolbar.append(container);
                     container.append('<button id="addrowbutton"> <i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('add') ?> </button>');
                     container.append('<button style="margin-left: 3px; " id="deleterowbutton"> <i class="fa fa-times fa-fw"></i> <?php echo lang('delete') ?> </button> ');
+                    
                     $("#addrowbutton").jqxButton();
                     $("#addrowbutton").jqxTooltip({ content: "<?php echo lang('add') ?>"});
                     $("#deleterowbutton").jqxButton();
                     $("#deleterowbutton").jqxTooltip({ content: "<?php echo lang('delete') ?>"});
+                    
                     // create new row.
                     $("#addrowbutton").on('click', function () {
                         setTimeout("location.href = '<?= base_url(); ?>aediadiem';",0);
@@ -304,6 +329,20 @@
                                 $("#jqxgrid").show();
                             }
                         });
+                    });
+
+                    container.append('<button id="btnbatdau"> <i class="fa fa-play fa-fw"></i> <?php echo lang('start') ?> </button> ');
+                    $("#btnbatdau").jqxButton();
+                    $("#btnbatdau").jqxTooltip({ content: "<?php echo lang('start').' '.lang('reset') ?>"});
+                    $("#btnbatdau").on('click', function () {
+                        dongho();
+                    });
+
+                    container.append('<button id="btnnaplai"> <i class="fa fa-pause fa-fw"></i> <?php echo lang('stop') ?> </button> ');
+                    $("#btnnaplai").jqxButton();
+                    $("#btnnaplai").jqxTooltip({ content: "<?php echo lang('stop').' '.lang('reset') ?>"});
+                    $("#btnnaplai").on('click', function () {
+                        ngungnaplai();
                     });
                 },
 
@@ -423,7 +462,8 @@
         }
     </style>
 </head>
-<body class='default'>
+<body onload="dongho();" class='default'>
+    <?= lang("time")." ".lang("reset") ?>: <b id="dongho">5</b>
     <div id='jqxWidget' style="font-size: 13px; font-family: Verdana;">
         <div id="jqxgrid">
         </div>

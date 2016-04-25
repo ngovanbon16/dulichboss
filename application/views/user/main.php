@@ -112,7 +112,18 @@
       });
     });
     </script>
-
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/571da09da2ce853d5f0837f2/default';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
     <style>
     .support-icon-right {
         border-radius: 3px;
@@ -457,7 +468,7 @@
                   js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.5";
                   fjs.parentNode.insertBefore(js, fjs);
                 }(document, 'script', 'facebook-jssdk'));</script>
-                <div class="support-icon-right" style="position:fixed; z-index:9999999; right:10px; bottom:10px;">
+                <div class="support-icon-right" style="margin-bottom: 30px; position:fixed; z-index:9999999; right:10px; bottom:10px;">
                     <h3><i class="fa fa-hand-o-right"></i> Chat với Dulichmientay</h3>
                     <div class="online-support">
                         <div

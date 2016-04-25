@@ -112,7 +112,7 @@ class Binhluan extends CI_Controller
 			}
 			else
 			{
-				/* code neu khong tim thay du lieu */
+				$sort = " ORDER BY binhluan.BL_NGAYDANG DESC ";
 			}
 
 			if (isset($_GET['filterscount'])) // code tim kiem

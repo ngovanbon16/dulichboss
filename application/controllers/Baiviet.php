@@ -254,7 +254,7 @@ class Baiviet extends CI_Controller
 			}
 			else
 			{
-				/* code neu khong tim thay du lieu */
+					$sort = " ORDER BY baiviet.BV_DUYET ASC, baiviet.BV_NGAYDANG DESC ";
 			}
 
 			if (isset($_GET['filterscount'])) // code tim kiem
