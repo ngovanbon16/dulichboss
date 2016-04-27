@@ -11,7 +11,7 @@ class Avata extends CI_Controller{
         $this->_data['title'] = lang('photo');
         $this->_data['errors'] = '';
         $this->_data['subview'] = 'admin/avata_view';
-        $this->load->view('Main.php', $this->_data);
+        $this->load->view('main.php', $this->_data);
     }
 
     public function upload($id)

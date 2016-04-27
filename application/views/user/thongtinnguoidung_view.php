@@ -225,6 +225,7 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
+            border: solid 1px #FFF;
         }
         hr{
             margin: 5px;
@@ -248,8 +249,8 @@
 </head>
 <body>
      <section style="background-color: #DCDCDC;" class="service-item">
-       <div style="border: solid 1px #F8F8FF;" class="container">
-            <table border="0">
+       <div class="container">
+            <table style="border: solid 2px #F8F8FF;" border="0">
                 <tr>
                     <td valign="top" style="padding: 10px; background-color: #DCDCDC; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
                         <?php
@@ -274,7 +275,7 @@
                             <a href="<?php echo base_url(); ?>index.php/user/edit/<?php echo $info['ND_MA'] ?>">
                                 <i class="fa fa-edit fa-fw"></i>
                             </a>
-                            
+                            <hr/>
                         </h2>
 
                         <ul class="blog_archieve" style="border-radius: 3px; background-color: #FFF; border: solid 1px #F8F8FF; padding: 10px 10px 10px 10px;">
@@ -327,9 +328,14 @@
                             }
                         ?>
                         </div>
-                        <button style="margin-top: 10px;" id="btnthem" type="button" class="btn btn-danger"><i class="fa  fa-eye fa-fw"></i> <?= lang('view_more'); ?></button>
-                        <button style="margin-top: 10px; display: none;" id="btnthembv" type="button" class="btn btn-danger"><i class="fa  fa-eye fa-fw"></i> <?= lang('view_more'); ?></button>
-                        <br/> <?= lang('total'); ?>: <b id="count"><?php if(count($daden) > 5) { echo '5'; } else { echo count($daden); } ?></b>
+                        <center>
+                        <button style="width: 200px; background-color: #049ec5; margin-top: 10px;" id="btnthem" type="button" class="btn btn-info"><i class="fa  fa-eye fa-fw"></i> <?= lang('view_more'); ?></button>
+                        <button style="width: 200px; background-color: #049ec5; margin-top: 10px; display: none;" id="btnthembv" type="button" class="btn btn-info"><i class="fa  fa-eye fa-fw"></i> <?= lang('view_more'); ?></button>
+                        <br/>
+                        <div style="margin-top: 10px;">
+                            <?= lang('total'); ?>: <b id="count"><?php if(count($daden) > 5) { echo '5'; } else { echo count($daden); } ?></b>
+                        </div> 
+                        </center>
                     </td>
                 </tr>
             </table>

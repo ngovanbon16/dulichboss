@@ -62,7 +62,7 @@ class Home extends CI_Controller
 		$this->_data['active'] = "trangchu";
 		$this->load->model("mdiadiem");
 		$this->load->model("mhinhanh");
-		$this->_data['info'] = $this->mdiadiem->getList1(14, 0);
+		$this->_data['info'] = $this->mdiadiem->getList1(21, 0);
 		$this->_data['info1'] = $this->mhinhanh->getList();
 
 		$this->load->model("mtinh");
@@ -79,7 +79,7 @@ class Home extends CI_Controller
 
 		$this->_data['huyentt'] = $this->mhuyen->getid($T_MA);
 
-		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1'  ORDER BY diadiem.DD_LUOTXEM DESC LIMIT 0, 7";
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1'  ORDER BY diadiem.DD_LUOTXEM DESC LIMIT 0, 14";
 
 		// Kết nối Database, thực hiện câu truy vấn
 		$this->_data['luotxem'] = $this->mdiadiem->gettimkiem($query);
@@ -303,19 +303,8 @@ class Home extends CI_Controller
 		$config['center'] = 'can tho';
 		$config['zoom'] = '8';
 		$config['cluster'] = TRUE;
-		/*$config['onboundschanged'] = 'if (!centreGot) {
-			var mapCentre = map.getCenter();
-			marker_0.setOptions({
-				position: new google.maps.LatLng(mapCentre.lat(), mapCentre.lng()) 
-			});
-		}
-		centreGot = true;';*/
 
 		$this->googlemaps->initialize($config);
-
-		/*$marker = array();
-		$marker['onclick'] = 'alert("Bạn đang ở vị trí này!")';
-		$this->googlemaps->add_marker($marker);*/
 
 		$this->load->model("mdiadiem");
 
@@ -324,10 +313,9 @@ class Home extends CI_Controller
 		$result = $this->mdiadiem->gettimkiem($query);
 
 		foreach ($result as $item) {
-			$local = $item['DD_VITRI'];
 			$danhmuc = $item['DM_MA'];
 			$marker = array();
-			$marker['position'] = $local;
+			$marker['position'] = $item['DD_VITRI'];
 
 			$madd = $item['DD_MA'];
             $anhdaidien = $item['HA_TEN'];
@@ -357,7 +345,6 @@ class Home extends CI_Controller
 			$thongtin .= '<br/><i class="fa fa-phone fa-fw"></i> '.$sdt;
 			$thongtin .= '<div class="mota"><i class="fa fa-bookmark fa-fw"></i> '.$mota.'</div></p>';
 			$marker['infowindow_content'] = "<table><tr><td>".$hinh."</td><td valign='top' width='220'>".$noidung.$thongtin."</td></tr></table>";
-			$marker['id'] = $madd;
 			$marker['icon'] = base_url().'/uploads/danhmuc/'.$danhmuc.'.png';
 			$this->googlemaps->add_marker($marker);
 		}
@@ -372,7 +359,7 @@ class Home extends CI_Controller
 		$this->_data['active'] = "map";
 
        	$this->_data['title'] = 'Map';
-       	$this->load->view('user/main.php', $this->_data);
+       	$this->load->view('user/map_view.php', $this->_data);
 	}
 
 	public function danhmuc()

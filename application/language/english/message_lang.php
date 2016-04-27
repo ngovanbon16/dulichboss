@@ -246,6 +246,15 @@ $lang['start'] = "Start";
 $lang['new_user'] = "New user";
 $lang['complete'] = "Complete";
 $lang['please_reload_the_page_after_a_successful_upload'] = "Please reload the page after a successful upload";
+$lang['most_viewed'] = "Most viewed";
+$lang['includes_new_locations_and_newly_updated_information'] = "Includes new locations and newly updated information";
+$lang[''] = "";
+$lang[''] = "";
+$lang[''] = "";
+$lang[''] = "";
+$lang[''] = "";
+$lang[''] = "";
+$lang[''] = "";
 $lang[''] = "";
 $lang[''] = "";
 ?>

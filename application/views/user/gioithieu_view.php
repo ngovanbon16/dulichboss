@@ -12,7 +12,7 @@
 	}
 </style>
 <section style="margin-top: -50px; background-color: #F8F8FF;" id="about-us">
-        <div class="container">
+        <div style="border: solid 2px #FFF; padding-bottom: 15px; border-radius: 3px;" class="container">
 			<div>
 				<?= $gioithieu["TT_GIOITHIEU"]; ?>
 				<!-- <table width="100%">

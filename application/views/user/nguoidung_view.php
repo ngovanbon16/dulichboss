@@ -75,6 +75,7 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
+            border: solid 1px #FFF;
         }
         hr{
             margin: 5px;
@@ -114,9 +115,9 @@
 <body>
      <section style="background-color: #DCDCDC;" class="service-item">
        <div class="container">
-            <table border="0">
+            <table border="0" style="border: solid 2px #F8F8FF;">
                 <tr>
-                    <td style="border: solid 1px #F8F8FF; padding: 20px; background-color: #DCDCDC; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
+                    <td style="padding: 20px; background-color: #DCDCDC; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
                         <?php
                             $ten = $info["ND_HINH"];
                             $file_path = "uploads/user/".$ten;

@@ -1,9 +1,9 @@
-<section id="contact-info" style="margin-top: -100px; margin-bottom: -100px;">
-<div class="gmap-area">
-            <div class="container">
-                <div class="row">
 <html>
 <head>
+    <title><?php echo $title; ?></title>
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/logo.ico" type="image/x-icon" />
+    <link href="<?php echo base_url(); ?>assets/user/css/bootstrap.min.css" rel="stylesheet">
+
     <link type="text/css" rel="Stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" />
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxcore.js"></script>
@@ -35,9 +35,6 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
 
 	<?php echo $map['js']; ?>
-    <script type="text/javascript">
-		var centreGot = false;
-	</script>
 
     <script type="text/javascript">
      $(document).ready(function () {
@@ -295,7 +292,7 @@
     </style>
 </head>
 <body>
-    <h1 style="margin-top: -20px;"><?php echo lang('places_map'); ?></h1>
+    <h1 style="font-weight: bold;"><?php echo lang('places_map'); ?> <a href="<?= site_url('trangchu'); ?>"><?= lang('home') ?></a></h1>
     <table width="100%">
         <tr>
             <td valign="top" style="min-width: 250px;">
@@ -315,6 +312,3 @@
     </table>
 </body>
 </html>
-
-</div></div></div>
-</section>

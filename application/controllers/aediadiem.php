@@ -80,6 +80,9 @@ class Aediadiem extends CI_Controller
 
 	function danduong($id)
 	{
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+		
 		$diadiem = $this->mdiadiem->getID($id);
 		$matinhdd = $diadiem['T_MA'];
 		$mahuyendd = $diadiem['H_MA']; 
@@ -100,7 +103,7 @@ class Aediadiem extends CI_Controller
 		}
 		centreGot = true;';*/
 		$config['directions'] = TRUE;
-		$config['cluster'] = TRUE;
+		//$config['cluster'] = TRUE;
 		$config['directionsStart'] = $config['center'];
 		$config['directionsEnd'] = $local;
 		$config['directionsDivID'] = 'directionsDiv';
@@ -109,7 +112,9 @@ class Aediadiem extends CI_Controller
 		/*$marker = array();
 		$this->googlemaps->add_marker($marker);*/
 
-		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.T_MA = $matinhdd AND diadiem.H_MA = $mahuyendd";
+		/*$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.T_MA = '$matinhdd' AND diadiem.H_MA = '$mahuyendd'";*/
+
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_MA = '$id'";
 
 		$result = $this->mdiadiem->gettimkiem($query);
 
@@ -117,8 +122,13 @@ class Aediadiem extends CI_Controller
 			$local = $item['DD_VITRI'];
 			$marker = array();
 			$marker['position'] = $local;
+			$anhdaidien = $item['HA_TEN'];
+            if($anhdaidien == "")
+            {
+            	$anhdaidien = "anhdaidien.jpg";
+            }
 
-			$hinh = "<a href='".base_url()."aediadiem/detailuser1/".$item['DD_MA']."'><img class='img' src='".base_url()."uploads/diadiem/".$item['HA_TEN']."' width='180' hgiht='150'>";
+			$hinh = "<a href='".base_url()."aediadiem/detailuser1/".$item['DD_MA']."'><img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
 			$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: 0px 0px 0px 0px; padding: 0px; width: 180px; max-height: 30px;'><input style='width: 180px; cursor: pointer; font-weight: bold;' type='text' value='".$item['DD_TEN']."' > </a></div><div style='width: 180px; text-transform: capitalize; color: #1AA5D1; background-color: #FFF; font-weight: bold;'><i>".$item['DD_DIACHI']."</i></div>";
 			$marker['infowindow_content'] = $hinh.$noidung;
 			$marker['icon'] = base_url().'/uploads/danhmuc/'.$item['DM_MA'].'.png';
@@ -133,24 +143,24 @@ class Aediadiem extends CI_Controller
        	$this->load->view("user/main.php", $this->_data);
 	}
 
-	function mapuser($id, $local)
-	{
+	function mapuser($id)
+	{	
+		$diadiem = $this->mdiadiem->getID($id);
+		$matinhdd = $diadiem['T_MA'];
+		$mahuyendd = $diadiem['H_MA']; 
+       	$local = $diadiem['DD_VITRI'];
+
 		$this->load->library('googlemaps');
 
 		$config = array();
 		$config['center'] = $local;
-		$config['cluster'] = TRUE;
-		$config['zoom'] = '18';
-
+		$config['zoom'] = '15';
+		//$config['cluster'] = TRUE;
 		$this->googlemaps->initialize($config);
 
-		$this->load->model("mdiadiem");
+		/*$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.T_MA = '$matinhdd' AND diadiem.H_MA = '$mahuyendd'";*/
 
-		$diadiem = $this->mdiadiem->getID($id);
-		$matinhdd = $diadiem['T_MA'];
-		$mahuyendd = $diadiem['H_MA']; 
-
-		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.T_MA = $matinhdd AND diadiem.H_MA = $mahuyendd";
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_MA = '$id'";
 
 		$result = $this->mdiadiem->gettimkiem($query);
 
@@ -158,8 +168,13 @@ class Aediadiem extends CI_Controller
 			$local = $item['DD_VITRI'];
 			$marker = array();
 			$marker['position'] = $local;
+			$anhdaidien = $item['HA_TEN'];
+            if($anhdaidien == "")
+            {
+            	$anhdaidien = "anhdaidien.jpg";
+            }
 
-			$hinh = "<a href='".base_url()."aediadiem/detailuser1/".$item['DD_MA']."'><img class='img' src='".base_url()."uploads/diadiem/".$item['HA_TEN']."' width='180' hgiht='150'>";
+			$hinh = "<a href='".base_url()."aediadiem/detailuser1/".$item['DD_MA']."'><img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
 			$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: 0px 0px 0px 0px; padding: 0px; width: 180px; max-height: 30px;'><input style='width: 180px; cursor: pointer; font-weight: bold;' type='text' value='".$item['DD_TEN']."' > </a></div><div style='width: 180px; text-transform: capitalize; color: #1AA5D1; background-color: #FFF; font-weight: bold;'><i>".$item['DD_DIACHI']."</i></div>";
 			$marker['infowindow_content'] = $hinh.$noidung;
 			$marker['icon'] = base_url().'/uploads/danhmuc/'.$item['DM_MA'].'.png';
@@ -437,7 +452,7 @@ class Aediadiem extends CI_Controller
        	$this->_data['tenxa'] = $xa["X_TEN"];
 
        	
-        $this->_data['map'] = $this->mapuser($id, $info["DD_VITRI"]);
+        $this->_data['map'] = $this->mapuser($id);
         $this->_data['info'] = $this->mdiadiem->getID($id);
         $this->load->model("mhinhanh");
         $this->_data['info1'] = $this->mhinhanh->getloc($id); // load hinh anh theo ma dia diem

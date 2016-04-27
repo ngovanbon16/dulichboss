@@ -395,7 +395,7 @@
 
            <div class="center wow fadeInDown">
                 
-                <h2>Được xem nhiều nhất</h2>
+                <h2><?= lang('most_viewed') ?></h2>
             </div>
 
             <div style="margin-left: 0px; margin-top: -30px;" class="row">
@@ -437,8 +437,8 @@
     <section id="recent-works">
         <div class="container">
             <div class="center wow fadeInDown">
-                <h2><?php echo lang('some_prominent_locations') ?></h2>
-                <p class="lead">Gồm các địa điểm mới và vừa mới được cập nhật thông tin</p>
+                <h2><?= lang('some_prominent_locations') ?></h2>
+                <p class="lead"><?= lang('includes_new_locations_and_newly_updated_information') ?></p>
             </div>
 
             <div class="row">
@@ -514,7 +514,7 @@
             </div><!--/.row-->   
             <div class="row">
                  <center>
-                    <div style="cursor: pointer; margin: 10px;">
+                    <div style="cursor: pointer; margin-bottom: 20px;">
                         <button id="btnthem" type="button" class="btn btn-danger"><i class="fa  fa-eye fa-fw"></i> <?php echo lang('view_more'); ?></button>
                     </div>
                     <div style="font-weight: bolder;" class="grad1">

@@ -1,9 +1,11 @@
+<head>
+    <?php echo $map['js']; ?>
+</head>
 <section style="margin-top: -80px; margin-bottom: -80px;" id="contact-info">
     <div class="gmap-area">
         <div class="container">
         	<div class="row">
         		<div class="col-sm-8 map-content">
-        			<?php echo $map['js']; ?>
 					<?php echo $map['html']; ?>
         		</div>
                 <div class="col-sm-4 text-center">
