@@ -5,7 +5,8 @@
                 var url, dta;
                 url="<?php echo base_url(); ?>home/loadthemdiadiem?t=" + Math.random();
                 dta = {
-                    "count" : $("#count").val(),
+                    "start" : $("#count").val(),
+                    "length" : "14"
                 };
                 console.log(dta);
                 $.post(url, dta, function(data, status){
@@ -20,43 +21,24 @@
                         }
                         else
                         {
-                            for (var i = 0 ; i < data.data.length; i++) 
+                            for (var i = 0 ; i < data.length; i++) 
                             {
                                 var hinh = "";
                                 var tentinh = "";
                                 var tenhuyen = "";
-                                var ma = data.data[i]["DD_MA"];
-                                var ten = data.data[i]["DD_TEN"];
-                                var tinh = data.data[i]["T_MA"];
-                                var huyen = data.data[i]["H_MA"];
-
-                                for (var j = 0; j < data.hinh.length; j++) {
-                                    if(ma == data.hinh[j]["DD_MA"] && data.hinh[j]["HA_DAIDIEN"] == "1")
-                                    {
-                                        hinh = data.hinh[j]["HA_TEN"];
-                                    }
-                                }
-
-                                for (var j = 0; j < data.tinh.length; j++) {
-                                    if(tinh == data.tinh[j]["T_MA"])
-                                    {
-                                        tentinh = data.tinh[j]["T_TEN"];
-                                    }
-                                }
-
-                                for (var j = 0; j < data.huyen.length; j++) {
-                                    if(tinh == data.huyen[j]["T_MA"] && huyen == data.huyen[j]["H_MA"])
-                                    {
-                                        tenhuyen = data.huyen[j]["H_TEN"];
-                                    }
-                                }
-
+                                var ma = data[i]["DD_MA"];
+                                var ten = data[i]["DD_TEN"];
+                                var tinh = data[i]["T_MA"];
+                                var huyen = data[i]["H_MA"];
+                                var hinh = data[i]["HA_TEN"];
+                                var tentinh = data[i]["T_TEN"];
+                                var tenhuyen = data[i]["H_TEN"];
 
                                 document.getElementById("diadiem").innerHTML += '<table style="float: left; margin-right: 13px; height: 180px; width: 150px;" border="0"><tr><td height="100" width="150"><a href="<?php echo base_url(); ?>aediadiem/detailuser1/'+ma+'"><img style="width: 150px; height: 100px" class="imgdiadiem" src="<?php echo base_url(); ?>uploads/diadiem/'+hinh+'" alt=""></a></td></tr><tr><td valign="top"><div style="max-height: 40px; overflow: hidden;"><b style="text-transform: capitalize; font-size: 13px;"><a href="<?php echo base_url(); ?>aediadiem/detailuser1/'+ma+'">'+ten+'</a> </b> </div><p style="font-size: 13px; font-style: italic;">'+tenhuyen+'<i class="fa fa-angle-double-right fa-fw"></i>'+tentinh+'</p></td></tr></table>';
                             }
-                            var tong = eval(data.data.length+"+"+$("#count").val());
+                            var tong = eval(data.length+"+"+$("#count").val());
                             $("#count").val(tong);
-                            if(data.data.length == 0)
+                            if(data.length == 0)
                             {
                                 $("#btnthem").hide();
                             }
@@ -66,7 +48,7 @@
                 }, 'json');
             });
         });
-        var bool = true;
+        var bool = false;
         function oppen()
         {
             $(".benner").toggleClass("benner1");
@@ -218,7 +200,7 @@
             <tr>
                 <td valign="top">
                    <!--  <img class="iconleft" src="<?php echo base_url(); ?>assets/images/left.png" onclick="oppen()" /> -->
-                   <i id="iconleft" class="fa fa-angle-double-left fa-fw" onclick="oppen()"></i>
+                   <i id="iconleft" class="fa fa-angle-double-right fa-fw" onclick="oppen()"></i>
                 </td>
                 <td>
                     <div class="benner" >
@@ -445,45 +427,18 @@
                 <div style="margin-left: 15px;" id="diadiem" class="features">
 
                     <?php 
-                        $count = 0;
                         foreach ($info as $iteam) {
                         $ma = $iteam['DD_MA'];
                         $ten = $iteam['DD_TEN'];
                         $mota = $iteam['DD_MOTA'];
-                        $duyet = $iteam['DD_DUYET'];
-                        $matinh = $iteam['T_MA'];
-                        $mahuyen = $iteam['H_MA'];
-                        $tentinh = '';
-                        $tenhuyen = '';
+                        $tentinh = $iteam['T_TEN'];
+                        $tenhuyen = $iteam['H_TEN'];
 
-                        foreach ($tinh as $key) {
-                            if($matinh == $key['T_MA'])
-                            {
-                                $tentinh = $key['T_TEN'];
-                            }
-                        }
-
-                        foreach ($huyen as $key) {
-                            if($matinh == $key['T_MA'] && $mahuyen == $key['H_MA'])
-                            {
-                                $tenhuyen = $key['H_TEN'];
-                            }
-                        }
-
-                        if($duyet == "1")
+                        $hinh = "anhdaidien.jpg";
+                        if($iteam['HA_TEN'] != "")
                         {
-                            $count++;
-                            $hinh = "anhdaidien.jpg";
-                            foreach ($info1 as $key) {
-                                if($ma == $key['DD_MA'])
-                                {
-                                    if($key['HA_DAIDIEN'] == "1")
-                                    {
-                                        $hinh = $key['HA_TEN'];
-                                    }
-                                }
-                            }
-
+                            $hinh = $iteam['HA_TEN'];
+                        }
                     ?>
 
                     <!-- <div style="height: 180px;" class="col-md-2" data-wow-duration="1000ms" data-wow-delay="600ms">
@@ -506,7 +461,6 @@
                     <!-- </div> -->
 
                     <?php
-                            }
                         }
                     ?>
 
@@ -518,7 +472,7 @@
                         <button id="btnthem" type="button" class="btn btn-danger"><i class="fa  fa-eye fa-fw"></i> <?php echo lang('view_more'); ?></button>
                     </div>
                     <div style="font-weight: bolder;" class="grad1">
-                        <?php echo lang('total') ?>: <input id="count" style="width: 40px; height: 40px; border-radius: 50%; text-align: center; border: ; font-weight: bolder; background-color: #d9534f; font-size: 15px; color: #fff;" value="<?php echo $count ?>" readonly="readonly" />
+                        <?php echo lang('total') ?>: <input id="count" style="width: 40px; height: 40px; border-radius: 50%; text-align: center; border: ; font-weight: bolder; background-color: #d9534f; font-size: 15px; color: #fff;" value="<?= count($info); ?>" readonly="readonly" />
                     </div>
                     
                  </center> 

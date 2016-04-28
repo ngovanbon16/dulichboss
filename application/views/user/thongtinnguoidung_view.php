@@ -13,7 +13,7 @@
                 dta = {
                     "ten" : ten,
                     "start" : start,
-                    "length" : '5'
+                    "length" : '4'
                 };
                 console.log(dta);
                 $.post(url, dta, function(data, status){
@@ -30,7 +30,9 @@
                             var T_TEN = data[i]['T_TEN'];
                             var H_TEN = data[i]['H_TEN'];
                             var HA_TEN = data[i]['HA_TEN'];
-                            str += '<a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><table style="width: 100%;"><tr><td width="100"><img class="img" src="<?= base_url() ?>uploads/diadiem/'+HA_TEN+'"></td><td style="padding: 0px 5px 0px 5px;" valign="top" align="left"><b style="font-size: 16px;">'+DD_TEN+'</b><br/><i>'+H_TEN+' - '+T_TEN+'</i><div style="text-align: justify; line-height: 1.5; font-size: 13px; max-height: 100px; overflow: hidden; color: #000;">'+DD_MOTA+'</div></td></tr></table><hr/></a>';
+                            var DD_DIACHI = data[i]['DD_DIACHI'];
+                            var DD_LUOTXEM = data[i]['DD_LUOTXEM'];
+                            str += '<div style="margin: 0px; border: solid 2px #FFF; border-radius: 3px;" class="portfolio-item joomla bootstrap col-xs-24 col-sm-8 col-md-6"><a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><div style="margin: 5px;" class="recent-work-inner"><b><input style="width: 100%; border: none; font-weight: bold; background-color: transparent;" type="text" value="'+DD_TEN+'"></b><p style="text-transform: capitalize; font-size: 13px; height: 15px; overflow: hidden; line-height: 1.2;">'+DD_DIACHI+' - '+H_TEN+' - '+T_TEN+'</p></div> <div class="recent-work-wrap"><img style="height: 120px;" class="img-responsive" src="<?= base_url() ?>uploads/diadiem/'+HA_TEN+'" alt=""></div> </a><div style="margin: 5px; font-size: 13px;" class="recent-work-inner"><i><i class="fa fa-eye"></i> '+DD_LUOTXEM+' <?= lang('views') ?></i> </div></div>';
                         }
                         document.getElementById('noidung').innerHTML += str;
                         document.getElementById('count').innerHTML = eval(start + "+" + data.length);
@@ -153,7 +155,9 @@
                         var T_TEN = data[i]['T_TEN'];
                         var H_TEN = data[i]['H_TEN'];
                         var HA_TEN = data[i]['HA_TEN'];
-                        str += '<a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><table style="width: 100%;"><tr><td width="100"><img class="img" src="<?= base_url() ?>uploads/diadiem/'+HA_TEN+'"></td><td style="padding: 0px 5px 0px 5px;" valign="top" align="left"><b style="font-size: 16px;">'+DD_TEN+'</b><br/><i>'+H_TEN+' - '+T_TEN+'</i><div style="text-align: justify; line-height: 1.5; font-size: 13px; max-height: 100px; overflow: hidden; color: #000;">'+DD_MOTA+'</div></td></tr></table><hr/></a>';
+                        var DD_DIACHI = data[i]['DD_DIACHI'];
+                        var DD_LUOTXEM = data[i]['DD_LUOTXEM'];
+                        str += '<div style="margin: 0px; border: solid 2px #FFF; border-radius: 3px;" class="portfolio-item joomla bootstrap col-xs-24 col-sm-8 col-md-6"><a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><div style="margin: 5px;" class="recent-work-inner"><b><input style="width: 100%; border: none; font-weight: bold; background-color: transparent;" type="text" value="'+DD_TEN+'"></b><p style="text-transform: capitalize; font-size: 13px; height: 15px; overflow: hidden; line-height: 1.2;">'+DD_DIACHI+' - '+H_TEN+' - '+T_TEN+'</p></div> <div class="recent-work-wrap"><img style="height: 120px;" class="img-responsive" src="<?= base_url() ?>uploads/diadiem/'+HA_TEN+'" alt=""></div> </a><div style="margin: 5px; font-size: 13px;" class="recent-work-inner"><i><i class="fa fa-eye"></i> '+DD_LUOTXEM+' <?= lang('views') ?></i> </div></div>';
                     }
                     document.getElementById('noidung').innerHTML = str;
                     document.getElementById('ten').innerHTML = ten;
@@ -279,15 +283,15 @@
                         </h2>
 
                         <ul class="blog_archieve" style="border-radius: 3px; background-color: #FFF; border: solid 1px #F8F8FF; padding: 10px 10px 10px 10px;">
-                            <li id="daden" style="color: #F00;" class="li" onclick="xem('daden', '0', '5')">
+                            <li id="daden" style="color: #F00;" class="li" onclick="xem('daden', '0', '6')">
                                   <i class="fa fa-check-square-o fa-fw"></i> <?php echo lang('check_in') ?>
                                   <span class="pull-right"><label> <?= count($daden) ?></label></span>
                             </li>
-                            <li id="yeuthich" class="li" onclick="xem('yeuthich', '0', '5')">
+                            <li id="yeuthich" class="li" onclick="xem('yeuthich', '0', '6')">
                                   <i class="fa fa-heart fa-fw"></i> <?= lang('love') ?>
                                   <span class="pull-right"><label> <?= count($yeuthich) ?></label></span>
                             </li>
-                            <li id="muonden" class="li" onclick="xem('muonden', '0', '5')">
+                            <li id="muonden" class="li" onclick="xem('muonden', '0', '6')">
                                   <i class="fa fa-star fa-fw"></i> <?= lang('custom') ?>
                                   <span class="pull-right"><label> <?= count($muonden) ?></label></span>
                             </li>
@@ -295,7 +299,7 @@
                                   <i class="fa fa-pencil fa-fw"></i> <?= lang('posts') ?>
                                   <span class="pull-right"><label> <?= count($baiviet) ?></label></span>
                             </li>
-                            <li id="diadiem" class="li" onclick="xem('diadiem', '0', '5')">
+                            <li id="diadiem" class="li" onclick="xem('diadiem', '0', '6')">
                                   <i class="fa fa-globe fa-fw"></i> <?= lang('place') ?>
                                   <span class="pull-right"><label> <?= count($diadiem) ?></label></span>
                             </li>
@@ -309,7 +313,7 @@
                         <?php 
                             foreach ($daden as $row) {
                             ?>
-                            <a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/<?= $row['DD_MA'] ?>">
+                            <!-- <a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/<?= $row['DD_MA'] ?>">
                                 <table style="width: 100%;">
                                     <tr>
                                         <td width="100">
@@ -323,7 +327,21 @@
                                     </tr>
                                 </table>
                                 <hr/>
-                            </a>
+                            </a> -->
+                            <div style="margin: 0px; border: solid 2px #FFF; border-radius: 3px;" class="portfolio-item joomla bootstrap col-xs-24 col-sm-8 col-md-6">
+                                <a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/<?= $row['DD_MA'] ?>">
+                                <div style="margin: 5px;" class="recent-work-inner">
+                                    <b><input style="width: 100%; border: none; font-weight: bold; background-color: transparent;" type="text" value="<?= $row['DD_TEN'] ?>"></b>
+                                    <p style="text-transform: capitalize; font-size: 13px; height: 15px; overflow: hidden; line-height: 1.2;"><?= $row['DD_DIACHI'] ?> - <?= $row['H_TEN'] ?> - <?= $row['T_TEN'] ?></p>
+                                </div> 
+                                <div class="recent-work-wrap">
+                                    <img style="height: 120px;" class="img-responsive" src="<?= base_url() ?>uploads/diadiem/<?= $row['HA_TEN'] ?>" alt="">                        
+                                </div>  
+                                </a>
+                                <div style="margin: 5px; font-size: 13px;" class="recent-work-inner">
+                                    <i><i class="fa fa-eye"></i> <?= $row['DD_LUOTXEM'] ?> <?= lang('views') ?></i> 
+                                </div>        
+                            </div>
                             <?php
                             }
                         ?>

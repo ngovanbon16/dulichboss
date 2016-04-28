@@ -61,15 +61,12 @@ class Home extends CI_Controller
 		$this->_data['subview'] = 'user/trangchu_view';
 		$this->_data['active'] = "trangchu";
 		$this->load->model("mdiadiem");
-		$this->load->model("mhinhanh");
-		$this->_data['info'] = $this->mdiadiem->getList1(21, 0);
-		$this->_data['info1'] = $this->mhinhanh->getList();
 
 		$this->load->model("mtinh");
 		$this->_data['tinh'] = $this->mtinh->getList();
 
-		$this->load->model("mhuyen");
-		$this->_data["huyen"] = $this->mhuyen->getList();
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1' ORDER BY diadiem.DD_NGAYCAPNHAT DESC, diadiem.DD_NGAYDANG DESC LIMIT 0, 21";
+		$this->_data['info'] = $this->mdiadiem->gettimkiem($query);
 
 		$T_MA = "";
 		if(isset($this->session->userdata['T_MA']))
@@ -77,11 +74,7 @@ class Home extends CI_Controller
 			$T_MA = $this->session->userdata['T_MA'];
 		}
 
-		$this->_data['huyentt'] = $this->mhuyen->getid($T_MA);
-
-		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1'  ORDER BY diadiem.DD_LUOTXEM DESC LIMIT 0, 14";
-
-		// Kết nối Database, thực hiện câu truy vấn
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1' ORDER BY diadiem.DD_LUOTXEM DESC LIMIT 0, 14";
 		$this->_data['luotxem'] = $this->mdiadiem->gettimkiem($query);
 
 		$this->load->model("mbaiviet");
@@ -89,7 +82,7 @@ class Home extends CI_Controller
 		$result = $this->mbaiviet->gettimkiem($query);
 		$this->_data['baiviet'] = $result;
 
-		$query = "SELECT diadiem.DD_MA, diadiem.DD_TEN, tinh.T_TEN, huyen.H_TEN, hinhanh.HA_TEN, (SUM(binhluan.BL_CHATLUONG)+SUM(binhluan.BL_PHUCVU)+SUM(binhluan.BL_KHONGGIAN))/count(diadiem.DD_MA)/3 diem FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN binhluan ON diadiem.DD_MA = binhluan.DD_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' GROUP BY diadiem.DD_MA  ORDER BY diem DESC LIMIT 0, 6";
+		$query = "SELECT diadiem.DD_MA, diadiem.DD_TEN, tinh.T_TEN, huyen.H_TEN, hinhanh.HA_TEN, (SUM(binhluan.BL_CHATLUONG)+SUM(binhluan.BL_PHUCVU)+SUM(binhluan.BL_KHONGGIAN))/count(diadiem.DD_MA)/3 diem FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN binhluan ON diadiem.DD_MA = binhluan.DD_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1' GROUP BY diadiem.DD_MA  ORDER BY diem DESC LIMIT 0, 6";
 		$this->_data['danhgia'] = $this->mdiadiem->gettimkiem($query);
 
        	$this->_data['title'] = 'Trang chủ';
@@ -98,23 +91,14 @@ class Home extends CI_Controller
 
 	public function loadthemdiadiem()
 	{
-		$count = $_POST["count"];
+		$start = $_POST["start"];
+		$length = $_POST["length"];
 		$this->load->model("mdiadiem");
-		$data = $this->mdiadiem->getList1(7, $count);
 
-		$this->load->model("mhinhanh");
-		$hinh = $this->mhinhanh->getList();
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1' ORDER BY diadiem.DD_NGAYCAPNHAT DESC, diadiem.DD_NGAYDANG DESC LIMIT $start, $length";
+		$data = $this->mdiadiem->gettimkiem($query);
 
-		$this->load->model("mtinh");
-		$tinh = $this->mtinh->getList();
-
-		$this->load->model("mhuyen");
-		$huyen = $this->mhuyen->getList();
-
-		$status = "success";
-
-		$response = array('status' => $status, 'data' => $data, 'hinh' => $hinh, 'tinh' => $tinh, 'huyen' => $huyen, 'count' => $count);
-		$jsonString = json_encode($response);
+		$jsonString = json_encode($data);
 		echo $jsonString;
 	}
 
