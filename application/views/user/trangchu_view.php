@@ -119,8 +119,6 @@
             margin-right: 0px;
             -webkit-transition: margin-right 3s;
             transition:  margin-right 3s;
-            box-shadow: 0 0 4px #8DEEEE;
-            -webkit-box-shadow: 0 0 4px #8DEEEE;
         }
         .benner1{
             margin-right: -250px;
@@ -144,8 +142,6 @@
             color: #000;
         }
         #iconleft{
-            box-shadow: 0 0 4px #8DEEEE;
-            -webkit-box-shadow: 0 0 4px #8DEEEE;
             margin-right: -12px;
             margin-top: 10.5px;
             cursor: pointer;
@@ -164,8 +160,6 @@
             text-align: center;
             border-radius: 3px 3px 5px 5px;
             width: 100%;
-            box-shadow: 0 0 4px #000;
-            -webkit-box-shadow: 0 0 4px #000;
             font-weight: bold;
             font-size: 13px;
         }
@@ -176,8 +170,6 @@
             height: 30px;
             opacity: 0.7;
             border-radius: 3px;
-            box-shadow: 0 0 4px #8DEEEE;
-            -webkit-box-shadow: 0 0 4px #8DEEEE;
             z-index: -1;
         }
         .nenbanner{
@@ -186,8 +178,6 @@
             height: 500px; 
             background-color: #000;
             border-radius: 3px;
-            box-shadow: 0 0 4px #8DEEEE;
-            -webkit-box-shadow: 0 0 4px #8DEEEE;
             opacity: 0.5;
             z-index: -1;
         }
@@ -254,7 +244,7 @@
                                 <div class="carousel-content">
                                     <h1 class="animation animated-item-1">Cầu Cần Thơ</h1>
                                     <h2 class="animation animated-item-2">Được mệnh danh là cây cầu dài nhất Đông Nam Á.</h2>
-                                    <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/74"><?php echo lang('view_more') ?></a>
+                                    <!-- <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/74"><?php echo lang('view_more') ?></a> -->
                                 </div>
                             </div>
 
@@ -278,7 +268,7 @@
                                 <div class="carousel-content">
                                     <h1 class="animation animated-item-1">Đồng Tháp Mười</h1>
                                     <h2 class="animation animated-item-2">Là một biểu tượng của đồng bằng Sông Cửu Long châu thổ.</h2>
-                                    <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/80"><?php echo lang('view_more') ?></a>
+                                    <!-- <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/80"><?php echo lang('view_more') ?></a> -->
                                 </div>
                             </div>
 
@@ -301,7 +291,7 @@
                                 <div class="carousel-content">
                                     <h1 class="animation animated-item-1">Chùa Vạn Linh trên núi Thiên Cẩm Sơn</h1>
                                     <h2 class="animation animated-item-2">Một trong những địa điểm du lịch tâm linh không thể bỏ qua.</h2>
-                                    <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/83"><?php echo lang('view_more') ?></a>
+                                    <!-- <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/83"><?php echo lang('view_more') ?></a> -->
                                 </div>
                             </div>
 
@@ -324,7 +314,7 @@
                                 <div class="carousel-content">
                                     <h1 class="animation animated-item-1">Chợ Nổi Cái Răng</h1>
                                     <h2 class="animation animated-item-2">Một nơi hấp dẫn đối với những du khách sành về ăn uống.</h2>
-                                    <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/64"><?php echo lang('view_more') ?></a>
+                                    <!-- <a class="btn-slide animation animated-item-3" href="<?php echo base_url(); ?>aediadiem/detailuser1/64"><?php echo lang('view_more') ?></a> -->
                                 </div>
                             </div>
                             <div class="col-sm-6 hidden-xs animation animated-item-4">
@@ -353,7 +343,7 @@
     </a></center>
 
     <a name="name"></a>
-    <section id="feature" style="margin-top: -30px;">
+    <section id="feature" style="">
         <div class="container">
 
             <!-- <div class="baiviet">
@@ -380,7 +370,7 @@
                 <h2><?= lang('most_viewed') ?></h2>
             </div>
 
-            <div style="margin-left: 0px; margin-top: -30px;" class="row">
+            <div style="margin-left: 0px;" class="row">
                 <div class="features">
                     <?php 
                         foreach ($luotxem as $row) {
@@ -471,7 +461,7 @@
                     <div style="cursor: pointer; margin-bottom: 20px;">
                         <button id="btnthem" type="button" class="btn btn-danger"><i class="fa  fa-eye fa-fw"></i> <?php echo lang('view_more'); ?></button>
                     </div>
-                    <div style="font-weight: bolder;" class="grad1">
+                    <div style="font-weight: bolder; padding-top: 10px;" class="grad1">
                         <?php echo lang('total') ?>: <input id="count" style="width: 40px; height: 40px; border-radius: 50%; text-align: center; border: ; font-weight: bolder; background-color: #d9534f; font-size: 15px; color: #fff;" value="<?= count($info); ?>" readonly="readonly" />
                     </div>
                     

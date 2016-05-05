@@ -89,7 +89,7 @@
 </style>
 <body class="homepage">
 
-    <section style="margin-top: -50px;" id="recent-works">
+    <section id="recent-works">
         <div class="container">
 
             <div class="row">

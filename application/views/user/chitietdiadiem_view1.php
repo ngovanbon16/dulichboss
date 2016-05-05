@@ -457,26 +457,6 @@
                 }
             });
 
-            var bool = true;
-            $("#btngioithieu").click(function(){
-                $('#gioithieu').toggle(1000,function(){
-                    if(bool)
-                    {
-                      document.getElementById("btngioithieu").className = 'fa fa-minus-circle fa-fw';
-                      bool = false;
-                    }
-                    else
-                    {
-                      document.getElementById("btngioithieu").className = 'fa fa-plus-circle fa-fw';
-                      bool = true;
-                    }
-                    
-                    $(this).css('overflow','inherit');
-                    $(this).css('height','auto');
-                    $(this).css('text-align','justify');
-                });
-            });
-
             function mau(diem)
               {
                   if(diem >= 0 && diem < 2)
@@ -575,42 +555,48 @@
             });
         });
 
-        function xemhinhanh()
+        function xemhinhanh(tenhinh)
         {
-          var ol = "";
-          var div = "";
-          <?php
-              $i = -1; 
-              foreach ($info1 as $item) {
-                $i++;
-                if($i == '0')
-              {
-                ?>
-                  ol += '<li data-target="#my-pics" data-slide-to="0" class="active"></li>';
-                  div += '<div class="item active"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $item["HA_TEN"]; ?>" alt="" width="100%" ></div>';
-                <?php
+          var url = "<?= base_url(); ?>diadiemhinh/datahinhdd";
+          var data = {
+              "DD_MA" : "<?= $info['DD_MA']; ?>"
+          };
+          console.log(data);
+          $.ajax({
+              url : url,
+              type : 'post',
+              dataType : 'json',
+              data : data,
+              success : function (data){
+                  console.log(data);
+                  var ol = "";
+                  var div = "";
+                  for (var i = 0; i < data.length; i++) {
+                    var HA_TEN = data[i]["HA_TEN"];
+                    var activeol = "";
+                    var activediv = "item";
+                    if(HA_TEN == tenhinh)
+                    {
+                      activeol = "active";
+                      activediv = "item active";
+                    }
+                    ol += '<li data-target="#my-pics" data-slide-to="'+i+'" class="'+activeol+'"></li>';
+                    div += '<div class="'+activediv+'"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt="" width="100%" ></div>';
+                 }
+                 if(data.length == '0')
+                  {
+                      document.getElementById("next").style.display = "none";
+                      document.getElementById("previous").style.display = "none";
+                  }
+                  else
+                  {
+                      document.getElementById("next").style.display = "block";
+                      document.getElementById("previous").style.display = "block";
+                  }
+                  document.getElementById("ol").innerHTML = ol;
+                  document.getElementById("div").innerHTML = div;
               }
-                else{
-              ?>
-                  ol += '<li data-target="#my-pics" data-slide-to="'+'<?php echo $i ?>'+'"></li>';
-                  div += '<div class="item"><img src="<?php echo base_url(); ?>uploads/diadiem/'+'<?php echo $item["HA_TEN"] ?>'+'" alt="" width="100%" style="height: 500px;"></div>';
-              <?php
-                }
-              }
-          ?>
-          
-          if("<?php echo $i; ?>" == '0')
-          {
-              document.getElementById("next").style.display = "none";
-              document.getElementById("previous").style.display = "none";
-          }
-          else
-          {
-              document.getElementById("next").style.display = "block";
-              document.getElementById("previous").style.display = "block";
-          }
-          document.getElementById("ol").innerHTML = ol;
-          document.getElementById("div").innerHTML = div;
+          });
         }
         
         function xemanhbinhluan(idbinhluan)
@@ -747,6 +733,23 @@
             window.open(url, '', '_blank');
         }
 
+        var bool = true;
+        function xemgioithieu()
+        {
+          if(bool)
+          {
+            document.getElementById("btngioithieu").className = 'fa fa-minus-circle fa-fw';
+            document.getElementById("gioithieu").className = "gioithieu1";
+            bool = false;
+          }
+          else
+          {
+            document.getElementById("btngioithieu").className = 'fa fa-plus-circle fa-fw';
+            document.getElementById("gioithieu").className = "gioithieu0";
+            bool = true;
+          }
+        }
+
     </script>
 
     <script type="text/javascript">
@@ -813,11 +816,11 @@
        height: 45px; 
        overflow: hidden;
        text-align: justify;
-       display: none;
     }
     .gioithieu1{
        height: auto; 
        overflow: inherit;
+       text-align: justify;
     }
 </style>
 
@@ -940,7 +943,7 @@
                             <b style="margin: 5px; cursor: pointer; position: absolute; font-size: 25px;" onclick="inposts('<?php echo $iddd1; ?>')">
                                 <i style="color: #000;" class="fa fa-print fa-fw"> </i><span class="pull-right"></span>
                             </b>
-                            <img style="cursor: pointer;" onclick="xemhinhanh()" data-toggle='modal' data-target='#Modalimg' class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="<?php echo lang('avatar') ?>" />
+                            <img style="cursor: pointer;" onclick="xemhinhanh('<?= $anhdaidien; ?>')" data-toggle='modal' data-target='#Modalimg' class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="<?php echo lang('avatar') ?>" />
                           </div>
                           
                         <!-- </a> -->
@@ -955,9 +958,9 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-10 blog-content">
-                                    <p>
-                                      <i style="cursor: pointer;" id="btngioithieu" class="fa fa-plus-circle fa-fw"></i>
-                                      <b><?php echo lang('introduce') ?>:</b> <?php echo lang('click_the_plus_icon_to_view_the_contents_of_introducing'); ?> 
+                                    <p style="cursor: pointer;" onclick="xemgioithieu()">
+                                      <i id="btngioithieu" class="fa fa-plus-circle fa-fw"></i>
+                                      <b><?php echo lang('introduce') ?>:</b> <?php //echo lang('click_the_plus_icon_to_view_the_contents_of_introducing'); ?> 
                                       <p id="gioithieu" class="gioithieu0">
                                         <?php 
                                           $gioithieu = $info["DD_GIOITHIEU"];
@@ -1431,7 +1434,7 @@
 
                     <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget blog_gallery">
                         <h3><?php echo lang('photos') ?></h3>
-                        <ul onclick="xemhinhanh()" style="cursor: pointer;" class="sidebar-gallery" data-toggle='modal' data-target='#Modalimg'>
+                        <ul style="cursor: pointer;" class="sidebar-gallery" data-toggle='modal' data-target='#Modalimg'>
                             <?php
                                 $j = 0;
                                 foreach ($info1 as $key) {
@@ -1446,7 +1449,7 @@
                                   {
                               ?>    
                                     <li>
-                                        <img class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" width="100" height="60" />
+                                        <img class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" width="100" height="60" onclick="xemhinhanh('<?= $hinh; ?>')" />
                                     </li>
                              <?php
                                   }
@@ -1457,7 +1460,7 @@
     				
     				        <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
                         <h3><?php echo lang('map') ?>
-                            <a target="_bank" href="<?= base_url(); ?>aediadiem/danduong/<?= $info['DD_MA']; ?>">
+                            <a target="_blank" href="<?= base_url(); ?>aediadiem/danduong/<?= $info['DD_MA']; ?>">
                               <button style="margin-top: -5px; margin-left: 5px;" type="button" class="btn btn-success"><?= lang('direct') ?></button>
                             </a>
                         </h3>

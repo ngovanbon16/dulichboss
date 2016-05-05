@@ -41,7 +41,7 @@
 
     <script type="text/javascript">
 
-        var ts = 5;
+        /*var ts = 5;
         function dongho()
         {
             if(ts < 0)
@@ -52,17 +52,17 @@
             document.getElementById("dongho").innerHTML = ts;
             ts--;
             dh = setTimeout("dongho()", 1000);
-        }
+        }*/
 
         function naplai()
         {
             $("#jqxgrid").jqxGrid('updatebounddata');
         }
 
-        function ngungnaplai()
+        /*function ngungnaplai()
         {
             clearTimeout(dh);
-        }
+        }*/
 
         function sua(id)
         {
@@ -331,19 +331,19 @@
                         });
                     });
 
-                    container.append('<button id="btnbatdau"> <i class="fa fa-play fa-fw"></i> <?php echo lang('start') ?> </button> ');
+                    container.append('<button id="btnbatdau"> <i class="fa fa-refresh fa-fw"></i> <?php echo lang('refresh') ?> </button> ');
                     $("#btnbatdau").jqxButton();
-                    $("#btnbatdau").jqxTooltip({ content: "<?php echo lang('start').' '.lang('reset') ?>"});
+                    $("#btnbatdau").jqxTooltip({ content: "<?php echo lang('refresh') ?>"});
                     $("#btnbatdau").on('click', function () {
-                        dongho();
+                        naplai();
                     });
 
-                    container.append('<button id="btnnaplai"> <i class="fa fa-pause fa-fw"></i> <?php echo lang('stop') ?> </button> ');
+                    /*container.append('<button id="btnnaplai"> <i class="fa fa-pause fa-fw"></i> <?php echo lang('stop') ?> </button> ');
                     $("#btnnaplai").jqxButton();
                     $("#btnnaplai").jqxTooltip({ content: "<?php echo lang('stop').' '.lang('reset') ?>"});
                     $("#btnnaplai").on('click', function () {
                         ngungnaplai();
-                    });
+                    });*/
                 },
 
                 rendergridrows: function () {
@@ -462,8 +462,8 @@
         }
     </style>
 </head>
-<body onload="dongho();" class='default'>
-    <?= lang("time")." ".lang("reset") ?>: <b id="dongho">5</b>
+<body class='default'>
+    <!-- <?= lang("time")." ".lang("reset") ?>: <b id="dongho">5</b> -->
     <div id='jqxWidget' style="font-size: 13px; font-family: Verdana;">
         <div id="jqxgrid">
         </div>

@@ -532,10 +532,18 @@ class Diadiemhinh extends CI_Controller
   public function loc()
   {
   	$DD_MA = $_POST["DD_MA"];
-	$hinh = $this->mhinhanh->getloc($DD_MA);
+  	$hinh = $this->mhinhanh->getloc($DD_MA);
 
-	$response = array('data' => $hinh);
+  	$response = array('data' => $hinh);
     $jsonString = json_encode($response);
+    echo $jsonString;
+  }
+
+  public function datahinhdd()
+  {
+    $DD_MA = $_POST["DD_MA"];
+    $data = $this->mhinhanh->gethinhdd($DD_MA);
+    $jsonString = json_encode($data);
     echo $jsonString;
   }
 

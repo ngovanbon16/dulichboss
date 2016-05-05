@@ -373,7 +373,7 @@
     </style>
 </head>
 <body>
-<section id="partner">
+<section>
     
     <div class="container">
     <div id="createAccount" style="font-family: Verdana; font-size: 13px; float: left; width: 50%;">

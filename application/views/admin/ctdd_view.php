@@ -20,6 +20,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxbuttons.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxfileupload.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/jqxloader.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -44,6 +45,8 @@
 			$("#checkAllabl").change(function () {
 			    $(".anhbinhluanchk").prop('checked', $(this).prop("checked"));
 			});
+
+			$("#jqxLoader").jqxLoader({ isModal: true, text: "<?php echo lang('loading') ?>...", width: 100, height: 60, imagePosition: 'top' });
 
 		});
 
@@ -88,7 +91,7 @@
 	          "HA_MA" : id,
 	          "HA_DUYET" : tg
 	        };
-
+	        $('#jqxLoader').jqxLoader('open');
 	        $.post(url, dta, function(data, status){
 
 		        console.log(status);
@@ -98,19 +101,20 @@
 				if(tg == '1')
 				{
 					thongbao("", "<?php echo lang('photo_approved') ?>", "success");
-					$("#img"+id).css("opacity", "1");
+					$("#img"+id).css("opacity", "0.5");
 				}
 				else
 				{
 					thongbao("", "<?php echo lang('cancelled_accept_photos') ?>", "danger");
-					$("#img"+id).css("opacity", "0.5");
+					$("#img"+id).css("opacity", "1");
 				}
-
+				$('#jqxLoader').jqxLoader('close');
 	        }, 'json');
 		}
 
 		function daidien(id, ten)
 		{
+			$('#jqxLoader').jqxLoader('open');
 			var url, dta;
 	        url = "<?php echo base_url(); ?>index.php/diadiemhinh/daidien";
 	        dta = {
@@ -136,6 +140,7 @@
 		        		document.getElementById('avatar'+ma).src = "<?php echo base_url(); ?>assets/images/unavatar.png";
 		        	}
 		        }
+		        $('#jqxLoader').jqxLoader('close');
 		        loc('2');
 
 	        }, 'json');
@@ -241,6 +246,7 @@
 	          	"DD_MA" : '<?php echo $info['DD_MA'] ?>',
 	        };
 	        console.log(dta);
+	        $('#jqxLoader').jqxLoader('open');
 	        $.post(url, dta, function(data, status){
 
 		        console.log(status);
@@ -254,12 +260,12 @@
 		        	var hadaidien = data.data[i]['HA_DAIDIEN'];
 		        	var duyet = "";
 		        	var avatar = "";
-		        	var domo = "0.5";
+		        	var domo = "1";
 		        	var maudaidien = "";
 		        	if(haduyet == '1')
                 	{
                 		duyet = "check.png";
-                		domo = '1';
+                		domo = '0.5';
                 	}
                 	else
                 	{
@@ -296,6 +302,7 @@
 		        }
 		        document.getElementById('count').innerHTML = count;
 		        document.getElementById('hinhdiadiem').innerHTML = chuoi;
+		        $('#jqxLoader').jqxLoader('close');
 
 	        }, 'json');
 		}
@@ -531,10 +538,9 @@
 
 </head>
 <body>
-	<div>
-		 <h3><?php echo $info['DD_TEN'] ?></h3>
-	</div>
+	<div style="z-index: 10000000000000000000;" id="jqxLoader"></div>
 	<div style="border-radius: 2px; padding: 15px; width: 100%; height: 280px;">
+		<h3><?php echo $info['DD_TEN'] ?></h3>
 		<div style="float: left; width: 28%; height: 250px;">
 			<?php 
 	            $madd = $info['DD_MA'];
@@ -552,14 +558,16 @@
 	                }
 	            }
 	        ?>
-	        <img src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width='100%' height='100%'>
+	        <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" rel="prettyPhoto">
+	        	<img style="border-radius: 3px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width='100%' height='100%'>
+	        </a>
 		</div>
 		<div style="float: right; width: 70%; height: 250px; overflow: auto;">
 			<table style="min-width: 278px; opacity: 1; color: #000;" class="tablenoidung" width="100%">
 			  <tr>
                 <td class="cot1"><i class="fa fa-photo fa-fw"></i> Hình ảnh </td>
                 <td class="cot2">
-                	<button class="btnhinhanh" data-toggle="modal" data-target=".bs-example-modal-lg"><?php echo lang('view') ?></button>
+                	<button class="btnhinhanh" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa  fa-eye fa-fw"></i> <?php echo lang('view') ?></button>
                 </td>
               </tr>
               <tr>
@@ -758,13 +766,13 @@
 	                    	$haduyet = $item['HA_DUYET'];
 	                    	$hadaidien = $item['HA_DAIDIEN'];
 
-	                    	$domo = "0.5";
+	                    	$domo = "1";
 	                    	$maudaidien = "";
 
 	                    	if($haduyet == '1')
 	                    	{
 	                    		$duyet = "check.png";
-	                    		$domo = "1";
+	                    		$domo = "0.5";
 	                    	}
 	                    	else
 	                    	{

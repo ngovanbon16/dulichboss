@@ -137,6 +137,7 @@ class Aediadiem extends CI_Controller
 		
 		//return $this->googlemaps->create_map();
 		$this->_data['map'] = $this->googlemaps->create_map();
+		$this->_data['info'] = $this->mdiadiem->getID($id);
 
 		$this->_data['subview'] = "user/danduong_view";
         $this->_data['title'] = lang('map');

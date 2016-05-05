@@ -113,7 +113,7 @@
 </style>
 <body class="homepage" onload="loc('1', 'Du Lịch Sinh Thái', 0, 7)">
 
-    <section style="margin-top: -50px;" id="recent-works">
+    <section id="recent-works">
         <div class="container">
             <div style="font-size: 16px; font-weight: bold;" class="features">
                 <!-- <ul class="nav navbar-nav">

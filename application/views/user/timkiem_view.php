@@ -135,18 +135,22 @@ $('#txthuyen').change(function(event){
 		cursor: pointer;
 	}
 	a{
-		color: #1AA5D1;
+		/*color: #000;*/
 	}
 	.mota{
 		font-size: 15px;
-		color: #1AA5D1; 
+		color: #000; 
+		font-style: normal;
+	}
+	.key{
+		color: #F00;
 	}
 </style>
 
 </head>
 <body>
-<section style="margin-top: -50px; background-color: #DCDCDC;" >
-    <div style="border: solid 2px #FFF; border-radius: 3px;" class="container">
+<section style="background-color: #F8F8FF;" >
+    <div style="border: solid 1px #FFF; border-radius: 3px;" class="container">
     	<a name="name"></a>
 		<center><h1 style="color: #000;"><?= lang('search').' '.lang('place'); ?></h1></center>
 	    <h3 id="faq_title" style="display: none;"> <strong><?= lang('search_with_keyword'); ?> : </strong> <span id="faq_category_title"><?= lang('keyword'); ?> </span> </h3>
@@ -212,7 +216,7 @@ $('#txthuyen').change(function(event){
 	  		</form> 
 	    </center>
 	    <hr/>
-	    <div align="left" style="padding: 10px; border: solid 1px #FFF; background-color: #F8F8FF; border-radius: 3px; overflow: auto; max-height: 450px; margin: 0px 0px 15px 0px;" id="searchresultdata" class="faq-articles"><?= lang('result') ?>:</div>
+	    <div align="left" style="padding: 10px; background-color: #F8F8FF; border-radius: 3px; overflow: auto; max-height: 450px; margin: 0px 0px 15px 0px;" id="searchresultdata" class="faq-articles"><?= lang('result') ?>:</div>
 		    
 	</div>
 </section>

@@ -11,7 +11,7 @@
 		color: #1AA5D1;
 	}
 </style>
-<section style="margin-top: -50px; background-color: #F8F8FF;" id="about-us">
+<section id="about-us">
         <div style="border: solid 2px #FFF; padding-bottom: 15px; border-radius: 3px;" class="container">
 			<div>
 				<?= $gioithieu["TT_GIOITHIEU"]; ?>

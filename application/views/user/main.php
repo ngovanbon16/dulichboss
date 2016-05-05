@@ -185,7 +185,7 @@
                                         if(file_exists($file_path))
                                         {  
                                         ?>  
-                                            <img id="avata" src="<?php echo base_url(); ?>uploads/user/<?php echo $this->session->userdata['avata']; ?>" height="25" width="25">
+                                            <img style="border-radius: 25px;" id="avata" src="<?php echo base_url(); ?>uploads/user/<?php echo $this->session->userdata['avata']; ?>" height="25" width="25">
                                         <?php
                                         }
                                         else
@@ -233,25 +233,25 @@
 
                         </p></div>
                     </div>
-                    <div class="col-sm-6 col-xs-8">
+                    <!-- <div class="col-sm-6 col-xs-8">
                        <div class="social">
-                            <!-- <ul class="social-share">
+                            <ul class="social-share">
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fa fa-linkedin"></i></a></li> 
                                 <li><a href="#"><i class="fa fa-skype"></i></a></li>
                                 <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                            </ul> -->
+                            </ul>
                             <div class="search">
                                 <form role="form">
                                     <a href="<?php echo base_url(); ?>user/searchplace"> 
-                                    <!-- <input type="text" class="search-form" autocomplete="off" placeholder="<?php echo lang('search'); ?>"> -->
+                                    <input type="text" class="search-form" autocomplete="off" placeholder="<?php echo lang('search'); ?>">
 
                                     <button style="background-color: #000; color: #FFF;" type="button" class="btn btn-default"> <i class="fa fa-search fa-fw"></i> <?= lang('search'); ?></button>
 
                                     </a>
 
-                                    <!-- <div style="z-index: 2000000;" id='content'>
+                                    <div style="z-index: 2000000;" id='content'>
                                         <script type="text/javascript">
                                             $(document).ready(function () {               
                                                 var url = "<?php echo base_url(); ?>diadiem/datafound";
@@ -289,20 +289,20 @@
                                         <div id='jqxWidget'>
                                         </div>
                                         <div style="font-size: 12px; font-family: Verdana;" id="selectionlog"></div>
-                                    </div> -->
+                                    </div>
 
-                                    <!-- <a href="<?php echo base_url(); ?>login">
+                                    <a href="<?php echo base_url(); ?>login">
                                         <button type="button" class="btn btn-outline btn-danger" data-toggle="modal" data-target="#modaldangnhap"><i class="fa fa-sign-in"></i> Đăng nhập</button>
-                                    </a> -->
+                                    </a>
                                 </form>
                            </div>
                        </div>
-                    </div>
+                    </div> -->
                 </div>
             </div><!--/.container-->
         </div><!--/.top-bar-->
 
-        <nav class="navbar navbar-inverse" role="banner">
+        <nav style="border-bottom: 1px solid #c52d2f;" class="navbar navbar-inverse" role="banner">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -322,6 +322,7 @@
                         $gioithieu = "";
                         $lienhe = "";
                         $danhmuc = "";
+                        $timkiem = "";
 
                         if(isset($active))
                         {
@@ -337,6 +338,8 @@
                                 $lienhe = "active";
                             if($active == "danhmuc")
                                 $danhmuc = "active";
+                            if($active == "timkiem")
+                                $timkiem = "active";
                         }
                     ?>
                     <ul class="nav navbar-nav">
@@ -379,7 +382,8 @@
                         </li>
                         <li class="<?php echo $danhmuc; ?>"><a href="<?php echo site_url('home/theodanhmuc'); ?>"><i class="fa fa-th-large fa-fw"></i> <?php echo lang('category') ?></a></li> 
                         <li class="<?php echo $gioithieu; ?>"><a href="<?php echo site_url('home/gioithieu'); ?>"><i class="fa fa-info-circle fa-fw"></i> <?php echo lang('introduce') ?></a></li> 
-                        <li class="<?php echo $lienhe; ?>"><a href="<?php echo site_url('home/lienhe'); ?>"><i class="fa fa-linkedin-square fa-fw"></i> <?php echo lang('contact') ?></a></li>                
+                        <li class="<?php echo $lienhe; ?>"><a href="<?php echo site_url('home/lienhe'); ?>"><i class="fa fa-linkedin-square fa-fw"></i> <?php echo lang('contact') ?></a></li>   
+                        <li class="<?php echo $timkiem; ?>"><a href="<?php echo site_url('user/searchplace'); ?>"><i class="fa fa-search fa-fw"></i> <?php echo lang('search') ?></a></li>                
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -460,7 +464,7 @@
         <div class="container">
             <div class="row">
 
-                <div id="fb-root"></div>
+                <!-- <div id="fb-root"></div>
                 <script>(function(d, s, id) {
                   var js, fjs = d.getElementsByTagName(s)[0];
                   if (d.getElementById(id)) return;
@@ -484,7 +488,7 @@
                                  data-show-posts="false">
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-sm-6">
                     <i class="fa fa-phone-square"></i>  +84982770090 

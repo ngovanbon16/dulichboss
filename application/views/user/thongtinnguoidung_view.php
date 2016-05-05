@@ -13,7 +13,7 @@
                 dta = {
                     "ten" : ten,
                     "start" : start,
-                    "length" : '4'
+                    "length" : '8'
                 };
                 console.log(dta);
                 $.post(url, dta, function(data, status){
@@ -32,7 +32,7 @@
                             var HA_TEN = data[i]['HA_TEN'];
                             var DD_DIACHI = data[i]['DD_DIACHI'];
                             var DD_LUOTXEM = data[i]['DD_LUOTXEM'];
-                            str += '<div style="margin: 0px; border: solid 2px #FFF; border-radius: 3px;" class="portfolio-item joomla bootstrap col-xs-24 col-sm-8 col-md-6"><a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><div style="margin: 5px;" class="recent-work-inner"><b><input style="width: 100%; border: none; font-weight: bold; background-color: transparent;" type="text" value="'+DD_TEN+'"></b><p style="text-transform: capitalize; font-size: 13px; height: 15px; overflow: hidden; line-height: 1.2;">'+DD_DIACHI+' - '+H_TEN+' - '+T_TEN+'</p></div> <div class="recent-work-wrap"><img style="height: 120px;" class="img-responsive" src="<?= base_url() ?>uploads/diadiem/'+HA_TEN+'" alt=""></div> </a><div style="margin: 5px; font-size: 13px;" class="recent-work-inner"><i><i class="fa fa-eye"></i> '+DD_LUOTXEM+' <?= lang('views') ?></i> </div></div>';
+                            str += '<div style="margin: 0px; border: solid 2px #FFF; border-radius: 3px;" class="portfolio-item joomla bootstrap col-xs-12 col-sm-4 col-md-3"><a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><div style="margin: 5px;" class="recent-work-inner"><b><input style="width: 100%; border: none; font-weight: bold; background-color: transparent;" type="text" value="'+DD_TEN+'"></b><p style="text-transform: capitalize; font-size: 13px; height: 15px; overflow: hidden; line-height: 1.2;">'+DD_DIACHI+' - '+H_TEN+' - '+T_TEN+'</p></div> <div class="recent-work-wrap"><img style="height: 120px;" class="img-responsive" src="<?= base_url() ?>uploads/diadiem/'+HA_TEN+'" alt=""></div> </a><div style="margin: 5px; font-size: 13px;" class="recent-work-inner"><i><i class="fa fa-eye"></i> '+DD_LUOTXEM+' <?= lang('views') ?></i> </div></div>';
                         }
                         document.getElementById('noidung').innerHTML += str;
                         document.getElementById('count').innerHTML = eval(start + "+" + data.length);
@@ -157,7 +157,7 @@
                         var HA_TEN = data[i]['HA_TEN'];
                         var DD_DIACHI = data[i]['DD_DIACHI'];
                         var DD_LUOTXEM = data[i]['DD_LUOTXEM'];
-                        str += '<div style="margin: 0px; border: solid 2px #FFF; border-radius: 3px;" class="portfolio-item joomla bootstrap col-xs-24 col-sm-8 col-md-6"><a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><div style="margin: 5px;" class="recent-work-inner"><b><input style="width: 100%; border: none; font-weight: bold; background-color: transparent;" type="text" value="'+DD_TEN+'"></b><p style="text-transform: capitalize; font-size: 13px; height: 15px; overflow: hidden; line-height: 1.2;">'+DD_DIACHI+' - '+H_TEN+' - '+T_TEN+'</p></div> <div class="recent-work-wrap"><img style="height: 120px;" class="img-responsive" src="<?= base_url() ?>uploads/diadiem/'+HA_TEN+'" alt=""></div> </a><div style="margin: 5px; font-size: 13px;" class="recent-work-inner"><i><i class="fa fa-eye"></i> '+DD_LUOTXEM+' <?= lang('views') ?></i> </div></div>';
+                        str += '<div style="margin: 0px; border: solid 2px #FFF; border-radius: 3px;" class="portfolio-item joomla bootstrap col-xs-12 col-sm-4 col-md-3"><a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/'+DD_MA+'"><div style="margin: 5px;" class="recent-work-inner"><b><input style="width: 100%; border: none; font-weight: bold; background-color: transparent;" type="text" value="'+DD_TEN+'"></b><p style="text-transform: capitalize; font-size: 13px; height: 15px; overflow: hidden; line-height: 1.2;">'+DD_DIACHI+' - '+H_TEN+' - '+T_TEN+'</p></div> <div class="recent-work-wrap"><img style="height: 120px;" class="img-responsive" src="<?= base_url() ?>uploads/diadiem/'+HA_TEN+'" alt=""></div> </a><div style="margin: 5px; font-size: 13px;" class="recent-work-inner"><i><i class="fa fa-eye"></i> '+DD_LUOTXEM+' <?= lang('views') ?></i> </div></div>';
                     }
                     document.getElementById('noidung').innerHTML = str;
                     document.getElementById('ten').innerHTML = ten;
@@ -226,10 +226,10 @@
             width: 100%;
         }
         .avatar{
-            width: 150px;
-            height: 150px;
+            width: 100%;
             border-radius: 50%;
             border: solid 1px #FFF;
+            max-width: 150px;
         }
         hr{
             margin: 5px;
@@ -242,21 +242,23 @@
         }
         .li{
             cursor: pointer;
-            font-weight: bold;
         }
         .img{
             width: 150px;
             height: 100px;
             border-radius: 2px;
         }
+        .menuleft{
+            width: 100%;
+        }
     </style>
 </head>
 <body>
-     <section style="background-color: #DCDCDC;" class="service-item">
+     <section style="background-color: #F8F8FF;" class="service-item">
        <div class="container">
-            <table style="border: solid 2px #F8F8FF;" border="0">
+            <table style="border: solid 2px #F8F8FF; width: 100%;" border="0">
                 <tr>
-                    <td valign="top" style="padding: 10px; background-color: #DCDCDC; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
+                    <td valign="top" style="padding: 10px; background-color: #FFF; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
                         <?php
                             $ten = $info["ND_HINH"];
                             $file_path = "uploads/user/".$ten;
@@ -283,30 +285,70 @@
                         </h2>
 
                         <ul class="blog_archieve" style="border-radius: 3px; background-color: #FFF; border: solid 1px #F8F8FF; padding: 10px 10px 10px 10px;">
-                            <li id="daden" style="color: #F00;" class="li" onclick="xem('daden', '0', '6')">
-                                  <i class="fa fa-check-square-o fa-fw"></i> <?php echo lang('check_in') ?>
-                                  <span class="pull-right"><label> <?= count($daden) ?></label></span>
+                            <li id="daden" style="color: #F00;" class="li" onclick="xem('daden', '0', '8')">
+                                  <table class="menuleft">
+                                      <tr>
+                                          <td width="90%">
+                                              <i class="fa fa-check-square-o fa-fw"></i> <?php echo lang('check_in') ?>
+                                          </td>
+                                          <td align="right">
+                                              <label> <?= count($daden) ?></label>
+                                          </td>
+                                      </tr>
+                                  </table>
                             </li>
-                            <li id="yeuthich" class="li" onclick="xem('yeuthich', '0', '6')">
-                                  <i class="fa fa-heart fa-fw"></i> <?= lang('love') ?>
-                                  <span class="pull-right"><label> <?= count($yeuthich) ?></label></span>
+                            <li id="yeuthich" class="li" onclick="xem('yeuthich', '0', '8')">
+                                  <table class="menuleft">
+                                      <tr>
+                                          <td width="90%">
+                                             <i class="fa fa-heart fa-fw"></i> <?= lang('love') ?>
+                                          </td>
+                                          <td align="right">
+                                              <label> <?= count($yeuthich) ?></label>
+                                          </td>
+                                      </tr>
+                                  </table>
                             </li>
-                            <li id="muonden" class="li" onclick="xem('muonden', '0', '6')">
-                                  <i class="fa fa-star fa-fw"></i> <?= lang('custom') ?>
-                                  <span class="pull-right"><label> <?= count($muonden) ?></label></span>
+                            <li id="muonden" class="li" onclick="xem('muonden', '0', '8')">
+                                  <table class="menuleft">
+                                      <tr>
+                                          <td width="90%">
+                                             <i class="fa fa-star fa-fw"></i> <?= lang('custom') ?>
+                                          </td>
+                                          <td align="right">
+                                              <label> <?= count($muonden) ?></label>
+                                          </td>
+                                      </tr>
+                                  </table>
                             </li>
                             <li id="baiviet" class="li" onclick="xembaiviet()">
-                                  <i class="fa fa-pencil fa-fw"></i> <?= lang('posts') ?>
-                                  <span class="pull-right"><label> <?= count($baiviet) ?></label></span>
+                                  <table class="menuleft">
+                                      <tr>
+                                          <td width="90%">
+                                             <i class="fa fa-pencil fa-fw"></i> <?= lang('posts') ?>
+                                          </td>
+                                          <td align="right">
+                                              <label> <?= count($baiviet) ?></label>
+                                          </td>
+                                      </tr>
+                                  </table>
                             </li>
-                            <li id="diadiem" class="li" onclick="xem('diadiem', '0', '6')">
-                                  <i class="fa fa-globe fa-fw"></i> <?= lang('place') ?>
-                                  <span class="pull-right"><label> <?= count($diadiem) ?></label></span>
+                            <li id="diadiem" class="li" onclick="xem('diadiem', '0', '8')">
+                                  <table class="menuleft">
+                                      <tr>
+                                          <td width="90%">
+                                             <i class="fa fa-globe fa-fw"></i> <?= lang('place') ?>
+                                          </td>
+                                          <td align="right">
+                                              <label> <?= count($diadiem) ?></label>
+                                          </td>
+                                      </tr>
+                                  </table>
                             </li>
                         </ul>
 
                     </td>
-                    <td style="padding: 10px; background-color: #F8F8FF; border-radius: 0px 5px 5px 0px;" valign="top">
+                    <td style="padding: 10px; background-color: #FFF; border-radius: 0px 5px 5px 0px;" valign="top">
                         <h4 id="ten" style="display: none;">daden</h4>
                         <h1 id="tenhien"><?= lang('places_you_have_checkined') ?></h1>
                         <div id="noidung" style="max-height: 500px; overflow: auto;">
@@ -328,7 +370,7 @@
                                 </table>
                                 <hr/>
                             </a> -->
-                            <div style="margin: 0px; border: solid 2px #FFF; border-radius: 3px;" class="portfolio-item joomla bootstrap col-xs-24 col-sm-8 col-md-6">
+                            <div style="margin: 0px; border: solid 2px #FFF; border-radius: 3px;" class="portfolio-item joomla bootstrap col-xs-12 col-sm-4 col-md-3">
                                 <a target="_blank" href="<?= base_url() ?>index.php/aediadiem/detailuser1/<?= $row['DD_MA'] ?>">
                                 <div style="margin: 5px;" class="recent-work-inner">
                                     <b><input style="width: 100%; border: none; font-weight: bold; background-color: transparent;" type="text" value="<?= $row['DD_TEN'] ?>"></b>

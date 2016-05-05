@@ -249,4 +249,5 @@ $lang['complete'] = "Hoàn tất";
 $lang['please_reload_the_page_after_a_successful_upload'] = "Vui lòng tải lại trang sau khi tải lên thành công";
 $lang['most_viewed'] = "Được xem nhiều nhất";
 $lang['includes_new_locations_and_newly_updated_information'] = "Bao gồm các địa điểm mới và thông tin mới được cập nhật";
+$lang['refresh'] = "Làm mới";
 ?>

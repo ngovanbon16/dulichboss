@@ -72,10 +72,10 @@
             width: 100%;
         }
         .avatar{
-            width: 150px;
-            height: 150px;
+            width: 100%;
             border-radius: 50%;
             border: solid 1px #FFF;
+            max-width: 150px;
         }
         hr{
             margin: 5px;
@@ -113,11 +113,11 @@
     </style>
 </head>
 <body>
-     <section style="background-color: #DCDCDC;" class="service-item">
+     <section style="background-color: #F8F8FF;" class="service-item">
        <div class="container">
-            <table border="0" style="border: solid 2px #F8F8FF;">
+            <table border="0" style="border: solid 2px #fff;">
                 <tr>
-                    <td style="padding: 20px; background-color: #DCDCDC; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
+                    <td style="padding: 20px; background-color: #fff; border-radius: 5px 0px 0px 5px;" align="center" width="30%">
                         <?php
                             $ten = $info["ND_HINH"];
                             $file_path = "uploads/user/".$ten;
@@ -147,7 +147,7 @@
                         <div id="jqxFileUpload"></div>
                         <div style="display: none;" id="eventsPanel"></div>
                     </td>
-                    <td style="padding: 20px; background-color: #F8F8FF; border-radius: 0px 5px 5px 0px;" valign="top">
+                    <td style="padding: 20px; background-color: #fff; border-radius: 0px 5px 5px 0px;" valign="top">
                         <h1><?php echo lang('profile') ?></h1>
                         <h2> <b style="color: #000;"><?php echo lang('basic_information') ?></b></h2>
                         <hr/>

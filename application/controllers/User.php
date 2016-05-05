@@ -20,6 +20,7 @@ class User extends CI_Controller
 		$this->_data['danhmuc'] = $this->mdanhmuc->getList();
 
 		$this->_data['title'] = lang('search');
+		$this->_data['active'] = "timkiem";
         $this->_data['subview'] = 'user/timkiem_view';
         $this->load->view('user/main.php', $this->_data);
         //$this->load->view('user/timkiem_view');
@@ -99,7 +100,7 @@ class User extends CI_Controller
 
 			$result = $this->mdiadiem->gettimkiem($query);
 
-			echo '<h3>'.count($result).' '.lang('result').': "'.$_GET['keyword'].'" </h3>';
+			echo '<h3>'.count($result).' '.lang('result').': <b class="key">"'.$_GET['keyword'].'"</b> </h3>';
 			if(count($result) > 0)
 			{
 				foreach ($result as $row) {
@@ -115,7 +116,7 @@ class User extends CI_Controller
 			$result = $this->mdiadiem->gettimkiem($query);
 
 			// Kiểm tra có dòng record nào hay không?
-			echo '<h3>'.count($result).' '.lang('result').': "'.$_GET['keyword'].'" </h3>';
+			echo '<h3>'.count($result).' '.lang('result').': <b class="key">"'.$_GET['keyword'].'"</b> </h3>';
 			if(count($result) > 0)
 			{
 				foreach ($result as $row) {

@@ -183,9 +183,9 @@ body > section {
 }
 
 .top-bar {
-  padding: 10px 0;
-  background: #191919;
-  border-bottom: 1px solid #222;
+  padding: 5px 0px 0px 0px;
+  background: #fff; /* mau nen o thanh phia tren */
+  /*border-bottom: 1px solid #c52d2f;*/
   line-height: 28px;
 }
 
@@ -265,7 +265,7 @@ input.search-form:hover {
 .navbar {
   border-radius: 0;
   margin-bottom: 0;
-  background: #151515;
+  background: #fff; /* mau nen o thanh phia tren */
   padding: 15px 0;
   padding-bottom: 0;
 }
@@ -283,7 +283,7 @@ input.search-form:hover {
   padding: 5px 12px;
   margin: 0;
   border-radius: 3px;
-  color: #fff;
+  color: #000;
   line-height: 24px;
   display: inline-block;
 }
@@ -2502,12 +2502,12 @@ shortcodes page css
 #footer {
   padding-top: 30px;
   padding-bottom: 30px;
-  color: #fff;
-  background: #2e2e2e;
+  color: #000;
+  background: #fff; /* mau nen o thanh phia duoi*/
 }
 
 #footer a {
-  color: #fff;
+  color: #808080;
 }
 
 #footer a:hover {

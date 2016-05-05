@@ -356,7 +356,7 @@
 
 </head>
 <body>
-    <section id="services" class="service-item">
+    <section class="service-item">
        <div class="container">
     <center>
     <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
