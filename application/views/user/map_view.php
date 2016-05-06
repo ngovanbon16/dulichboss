@@ -292,7 +292,7 @@
     </style>
 </head>
 <body>
-    <h1 style="font-weight: bold;"><?php echo lang('places_map'); ?> <a href="<?= site_url('trangchu'); ?>"><?= lang('home') ?></a></h1>
+    <h1 style="font-weight: bold;"><?php echo lang('places_map'); ?> <a style="font-size: 20px;" href="<?= site_url('trangchu'); ?>"><?= lang('home') ?></a></h1>
     <table width="100%">
         <tr>
             <td valign="top" style="min-width: 250px;">

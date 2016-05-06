@@ -573,15 +573,16 @@
                   var div = "";
                   for (var i = 0; i < data.length; i++) {
                     var HA_TEN = data[i]["HA_TEN"];
-                    var activeol = "";
-                    var activediv = "item";
                     if(HA_TEN == tenhinh)
                     {
-                      activeol = "active";
-                      activediv = "item active";
+                      ol += '<li data-target="#main-slider1" data-slide-to="0" class="active"></li>';
+                      div += '<div class="item active" style="max-height: 500px;"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt="" width="100%" ></div>';
                     }
-                    ol += '<li data-target="#my-pics" data-slide-to="'+i+'" class="'+activeol+'"></li>';
-                    div += '<div class="'+activediv+'"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt="" width="100%" ></div>';
+                    else
+                    {
+                      ol += '<li data-target="#main-slider1" data-slide-to="'+i+'"></li>';
+                      div += '<div class="item" style="max-height: 500px;"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt="" width="100%" ></div>';
+                    }
                  }
                  if(data.length == '0')
                   {
@@ -599,7 +600,7 @@
           });
         }
         
-        function xemanhbinhluan(idbinhluan)
+        function xemanhbinhluan(idbinhluan, tenhinh)
         {
             var url, dta;
             url="<?php echo base_url(); ?>binhluan/anhbinhluan?t=" + Math.random();
@@ -623,7 +624,7 @@
                     var div = "";
                     for (var i = 0; i < data.data.length; i++) {
                       var tenanh = data.data[i]["ABL_TEN"];
-                      if(i == '0')
+                      if(tenanh == tenhinh)
                       {
                         ol += '<li data-target="#main-slider1" data-slide-to="0" class="active"></li>';
                         div += '<div class="item active" style="max-height: 500px;"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/binhluan/'+tenanh+'" alt="" width="100%" ></div>';
@@ -683,7 +684,11 @@
         {
             if(diem < 2 && diem >= 0)
             {
-                document.getElementById(id).style.color = "#F00";
+                var countbinhluan = "<?= $countbinhluan; ?>";
+                if(countbinhluan < 1)
+                  document.getElementById(id).style.color = "#1AA5D1";
+                else
+                  document.getElementById(id).style.color = "#F00";
             }
             if(diem >= 2 && diem < 4)
             {
@@ -707,7 +712,15 @@
         {
             if(diem < 2 && diem >= 0)
             {
-                document.getElementById(id).innerHTML = "<?php echo lang('bad') ?>";
+                var countbinhluan = "<?= $countbinhluan; ?>";
+                if(countbinhluan < 1)
+                {
+                  //document.getElementById(id).innerHTML = "<?php echo lang('bad') ?>";
+                }
+                else
+                {
+                  document.getElementById(id).innerHTML = "<?php echo lang('bad') ?>";
+                }
             }
             if(diem >= 2 && diem < 4)
             {
@@ -943,7 +956,7 @@
                             <b style="margin: 5px; cursor: pointer; position: absolute; font-size: 25px;" onclick="inposts('<?php echo $iddd1; ?>')">
                                 <i style="color: #000;" class="fa fa-print fa-fw"> </i><span class="pull-right"></span>
                             </b>
-                            <img style="cursor: pointer;" onclick="xemhinhanh('<?= $anhdaidien; ?>')" data-toggle='modal' data-target='#Modalimg' class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="<?php echo lang('avatar') ?>" />
+                            <img style="cursor: pointer;" onclick="xemhinhanh('<?= $anhdaidien; ?>')" data-toggle='modal' data-target='#Modalcomment' class="img-responsive img-blog" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $anhdaidien; ?>" width="100%" alt="<?php echo lang('avatar') ?>" />
                           </div>
                           
                         <!-- </a> -->
@@ -1152,7 +1165,7 @@
                                 <h3 style="color: #000; font-weight: bold; font-size: 18px; text-transform: capitalize;"><?php echo $tieude ?></h3>
                                 <p>
                                     <div style="text-align: justify; margin-bottom: 10px; line-height: 1.5; font-size: 13px;"><?php echo $noidung ?> </div>
-                                    <div style="cursor: pointer;" data-toggle="modal" data-target="#Modalcomment" onclick="xemanhbinhluan('<?php echo $mabinhluan; ?>')">
+                                    <div >
                                     <?php
                                          $j = 0;
                                          foreach ($anhbinhluan as $key) {
@@ -1162,7 +1175,7 @@
                                               {
                                               $tenanh = $key['ABL_TEN'];
                                       ?>
-                                            <img class="img" src="<?php echo base_url(); ?>uploads/binhluan/<?php echo $tenanh ?>" width="120" height="100">
+                                            <img class="img" src="<?php echo base_url(); ?>uploads/binhluan/<?php echo $tenanh ?>" width="120" height="100" style="cursor: pointer;" data-toggle="modal" data-target="#Modalcomment" onclick="xemanhbinhluan('<?php echo $mabinhluan; ?>','<?= $tenanh; ?>')">
                                       <?php
                                               }
                                               $j++;
@@ -1405,7 +1418,7 @@
                                 $bien = count($baiviet);
                                 if ($bien == 0) {
                                     echo "<b>".lang('no_posts_yet')."</b>";
-                                    echo '<img style="cursor: pointer;" onclick="xemhinhanh()" data-toggle=\'modal\' data-target=\'#Modalimg\' class="img-responsive img-blog" src="'.base_url().'uploads/diadiem/'.$anhdaidien.'" width="100%" alt="" />';
+                                    echo '<img style="cursor: pointer;" onclick="xemhinhanh(\''.$anhdaidien.'\')" data-toggle=\'modal\' data-target=\'#Modalcomment\' class="img-responsive img-blog" src="'.base_url().'uploads/diadiem/'.$anhdaidien.'" width="100%" alt="" />';
                                 }
                                 foreach ($baiviet as $row) {
                                   $BV_MA = $row["BV_MA"];
@@ -1433,8 +1446,10 @@
                     </div><!--/.recent comments-->
 
                     <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget blog_gallery">
-                        <h3><?php echo lang('photos') ?></h3>
-                        <ul style="cursor: pointer;" class="sidebar-gallery" data-toggle='modal' data-target='#Modalimg'>
+                        <h3><?php echo lang('photos') ?> 
+                            <!-- <button data-toggle='modal' data-target='#Modalimg' style="font-size: 13px; margin-top: -5px; margin-left: 5px;" type="button" class="btn btn-success" onclick="xemhinhanh('<?= $anhdaidien; ?>')"><?= lang('view') ?></button> -->
+                        </h3>
+                        <ul class="sidebar-gallery">
                             <?php
                                 $j = 0;
                                 foreach ($info1 as $key) {
@@ -1449,7 +1464,9 @@
                                   {
                               ?>    
                                     <li>
-                                        <img class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $hinh; ?>" width="100" height="60" onclick="xemhinhanh('<?= $hinh; ?>')" />
+                                        <!-- <a class="preview" href="<?php echo base_url(); ?>uploads/diadiem/<?= $hinh; ?>" rel="prettyPhoto"> -->
+                                          <img style="cursor: pointer;" data-toggle='modal' data-target='#Modalcomment' class="img" data-u="image" src="<?php echo base_url(); ?>uploads/diadiem/<?= $hinh; ?>" width="100" height="60" onclick="xemhinhanh('<?= $hinh; ?>')"/>
+                                        <!-- </a> -->
                                     </li>
                              <?php
                                   }
@@ -1461,7 +1478,7 @@
     				        <div style="border-radius: 2px; margin-top: -30px; background-color: #FFF; border: solid 1px #DCDCDC; padding: 0px 10px 10px 10px;" class="widget categories">
                         <h3><?php echo lang('map') ?>
                             <a target="_blank" href="<?= base_url(); ?>aediadiem/danduong/<?= $info['DD_MA']; ?>">
-                              <button style="margin-top: -5px; margin-left: 5px;" type="button" class="btn btn-success"><?= lang('direct') ?></button>
+                              <button style="font-size: 13px; margin-top: -5px; margin-left: 5px;" type="button" class="btn btn-success"><?= lang('direct') ?></button>
                             </a>
                         </h3>
                         

@@ -33,41 +33,41 @@
             $.jqx.theme = "bootstrap";
             
             // Create jqxExpander.
-            $("#createAccount").jqxExpander({  toggleMode: 'none', width: '500px', showArrow: false });
+            $("#createAccount").jqxExpander({  toggleMode: 'none', width: '100%', showArrow: false });
             // Create jqxInput.
-            $("#ND_MA").jqxInput({  width: '300px', height: '25px' });
+            $("#ND_MA").jqxInput({  width: '100%', height: '25px' });
 
-            $("#ND_HO").jqxInput({  width: '300px', height: '25px' });
-            $("#ND_TEN").jqxInput({  width: '300px', height: '25px'});
-            $("#ND_DIACHIMAIL").jqxInput({  width: '300px', height: '25px' });
+            $("#ND_HO").jqxInput({  width: '100%', height: '25px' });
+            $("#ND_TEN").jqxInput({  width: '100%', height: '25px'});
+            $("#ND_DIACHIMAIL").jqxInput({  width: '100%', height: '25px' });
             // Create jqxPasswordInput.
-            $("#passwordold").jqxPasswordInput({  width: '300px', height: '25px', showStrength: true, showStrengthPosition: "right" });
-            $("#ND_MATKHAU").jqxPasswordInput({  width: '300px', height: '25px', showStrength: true, showStrengthPosition: "right" });
-            $("#passwordConfirm").jqxPasswordInput({  width: '300px', height: '25px' });
+            $("#passwordold").jqxPasswordInput({  width: '100%', height: '25px', showStrength: true, showStrengthPosition: "right" });
+            $("#ND_MATKHAU").jqxPasswordInput({  width: '100%', height: '25px', showStrength: true, showStrengthPosition: "right" });
+            $("#passwordConfirm").jqxPasswordInput({  width: '100%', height: '25px' });
             // Create jqxDateTimeInpput.
-            $("#ND_NGAYSINH").jqxDateTimeInput({ formatString: 'yyyy-MM-dd',  width: '300px', height: '25px' });
+            $("#ND_NGAYSINH").jqxDateTimeInput({ formatString: 'yyyy-MM-dd',  width: '100%', height: '25px' });
 
             if("<?php echo lang('lang'); ?>" == "en")
             {
                 $.getScript('<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/globalization/globalize.culture.en-US.js', function () {
-                                $("#ND_NGAYSINH").jqxDateTimeInput({ culture: 'en-US' });
+                                $("#ND_NGAYSINH").jqxDateTimeInput({ culture: 'en-US', width: '100%' });
                             });
             }
             else
             {
                 $.getScript('<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/globalization/globalize.culture.vi-VI.js', function () {
-                                $("#ND_NGAYSINH").jqxDateTimeInput({ culture: 'vi-VI' });
+                                $("#ND_NGAYSINH").jqxDateTimeInput({ culture: 'vi-VI', width: '100%' });
                             });
             }
 
             // Create jqxDropDownList.
             var genders = ["<?php echo lang('female') ?>", "<?php echo lang('male') ?>"];
-            $("#ND_GIOITINH").jqxDropDownList({  source: genders, selectedIndex: <?php echo $info['ND_GIOITINH'] ?>, width: '300px', height: '25px', promptText: "<?php echo lang('i_am') ?>...", dropDownHeight: "50px" });
+            $("#ND_GIOITINH").jqxDropDownList({  source: genders, selectedIndex: <?php echo $info['ND_GIOITINH'] ?>, width: '100%', height: '25px', promptText: "<?php echo lang('i_am') ?>...", dropDownHeight: "50px" });
             
-            $("#ND_DIACHI").jqxInput({  width: '300px', height: '25px' });
-            $("#ND_SDT").jqxInput({  width: '300px', height: '25px' });
-            $("#ND_FACE").jqxInput({  width: '300px', height: '25px' });
-            $("#ND_GIOITHIEU").jqxInput({  width: '300px', height: '25px' });
+            $("#ND_DIACHI").jqxInput({  width: '100%', height: '25px' });
+            $("#ND_SDT").jqxInput({  width: '100%', height: '25px' });
+            $("#ND_FACE").jqxInput({  width: '100%', height: '25px' });
+            $("#ND_GIOITHIEU").jqxInput({  width: '100%', height: '25px' });
             // Create jqxButton.
             $("#submit").jqxButton({ template: "", height: "30px", width: "150px" });
             // Create jqxValidator.
@@ -180,7 +180,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#T_MA").jqxDropDownList({ selectedIndex: <?php echo $indextinh; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('provincial') ?>:", displayMember: "T_TEN", valueMember: "T_MA", width: 300, height: 25});
+                $("#T_MA").jqxDropDownList({ selectedIndex: <?php echo $indextinh; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('provincial') ?>:", displayMember: "T_TEN", valueMember: "T_MA", width: '100%', height: 25});
 
                 $("#T_MA").on('select', function (event) {
                     if (event.args) {
@@ -210,7 +210,7 @@
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#H_MA").jqxDropDownList({ selectedIndex: <?php echo $indexhuyen; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>:", displayMember: "H_TEN", valueMember: "H_MA", width: 300, height: 25});
+                    $("#H_MA").jqxDropDownList({ selectedIndex: <?php echo $indexhuyen; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>:", displayMember: "H_TEN", valueMember: "H_MA", width: '100%', height: 25});
 
 
                     var url = "<?php echo base_url(); ?>index.php/xa/data/" + $("#T_MA").val() + "/" + $("#H_MA").val();
@@ -228,7 +228,7 @@
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
+                    $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: '100%', height: 25});
                 });
 
                 var url = "<?php echo base_url(); ?>index.php/huyen/data/" + <?php echo $info["T_MA"]; ?>;
@@ -245,7 +245,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#H_MA").jqxDropDownList({ selectedIndex: <?php echo $indexhuyen; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>:", displayMember: "H_TEN", valueMember: "H_MA", width: 300, height: 25});
+                $("#H_MA").jqxDropDownList({ selectedIndex: <?php echo $indexhuyen; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>:", displayMember: "H_TEN", valueMember: "H_MA", width: '100%', height: 25});
 
                 $("#H_MA").on('select', function (event) {
                     if (event.args) {
@@ -277,7 +277,7 @@
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
+                    $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: '100%', height: 25});
                 });
 
                 var url = "<?php echo base_url(); ?>index.php/xa/data/" + <?php echo $info["T_MA"]; ?> + "/" + <?php echo $info["H_MA"]; ?>;
@@ -294,7 +294,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: 300, height: 25});
+                $("#X_MA").jqxDropDownList({ selectedIndex: <?php echo $indexxa; ?>, source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: '100%', height: 25});
             });
     </script>
 
@@ -359,21 +359,21 @@
     <section class="service-item">
        <div class="container">
     <center>
-    <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
+    <div style="max-width: 550px;" id="createAccount" style="font-family: Verdana; font-size: 13px;">
         <div>
             <div class="div1"><?php echo lang('edit').' '.lang('profile') ?></div>
         </div>
         <div style="font-family: Verdana; font-size: 13px;">
             <form id="form" style="overflow: hidden; margin: 10px;" action="./">
                 <?php //echo print_r($info); ?>
-                <table>
+                <table width="98%">
                     <tr>
                         <td colspan="2">
                             <div class="tieude"><?php echo lang('basic_information') ?></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td width="30%">
                             <?php echo lang('key') ?>:
                         </td>
                         <td>

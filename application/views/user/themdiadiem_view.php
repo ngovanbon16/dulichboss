@@ -38,24 +38,27 @@
         $(document).ready(function () {
             $.jqx.theme = "bootstrap";
 
+            $("#DD_GIATU").jqxFormattedInput({ width: '100%', height: 25, radix: "decimal", value: "10000", min: "0", max: "10000000", spinButtons: true });
+            $("#DD_GIADEN").jqxFormattedInput({ width: '100%', height: 25, radix: "decimal", value: "10000", min: "0", max: "10000000", spinButtons: true });
+
             // Create jqxExpander.
-            $("#createAccount").jqxExpander({  toggleMode: 'none', width: '550px', showArrow: false });
+            $("#createAccount").jqxExpander({  toggleMode: 'none', width: '100%', showArrow: false });
             // Create jqxInput.
-            $("#DD_TEN").jqxInput({  width: '350px', height: '25px' });
-            $("#DD_DIACHI").jqxInput({  width: '350px', height: '25px'});
-            $("#DD_SDT").jqxInput({  width: '350px', height: '25px' });
+            $("#DD_TEN").jqxInput({  width: '100%', height: '25px' });
+            $("#DD_DIACHI").jqxInput({  width: '100%', height: '25px'});
+            $("#DD_SDT").jqxInput({  width: '100%', height: '25px' });
             $("#DD_SDT").jqxTooltip({ content: '<?php echo lang('example').' '.lang('about').' '.lang('phone') ?>: <b><i>071... | 097...</i></b>', position: 'mouse', name: 'movieTooltip'});
-            $("#DD_EMAIL").jqxInput({  width: '350px', height: '25px' });
+            $("#DD_EMAIL").jqxInput({  width: '100%', height: '25px' });
             $("#DD_EMAIL").jqxTooltip({ content: '<?php echo lang('example').' '.lang('about').' '.lang('email') ?>: <b><i>ex@gmail.com</i></b>', position: 'mouse', name: 'movieTooltip'});
-            $("#DD_WEBSITE").jqxInput({  width: '350px', height: '25px' });
+            $("#DD_WEBSITE").jqxInput({  width: '100%', height: '25px' });
             $("#DD_WEBSITE").jqxTooltip({ content: '<?php echo lang('example').' '.lang('about') ?> URL: <b><i>ex.com</i></b>', position: 'mouse', name: 'movieTooltip'});
-            $("#DD_MOTA").jqxInput({  width: '350px', height: '50px' });
-            $("#DD_VITRI").jqxInput({  width: '350px', height: '25px' });
+            $("#DD_MOTA").jqxInput({  width: '100%', height: '50px' });
+            $("#DD_VITRI").jqxInput({  width: '100%', height: '25px' });
             $("#DD_VITRI").jqxTooltip({ content: "<b><i><?php echo lang('open_the_map_and_move_an_icon_to_the_location_you_want'); ?>!</i></b>", position: 'mouse', name: 'movieTooltip'});
 
-            $("#DD_GIOITHIEU").jqxInput({  width: '350px', height: '50px' });
-            $("#DD_BATDAU").jqxDateTimeInput({ formatString: 'yyyy-MM-dd HH:mm:ss',  width: '250px', height: '25px' });
-            $("#DD_KETTHUC").jqxDateTimeInput({ formatString: 'yyyy-MM-dd HH:mm:ss',  width: '250px', height: '25px' });
+            $("#DD_GIOITHIEU").jqxInput({  width: '100%', height: '50px' });
+            $("#DD_BATDAU").jqxDateTimeInput({ formatString: 'yyyy-MM-dd HH:mm:ss',  width: '100%', height: '25px' });
+            $("#DD_KETTHUC").jqxDateTimeInput({ formatString: 'yyyy-MM-dd HH:mm:ss',  width: '100%', height: '25px' });
 
             if("<?php echo lang('lang'); ?>" == "en")
             {
@@ -72,9 +75,8 @@
                             });
             }
 
-            $("#DD_GIATU").jqxFormattedInput({ width: 250, height: 25, radix: "decimal", value: "10000", min: "0", max: "10000000", spinButtons: true });
-            $("#DD_GIADEN").jqxFormattedInput({ width: 250, height: 25, radix: "decimal", value: "10000", min: "0", max: "10000000", spinButtons: true });
-            $("#DD_NOIDUNG").jqxInput({  width: '350px', height: '50px' });
+            
+            $("#DD_NOIDUNG").jqxInput({  width: '100%', height: '50px' });
             // Create jqxButton.
             $("#submit").jqxButton({ template: "", height: "30px", width: "150px" });
             // Create jqxValidator.
@@ -245,11 +247,11 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#DM_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('business_category') ?>:", displayMember: "DM_TEN", valueMember: "DM_MA", width: 250, height: 25, dropDownHeight: "150px" });
+                $("#DM_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('business_category') ?>:", displayMember: "DM_TEN", valueMember: "DM_MA", width: '100%', height: 25, dropDownHeight: "150px" });
 
                 var source = [];
-                $("#H_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '250px', height: '25px', promptText: "<?php echo lang('select').' '.lang('district') ?>...", dropDownHeight: "150px" });
-                $("#X_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '250px', height: '25px', promptText: "<?php echo lang('select').' '.lang('town') ?>...", dropDownHeight: "150px" });
+                $("#H_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '100%', height: '25px', promptText: "<?php echo lang('select').' '.lang('district') ?>...", dropDownHeight: "150px" });
+                $("#X_MA").jqxDropDownList({  source: source, selectedIndex: -1, width: '100%', height: '25px', promptText: "<?php echo lang('select').' '.lang('town') ?>...", dropDownHeight: "150px" });
 
                 var url = "<?php echo base_url(); ?>index.php/tinh/data";
                 // prepare the data
@@ -265,7 +267,7 @@
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxInput
-                $("#T_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('provincial') ?>:", displayMember: "T_TEN", valueMember: "T_MA", width: 250, height: 25, dropDownHeight: "150px" });
+                $("#T_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('provincial') ?>:", displayMember: "T_TEN", valueMember: "T_MA", width: '100%', height: 25, dropDownHeight: "150px" });
 
                 $("#T_MA").on('select', function (event) {
                     var matinh = $("#T_MA").val();
@@ -284,7 +286,7 @@
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#H_MA").jqxDropDownList({ selectedIndex: '-1', source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>:", displayMember: "H_TEN", valueMember: "H_MA", width: 250, height: 25, dropDownHeight: "150px" });
+                    $("#H_MA").jqxDropDownList({ selectedIndex: '-1', source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('district') ?>:", displayMember: "H_TEN", valueMember: "H_MA", width: '100%', height: 25, dropDownHeight: "150px" });
                 });
 
                 $("#H_MA").on('select', function (event) {
@@ -304,13 +306,13 @@
                     };
                     var dataAdapter = new $.jqx.dataAdapter(source);
                     // Create a jqxInput
-                    $("#X_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: 250, height: 25, dropDownHeight: "150px" });
+                    $("#X_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: '100%', height: 25, dropDownHeight: "150px" });
                 });
 
 
                 $("#showWindowButton").jqxButton({ template: "success" , height: 30 });
-                $("#lat").jqxInput({placeHolder: "<?php echo lang('latitude') ?>", height: 25, width: 200 });
-                $("#lng").jqxInput({placeHolder: "<?php echo lang('longitude') ?>", height: 25, width: 200 });
+                $("#lat").jqxInput({placeHolder: "<?php echo lang('latitude') ?>", height: 25, width: '40%' });
+                $("#lng").jqxInput({placeHolder: "<?php echo lang('longitude') ?>", height: 25, width: '40%' });
                 $("#myPlaceTextBox").jqxInput({placeHolder: "<?php echo lang('enter_the_name_of_the_location_you_want_to_select') ?>...", height: 30, width: "100%" });
             });
     </script>
@@ -376,13 +378,13 @@
 <section>
     
     <div class="container">
-    <div id="createAccount" style="font-family: Verdana; font-size: 13px; float: left; width: 50%;">
+    <div id="createAccount" style="font-family: Verdana; font-size: 13px; float: left; width: 100%; max-width: 550px;">
         <div id="tieude">
             <div class="div1"><?php echo lang('add_new_place') ?></div>
         </div>
         <div align="left" style="font-family: Verdana; font-size: 13px;">
             <form id="form" style="overflow: hidden; margin: 10px;" action="./">
-                <table>
+                <table width="99%">
                     <tr>
                         <td align="center" colspan="2">
                             <div id="jqxLoader"></div>
@@ -399,7 +401,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td width="30%">
                             <?php echo lang('place_name') ?><b class="batbuoc"> * </b>
                         </td>
                          <td>
@@ -564,14 +566,14 @@
                     </tr>
                     <tr>
                         <td align="center" colspan="2">
-                            <input id="submit" type="button" value="<?php echo lang('add_new_place') ?>" />
+                            <input style="margin-top: 20px;" id="submit" type="button" value="<?php echo lang('add_new_place') ?>" />
                         </td>
                     </tr>
                 </table>
             </form>
         </div>
     </div>
-    <div align="left" style="margin-left: 10px; float: left; width: 50%;">
+    <div align="left" style="margin-left: 0px; float: left; width: 100%; max-width: 580px;">
         <a name="name"></a>
         <img src="<?php echo base_url(); ?>assets/images/mapicon.png" alt="" style="margin-right: 15px" /><?php echo lang('map') ?>
         <div align="center">

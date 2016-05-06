@@ -178,7 +178,7 @@
                                 <?php //echo $this->session->userdata['avata']; ?>
                                 <!-- <a href="<?php echo base_url(); ?>avata"> -->
                                 <?php
-                                    if($this->session->userdata("email") != "")
+                                    if(isset($this->session->userdata["email"]))
                                     {
                                         $ten = $this->session->userdata('avata');
                                         $file_path = "uploads/user/".$ten;
@@ -202,19 +202,24 @@
                                         <?php
                                     }
                                 ?>
-                                <?php echo $this->session->userdata("email"); ?> <b class="caret"></b>
+                                <?php 
+                                    if(isset($this->session->userdata["email"]))
+                                        echo $this->session->userdata("email"); 
+                                    else
+                                        echo lang('account');
+                                ?> <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
                                 <?php 
                                     if($this->session->userdata("id") != "")
                                     {
                                 ?>
-                                <li><a href="<?php echo base_url(); ?>user/account"><i class="fa fa-user fa-fw"></i> <?php echo lang('account') ?></a>
+                                <li><a href="<?php echo base_url(); ?>user/account"><i class="fa fa-user fa-fw"></i> <?= lang('account') ?></a>
                                 </li>
                                 <li><a href="<?php echo base_url(); ?>user/addnewplace"><i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('add_new_place'); ?></a>
                                 </li>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>user/info"><i class="fa fa-book fa-fw"></i> <?php echo lang('albums') ?></a>
+                                <li><a href="<?php echo base_url(); ?>user/info"><i class="fa fa-book fa-fw"></i> <?= lang('albums') ?></a>
                                 </li>
                                 <li class="divider"></li>
 
@@ -302,7 +307,7 @@
             </div><!--/.container-->
         </div><!--/.top-bar-->
 
-        <nav style="border-bottom: 1px solid #c52d2f;" class="navbar navbar-inverse" role="banner">
+        <nav style="border-bottom: 1px solid #DCDCDC;" class="navbar navbar-inverse" role="banner">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -682,7 +687,7 @@
     <div class="modal-content">
       <div class="modal-header">
             <h3 id='lbldangnhap' class="panel-title"><?php echo lang('login') ?></h3>
-            <a id="lbldangky" href="<?php echo base_url(); ?>registration"><?php echo lang('register') ?></a>
+            <a style="font-weight: bold;" id="lbldangky" href="<?php echo base_url(); ?>registration"><?php echo lang('register') ?></a>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <!-- <h4 class="modal-title"><i class="fa fa-camera fa-fw"></i> Đăng nhập</h4> -->
       </div>
@@ -691,13 +696,14 @@
             <div id="info" class="form-group"></div>
         </center> 
         <form name="login" id="login" method="post" role="form">
-            <div style="margin-bottom: 20px;" class="form-group">
+            <div style="margin-bottom: 22px;" class="form-group">
                 <input class="form-control" placeholder="<?php echo lang('input').' '.lang('email') ?>" name="email" id="email" type="text" autofocus>
             </div>
-            <div style="margin-bottom: 20px;" class="form-group">
+            <div style="margin-bottom: 22px;" class="form-group">
                 <input class="form-control" placeholder="<?php echo lang('input').' '.lang('password') ?>" name="password" id="password" type="password" value="">
             </div>
-            <div style="margin-bottom: 20px;" class="form-group">
+            <hr style="margin-bottom: 5px;" />
+            <div style="margin-bottom: 5px; font-weight: bold;" class="form-group">
                 <a data-toggle="modal" data-target="#modalmatkhau" href=""><?php echo lang('forgot').' '.lang('password'); ?></a>
             </div>
             <button type="button" id="button" class="btn btn-outline btn-success btn-lg btn-block"><?php echo lang('login') ?></button>

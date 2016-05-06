@@ -424,14 +424,10 @@
 					<tr>
 						<td valign="top" style="padding-right: 10px; padding-left: 10px;">
 							Mô tả: <br/>
-							<textarea rows="6" class="p">
-								<?php echo $data['DD_MOTA']; ?>
-							</textarea>
+							<textarea rows="6" class="p"><?php echo $data['DD_MOTA']; ?></textarea>
 							<img style="width: 100%; height: 120px; margin-bottom: 10px; margin-top: 10px;" src="<?php echo base_url(); ?>uploads/diadiem/<?php echo $data['HA_TEN']; ?>">
 							Giới thiệu: <br/>
-							<textarea rows="20" class="p">
-								<?php echo $data['DD_GIOITHIEU']; ?>
-							</textarea>
+							<textarea rows="20" class="p"><?php echo $data['DD_GIOITHIEU']; ?></textarea>
 						</td>
 						<td>
 							<div class="rightbottom">

@@ -183,9 +183,9 @@ body > section {
 }
 
 .top-bar {
-  padding: 5px 0px 0px 0px;
-  background: #fff; /* mau nen o thanh phia tren */
-  /*border-bottom: 1px solid #c52d2f;*/
+  padding: 5px 0;
+  background: #F5F5F5; /* mau nen o thanh phia tren */
+  border-bottom: 1px solid #BEBEBE;
   line-height: 28px;
 }
 
