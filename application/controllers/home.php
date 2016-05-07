@@ -287,12 +287,13 @@ class Home extends CI_Controller
 		$config['center'] = 'can tho';
 		$config['zoom'] = '8';
 		$config['cluster'] = TRUE;
+		$config['onclick'] = 'updateDatabase(event.latLng.lat(), event.latLng.lng());';
 
 		$this->googlemaps->initialize($config);
 
 		$this->load->model("mdiadiem");
 
-		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' ".$WHERE_DM.$WHERE_T.$WHERE_H.$WHERE_X;
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1' ".$WHERE_DM.$WHERE_T.$WHERE_H.$WHERE_X;
 
 		$result = $this->mdiadiem->gettimkiem($query);
 
@@ -330,6 +331,16 @@ class Home extends CI_Controller
 			$thongtin .= '<div class="mota"><i class="fa fa-bookmark fa-fw"></i> '.$mota.'</div></p>';
 			$marker['infowindow_content'] = "<table><tr><td>".$hinh."</td><td valign='top' width='220'>".$noidung.$thongtin."</td></tr></table>";
 			$marker['icon'] = base_url().'/uploads/danhmuc/'.$danhmuc.'.png';
+
+			$str = trim($item["DD_VITRI"]);
+			$length = strlen($str);
+			$start = strpos($str, ',' );
+			$lng = substr( $str,  $start + 1, $length - $start);
+			$lat = substr( $str, '0', $length - strlen($lng) - 1 );
+			$lng = trim($lng);
+			$lat = trim($lat);
+
+			$marker['onclick'] = 'updateDatabase("'.$lat.'","'.$lng.'");';
 			$this->googlemaps->add_marker($marker);
 		}
 
@@ -341,6 +352,133 @@ class Home extends CI_Controller
 
 		$this->_data['subview'] = 'user/map_view';
 		$this->_data['active'] = "map";
+
+       	$this->_data['title'] = 'Map';
+       	$this->load->view('user/map_view.php', $this->_data);
+	}
+
+	public function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+
+	  $theta = $lon1 - $lon2;
+	  $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+	  $dist = acos($dist);
+	  $dist = rad2deg($dist);
+	  $miles = $dist * 60 * 1.1515;
+	  $unit = strtoupper($unit);
+
+	  if ($unit == "K") {
+	    return ($miles * 1.609344);
+	  } else if ($unit == "N") {
+	      return ($miles * 0.8684);
+	    } else {
+	        return $miles;
+	      }
+	}
+
+	public function maparound($lat1, $lng1, $km)
+	{
+		$local = $lat1.', '.$lng1;
+		if($lat1 == '0' && $lng1 == '0')
+		{
+			$local = "can tho";
+		}
+
+		$this->load->model("mtinh");
+		$this->_data['tinh'] = $this->mtinh->getList();
+
+		$this->_data['DM_MA'] = "";
+		$this->_data['T_MA'] = "";
+		$this->_data['H_MA'] = "";
+		$this->_data['X_MA'] = "";
+
+		$this->load->library('googlemaps');
+		$config = array();
+		$config['center'] = $local;
+		$config['zoom'] = '15';
+		//$config['cluster'] = TRUE;
+		$config['onclick'] = 'updateDatabase(event.latLng.lat(), event.latLng.lng());';
+
+		$this->googlemaps->initialize($config);
+
+		$this->load->model("mdiadiem");
+
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1' ";
+
+		$result = $this->mdiadiem->gettimkiem($query);
+
+		foreach ($result as $item) {
+			$str = trim($item["DD_VITRI"]);
+			$length = strlen($str);
+			$start = strpos($str, ',' );
+			$lng = substr( $str,  $start + 1, $length - $start);
+			$lat = substr( $str, '0', $length - strlen($lng) - 1 );
+			$lng = trim($lng);
+			$lat = trim($lat);
+
+			if($this->distance($lat1, $lng1, $lat, $lng, "K") <= $km)
+			{
+				$danhmuc = $item['DM_MA'];
+				$marker = array();
+				$marker['position'] = $item['DD_VITRI'];
+
+				$madd = $item['DD_MA'];
+	            $anhdaidien = $item['HA_TEN'];
+
+	            $duong = lang('information_is_being_updated');
+	            if($item["DD_DIACHI"] != "")
+	            {
+	            	$duong = $item["DD_DIACHI"];
+	            }
+
+	            $sdt = lang('information_is_being_updated');
+	            if($item["DD_SDT"] != "")
+	            {
+	            	$sdt = $item["DD_SDT"];
+	            }
+
+	            $mota = lang('information_is_being_updated');
+	            if($item["DD_MOTA"] != "")
+	            {
+	            	$mota = $item["DD_MOTA"];
+	            }
+
+				$hinh = "<img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='150' hgiht='150'>";
+				$noidung = "<a target='_blank' href='".base_url()."aediadiem/detailuser1/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a>";
+				$thongtin = '<br/><p><i class="fa fa-map-marker fa-fw"></i><b class="vitri">'.$item["DD_VITRI"].'</b>';
+				$thongtin .= '<br/><i class="fa fa-road fa-fw"></i> '.$duong;
+				$thongtin .= '<br/><i class="fa fa-phone fa-fw"></i> '.$sdt;
+				$thongtin .= '<div class="mota"><i class="fa fa-bookmark fa-fw"></i> '.$mota.'</div></p>';
+				$marker['infowindow_content'] = "<table><tr><td>".$hinh."</td><td valign='top' width='220'>".$noidung.$thongtin."</td></tr></table>";
+				$marker['icon'] = base_url().'/uploads/danhmuc/'.$danhmuc.'.png';
+
+				$marker['onclick'] = 'updateDatabase("'.$lat.'", "'.$lng.'");';
+				$this->googlemaps->add_marker($marker);
+			}
+		}
+
+		$marker = array();
+		$marker['position'] = $local;
+		//$marker['draggable'] = TRUE;
+		//$marker['animation'] = 'DROP';
+		$marker['icon'] = base_url().'/assets/images/movelocal2.png';
+		$marker['onclick'] = 'thongbao("", "'.lang('you_have_chosen_the_location').': "+event.latLng.lat()+", "+event.latLng.lng(), "success");';
+		$this->googlemaps->add_marker($marker);
+
+		$circle = array();
+		$circle['center'] = $local;
+		$circle['radius'] = $km*1000;
+		$circle['strokeColor'] = '#F8F8FF';
+		$circle['fillColor'] = '#F8F8FF';
+		$this->googlemaps->add_circle($circle);
+
+		$this->_data['map'] = $this->googlemaps->create_map();
+
+		$this->_data['lat'] = $lat1;
+		$this->_data['lng'] = $lng1;
+		$this->_data['km'] = $km;
+
+		$this->_data['subview'] = 'user/map_view';
+		//$this->_data['active'] = "map";
 
        	$this->_data['title'] = 'Map';
        	$this->load->view('user/map_view.php', $this->_data);

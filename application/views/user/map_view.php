@@ -34,6 +34,8 @@
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.bootstrap.css" media="screen">
 
+    <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap-notify.js"></script>
+
 	<?php echo $map['js']; ?>
 
     <script type="text/javascript">
@@ -239,23 +241,100 @@
 					console.log(data);
 					if(status == "success")
 					{	
-						location.reload(true);
-						if(data.status == "error")
-						{
-
-						}
-						else
-						{
-
-						}
+						var url = "<?= base_url(); ?>home/map";
+                        setTimeout("location.href = '"+url+"';", 0);
 					}
 				}, 'json');
             });  
 
        		$("#loc").click(function(){
-       			location.reload(true);
+       			var url = "<?= base_url(); ?>home/map";
+                setTimeout("location.href = '"+url+"';", 0);
        		});
+
+            $("#btntimkiem").click(function(){
+                var lat = Trim($("#lat").val());
+                var lng = Trim($("#lng").val());
+                var km = Trim($("#km").val());
+                if(lat == "" && lng == "")
+                {
+                    lat = "0";
+                    lng = "0";
+                    thongbao("", "<?= lang('please_click_on_the_map_to_get_the_location'); ?>!", "danger");
+
+                }
+                else if(km == "")
+                {
+                    km = "0";
+                    thongbao("", "<?= lang('please_enter_the_radius'); ?> (<?= lang('please_enter_the_radius'); ?>: <?= lang('unit').': '.lang('kilometers'); ?>)", "danger");
+                }
+                else
+                {
+                    var url = "<?= base_url(); ?>home/maparound/"+lat+"/"+lng+"/"+km;
+                    setTimeout("location.href = '"+url+"';", 0);
+                }
+                
+            });
+
+            $("#btnxoa").click(function(){
+                var url = "<?= base_url(); ?>home/map";
+                setTimeout("location.href = '"+url+"';", 0);
+            });
+
+            function Trim(sString)
+            {
+                while (sString.substring(0,1) == ' ')
+                {
+                    sString = sString.substring(1, sString.length);
+                }
+                while (sString.substring(sString.length-1, sString.length) == ' ')
+                {
+                    sString = sString.substring(0,sString.length-1);
+                }
+                return sString;
+            }
         });
+
+        function updateDatabase(newLat, newLng)
+        {
+            $("#lat").val(newLat);
+            $("#lng").val(newLng);
+            thongbao("", "<?= lang('you_have_chosen_the_location'); ?>: "+newLat+", "+newLng, "success");
+        }
+
+        function thongbao(title, message, type)
+        {
+            if(title == "")
+            {
+                title = "<?php echo lang('notification') ?>";
+            }
+            $.notify(
+                {
+                    icon: 'glyphicon glyphicon-star',
+                    title: title+":",
+                    message: message,
+                    url: "https://google.com",
+                    target: "_blank"
+                },
+                {
+                    type: type, //warning danger
+                    allow_dismiss: true,
+                    delay: 3000,
+                    timer: 1000,
+                    offset: {
+                        x: 10,
+                        y: 10
+                    },
+                    z_index: 1090,
+                    //icon_type: 'image',
+                    newest_on_top: true,
+                    animate: {
+                        enter: 'animated fadeInRight',
+                        exit: 'animated fadeOutRight'
+                    }
+                }
+            );
+        }
     </script>
     <style type="text/css">
         .div{
@@ -306,7 +385,30 @@
         </tr>        
         <tr>
             <td width="100%">
-                <?php echo $map['html']; ?>
+                <?php echo $map['html']; 
+                    $lat1 = "";
+                    $lng1 = "";
+                    $km1 = "2";
+                    if(isset($lat) && isset($lng))
+                    {
+                        $lat1 = $lat;
+                        $lng1 = $lng;
+                        $km1 = $km;
+                    }
+                ?>
+                <form class="form-inline" role="form">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="lat" title="<?= lang('latitude'); ?>" value="<?= $lat1; ?>" placeholder="<?= lang('latitude'); ?>...">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="lng" title="<?= lang('longitude'); ?>" value="<?= $lng1; ?>" placeholder="<?= lang('longitude'); ?>...">
+                  </div>
+                  <div class="form-group">
+                    <input style="width: 80px; text-align: center;" type="text" class="form-control" id="km" title="<?= lang('please_enter_the_radius'); ?> (<?= lang('unit'); ?>: Km)" value="<?= $km1; ?>" placeholder="<?= lang('please_enter_the_radius'); ?>...">
+                  </div>
+                  <button type="button" class="btn btn-default" id="btntimkiem"><?= lang('search') ?></button>
+                  <button type="button" class="btn btn-default" id="btnxoa"><?= lang('delete') ?></button>
+                </form>
             </td>
         </tr>
     </table>

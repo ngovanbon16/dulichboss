@@ -250,4 +250,9 @@ $lang['please_reload_the_page_after_a_successful_upload'] = "Vui lòng tải l�
 $lang['most_viewed'] = "Được xem nhiều nhất";
 $lang['includes_new_locations_and_newly_updated_information'] = "Bao gồm các địa điểm mới và thông tin mới được cập nhật";
 $lang['refresh'] = "Làm mới";
+$lang['please_click_on_the_map_to_get_the_location'] = "Vui lòng click vào bản đồ để có được vị trí";
+$lang['please_enter_the_radius'] = "Vui lòng nhập bán kính";
+$lang['unit'] = "Đơn vị";
+$lang['kilometers'] = "Kí lô mét";
+$lang['you_have_chosen_the_location'] = "Bạn đã chọn vị trí";
 ?>
