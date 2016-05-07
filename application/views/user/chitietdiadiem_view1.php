@@ -584,7 +584,7 @@
                       div += '<div class="item" style="max-height: 500px;"><img style="height: 500px;" src="<?php echo base_url(); ?>uploads/diadiem/'+HA_TEN+'" alt="" width="100%" ></div>';
                     }
                  }
-                 if(data.length == '0')
+                 if(data.length < '2')
                   {
                       document.getElementById("next").style.display = "none";
                       document.getElementById("previous").style.display = "none";
@@ -636,7 +636,7 @@
                       }
                       //console.log(data.data[i]["ABL_TEN"]);
                     }
-                    if(i == '1')
+                    if(i < '2')
                     {
                         document.getElementById("next").style.display = "none";
                         document.getElementById("previous").style.display = "none";

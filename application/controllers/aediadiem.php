@@ -144,6 +144,24 @@ class Aediadiem extends CI_Controller
        	$this->load->view("user/main.php", $this->_data);
 	}
 
+	public function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+
+	  $theta = $lon1 - $lon2;
+	  $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+	  $dist = acos($dist);
+	  $dist = rad2deg($dist);
+	  $miles = $dist * 60 * 1.1515;
+	  $unit = strtoupper($unit);
+
+	  if ($unit == "K") {
+	    return ($miles * 1.609344);
+	  } else if ($unit == "N") {
+	      return ($miles * 0.8684);
+	    } else {
+	        return $miles;
+	      }
+	}
+
 	function mapuser($id)
 	{	
 		$diadiem = $this->mdiadiem->getID($id);
@@ -151,35 +169,61 @@ class Aediadiem extends CI_Controller
 		$mahuyendd = $diadiem['H_MA']; 
        	$local = $diadiem['DD_VITRI'];
 
+       	$str = trim($diadiem["DD_VITRI"]);
+		$length = strlen($str);
+		$start = strpos($str, ',' );
+		$lng = substr( $str,  $start + 1, $length - $start);
+		$lat = substr( $str, '0', $length - strlen($lng) - 1 );
+		$lng1 = trim($lng);
+		$lat1 = trim($lat);
+		$km = 1;
+
 		$this->load->library('googlemaps');
 
 		$config = array();
 		$config['center'] = $local;
-		$config['zoom'] = '15';
+		$config['zoom'] = '18';
 		//$config['cluster'] = TRUE;
 		$this->googlemaps->initialize($config);
 
+		$circle = array();
+		$circle['center'] = $local;
+		$circle['radius'] = $km*1000;
+		$circle['strokeColor'] = '#F8F8FF';
+		$circle['fillColor'] = '#F8F8FF';
+		$this->googlemaps->add_circle($circle);
+
 		/*$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.T_MA = '$matinhdd' AND diadiem.H_MA = '$mahuyendd'";*/
 
-		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_MA = '$id'";
+		$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND diadiem.DD_DUYET = '1'";
 
 		$result = $this->mdiadiem->gettimkiem($query);
 
 		foreach ($result as $item) {
 			$local = $item['DD_VITRI'];
-			$marker = array();
-			$marker['position'] = $local;
-			$anhdaidien = $item['HA_TEN'];
-            if($anhdaidien == "")
-            {
-            	$anhdaidien = "anhdaidien.jpg";
-            }
+			$str = trim($item["DD_VITRI"]);
+			$length = strlen($str);
+			$start = strpos($str, ',' );
+			$lng = substr( $str,  $start + 1, $length - $start);
+			$lat = substr( $str, '0', $length - strlen($lng) - 1 );
+			$lng = trim($lng);
+			$lat = trim($lat);
+			if($this->distance($lat1, $lng1, $lat, $lng, "K") <= $km)
+			{
+				$marker = array();
+				$marker['position'] = $local;
+				$anhdaidien = $item['HA_TEN'];
+	            if($anhdaidien == "")
+	            {
+	            	$anhdaidien = "anhdaidien.jpg";
+	            }
 
-			$hinh = "<a href='".base_url()."aediadiem/detailuser1/".$item['DD_MA']."'><img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
-			$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: 0px 0px 0px 0px; padding: 0px; width: 180px; max-height: 30px;'><input style='width: 180px; cursor: pointer; font-weight: bold;' type='text' value='".$item['DD_TEN']."' > </a></div><div style='width: 180px; text-transform: capitalize; color: #1AA5D1; background-color: #FFF; font-weight: bold;'><i>".$item['DD_DIACHI']."</i></div>";
-			$marker['infowindow_content'] = $hinh.$noidung;
-			$marker['icon'] = base_url().'/uploads/danhmuc/'.$item['DM_MA'].'.png';
-			$this->googlemaps->add_marker($marker);
+				$hinh = "<a href='".base_url()."aediadiem/detailuser1/".$item['DD_MA']."'><img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
+				$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: 0px 0px 0px 0px; padding: 0px; width: 180px; max-height: 30px;'><input style='width: 180px; cursor: pointer; font-weight: bold;' type='text' value='".$item['DD_TEN']."' > </a></div><div style='width: 180px; text-transform: capitalize; color: #1AA5D1; background-color: #FFF; font-weight: bold;'><i>".$item['DD_DIACHI']."</i></div>";
+				$marker['infowindow_content'] = $hinh.$noidung;
+				$marker['icon'] = base_url().'/uploads/danhmuc/'.$item['DM_MA'].'.png';
+				$this->googlemaps->add_marker($marker);
+			}
 		}
 		
 		return $this->googlemaps->create_map();

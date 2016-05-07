@@ -389,11 +389,16 @@
                     $lat1 = "";
                     $lng1 = "";
                     $km1 = "2";
+                    $count1 = "0";
                     if(isset($lat) && isset($lng))
                     {
                         $lat1 = $lat;
                         $lng1 = $lng;
                         $km1 = $km;
+                    }
+                    if(isset($count))
+                    {
+                        $count1 = $count;
                     }
                 ?>
                 <form class="form-inline" role="form">
@@ -408,6 +413,9 @@
                   </div>
                   <button type="button" class="btn btn-default" id="btntimkiem"><?= lang('search') ?></button>
                   <button type="button" class="btn btn-default" id="btnxoa"><?= lang('delete') ?></button>
+                  <div class="form-group">
+                    <?= lang('total').': '.$count1; ?>
+                  </div>
                 </form>
             </td>
         </tr>

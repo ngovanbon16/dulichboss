@@ -349,6 +349,7 @@ class Home extends CI_Controller
 		$this->load->view('admin/map_view', $data);*/
 
 		$this->_data['map'] = $this->googlemaps->create_map();
+		$this->_data['count']= count($result);
 
 		$this->_data['subview'] = 'user/map_view';
 		$this->_data['active'] = "map";
@@ -406,6 +407,7 @@ class Home extends CI_Controller
 
 		$result = $this->mdiadiem->gettimkiem($query);
 
+		$i = 0;
 		foreach ($result as $item) {
 			$str = trim($item["DD_VITRI"]);
 			$length = strlen($str);
@@ -453,6 +455,7 @@ class Home extends CI_Controller
 
 				$marker['onclick'] = 'updateDatabase("'.$lat.'", "'.$lng.'");';
 				$this->googlemaps->add_marker($marker);
+				$i++;
 			}
 		}
 
@@ -476,6 +479,7 @@ class Home extends CI_Controller
 		$this->_data['lat'] = $lat1;
 		$this->_data['lng'] = $lng1;
 		$this->_data['km'] = $km;
+		$this->_data['count'] = $i;
 
 		$this->_data['subview'] = 'user/map_view';
 		//$this->_data['active'] = "map";
