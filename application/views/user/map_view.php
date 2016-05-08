@@ -256,17 +256,17 @@
                 var lat = Trim($("#lat").val());
                 var lng = Trim($("#lng").val());
                 var km = Trim($("#km").val());
-                if(lat == "" && lng == "")
+                if(lat == "" || lng == "")
                 {
                     lat = "0";
                     lng = "0";
                     thongbao("", "<?= lang('please_click_on_the_map_to_get_the_location'); ?>!", "danger");
 
                 }
-                else if(km == "")
+                else if(km == "" || km <= 0 || isNaN(km))
                 {
                     km = "0";
-                    thongbao("", "<?= lang('please_enter_the_radius'); ?> (<?= lang('please_enter_the_radius'); ?>: <?= lang('unit').': '.lang('kilometers'); ?>)", "danger");
+                    thongbao("", "<?= lang('please_enter_the_radius'); ?> (<?= lang('unit').': '.lang('kilometers'); ?>)", "danger");
                 }
                 else
                 {

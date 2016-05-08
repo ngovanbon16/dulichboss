@@ -176,6 +176,9 @@
                 //$("#createAccount").jqxExpander('setContent', '<span style="margin: 10px;">Account created.</span>');
                 //$('#jqxLoader').jqxLoader('open');
                 //$("#submit").hide();
+                var vitri = $("#DD_VITRI").val();
+                vitri = vitri.replace("(", "");
+                vitri = vitri.replace(")", "");
                 var url, dta;
                 url="<?php echo base_url(); ?>index.php/aediadiem/add?t=" + Math.random();
                 dta = {
@@ -189,7 +192,7 @@
                     "DD_EMAIL" : $("#DD_EMAIL").val(),
                     "DD_WEBSITE" : $("#DD_WEBSITE").val(),
                     "DD_MOTA" : $("#DD_MOTA").val(),
-                    "DD_VITRI" : $("#DD_VITRI").val(),
+                    "DD_VITRI" : vitri,
                     "DD_GIOITHIEU" : $("#DD_GIOITHIEU").val(),
                     "DD_BATDAU" : $("#DD_BATDAU").val(),
                     "DD_KETTHUC" : $("#DD_KETTHUC").val(),
@@ -314,6 +317,9 @@
                 $("#lat").jqxInput({placeHolder: "<?php echo lang('latitude') ?>", height: 25, width: '40%' });
                 $("#lng").jqxInput({placeHolder: "<?php echo lang('longitude') ?>", height: 25, width: '40%' });
                 $("#myPlaceTextBox").jqxInput({placeHolder: "<?php echo lang('enter_the_name_of_the_location_you_want_to_select') ?>...", height: 30, width: "100%" });
+                $("#showWindowButton").click(function(){
+                    $("#myPlaceTextBox").focus();
+                });
             });
     </script>
 

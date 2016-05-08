@@ -441,6 +441,7 @@ class User extends CI_Controller
 		    map.setZoom(15);
 		    markers_map[0].setPosition(place.geometry.location);
 		    markers_map[0].setVisible(true);
+		    document.getElementById('DD_VITRI').value = place.geometry.location;
 
 		";
 		$this->googlemaps->initialize($config);

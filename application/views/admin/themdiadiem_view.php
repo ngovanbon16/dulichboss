@@ -198,6 +198,9 @@
                 //$("#createAccount").jqxExpander('setContent', '<span style="margin: 10px;">Account created.</span>');
                 //$('#jqxLoader').jqxLoader('open');
                 //$("#submit").hide();
+                var vitri = $("#DD_VITRI").val();
+                vitri = vitri.replace("(", "");
+                vitri = vitri.replace(")", "");
                 var url, dta;
                 url="<?php echo base_url(); ?>index.php/aediadiem/add?t=" + Math.random();
                 dta = {
@@ -211,7 +214,7 @@
                     "DD_EMAIL" : $("#DD_EMAIL").val(),
                     "DD_WEBSITE" : $("#DD_WEBSITE").val(),
                     "DD_MOTA" : $("#DD_MOTA").val(),
-                    "DD_VITRI" : $("#DD_VITRI").val(),
+                    "DD_VITRI" : vitri,
                     "DD_GIOITHIEU" : $("#DD_GIOITHIEU").val(),
                     "DD_BATDAU" : $("#DD_BATDAU").val(),
                     "DD_KETTHUC" : $("#DD_KETTHUC").val(),
@@ -330,6 +333,14 @@
                     // Create a jqxInput
                     $("#X_MA").jqxDropDownList({ selectedIndex: "-1", source: dataAdapter, placeHolder: "<?php echo lang('select').' '.lang('town') ?>:", displayMember: "X_TEN", valueMember: "X_MA", width: 250, height: 25, dropDownHeight: "150px" });
                 });
+
+                $("#showWindowButton").jqxButton({ template: "success" , height: 30 });
+                $("#lat").jqxInput({placeHolder: "<?php echo lang('latitude') ?>", height: 25, width: "40%" });
+                $("#lng").jqxInput({placeHolder: "<?php echo lang('longitude') ?>", height: 25, width: "40%" });
+                $("#myPlaceTextBox").jqxInput({placeHolder: "<?php echo lang('enter_the_name_of_the_location_you_want_to_select') ?>...", height: 30, width: "100%" });
+                $("#showWindowButton").click(function(){
+                    $("#myPlaceTextBox").focus();
+                });
             });
     </script>
 
@@ -341,7 +352,7 @@
     <?php echo $map['js']; ?>
 
     <script type="text/javascript">
-        var basicDemo = (function () {
+        /*var basicDemo = (function () {
             //Adding event listeners
             function _addEventListeners() {
                 $('#showWindowButton').click(function () {
@@ -396,7 +407,7 @@
         function load()
         {
             $('#window').jqxWindow('close');
-        }
+        }*/
     </script>
 
 
@@ -458,14 +469,17 @@
         }
     </style>
 </head>
-<body onload="load()"><center>
+<body>
+    <center>
+    <div style="max-width: 1150px;">
     <div id="notiSuccess">
         <div id="result">Thông báo thành công!</div>
     </div>
     <div id="notiError">
         <div id="error">Thông báo lỗi!</div>
     </div>
-    <div id="createAccount" style="font-family: Verdana; font-size: 13px;">
+    
+    <div id="createAccount" style=" float: left; font-family: Verdana; font-size: 13px;">
         <div id="tieude">
             <div class="div1"><?php echo lang('add_new_place') ?></div>
             <div class="div2">
@@ -584,11 +598,13 @@
                             <div id="jqxWidget">
                                 <div style="float: left;">
                                     <div>
-                                        <input type="button" value="<?php echo lang('update_map_location') ?>" id="showWindowButton" />
+                                        <a href="#name">
+                                            <input type="button" value="<?php echo lang('update_map_location') ?>" id="showWindowButton" />
+                                        </a>
 
                                     </div>
                                 </div>
-                                <div>
+                                <!-- <div>
                                     
                                     <div id="window">
                                         <div id="windowHeader">
@@ -606,7 +622,7 @@
 
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </td>
                     </tr>
@@ -678,7 +694,17 @@
                     </tr>
                 </table>
             </form>
+
         </div>
-    </div></center>
+    </div>
+    <a name="name"></a>
+    <div style="float: left; max-width: 600px; width: 100%; text-align: left;">
+        <input type="text" id="myPlaceTextBox" />
+        <?php echo $map['html']; ?>
+        Lat: <input type="text" id="lat" value="" readonly="readonly" >
+        Lng: <input type="text" id="lng" value="" readonly="readonly" >
+    </div>
+    </div>
+    </center>
 </body>
 </html>
