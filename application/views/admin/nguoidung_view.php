@@ -345,58 +345,6 @@
 
                 columns: [
                     { text: "<?php echo lang('photo') ?>", datafield: 'ND_HINH', width: "5%", sortable: false, filterable: false, cellsrenderer: imagerenderer, cellsalign: 'center', align: "center", },
-                    { text: "<?php echo lang('authority_groups') ?>", dataField: 'NQ_MA', width: "15%", filterable: false, cellsalign: 'center', align: "left", columntype: 'number',
-                        cellsrenderer: function (row, column, value) {
-                            var offset = $("#jqxgrid").offset();
-                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-                            var id = dataRecord.ND_MA;
-                            var NQ_MA = dataRecord.NQ_MA;
-
-                            var dta, url;
-                            url = "<?php echo base_url(); ?>nhomquyen/data";
-                            dta = {
-                                "ma" : id
-                            };
-                            /*console.log(dta);*/
-                            $.post(url, dta, function(data, status){
-                                /*console.log(status);
-                                console.log(data);*/
-                                if(status == "success")
-                                {   
-                                    var str = '<select class="select" onchange="change('+id+', (this).value)">';
-                                    var admin = "<?php echo $this->session->userdata['NQ_MA']; ?>";
-                                      
-                                    for (var i = 0; i < data.length; i++) {
-                                        var ma = data[i]['NQ_MA'];
-                                        var ten = data[i]['NQ_TEN'];
-            
-                                        if(admin == "1")
-                                        {
-                                            if(ma == NQ_MA)
-                                                str += '<option value="'+ma+'" selected>'+ten+'</option>';
-                                            else
-                                                str += '<option value="'+ma+'" >'+ten+'</option>';
-                                        }
-                                        else
-                                        {
-                                            if(ma != "1")
-                                            {
-                                                if(ma == NQ_MA)
-                                                    str += '<option value="'+ma+'" selected>'+ten+'</option>';
-                                                else
-                                                    str += '<option value="'+ma+'" >'+ten+'</option>';
-                                            }
-                                        }
-
-                                    }
-                                    str += "</select>";
-                                    document.getElementById(id+"a").innerHTML = str;
-                                }
-                            }, 'json');
-
-                            return "<div id='"+id+"a'></div>";
-                        }
-                    },
                     { text: "<?php echo lang('key') ?>", dataField: 'T_MA', width: "5%", cellsalign: 'center', align: "center", },
                     { text: "<?php echo lang('key') ?>", dataField: 'ND_MA', width: "5%", cellsalign: 'center', align: "center", },
                     { text: "<?php echo lang('lastname') ?>", dataField: 'ND_HO', width: "5%" },
@@ -462,6 +410,58 @@
                                 return "<button class='icon' onclick='kichhoat(\""+id+"\",\""+row+"\")'><i id='"+id+"' class='fa fa-lock fa-fw'></i></button>";
                             }
                             
+                        }
+                    },
+                    { text: "<?php echo lang('authority_groups') ?>", dataField: 'NQ_MA', width: "15%", filterable: false, pinned: true, cellsalign: 'center', align: "left", columntype: 'number',
+                        cellsrenderer: function (row, column, value) {
+                            var offset = $("#jqxgrid").offset();
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.ND_MA;
+                            var NQ_MA = dataRecord.NQ_MA;
+
+                            var dta, url;
+                            url = "<?php echo base_url(); ?>nhomquyen/data";
+                            dta = {
+                                "ma" : id
+                            };
+                            /*console.log(dta);*/
+                            $.post(url, dta, function(data, status){
+                                /*console.log(status);
+                                console.log(data);*/
+                                if(status == "success")
+                                {   
+                                    var str = '<select class="select" onchange="change('+id+', (this).value)">';
+                                    var admin = "<?php echo $this->session->userdata['NQ_MA']; ?>";
+                                      
+                                    for (var i = 0; i < data.length; i++) {
+                                        var ma = data[i]['NQ_MA'];
+                                        var ten = data[i]['NQ_TEN'];
+            
+                                        if(admin == "1")
+                                        {
+                                            if(ma == NQ_MA)
+                                                str += '<option value="'+ma+'" selected>'+ten+'</option>';
+                                            else
+                                                str += '<option value="'+ma+'" >'+ten+'</option>';
+                                        }
+                                        else
+                                        {
+                                            if(ma != "1")
+                                            {
+                                                if(ma == NQ_MA)
+                                                    str += '<option value="'+ma+'" selected>'+ten+'</option>';
+                                                else
+                                                    str += '<option value="'+ma+'" >'+ten+'</option>';
+                                            }
+                                        }
+
+                                    }
+                                    str += "</select>";
+                                    document.getElementById(id+"a").innerHTML = str;
+                                }
+                            }, 'json');
+
+                            return "<div id='"+id+"a'></div>";
                         }
                     }
                 ],

@@ -255,4 +255,5 @@ $lang['please_enter_the_radius'] = "Vui lòng nhập bán kính";
 $lang['unit'] = "Đơn vị";
 $lang['kilometers'] = "Kí lô mét";
 $lang['you_have_chosen_the_location'] = "Bạn đã chọn vị trí";
+$lang['photos_not_yet_approved'] = "Hình ảnh chưa được phê duyệt";
 ?>

@@ -254,7 +254,7 @@ $lang['please_enter_the_radius'] = "Please enter the radius";
 $lang['unit'] = "Unit";
 $lang['kilometers'] = "Kilometers";
 $lang['you_have_chosen_the_location'] = "You have chosen the location";
-$lang[''] = "";
+$lang['photos_not_yet_approved'] = "Photos not yet approved";
 $lang[''] = "";
 $lang[''] = "";
 ?>

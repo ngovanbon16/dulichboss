@@ -104,11 +104,13 @@
                     var txtdiadiem = data.txtdiadiem;
                     var txtbaiviet = data.txtbaiviet;
                     var txtnguoidung = data.txtnguoidung;
+                    var txthinhanh = data.txthinhanh;
 
                     var colorbell = "#FFF";
                     var colordiadiem = "#000";
                     var colorbaiviet = "#000";
                     var colornguoidung = "#000";
+                    var colorhinhanh = "#000";
                     if(txtdiadiem > 0)
                     {
                         colordiadiem = "#F00";
@@ -124,6 +126,11 @@
                         colornguoidung = "#F00";
                         colorbell = "#F00";
                     }
+                    if(txthinhanh > 0)
+                    {
+                        colorhinhanh = "#F00";
+                        colorbell = "#F00";
+                    }
 
                     document.getElementById("colorbell").style.color = colorbell;
                     document.getElementById("colordiadiem").style.color = colordiadiem;
@@ -134,6 +141,9 @@
 
                     document.getElementById("colornguoidung").style.color = colornguoidung;
                     document.getElementById("txtnguoidung").innerHTML = txtnguoidung;
+
+                    document.getElementById("colorhinhanh").style.color = colorhinhanh;
+                    document.getElementById("txthinhanh").innerHTML = txthinhanh;
                   }
               });
             }
@@ -211,8 +221,16 @@
                             <li>
                                 <a id="colordiadiem" style="color: <?= $color ?>;" href="<?php echo base_url(); ?>diadiem">
                                     <div>
-                                        <i class="fa fa-comment fa-fw"></i> <?php echo lang('new_place') ?>
+                                        <i class="fa fa-map-marker fa-fw"></i> <?php echo lang('new_place') ?>
                                         <span id="txtdiadiem" class="pull-right text-muted small"><?php echo $new ?></span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="colorhinhanh" href="<?php echo base_url(); ?>diadiem">
+                                    <div>
+                                        <i class="fa fa-photo fa-fw"></i> <?php echo lang('photos_not_yet_approved') ?>
+                                        <span id="txthinhanh" class="pull-right text-muted small"></span>
                                     </div>
                                 </a>
                             </li>

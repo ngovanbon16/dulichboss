@@ -51,7 +51,10 @@ class Home extends CI_Controller
 		$this->load->model("mnguoidung");
 		$txtnguoidung = $this->mnguoidung->countkichhoat();
 
-		$response = array('txtdiadiem' => $txtdiadiem, 'txtbaiviet' => $txtbaiviet, 'txtnguoidung' => $txtnguoidung);
+		$this->load->model("mhinhanh");
+		$txthinhanh = $this->mhinhanh->countdaduyet();
+
+		$response = array('txtdiadiem' => $txtdiadiem, 'txtbaiviet' => $txtbaiviet, 'txtnguoidung' => $txtnguoidung, 'txthinhanh' => $txthinhanh);
 		$jsonString = json_encode($response);
 		echo $jsonString;
 	}

@@ -486,6 +486,17 @@ class Diadiemhinh extends CI_Controller
   		echo $this->mhinhanh->getID($id);
   }
 
+  public function countchuaduyet()
+  {
+    $DD_MA = $_POST["DD_MA"];
+
+    $count = $this->mhinhanh->counthinhanhchuaduyet($DD_MA);
+
+    $response = array('DD_MA' => $DD_MA, 'count' => $count);
+    $jsonString = json_encode($response);
+    echo $jsonString;
+  }
+
   public function duyet()
   {
   	$HA_MA = $_POST["HA_MA"];

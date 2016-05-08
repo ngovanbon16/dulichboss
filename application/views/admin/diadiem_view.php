@@ -352,10 +352,10 @@
 
                 columns: [
                     { text: "<?php echo lang('key') ?>", dataField: 'DD_MA', width: "5%", cellsalign: 'center', align: "center", },
-                    { text: "<?php echo lang('category') ?>", dataField: 'DM_TEN', width: "15%", /*filtertype: 'checkedlist'*/ },
+                    { text: "<?php echo lang('category') ?>", dataField: 'DM_TEN', width: "10%", /*filtertype: 'checkedlist'*/ },
                     /*{ text: 'Mã người dùng', dataField: 'ND_MA', width: "10%" },*/
-                    { text: "<?php echo lang('name') ?>", dataField: 'DD_TEN', width: "22%" },
-                    { text: "<?php echo lang('activate') ?>", dataField: 'DD_DUYET', width: "11%", columntype: 'textbox', filtertype: 'textbox', align: "center",
+                    { text: "<?php echo lang('name') ?>", dataField: 'DD_TEN', width: "16%" },
+                    { text: "<?php echo lang('activate') ?>", dataField: 'DD_DUYET', width: "10.5%", columntype: 'textbox', filtertype: 'textbox', align: "center",
                         cellsrenderer: function (row, column, value) {
                             var tt = "";
                             if(value == "0")
@@ -418,6 +418,44 @@
                             var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
                             var id = dataRecord.DD_MA;
                             return "<button class='icon' onclick='kichhoat(\""+id+"\",\""+row+"\")'><i class='fa fa-check fa-fw'></i></button>";
+                        }
+                    },
+                    { text: "<?php echo lang('photos_not_yet_approved') ?>", dataField: 'duyetanh', width: "7%", columntype: 'textbox', filtertype: 'textbox', sortable: false, filterable: false, pinned: true, align: "center",
+                        cellsrenderer: function (row, column, value) {
+
+                            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+                            var id = dataRecord.DD_MA;
+
+                            var data, url;
+                            
+                            url = "<?php echo base_url(); ?>diadiemhinh/countchuaduyet";
+                            data = {
+                                "DD_MA" : id
+                            };
+                            //console.log(data);
+                            $.ajax({
+                              url : url,
+                              type : 'post',
+                              dataType : 'json',
+                              data : data,
+                              success : function (data){
+                                  //console.log(data);
+                                  var tt = "";
+                                  var DD_MA = data["DD_MA"];
+                                  var value = data["count"];
+                                    if(value > "0")
+                                    {
+                                        tt = "<div class='trangthai0' >"+value+"</div>";
+                                    }
+                                    else
+                                    {
+                                        tt = "<div class='trangthai1'>"+value+"</div>";
+                                    }
+                                    document.getElementById(DD_MA).innerHTML = tt;
+                              }
+                            });
+                            
+                            return "<div id='"+id+"'></div>";
                         }
                     }
                   
