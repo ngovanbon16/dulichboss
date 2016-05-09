@@ -358,7 +358,7 @@ class Home extends CI_Controller
 		$this->_data['active'] = "map";
 
        	$this->_data['title'] = 'Map';
-       	$this->load->view('user/map_view.php', $this->_data);
+       	$this->load->view('user/mainmap.php', $this->_data);
 	}
 
 	public function distance($lat1, $lon1, $lat2, $lon2, $unit) {
@@ -488,7 +488,7 @@ class Home extends CI_Controller
 		//$this->_data['active'] = "map";
 
        	$this->_data['title'] = 'Map';
-       	$this->load->view('user/map_view.php', $this->_data);
+       	$this->load->view('user/mainmap.php', $this->_data);
 	}
 
 	public function danhmuc()

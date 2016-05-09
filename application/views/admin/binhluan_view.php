@@ -368,6 +368,8 @@
                 showeverpresentrow: show,
                 everpresentrowposition: "top",*/
                 showtoolbar: true,
+                pagesize: 15,
+                pagesizeoptions: ['10', '15', '20', '25', '30', '50'],
 
                 rendertoolbar: function (toolbar) {
                     var me = this;
@@ -422,9 +424,9 @@
                     { text: "<?php echo lang('key') ?>", dataField: 'BL_MA', width: "5%", cellsalign: 'center', align: "center", },
                     { text: "<?php echo lang('name') ?>", dataField: 'DD_TEN', width: "15%" },
                     { text: "<?php echo lang('email') ?>", dataField: 'ND_DIACHIMAIL', width: "15%", /*filtertype: 'checkedlist'*/ },
-                    { text: "<?php echo lang('title') ?>", dataField: 'BL_TIEUDE', width: "19.8%" },
+                    { text: "<?php echo lang('title') ?>", dataField: 'BL_TIEUDE', width: "19%" },
                     { text: "<?php echo lang('content') ?>", dataField: 'BL_NOIDUNG', width: "20%" },
-                    { text: "<?php echo lang('creates_date') ?>", dataField: 'BL_NGAYDANG', width: "15%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: "right", },
+                    { text: "<?php echo lang('creates_date') ?>", dataField: 'BL_NGAYDANG', width: "13%", columntype: 'datetimeinput', filtertype: 'range', cellsformat: 'yyyy-MM-dd', cellsalign: 'right', align: "right", },
                     { text: "<?php echo lang('delete') ?>", datafield: 'Delete', columntype: 'number', width: "40", sortable: false, filterable: false, pinned: true, align: "center", 
                         cellsrenderer: function (row, column, value) {
                             var offset = $("#jqxgrid").offset();

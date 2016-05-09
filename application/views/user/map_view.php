@@ -1,8 +1,8 @@
 <html>
 <head>
-    <title><?php echo $title; ?></title>
+    <!-- <title><?php echo $title; ?></title>
     <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/logo.ico" type="image/x-icon" />
-    <link href="<?php echo base_url(); ?>assets/user/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/user/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <link type="text/css" rel="Stylesheet" href="<?php echo base_url(); ?>assets/jqwidgets/jqwidgets/styles/jqx.base.css" />
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
@@ -335,6 +335,7 @@
                 }
             );
         }
+
     </script>
     <style type="text/css">
         .div{
@@ -353,7 +354,7 @@
             text-align: justify;
             font-weight: bold;
         }
-        a{
+        .a{
             font-size: 15px;
         }
         .vitri{
@@ -371,7 +372,7 @@
     </style>
 </head>
 <body>
-    <h1 style="font-weight: bold;"><?php echo lang('places_map'); ?> <a style="font-size: 20px;" href="<?= site_url('trangchu'); ?>"><?= lang('home') ?></a></h1>
+    <!-- <h1 style="font-weight: bold; color: #000;"><?php echo lang('places_map'); ?> </h1> -->
     <table width="100%">
         <tr>
             <td valign="top" style="min-width: 250px;">

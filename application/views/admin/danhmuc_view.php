@@ -233,6 +233,8 @@
                 localization: getLocalization("<?php echo lang('lang') ?>"), // tai ngon ngu
 
                 showtoolbar: true,
+                pagesize: 15,
+                pagesizeoptions: ['10', '15', '20', '25', '30', '50'],
 
                 rendertoolbar: function (toolbar) {
                     var me = this;

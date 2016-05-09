@@ -221,6 +221,8 @@
                 localization: getLocalization("<?php echo lang('lang') ?>"), // tai ngon ngu
 
                 showtoolbar: true,
+                pagesize: 15,
+                pagesizeoptions: ['10', '15', '20', '25', '30', '50'],
 
                 rendertoolbar: function (toolbar) {
                     var me = this;
@@ -283,7 +285,7 @@
                         }
                     },
                     {
-                      text: "<?php echo lang('name') ?>", columntype: 'textbox', datafield: 'T_TEN', width: "56%", cellsalign: 'left', align: "left",
+                      text: "<?php echo lang('name') ?>", columntype: 'textbox', datafield: 'T_TEN', width: "57%", cellsalign: 'left', align: "left",
                       validateEverPresentRowWidgetValue: function (datafield, value, rowValues) {
                           if (!value) {
                               return { message: "<?php echo lang('please_input').' '.lang('name') ?>", result: false };

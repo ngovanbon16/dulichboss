@@ -290,6 +290,8 @@
                 localization: getLocalization("<?php echo lang('lang') ?>"), // tai ngon ngu
 
                 showtoolbar: true,
+                pagesize: 15,
+                pagesizeoptions: ['10', '15', '20', '25', '30', '50'],
 
                 rendertoolbar: function (toolbar) {
                     var me = this;
@@ -341,7 +343,7 @@
 
                 columns: [
                     {
-                      text: "<?php echo lang('key') ?>", columntype: 'textbox', datafield: 'NQ_MA', width: "30%", cellsalign: 'center', align: "center", editable: false,
+                      text: "<?php echo lang('key') ?>", columntype: 'textbox', datafield: 'NQ_MA', width: "26%", cellsalign: 'center', align: "center", editable: false,
                       validateEverPresentRowWidgetValue: function (datafield, value, rowValues) {
                             var reg = /^\d+$/;
                             if(!reg.test(value) && value != "")
