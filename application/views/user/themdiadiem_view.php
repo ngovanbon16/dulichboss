@@ -170,12 +170,10 @@
             $("#submit").click(function () {
                 $('#form').jqxValidator('validate');
             });
-            //$("#jqxLoader").jqxLoader({ width: 100, height: 60, imagePosition: 'top' });
-            // Update the jqxExpander's content if the validation is successful.
+            $("#jqxLoader").jqxLoader({ isModal: true, text: "<?php echo lang('loading') ?>...", width: 100, height: 60, imagePosition: 'top' });
             $('#form').on('validationSuccess', function (event) {
                 //$("#createAccount").jqxExpander('setContent', '<span style="margin: 10px;">Account created.</span>');
-                //$('#jqxLoader').jqxLoader('open');
-                //$("#submit").hide();
+                $('#jqxLoader').jqxLoader('open');
                 var vitri = $("#DD_VITRI").val();
                 vitri = vitri.replace("(", "");
                 vitri = vitri.replace(")", "");
@@ -217,8 +215,7 @@
                             setTimeout("location.href = '<?php echo site_url(''); ?>';",2000);
                         }
                     }
-                    //$("#submit").show();
-                    //$('#jqxLoader').jqxLoader('close');
+                    $('#jqxLoader').jqxLoader('close');
                 }, 'json');
 
 

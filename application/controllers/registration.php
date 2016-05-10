@@ -98,8 +98,8 @@ class Registration extends CI_Controller
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'ngovanbon99@gmail.com', // change it to yours
-            'smtp_pass' => '12345696',
+            'smtp_user' => 'smartmekong16@gmail.com', // change it to yours
+            'smtp_pass' => 'smartmekong',
             'mailtype' => 'html',
             'charset' => 'utf-8',
             'wordwrap' => TRUE
@@ -108,7 +108,7 @@ class Registration extends CI_Controller
         $this->load->library('email', $config);
         $this->email->set_newline("\r\n");
 
-        $this->email->from('ngovanbon99@gmail.com', 'Mekong Tourism');
+        $this->email->from('smartmekong16@gmail.com', 'Mekong Tourism');
         $this->email->to($email);
 
         $this->email->subject('Email kích hoạt tài khoản - Account activation');

@@ -602,8 +602,8 @@ class Nguoidung extends CI_Controller
 	            'protocol' => 'smtp',
 	            'smtp_host' => 'ssl://smtp.gmail.com',
 	            'smtp_port' => 465,
-	            'smtp_user' => 'ngovanbon99@gmail.com', // change it to yours
-	            'smtp_pass' => '12345696',
+	            'smtp_user' => 'smartmekong16@gmail.com', // change it to yours
+	            'smtp_pass' => 'smartmekong',
 	            'mailtype' => 'html',
 	            'charset' => 'utf-8',
 	            'wordwrap' => TRUE
@@ -612,7 +612,7 @@ class Nguoidung extends CI_Controller
 	        $this->load->library('email', $config);
 	        $this->email->set_newline("\r\n");
 
-	        $this->email->from('ngovanbon99@gmail.com', 'Mekong Tourism');
+	        $this->email->from('smartmekong16@gmail.com', 'Mekong Tourism');
 	        $this->email->to($email);
 
 	        $this->email->subject('Email phục hồi mật khẩu cho người dùng!');
@@ -652,8 +652,10 @@ class Nguoidung extends CI_Controller
 	                  <p style="font-size: 15px; margin: 5px;" >Welcome to Website Mekong Tourism!</p>
 	                </h3>
 
-	                <h4> Mật khẩu mới của bạn là: '.$password.' | Vui lòng bấm vào link bên dưới để xác nhận! <br>
+	                <h4> Mật khẩu mới của bạn là: '.$password.' | Vui lòng bấm vào link bên dưới để hoàn thành việc lấy lại mật khẩu! <br> 
 	                  <a href="'.base_url().'index.php/nguoidung/forgotpassword/'.md5($email).'/'.$password.'">http://smartmekong.vn/dulich</a>
+	                  <br/>
+	                  <b>Chú ý:</b> <i style="color: #F00;">Sau khi xác nhận thành công bạn nên đăng nhập vào website và đổi mật khẩu mới!</i>
 	                </h4>
 	              </div>
 	            </div>
@@ -740,8 +742,8 @@ class Nguoidung extends CI_Controller
 	            'protocol' => 'smtp',
 	            'smtp_host' => 'ssl://smtp.gmail.com',
 	            'smtp_port' => 465,
-	            'smtp_user' => 'ngovanbon99@gmail.com', // change it to yours
-	            'smtp_pass' => '12345696',
+	            'smtp_user' => 'smartmekong16@gmail.com', // change it to yours
+	            'smtp_pass' => 'smartmekong',
 	            'mailtype' => 'html',
 	            'charset' => 'utf-8',
 	            'wordwrap' => TRUE
@@ -750,7 +752,7 @@ class Nguoidung extends CI_Controller
 	        $this->load->library('email', $config);
 	        $this->email->set_newline("\r\n");
 
-	        $this->email->from('ngovanbon99@gmail.com', 'Mekong Tourism');
+	        $this->email->from('smartmekong16@gmail.com', 'Mekong Tourism');
 	        $this->email->to($email);
 
 	        $this->email->subject('Email thông báo khóa tài khoản người dùng!');
@@ -790,7 +792,7 @@ class Nguoidung extends CI_Controller
 	                <h4> Chúng tôi rất tiếc phải báo với bạn rằng tài khoản trên Website Mekong Tourism của bạn đã bị khóa! <br>
 	                	Với lý do: <b style="color: #F00;">'.$noidung.'</b> <br>
 	                	Để mở khóa tài khoản vui lòng liên hệ với quản trị website qua địa chỉ email: 
-	                  <a href="mailto:ngovanbon99@gmail.com">ngovanbon99@gmail.com</a>
+	                  <a href="mailto:smartmekong16@gmail.com">smartmekong16@gmail.com</a>
 	                </h4>
 	              </div>
 	            </div>

@@ -260,7 +260,7 @@
                     <div class="widget">
                         <h3><?php echo lang('contact') ?></h3>
                         <ul>
-                            <li><a href="./">Email</a>: smartmekong@gmail.com</li>
+                            <li><a href="./">Email</a>: smartmekong16@gmail.com</li>
                             <li><a href="./"><?php echo lang('phone') ?></a>: 84 710 3831301</li>
                             <li><a href="./">Fb</a>: www.facebook.com/smartmekong</li>
                         </ul>
