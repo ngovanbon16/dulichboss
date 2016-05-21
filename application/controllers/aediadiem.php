@@ -120,18 +120,38 @@ class Aediadiem extends CI_Controller
 		$result = $this->mdiadiem->gettimkiem($query);
 
 		foreach ($result as $item) {
-			$local = $item['DD_VITRI'];
+			$danhmuc = $item['DM_MA'];
 			$marker = array();
-			$marker['position'] = $local;
-			$anhdaidien = $item['HA_TEN'];
-            if($anhdaidien == "")
+			$marker['position'] = $item['DD_VITRI'];
+			
+			$madd = $item['DD_MA'];
+            $anhdaidien = $item['HA_TEN'];
+
+            $duong = lang('information_is_being_updated');
+            if($item["DD_DIACHI"] != "")
             {
-            	$anhdaidien = "anhdaidien.jpg";
+            	$duong = $item["DD_DIACHI"];
             }
 
-			$hinh = "<a href='".base_url()."aediadiem/detailuser1/".$item['DD_MA']."'><img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='180' hgiht='150'>";
-			$noidung = "<div style='text-transform: uppercase; font-size: 16px; margin: 0px 0px 0px 0px; padding: 0px; width: 180px; max-height: 30px;'><input style='width: 180px; cursor: pointer; font-weight: bold;' type='text' value='".$item['DD_TEN']."' > </a></div><div style='width: 180px; text-transform: capitalize; color: #1AA5D1; background-color: #FFF; font-weight: bold;'><i>".$item['DD_DIACHI']."</i></div>";
-			$marker['infowindow_content'] = $hinh.$noidung;
+            $sdt = lang('information_is_being_updated');
+            if($item["DD_SDT"] != "")
+            {
+            	$sdt = $item["DD_SDT"];
+            }
+
+            $mota = lang('information_is_being_updated');
+            if($item["DD_MOTA"] != "")
+            {
+            	$mota = $item["DD_MOTA"];
+            }
+
+			$hinh = "<img class='img' src='".base_url()."uploads/diadiem/".$anhdaidien."' width='150' hgiht='150'>";
+			$noidung = "<a target='_blank' href='".base_url()."aediadiem/detailuser1/".$madd."'><br/><b><i>".$item['DD_TEN']." </i></b></a>";
+			$thongtin = '<br/><p><i class="fa fa-map-marker fa-fw"></i><b class="vitri">'.$item["DD_VITRI"].'</b>';
+			$thongtin .= '<br/><i class="fa fa-road fa-fw"></i> '.$duong;
+			$thongtin .= '<br/><i class="fa fa-phone fa-fw"></i> '.$sdt;
+			$thongtin .= '<div class="mota"><i class="fa fa-bookmark fa-fw"></i> '.$mota.'</div></p>';
+			$marker['infowindow_content'] = "<table><tr><td>".$hinh."</td><td valign='top' width='220'>".$noidung.$thongtin."</td></tr></table>";
 			$marker['icon'] = base_url().'/uploads/danhmuc/'.$item['DM_MA'].'.png';
 			$this->googlemaps->add_marker($marker);
 		}

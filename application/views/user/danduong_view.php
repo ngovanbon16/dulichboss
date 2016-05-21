@@ -48,9 +48,10 @@
         }
         #iconleft:hover{
             color: #F00;
+            font-weight: bold;
         }
         .benner{
-            margin-top: 30px; 
+            margin-top: 50px; 
             text-align: left; 
             position: absolute; 
             z-index: 100000; 
@@ -63,6 +64,29 @@
             -webkit-transition:  margin-left 3s;
             transition:  margin-left 3s;
         }
+        #print:hover{
+            color: #000;
+        }
+        .img{
+            border-radius: 3px;
+            max-height: 170px;
+            height: 100%;
+        }
+        .vitri{
+            font-size: 10px;
+            font-weight: normal;
+        }
+        .mota{
+            height: 100px;
+            overflow: auto;
+            font-style: normal;
+            line-height: 1.3;
+            font-size: 12px;
+            text-align: justify;
+        }
+        .a{
+            font-size: 15px;
+        }
     </style>
 </head>
 <body onload="onload()">
@@ -71,9 +95,10 @@
     <tr>
         <td>
             <div >
-                <div style="text-align: left; max-height: 390px; overflow: auto;" id="directionsDiv"></div>
-                
-                <img style="float: right; width: 25px; height: 25px; margin-right: 10px; cursor: pointer;" src="<?php echo base_url(); ?>assets/images/print.png" onclick="printDiv('directionsDiv')">
+                <div style="position: absolute; z-index: -1;background-color: #F8F8FF; width: 290px; height: 380px; opacity: 0.8;" ></div>
+                <div style="text-align: left; max-height: 380px; overflow: auto;" id="directionsDiv"></div>
+
+                <i id="print" class="fa fa-print fa-fw" style="z-index: 1000001; float: right; cursor: pointer; font-size: 25px;" onclick="printDiv('directionsDiv')"></i>
             </div>
         </td>
         <td>

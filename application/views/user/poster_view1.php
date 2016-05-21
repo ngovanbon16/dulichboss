@@ -351,7 +351,7 @@
 	</div>
 </div>
 
-<div id="dialog1" title="<?php echo lang('select').' '.lang('colors'); ?>">
+<div id="dialog1" title="<?php echo lang('select').' '.lang('photo'); ?>">
   	<div style="max-height: 400px; overflow: auto;" class="demoPanel">
   		<?php 
   			foreach ($hinhanh as $row) {
