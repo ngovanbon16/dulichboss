@@ -336,6 +336,23 @@
             );
         }
 
+        var bool = true;
+        function oppen()
+        {
+            $(".timkiem").toggleClass("timkiem1");
+            if(bool)
+            {
+                document.getElementById("iconleft").className = "fa fa-angle-double-up fa-fw";
+                bool = false;
+            }
+            else
+            {
+                document.getElementById("iconleft").className = "fa fa-angle-double-down fa-fw";
+                bool = true;
+            }
+            
+        }
+
     </script>
     <style type="text/css">
         .div{
@@ -369,6 +386,23 @@
             font-size: 12px;
             text-align: justify;
         }
+        .timkiem{
+            display: none;
+        }
+        .timkiem1{
+            display: block;
+        }
+        #iconleft{
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+            color: #c52d2f;
+            border-radius: 5px 0px 0px 5px;
+        }
+        #iconleft:hover{
+            color: #F00;
+        }
     </style>
 </head>
 <body>
@@ -376,14 +410,21 @@
     <table width="100%">
         <tr>
             <td valign="top" style="min-width: 250px;">
-                <div class="div" id="T_MA" style="float: left;"></div>
-                <div class="div" id="H_MA" style="float: left;"></div>
-                <div class="div" id="X_MA" style="float: left;"></div>
-                <div class="div" id="DM_MA" style="float: left;"></div>
-                <button style="font-size: 13px;" type="button" id="loc" class="btn btn-success"><?php echo lang('search') ?></button>
-                <button style="font-size: 13px;" type="button" id="xoa" class="btn btn-danger"><?php echo lang('reset') ?></button>
+                <div class="timkiem">
+                    <div class="div" id="T_MA" style="float: left;"></div>
+                    <div class="div" id="H_MA" style="float: left;"></div>
+                    <div class="div" id="X_MA" style="float: left;"></div>
+                    <div class="div" id="DM_MA" style="float: left;"></div>
+                    <button style="font-size: 13px;" type="button" id="loc" class="btn btn-success"><?php echo lang('search') ?></button>
+                    <button style="font-size: 13px;" type="button" id="xoa" class="btn btn-danger"><?php echo lang('reset') ?></button>
+                </div>
             </td>
-        </tr>        
+        </tr>      
+        <tr>
+            <td>
+                <i id="iconleft" class="fa fa-angle-double-down fa-fw" onclick="oppen()"></i>
+            </td>
+        </tr>  
         <tr>
             <td width="100%">
                 <?php echo $map['html']; 

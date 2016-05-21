@@ -75,6 +75,16 @@ class Mdiadiem extends CI_Model {
 
     public function gettimkiem($query) // dung cho trang quan ly
     {
+        /*$this->db->select('*');
+        $this->db->from('diadiem');   
+        $this->db->join('tinh','tinh.T_MA = diadiem.T_MA'); 
+        $this->db->join('huyen','huyen.H_MA = diadiem.H_MA'); 
+        $this->db->join('danhmuc','danhmuc.DM_MA = diadiem.DM_MA');
+        $this->db->join('hinhanh','hinhanh.DD_MA = diadiem.DD_MA');  
+        $this->db->where('hinhanh.HA_DAIDIEN', '1');
+        $this->db->where('MATCH (diadiem.DD_TEN, diadiem.DD_MOTA, danhmuc.DM_TEN) AGAINST ("'. $key .'")');
+        $this->db->order_by("diadiem.DD_NGAYDANG","DESC");
+        $query = $this->db->get();*/
         $query = $this->db->query($query);          
         if($query->num_rows() > 0)
         {

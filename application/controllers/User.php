@@ -96,7 +96,7 @@ class User extends CI_Controller
 			echo  " | ";
 			echo $str3;*/
 
-			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND (( DD_TEN LIKE '%$str0%' ) AND ( DM_TEN LIKE '%$str1%' ) AND ( H_TEN LIKE '%$str2%' ) AND ( T_TEN LIKE '%$str3%' )) ORDER BY DD_TEN ASC LIMIT 0, 10";
+			/*$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND (( DD_TEN LIKE '%$str0%' ) AND ( DM_TEN LIKE '%$str1%' ) AND ( H_TEN LIKE '%$str2%' ) AND ( T_TEN LIKE '%$str3%' )) ORDER BY DD_TEN ASC LIMIT 0, 10";
 
 			$result = $this->mdiadiem->gettimkiem($query);
 
@@ -106,11 +106,13 @@ class User extends CI_Controller
 				foreach ($result as $row) {
 					echo '<div> <img src="'.base_url().'uploads/diadiem/'.$row['HA_TEN'].'" style="width: 150px; height: 100px; float: left; margin-right: 10px; border-radius: 3px;"> <div style="min-height: 100px;"> <p class="title"> <a href="'.base_url()."aediadiem/detailuser1/".$row['DD_MA'].'" target="_blank" ><i style="font-size: 20px; font-weight: bolder; color: #1AA5D1;" class="fa fa-angle-double-right"></i> <b>'.$row['DD_TEN'].'</b></a> <i style="font-size: 15px;">'.$row['DM_TEN'].' | '.$row['H_TEN'].' <i class="fa fa-angle-double-right"></i> '.$row['T_TEN'].'</i><br><i class="mota">'.$row['DD_MOTA'] .'</i></p> </div> </div>'   ;
 				}
-			}
+			}*/
 
 
 			// Câu query lấy dữ liệu
-			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND ( DD_TEN LIKE '%$keyword%' OR DD_MOTA LIKE '%$keyword%' OR T_TEN LIKE '%$keyword%' OR H_TEN LIKE '%$keyword%' OR DM_TEN LIKE '%$keyword%' ) ORDER BY DD_TEN ASC LIMIT 0, 20";
+			//$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND ( DD_TEN LIKE '%$keyword%' OR DD_MOTA LIKE '%$keyword%' OR T_TEN LIKE '%$keyword%' OR H_TEN LIKE '%$keyword%' OR DM_TEN LIKE '%$keyword%' ) ORDER BY DD_TEN ASC LIMIT 0, 20";
+
+			$query = "SELECT * FROM diadiem JOIN tinh ON diadiem.T_MA = tinh.T_MA JOIN huyen ON diadiem.H_MA = huyen.H_MA JOIN danhmuc ON diadiem.DM_MA = danhmuc.DM_MA JOIN hinhanh ON diadiem.DD_MA = hinhanh.DD_MA WHERE hinhanh.HA_DAIDIEN = '1' AND ( MATCH ( DD_TEN ) AGAINST ('$keyword') OR  MATCH ( DM_TEN ) AGAINST ('$keyword') OR MATCH ( T_TEN ) AGAINST ('$keyword') OR MATCH ( H_TEN ) AGAINST ('$keyword')) ORDER BY diadiem.DD_TEN ASC LIMIT 0, 20";
 
 			// Kết nối Database, thực hiện câu truy vấn
 			$result = $this->mdiadiem->gettimkiem($query);
@@ -144,7 +146,7 @@ class User extends CI_Controller
 			$keyworddd = $this->db->escape_like_str($keyworddd);
 			if($keyworddd != "")
 			{
-				$keyworddd1 = " AND ( DD_TEN LIKE '%".$keyworddd."%' ) ";
+				$keyworddd1 = " AND ( MATCH ( DD_TEN ) AGAINST ('$keyworddd') ) ";
 			}
 		}
 

@@ -16,22 +16,74 @@
             var danduong = document.getElementById("directionsDiv").innerHTML;
             document.getElementById("directionsDiv").innerHTML = "<h2><?= $info['DD_TEN']; ?></h2>"+danduong;
         }
+
+        var bool = true;
+        function oppen()
+        {
+            $(".benner").toggleClass("benner1");
+            if(bool)
+            {
+                document.getElementById("iconleft").className = "fa fa-angle-double-right fa-fw";
+                bool = false;
+            }
+            else
+            {
+                document.getElementById("iconleft").className = "fa fa-angle-double-left fa-fw";
+                bool = true;
+            }
+            
+        }
     </script>
+
+    <style type="text/css">
+        #iconleft{
+            margin-right: -12px;
+            margin-top: 10.5px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+            color: #c52d2f;
+            border-radius: 5px 0px 0px 5px;
+        }
+        #iconleft:hover{
+            color: #F00;
+        }
+        .benner{
+            margin-top: 30px; 
+            text-align: left; 
+            position: absolute; 
+            z-index: 100000; 
+            width: 320px;             
+            -webkit-transition: margin-left 3s;
+            transition:  margin-left 3s;
+        }
+        .benner1{
+            margin-left: -305px;
+            -webkit-transition:  margin-left 3s;
+            transition:  margin-left 3s;
+        }
+    </style>
 </head>
 <body onload="onload()">
-<section style="margin-top: -80px; margin-bottom: -80px;" id="contact-info">
-    <div class="gmap-area">
-        <div class="container">
-        	<div class="row">
-        		<div class="col-sm-8 map-content">
-					<?php echo $map['html']; ?>
-        		</div>
-                <div style="text-align: left;" class="col-sm-4 text-center">
-                    <img style="width: 25px; height: 25px; cursor: pointer;" src="<?php echo base_url(); ?>assets/images/print.png" onclick="printDiv('directionsDiv')">
-                	<div style="text-align: left; max-height: 450px; overflow: auto;" id="directionsDiv"></div>
-                </div>
+
+<table class="benner">
+    <tr>
+        <td>
+            <div >
+                <div style="text-align: left; max-height: 390px; overflow: auto;" id="directionsDiv"></div>
+                
+                <img style="float: right; width: 25px; height: 25px; margin-right: 10px; cursor: pointer;" src="<?php echo base_url(); ?>assets/images/print.png" onclick="printDiv('directionsDiv')">
             </div>
-		</div>
-	</div>
-</section>
+        </td>
+        <td>
+            <i id="iconleft" class="fa fa-angle-double-left fa-fw" onclick="oppen()"></i>
+        </td>
+    </tr>
+</table>
+
+<div style="width: 100%;">
+<?php echo $map['html']; ?>
+</div>
+
 </body>

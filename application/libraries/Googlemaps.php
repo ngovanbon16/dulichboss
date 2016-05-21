@@ -1139,9 +1139,13 @@ class Googlemaps {
 				<script type="text/javascript" src="'.$apiLocation.'"></script>';
 			}
 			
-			if ($this->cluster) { $this->output_js .= '
+			/*if ($this->cluster) { $this->output_js .= '
 			<script type="text/javascript" src="' . ( ($this->https) ? 'https' : 'http' ) . '://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script>
-			'; }
+			'; }*/
+
+			if ($this->cluster) { $this->output_js .= '
+			<script type="text/javascript" src="'.base_url().'assets/js/markerclusterer.js"></script>
+			'; } // chinh sua
 		}
 		if ($this->jsfile=="") {
 			$this->output_js .= '
